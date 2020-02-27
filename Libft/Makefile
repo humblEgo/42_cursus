@@ -6,11 +6,12 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/02/27 16:16:23 by iwoo             ###   ########.fr        #
+#    Updated: 2020/02/27 19:34:34 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+_BONUS = bonus.a
 SRCS = ft_memset.c \
 	   ft_bzero.c \
 	   ft_memcpy.c \
@@ -45,7 +46,9 @@ SRCS = ft_memset.c \
 	   ft_putstr_fd.c \
 	   ft_putendl_fd.c \
 	   ft_putnbr_fd.c
+SRCS_BONUS = ft_lstnew.c
 OBJS = $(SRCS:%c=%o)
+OBJS_BONUS = $(SRCS:%c=%o) $(SRCS_BONUS:%c=%o)
 HEADER = libft.h
 
 CC = gcc
@@ -54,17 +57,23 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	ar rcs $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -include $(HEADER) 
+
+bonus: $(_BONUS)
+	mv $(_BONUS) $(NAME)
+
+$(_BONUS): $(OBJS_BONUS)
+	ar rcs $@ $^
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
-.PHONAY: all clean fclean re
+.PHONAY: all clean fclean re bonus

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 18:20:40 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 19:02:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/02/27 22:00:05 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,38 @@ static int	is_in_set(char c, char const *set)
 	return (0);
 }
 
-static int	set_count(char const *s1, char const *set)
+static int	get_len_trimmed(char const *s1, char const *set)
 {
-	int		set_count;
-	int		i;
+	int	start_idx;
+	int	end_idx;
 
-	set_count = 0;
-	i = -1;
-	while (s1[++i])
-		if (is_in_set(s1[i], set))
-			set_count++;
-	return (set_count);
+	start_idx = 0;
+	while (s1[start_idx] && is_in_set(s1[start_idx], set))
+		start_idx++;
+	end_idx = ft_strlen(s1) - 1;
+	if (end_idx < 0)
+		return (0);
+	while (s1[end_idx] && is_in_set(s1[end_idx], set))
+		end_idx--;
+	return (end_idx - start_idx + 1);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*res;
-	int		count;
+	int		len;
 	int		i;
 
-	count = set_count(s1, set);
-	if (!(res = (char *)malloc(sizeof(char) * (ft_strlen(s1) - count + 1))))
+	len = get_len_trimmed(s1, set);
+	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	i = 0;
-	while (*s1)
-	{
-		if (is_in_set(*s1, set))
-		{
-			s1++;
-			continue;
-		}
-		res[i] = *s1;
-		i++;
+	while (*s1 && is_in_set(*s1, set))
 		s1++;
+	i = 0;
+	while (i < len)
+	{
+		res[i] = s1[i];
+		i++;
 	}
 	res[i] = '\0';
 	return (res);
