@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/02/26 22:29:06 by iwoo             ###   ########.fr        #
+#    Updated: 2020/02/27 16:16:23 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,13 @@ SRCS = ft_memset.c \
 	   ft_substr.c \
 	   ft_strjoin.c \
 	   ft_strtrim.c \
-	   ft_split.c
+	   ft_split.c \
+	   ft_itoa.c \
+	   ft_strmapi.c \
+	   ft_putchar_fd.c \
+	   ft_putstr_fd.c \
+	   ft_putendl_fd.c \
+	   ft_putnbr_fd.c
 OBJS = $(SRCS:%c=%o)
 HEADER = libft.h
 

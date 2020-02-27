@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/24 19:52:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 22:37:50 by iwoo             ###   ########.fr       */
+/*   Created: 2020/02/27 15:58:03 by iwoo              #+#    #+#             */
+/*   Updated: 2020/02/27 16:00:58 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	ft_putstr_fd(char *s, int fd)
 {
-	unsigned char	*tmp;
-	size_t			i;
-
-	i = 0;
-	tmp = (unsigned char *)s;
-	while (i < n)
-		tmp[i++] = c;
-	return ((void *)tmp);
+	write(fd, s, ft_strlen(s));
 }
