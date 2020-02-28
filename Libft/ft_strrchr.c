@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 01:08:00 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 01:15:11 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/02/28 20:38:16 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ char	*ft_strrchr(const char *s, int c)
 	while (tmp_str[++i])
 		if (tmp_str[i] == c)
 			res = &tmp_str[i];
+	if (tmp_str[i] == c)
+		res = &tmp_str[i];
 	return (res);
 }

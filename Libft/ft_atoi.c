@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 12:02:43 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 14:49:29 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/02/28 17:42:18 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 static int	is_sign(char *tmp)
 {
 	if (*tmp == '+' || *tmp == '-')
+		return (1);
+	return (0);
+}
+
+static int	is_whitespace(char *tmp)
+{
+	if ((*tmp >= 9 && *tmp <= 13) || (*tmp == 32))
 		return (1);
 	return (0);
 }
@@ -35,6 +42,8 @@ int	ft_atoi(const char *nptr)
 	tmp = (char *)nptr;
 	sign = 1;
 	res = 0;
+	while (is_whitespace(tmp))
+		tmp++;
 	if (is_sign(tmp))
 	{
 		if (*tmp == '-')

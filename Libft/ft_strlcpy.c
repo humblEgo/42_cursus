@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:22:15 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 00:46:16 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/02/28 20:11:21 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		dst[i] = src[i];
 		i++;
 	}
-	dst[i] = '\0';
+	if (size > 0)
+		dst[i] = '\0';
 	src_len = 0;
 	while (src[src_len])
 		src_len++;
