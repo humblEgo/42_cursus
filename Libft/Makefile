@@ -6,12 +6,11 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/02/27 19:34:34 by iwoo             ###   ########.fr        #
+#    Updated: 2020/02/28 16:33:24 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-_BONUS = bonus.a
 SRCS = ft_memset.c \
 	   ft_bzero.c \
 	   ft_memcpy.c \
@@ -46,9 +45,17 @@ SRCS = ft_memset.c \
 	   ft_putstr_fd.c \
 	   ft_putendl_fd.c \
 	   ft_putnbr_fd.c
-SRCS_BONUS = ft_lstnew.c
+_bonus = ft_lstnew.c \
+			 ft_lstadd_front.c \
+			 ft_lstsize.c \
+			 ft_lstlast.c \
+			 ft_lstadd_back.c \
+			 ft_lstdelone.c \
+			 ft_lstclear.c \
+			 ft_lstiter.c \
+			 ft_lstmap.c
 OBJS = $(SRCS:%c=%o)
-OBJS_BONUS = $(SRCS:%c=%o) $(SRCS_BONUS:%c=%o)
+OBJS_BONUS = $(_bonus:%c=%o)
 HEADER = libft.h
 
 CC = gcc
@@ -59,21 +66,21 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
+bonus: all $(OBJS_BONUS)
+	$(CC) $(CFLAGS) -c $(_bonus)
+	ar rcs $(NAME) $(OBJS_BONUS)
+
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -include $(HEADER) 
-
-bonus: $(_BONUS)
-	mv $(_BONUS) $(NAME)
-
-$(_BONUS): $(OBJS_BONUS)
-	ar rcs $@ $^
+	$(CC) $(CFLAGS) -o $@ -c $< -include $(HEADER) 
 
 clean:
-	rm -f $(OBJS_BONUS)
+	rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-	rm -f $(NAME) $(NAME_BONUS)
+	rm -f $(NAME)
 
 re: fclean all
+
+re_bonus: fclean bonus
 
 .PHONAY: all clean fclean re bonus
