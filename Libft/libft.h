@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 21:51:12 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 15:30:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/02/29 23:40:31 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
-
-#include <stdio.h>
 
 typedef struct	s_list
 {
