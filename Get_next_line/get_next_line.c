@@ -15,47 +15,36 @@
 int	get_next_line(int fd, char **line)
 {
 	static char	buf[BUFFER_SIZE + 1];
-	static int	idx_read = 0;
-	int			read_nb;
-	int			idx_strt;
+	static int	i = 0;
+	static int	read_nb;
 	static int	file[FILE_ERA];
 
 	if (fd < 0 || line == NULL)
 		return (-1);
-	if (file[fd] == 0)
-	{
-		if(!(*line = malloc(sizeof(char))))
-			return (-1);
-		*line[0] = '\0';
-		file[fd] = 1;
-	}
-	if (idx_read == 0)
-		ft_memset(buf, '\0', BUFFER_SIZE + 1);
-	else
-	{
-		*line = ft_strnjoin(*line, &buf[idx_read], BUFFER_SIZE - idx_read);
-		ft_memset(buf, '\0', BUFFER_SIZE + 1);
-		idx_read = 0;
-	}
+	if(!(*line = malloc(sizeof(char))))
+		return (-1);
+	*line[0] = '\0';
+	if (buf[i] == '\n')
+		i++;
+	*line = ft_strjoin_bfnl(*line, &buf[i]);
+	ft_memset(buf, '\0', BUFFER_SIZE + 1);
+	i = 0;
 	if ((read_nb = read(fd, buf, BUFFER_SIZE)) < 0)
 		return (-1);
-	idx_strt = idx_read;
-	while (buf[idx_read] != '\n' && buf[idx_read])
-		idx_read++;
-	if (read_nb > 0)
+	while (buf[i] && buf[i] != '\n')
 	{
-		if (idx_read == BUFFER_SIZE)
+		if (i == BUFFER_SIZE - 1)
 		{
-			*line = ft_strnjoin(*line, &buf[idx_strt], idx_read);
-			idx_read = 0;
-			get_next_line(fd, line);
+			*line = ft_strjoin_bfnl(*line, buf);
+			ft_memset(buf, '\0', BUFFER_SIZE + 1);
+			if ((read_nb = read(fd, buf, BUFFER_SIZE)) < 0)
+				return (-1);
+			i = -1;
 		}
-		else
-			*line = ft_strnjoin(*line, &buf[idx_strt], idx_read);
+		i++;
 	}
-	else
-	{
-		*line = ft_strnjoin(*line, &buf[idx_strt], idx_read);
-	}
-	return (1);
+	*line = ft_strjoin_bfnl(*line, buf);	
+	if (ft_strlen(buf) != BUFFER_SIZE)
+		return (0);
+	return (read_nb ? 1 : 0);
 }
