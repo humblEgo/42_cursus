@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 23:51:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/03 23:44:25 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/03 23:54:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_strlen(char *str)
 	return (len);
 }
 
-int		ft_strlen_bfnl(char const *str)
+int		ft_strlen_bfnl(char *str)
 {
 	int	len;
 

@@ -28,9 +28,9 @@ int	get_next_line(int fd, char **line)
 		i++;
 	*line = ft_strjoin_bfnl(*line, &buf[i]);
 	ft_memset(buf, '\0', BUFFER_SIZE + 1);
-	i = 0;
 	if ((read_nb = read(fd, buf, BUFFER_SIZE)) < 0)
 		return (-1);
+	i = 0;
 	while (buf[i] && buf[i] != '\n')
 	{
 		if (i == BUFFER_SIZE - 1)
@@ -44,7 +44,10 @@ int	get_next_line(int fd, char **line)
 		i++;
 	}
 	*line = ft_strjoin_bfnl(*line, buf);	
-	if (ft_strlen(buf) != BUFFER_SIZE)
-		return (0);
-	return (read_nb ? 1 : 0);
+	if (buf[i] == '\n')
+		if (buf[i + 1] == '\0' && i != BUFFER_SIZE - 1)
+			return (0);
+	else
+		return (1);
+	return (0);
 }
