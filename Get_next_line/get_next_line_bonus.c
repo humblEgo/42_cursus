@@ -51,25 +51,25 @@ int	is_last_line_eof(int fd, t_buf *buf)
 
 int	get_next_line(int fd, char **line)
 {
-	static t_buf	buf;
+	static t_buf	buf[FILE_ERA];
 	
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
-	if (init_line(line) < 0 || read_if_buf_empty(fd, &buf) < 0)
+	if (init_line(line) < 0 || read_if_buf_empty(fd, &buf[fd]) < 0)
 		return (-1);
-	while (buf.read_nb != 0)
+	while (buf[fd].read_nb != 0)
 	{
-		*line = ft_strjoin_bfnl(*line, &(buf.buf[buf.idx]));
-		while (buf.buf[buf.idx] && buf.buf[buf.idx] != '\n')
-			buf.idx++;
-		if (buf.buf[buf.idx] == '\0')
+		*line = ft_strjoin_bfnl(*line, &(buf[fd].buf[buf[fd].idx]));
+		while (buf[fd].buf[buf[fd].idx] && buf[fd].buf[buf[fd].idx] != '\n')
+			buf[fd].idx++;
+		if (buf[fd].buf[buf[fd].idx] == '\0')
 		{
-			if ((buf.res = is_last_line_eof(fd, &buf)) < 1)
-				return (buf.res);
+			if ((buf[fd].res = is_last_line_eof(fd, &buf[fd])) < 1)
+				return (buf[fd].res);
 		}
 		else
 		{
-			buf.idx++;
+			buf[fd].idx++;
 			return (1);
 		}
 	}
