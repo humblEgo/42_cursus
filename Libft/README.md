@@ -36,7 +36,7 @@
 
 
 |  Completion   | Function | Description |
-| --- | -------- | ----------- |
+| :---: | :--------: | :----------- |
 | ✅ | ft_substr | Allocates (with malloc(3)) and returns a substring from the string ’s’. The substring begins at index ’start’ and is of maximum size ’len’. |
 | ✅ | ft_strjoin | Allocates (with malloc(3)) and returns a new string, which is the result of the concatenation of ’s1’ and ’s2’. |
 | ✅ | ft_strtrim | Allocates (with malloc(3)) and returns a copy of ’s1’ with the characters specified in ’set’ removed from the beginning and the end of the string. |
@@ -53,7 +53,7 @@
 #### Bonus part
 
 |  Completion  | Function | Description |
-| --- | -------- | ----------- |
+| :---: | :--------: | :----------- |
 | ✅ | ft_lstnew | Allocates (with malloc(3)) and returns a new element. The variable ’content’ is initialized with the value of the parameter ’content’. The variable ’next’ is initialized to NULL.|
 | ✅ | ft_lstadd_front | Adds the element ’new’ at the beginning of the list. |
 | ✅ | ft_lstsize | Counts the number of elements in a list. |
