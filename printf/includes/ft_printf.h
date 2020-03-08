@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:37:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/08 22:02:03 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 03:24:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 # define INIT_VALUE -1
 # define ASTERISK -2
+# define ONLY_DOT_NO_PREC -3
+# define MINUS_NUM_WITH_ASTERISK -4
 
 typedef struct	s_flag
 {
@@ -35,6 +37,7 @@ typedef struct s_format_info
 	va_list	arg;
 	t_flag	flag;
 	int		width;
+	int		tmp_width;
 	int		prec;
 	int		leng;
 	char	spec;

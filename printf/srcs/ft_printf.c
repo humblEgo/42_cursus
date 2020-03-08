@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/08 22:09:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 02:58:05 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	init_fmt_info(t_fmt_info *info)
 {
 	info->width = -1;
+	info->tmp_width = 0;
 	info->prec = -1;
 	info->leng = -1;
 	info->spec = -1;
@@ -69,8 +70,6 @@ int	ft_printf(const char *fmt, ...)
 			i++;
 			check_flag(fmt, &info, &i);
 			check_width(fmt, &info, &i);
-//			if (check_prec(fmt, &info, &i) < 0)
-	//			return (0);
 			check_prec(fmt, &info, &i);
 			if (check_spec(fmt, &info, &i) < 0)
 				return (0);

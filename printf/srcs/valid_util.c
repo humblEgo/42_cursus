@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 18:39:10 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/08 22:13:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 02:19:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	check_valid(t_fmt_info *tmp)
 	}
 	else if (tmp->spec == 's')
 	{
-//		if (tmp->flag.zero != INIT_VALUE)
-//			return (0);
+		if (tmp->flag.zero != INIT_VALUE)
+			return (0);
 	}
 	else if (tmp->spec == 'p')
 	{
-		if (tmp->prec != INIT_VALUE)
-			return (0);
+//		if (tmp->prec != INIT_VALUE)
+//			return (0);
 	}
 	else if (tmp->spec == 'd' || tmp->spec == 'i' || 
 			tmp->spec == 'u' || tmp->spec == 'x' || tmp->spec == 'X')
 	{
-		if (tmp->flag.zero != INIT_VALUE && tmp->prec != INIT_VALUE)
-			return (0);
+//		if (tmp->flag.zero != INIT_VALUE && tmp->prec != INIT_VALUE)
+//			return (0);
 	}
 	return (1);
 }

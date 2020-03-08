@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:15:05 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/08 22:06:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 01:10:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ int	check_flag(const char *fmt, t_fmt_info *info, int *i)
 		if (fmt[*i] == '-')
 			info->flag.minus = 1;
 		else if (fmt[*i] == '0')
+		{
 			info->flag.zero = 1;
+			if (fmt[*i + 1] == '-')
+			{
+				info->flag.minus = 1;
+				(*i)++;
+			}
+		}
 		(*i)++;
 		return (1);
 	}
@@ -68,7 +75,7 @@ int	check_prec(const char *fmt, t_fmt_info *info, int *i)
 		}
 		else
 		{
-			info->prec = 0;
+			info->prec = ONLY_DOT_NO_PREC;
 			return (-1);
 		}
 	}
