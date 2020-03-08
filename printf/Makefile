@@ -6,13 +6,20 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/05 20:58:16 by iwoo             ###   ########.fr        #
+#    Updated: 2020/03/08 12:43:53 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 
-SRC = ft_printf.c
+SRC = ft_printf.c \
+	  ft_printf_util.c \
+	  ft_itoa_base_llu.c \
+	  ft_strjoin_free_s2.c \
+	  print_fmt_util.c \
+	  print_fmt_util2.c \
+	  check_fmt_util.c \
+	  valid_util.c
 
 LIBSRC = ft_memset.c \
 	   ft_bzero.c \
@@ -67,13 +74,13 @@ LIBOBJ = $(LIBSRCS:%.c=%.o)
 OBJDIR = objs
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -c -Wall -Wextra -Werror
 
 .SUFFIXES: .c .o
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBOBJ)
+$(NAME): $(OBJ) $(LIBOBJ)
 	ar rcs $@ $^
 
 $(OBJ) : %.o: %.c
@@ -93,4 +100,4 @@ re: fclean all
 
 re_bonus: fclean bonus
 
-.PHONAY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus

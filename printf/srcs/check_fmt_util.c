@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:15:05 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/07 16:18:40 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/08 22:06:59 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ int	check_prec(const char *fmt, t_fmt_info *info, int *i)
 				(*i)++;
 			return (1);
 		}
+		else
+		{
+			info->prec = 0;
+			return (-1);
+		}
 	}
 	return (0);
 }
@@ -82,5 +87,3 @@ int	check_spec(const char *fmt, t_fmt_info *info, int *i)
 	}
 	return (-1);
 }
-
-

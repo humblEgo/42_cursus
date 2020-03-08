@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/07 16:29:27 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/08 16:54:29 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 		*count += ft_putnstr_fd(dec_str, len, STDOUT_FILENO);
 	}
 	free(dec_str);
+}
+
+void	print_percent(int *count)
+{
+	*count += write(STDOUT_FILENO, "%", 1); 
 }

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/07 16:29:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/08 22:09:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 void	init_fmt_info(t_fmt_info *info)
 {
-	info->width = 0;
+	info->width = -1;
 	info->prec = -1;
-	info->leng = 0;
-	info->spec = 0;
-	info->flag.minus = 0;
-	info->flag.zero = 0;
+	info->leng = -1;
+	info->spec = -1;
+	info->flag.minus = -1;
+	info->flag.zero = -1;
 }
 
 void	print_by_info(t_fmt_info *info, int *count)
@@ -41,44 +41,48 @@ void	print_by_info(t_fmt_info *info, int *count)
 		print_unsigned_hex(info, count);
 	else if (info->spec == 'X')
 		print_unsigned_hex(info, count); 
+	else if (info->spec == '%')
+		print_percent(count); 
 }
 
 int	ft_printf(const char *fmt, ...)
 {
 	int			i;
 	int			count;
-	int			spec_offset;
 	t_fmt_info	info;
-	int			temp = 0;
+	t_fmt_info	tmp;
 
 	i = 0;
 	count = 0;
 	init_fmt_info(&info);
 	va_start(info.arg, fmt);
+	va_copy(tmp.arg, info.arg);
 	if (ft_strlen(fmt) == 0)
-		return (-1);
-/*	if (!(is_valid_input(fmt, &info)))
-		return (-1); */
+		return (0);
+	if (!(is_valid_input(fmt, &tmp)))
+		return (-1); 
+	va_end(tmp.arg);
 	while (fmt[i])
 	{
 		if (fmt[i] == '%')
 		{
 			i++;
-			if (fmt[i] == '%')
-				count += write(STDOUT_FILENO, "%", 1);
-			else
-			{
-				temp = check_flag(fmt, &info, &i);
-				temp = check_width(fmt, &info, &i);
-				temp = check_prec(fmt, &info, &i);
-				temp = check_spec(fmt, &info, &i);
-				print_by_info(&info, &count);
-				init_fmt_info(&info);
-			}
+			check_flag(fmt, &info, &i);
+			check_width(fmt, &info, &i);
+//			if (check_prec(fmt, &info, &i) < 0)
+	//			return (0);
+			check_prec(fmt, &info, &i);
+			if (check_spec(fmt, &info, &i) < 0)
+				return (0);
+			print_by_info(&info, &count);
+			init_fmt_info(&info);
+			if (fmt[i] == '\0')
+				break ;
 		}
 		else 
 			count += write(STDOUT_FILENO, &fmt[i], 1);
-		i++; 
+		i++;
 	} 
+	va_end(info.arg);
 	return (count);
 }
