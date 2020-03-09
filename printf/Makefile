@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/08 12:43:53 by iwoo             ###   ########.fr        #
+#    Updated: 2020/03/09 17:53:24 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME = libftprintf.a
 
 SRC = ft_printf.c \
 	  ft_printf_util.c \
-	  ft_itoa_base_llu.c \
-	  ft_strjoin_free_s2.c \
+	  print_fmts_1.c \
+	  print_fmts_2.c \
 	  print_fmt_util.c \
-	  print_fmt_util2.c \
 	  check_fmt_util.c \
+	  put_value_util.c \
 	  valid_util.c
 
 LIBSRC = ft_memset.c \
@@ -65,39 +65,44 @@ LIBSRC = ft_memset.c \
 	   ft_lstiter.c \
 	   ft_lstmap.c
 
-SRCS = $(addprefix srcs/, $(SRC))
-LIBSRCS = $(addprefix libs/, $(LIBSRC))
-HEADER = -I includes
-
-OBJ = $(SRCS:%.c=%.o)
-LIBOBJ = $(LIBSRCS:%.c=%.o)
+SRCDIR = srcs
+INCDIR = includes
 OBJDIR = objs
+LIBDIR = libft
+
+SRCS = $(addprefix $(SRCDIR)/, $(SRC))
+LIBSRCS = $(addprefix $(LIBDIR)/, $(LIBSRC))
+HEADER = -I $(INCDIR) 
+
+OBJ = $(SRC:.c=.o)
+OBJS = $(addprefix $(OBJDIR)/, $(OBJ))
+LIBOBJ = $(LIBSRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 .SUFFIXES: .c .o
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBOBJ)
-	ar rcs $@ $^
+$(NAME): $(OBJS) $(LIBOBJ)
+	@ar rcs $@ $^
 
-$(OBJ) : %.o: %.c
-	mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(HEADER) $< -o $@
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p objs 
+	@$(CC) $(CFLAGS) -c $< $(HEADER) -o $@
 
 $(LIBOBJ) : %.o: %.c
-	$(CC) $(CFLAGS) $(HEADER) $< -o $@
+	@$(CC) $(CFLAGS) -c $< $(HEADER) -o $@
 
 clean:
-	rm -rf $(OBJ) $(LIBOBJ)
+	@rm -rf $(OBJS) $(LIBOBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
-re_bonus: fclean bonus
+re_bonus: fclean
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

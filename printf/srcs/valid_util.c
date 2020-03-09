@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 18:39:10 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 02:19:25 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 17:19:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,31 @@ int	check_valid(t_fmt_info *tmp)
 		if (tmp->flag.zero != INIT_VALUE)
 			return (0);
 	}
-	else if (tmp->spec == 'p')
-	{
-//		if (tmp->prec != INIT_VALUE)
-//			return (0);
-	}
-	else if (tmp->spec == 'd' || tmp->spec == 'i' || 
-			tmp->spec == 'u' || tmp->spec == 'x' || tmp->spec == 'X')
-	{
-//		if (tmp->flag.zero != INIT_VALUE && tmp->prec != INIT_VALUE)
-//			return (0);
-	}
 	return (1);
 }
 
-int	is_valid_input(const char *fmt, t_fmt_info *tmp)
+int	is_valid_input(const char *fmt, t_fmt_info *info)
 {
-	int	i;
+	int			i;
+	int			useless_count;
+	t_fmt_info	tmp;
 
-	i = 0;
-	init_fmt_info(tmp);
-	while (fmt[i])
+	init_fmt_info(&tmp, &i, &useless_count, "start");
+	va_copy(tmp.arg, info->arg);
+	if (ft_strlen(fmt) == 0)
+		return (0);
+	while (fmt[++i])
 	{
 		if (fmt[i] == '%')
 		{
 			i++;
-			if (fmt[i] == '%')
-				continue ;
-			else
-			{
-				check_flag(fmt, tmp, &i);
-				check_width(fmt, tmp, &i);
-				check_prec(fmt, tmp, &i);
-				check_spec(fmt, tmp, &i);
-				if (!(check_valid(tmp)))
-					return (0);
-				init_fmt_info(tmp);
-			}
+			if (!(check_fmt(fmt, &tmp, &i)))
+				return (0);
+			if (!(check_valid(&tmp)))
+				return (0);
+			init_fmt_info(&tmp, &i, &useless_count, "in_progress");
 		}
-		i++;
 	}
+	va_end(tmp.arg);
 	return (1);
 }
