@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:37:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 23:38:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 01:58:37 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_format_info
 	int		width;
 	int		tmp_width;
 	int		prec;
-	int		prec_add;
 	int		leng;
 	char	spec;
+	int		spec_lh;
 }				t_fmt_info;
 
 /*
@@ -63,8 +63,15 @@ void		print_by_info(t_fmt_info *info, int *count);
 int			ft_putnstr_fd(char *str, int n, int fd);
 int			is_numeric(char c);
 char		*ft_strjoin_free_s2(const char *s1, char *s2);
-int			digit_size(unsigned long long n, unsigned long long base_len);
+int			digit_size_llu(unsigned long long n, unsigned long long base_len);
 char		*ft_itoa_base_llu(unsigned long long n, char *base);
+
+/*
+**		ft_printf_util2.c	
+*/
+
+char		*ft_itoa_base_lli(long long int n, char *base);
+int			digit_size_lli(long long int n, long long int base_len);
 
 /*
 **		check_fmt_util.c	
@@ -83,6 +90,7 @@ void		set_if_asterisk(t_fmt_info *info);
 void		set_addr_str(t_fmt_info *info, char **addr_str);
 void		set_prec_width(t_fmt_info *info, int len, char *dec_str);
 void		set_prefix(t_fmt_info *info, char **dec_str);
+void		set_dec_str(t_fmt_info *info, char **dec_str, char *base);
 
 /*
 **		print_fmts_1.c

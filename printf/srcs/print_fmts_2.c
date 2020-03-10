@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 18:05:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 01:51:05 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 	char	*dec_str;
 	int		len;
 	char	*base;
-
 	set_if_asterisk(info);
 	if (info->spec == 'x')
 		base = "0123456789abcdef";
 	else if (info->spec == 'X')
 		base = "0123456789ABCDEF";
-	dec_str = ft_itoa_base_llu((unsigned long long)va_arg(info->arg, unsigned int), base);
+	set_dec_str(info, &dec_str, base);
+//	dec_str = ft_itoa_base_llu((unsigned long long)va_arg(info->arg, unsigned int), base);
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
 	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 21:27:20 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 22:21:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 01:57:24 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strjoin_free_s2(char const *s1, char *s2)
 	return (res);
 }
 
-int		digit_size(unsigned long long n, unsigned long long base_len)
+int		digit_size_llu(unsigned long long n, unsigned long long base_len)
 {
 	int	digit_cnt;
 
@@ -80,8 +80,7 @@ char	*ft_itoa_base_llu(unsigned long long n, char *base)
 	unsigned long long	base_len;
 
 	base_len = (unsigned long long)ft_strlen(base);
-	arr_size = digit_size(n, base_len);
-	base_len = (unsigned long long)ft_strlen(base);
+	arr_size = digit_size_llu(n, base_len);
 	if (!(res = (char *)malloc(sizeof(char) * (arr_size + 1))))
 		return (NULL);
 	res[arr_size] = '\0';

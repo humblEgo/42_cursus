@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:35:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 23:36:11 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 02:52:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,32 @@ void	set_prefix(t_fmt_info *info, char **dec_str)
 			*dec_str = ft_strjoin_free_s2("0X", *dec_str);
 		else if (info->spec == 'x')
 			*dec_str = ft_strjoin_free_s2("0x", *dec_str);
+	}
+}
+
+void	set_dec_str(t_fmt_info *info, char **dec_str, char *base)
+{
+	unsigned long long	tmp_llu;
+	long long int		tmp_lli;
+
+	if (info->spec == 'd' || info->spec == 'i')
+	{
+		if (info->spec_lh == 'l')
+			tmp_lli = (long long int)va_arg(info->arg, long int);
+		else if (info->spec_lh == 'l' + 'l')
+			tmp_lli = (long long int)va_arg(info->arg, long long int);
+		else
+			tmp_lli = (long long int)va_arg(info->arg, int);
+		*dec_str = ft_itoa_base_lli(tmp_lli, base);
+	}
+	else
+	{
+		if (info->spec_lh == 'l')
+			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned long);
+		else if (info->spec_lh == 'l' + 'l')
+			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned long long);
+		else
+			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned int);
+		*dec_str = ft_itoa_base_llu(tmp_llu, base);
 	}
 }

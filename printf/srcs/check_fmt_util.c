@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:15:05 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 23:29:38 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 00:52:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,24 @@ int	check_prec(const char *fmt, t_fmt_info *info, int *i)
 int	check_spec(const char *fmt, t_fmt_info *info, int *i)
 {
 	char	*specs;
-	char	*specs_add;
-	int		res;
+	char	*specs_lh;
 
-	res = 0;
 	specs = SPECS;
-	specs_add = "lh";
-	while (ft_strchr(specs, fmt[*i]))
+	specs_lh = "lh";
+	while (fmt[(*i)] != '\0' && (ft_strchr(specs, fmt[*i]) || ft_strchr(specs_lh, fmt[*i])))
 	{
-		if (ft_strchr(specs, fmt[*i]))
+		info->spec = ft_strchr(specs, fmt[*i]) ? fmt[*i] : INIT_VALUE;
+		if (ft_strchr(specs_lh, fmt[*i]))
 		{
-			info->spec = fmt[*i];
-			res = 1;
-		}
-		if (ft_strchr(specs_add, fmt[(*i) + 1]))
-		{
-			info->prec_add++;
-			(*i)++;
+			info->spec_lh = (fmt[*i] == 'l') ? info->spec_lh + 'l' : info->spec_lh + 'h';
+			if (fmt[(*i) + 1] != '\0' && 
+					(ft_strchr(specs, fmt[(*i) + 1]) || ft_strchr(specs_lh, fmt[(*i) + 1])))
+				(*i)++;
+			else
+				break ;
 		}
 		else
 			break ;
 	}
-	return (res);
+	return ((info->spec != INIT_VALUE) ? 1 : 0);
 }

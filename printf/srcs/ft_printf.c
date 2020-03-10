@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 23:39:17 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/10 23:46:52 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_fmt_info(t_fmt_info *info, int *idx, int *count, char *status)
 	info->prec = -1;
 	info->leng = -1;
 	info->spec = -1;
-	info->spec = 0;
+	info->spec_lh = 0;
 	info->flag.minus = -1;
 	info->flag.zero = -1;
 	info->flag.pound = -1;

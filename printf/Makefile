@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/10 13:52:02 by iwoo             ###   ########.fr        #
+#    Updated: 2020/03/11 02:57:22 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = libftprintf.a
 
 SRC = ft_printf.c \
 	  ft_printf_util.c \
+	  ft_printf_util2.c \
 	  print_fmts_1.c \
 	  print_fmts_2.c \
 	  print_fmt_util.c \

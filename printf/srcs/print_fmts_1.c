@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 18:05:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 01:51:23 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ void	print_dec(t_fmt_info *info, int *count)
 {
 	char	*dec_str;
 	int		len;
+	char	*base;
 
+	base = "0123456789";
 	set_if_asterisk(info);
-	dec_str = ft_itoa(va_arg(info->arg, int));
+	set_dec_str(info, &dec_str, base);
+//	dec_str = ft_itoa(va_arg(info->arg, int));
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
 	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
@@ -104,7 +107,8 @@ void	print_unsigned_int(t_fmt_info *info, int *count)
 
 	base = "0123456789";
 	set_if_asterisk(info);
-	dec_str = ft_itoa_base_llu((unsigned long long)va_arg(info->arg, unsigned int), base);
+	set_dec_str(info, &dec_str, base);
+//	dec_str = ft_itoa_base_llu((unsigned long long)va_arg(info->arg, unsigned int), base);
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
 	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
