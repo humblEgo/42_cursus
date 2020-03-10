@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:21:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 21:31:24 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/10 16:10:28 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	put_space_sign_prec_str(char *dec, int len, int *count, t_fmt_info *info)
 	*count += ft_putnstr_fd(&dec[1], len, STDOUT_FILENO);
 }
 
-void	put_minus_num(char *dec, int len, int *count, t_fmt_info *info)
+void	put_sign_num(char *dec, int len, int *count, t_fmt_info *info)
 {
 	if (info->flag.minus == 1)
 	{
@@ -67,7 +67,7 @@ void	put_minus_num(char *dec, int len, int *count, t_fmt_info *info)
 	}
 }
 
-void	put_plus_num(char *dec, int len, int *count, t_fmt_info *info)
+void	put_num(char *dec, int len, int *count, t_fmt_info *info)
 {
 	if (info->flag.minus == 1)
 		put_prec_str_space(dec, len, count, info);

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:15:05 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 01:10:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/10 23:29:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,27 @@
 
 int	check_flag(const char *fmt, t_fmt_info *info, int *i)
 {
+	int		res;
 	char	*flags;
 
-	flags = "-0";
-	if (ft_strchr(flags, fmt[*i]))
+	res = 0;
+	flags = FLAGS;
+	while (ft_strchr(flags, fmt[*i]))
 	{
 		if (fmt[*i] == '-')
 			info->flag.minus = 1;
 		else if (fmt[*i] == '0')
-		{
 			info->flag.zero = 1;
-			if (fmt[*i + 1] == '-')
-			{
-				info->flag.minus = 1;
-				(*i)++;
-			}
-		}
+		else if (fmt[*i] == '#')
+			info->flag.pound = 1;
+		else if (fmt[*i] == ' ')
+			info->flag.space = 1;
+		else if (fmt[*i] == '+')
+			info->flag.plus = 1;
 		(*i)++;
-		return (1);
+		res = 1;
 	}
-	return (0);
+	return (res);
 }
 
 int	check_width(const char *fmt, t_fmt_info *info, int *i)
@@ -85,12 +86,26 @@ int	check_prec(const char *fmt, t_fmt_info *info, int *i)
 int	check_spec(const char *fmt, t_fmt_info *info, int *i)
 {
 	char	*specs;
+	char	*specs_add;
+	int		res;
 
-	specs = "cspdiuxX%";
-	if (ft_strchr(specs, fmt[*i]))
+	res = 0;
+	specs = SPECS;
+	specs_add = "lh";
+	while (ft_strchr(specs, fmt[*i]))
 	{
-		info->spec = fmt[*i];
-		return (1);
+		if (ft_strchr(specs, fmt[*i]))
+		{
+			info->spec = fmt[*i];
+			res = 1;
+		}
+		if (ft_strchr(specs_add, fmt[(*i) + 1]))
+		{
+			info->prec_add++;
+			(*i)++;
+		}
+		else
+			break ;
 	}
-	return (-1);
+	return (res);
 }

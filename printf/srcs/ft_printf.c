@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 17:10:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/10 23:39:17 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ void	init_fmt_info(t_fmt_info *info, int *idx, int *count, char *status)
 	info->prec = -1;
 	info->leng = -1;
 	info->spec = -1;
+	info->spec = 0;
 	info->flag.minus = -1;
 	info->flag.zero = -1;
+	info->flag.pound = -1;
+	info->flag.space = -1;
+	info->flag.plus = -1;
 }
 
 int		check_fmt(const char *fmt, t_fmt_info *info, int *idx)
@@ -49,18 +53,18 @@ void	print_by_info(t_fmt_info *info, int *count)
 		print_str(info, count);
 	else if (info->spec == 'p')
 		print_p_addr(info, count);
-	else if (info->spec == 'd')
-		print_dec(info, count);
-	else if (info->spec == 'i')
+	else if (info->spec == 'd' || info-> spec == 'i')
 		print_dec(info, count);
 	else if (info->spec == 'u')
 		print_unsigned_int(info, count);
-	else if (info->spec == 'x')
+	else if (info->spec == 'x' || info->spec == 'X')
 		print_unsigned_hex(info, count);
-	else if (info->spec == 'X')
-		print_unsigned_hex(info, count); 
 	else if (info->spec == '%')
 		print_percent(count); 
+	else if (info->spec == 'n')
+		write(1, "", 0);
+//	else if (info->spec == 'f')
+//		print_float(info, count);
 }
 
 int	ft_printf(const char *fmt, ...)

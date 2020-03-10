@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:35:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 21:32:19 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/10 23:36:11 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,30 @@ void	set_addr_str(t_fmt_info *info, char **addr_str)
 
 void	set_prec_width(t_fmt_info *info, int len, char *dec_str)
 {
-	if (info->prec != INIT_VALUE) //u, d
+	if (info->prec != INIT_VALUE)
 	{
-		if (dec_str[0] == '-')
+		if (dec_str[0] == '-' || info->flag.space == 1 ||
+				info->flag.plus == 1)
 			info->prec = (info->prec > len) ? info->prec - len + 1 : 0;
 		else
-			info->prec = (info->prec) > len ? info->prec - len : 0;
+			info->prec = (info->prec > len) ? info->prec - len : 0;
 		info->width -= info->prec + len;
 	}
 	else
 		info->width -= len;
+}
+
+void	set_prefix(t_fmt_info *info, char **dec_str)
+{
+	if (*dec_str[0] != '-' && info->flag.space == 1)
+		*dec_str = ft_strjoin_free_s2(" ", *dec_str);
+	else if (*dec_str[0] != '-' && info->flag.plus == 1)
+		*dec_str = ft_strjoin_free_s2("+", *dec_str);
+	else if (info->flag.pound == 1)
+	{
+		if (info->spec == 'X')
+			*dec_str = ft_strjoin_free_s2("0X", *dec_str);
+		else if (info->spec == 'x')
+			*dec_str = ft_strjoin_free_s2("0x", *dec_str);
+	}
 }

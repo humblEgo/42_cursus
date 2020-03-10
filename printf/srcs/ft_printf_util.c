@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 21:27:20 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/09 21:32:18 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/09 22:21:15 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strjoin_free_s2(char const *s1, char *s2)
 	return (res);
 }
 
-static int	digit_size(unsigned long long n, unsigned long long base_len)
+int		digit_size(unsigned long long n, unsigned long long base_len)
 {
 	int	digit_cnt;
 

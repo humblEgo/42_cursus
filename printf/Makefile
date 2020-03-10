@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/09 17:53:24 by iwoo             ###   ########.fr        #
+#    Updated: 2020/03/10 13:52:02 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,9 +100,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -r $(OBJDIR)
 
 re: fclean all
-
-re_bonus: fclean
-
-.PHONY: all clean fclean re
