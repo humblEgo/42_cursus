@@ -9,8 +9,7 @@ This program must compile with the flag **-D BUFFER_SIZE=xx** which will be used
 So, please compile like this way: **gcc -Wall -Wextra -Werror -D BUFFER_SIZE=32 get_next_line.c get_next_line_utils.c**.
 
 This program is able to manage multiple file descriptor. 
-**For example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc. without
-losing the reading thread on each of the descriptors.**
+**For example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc. without losing the reading thread on each of the descriptors.**
 
  - Leak check : ✅
  - Norm check : ❌
