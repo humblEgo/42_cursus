@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:37:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 01:58:37 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 11:43:34 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include "libft.h"
-
-#include <stdio.h> // should delete
 
 # define FLAGS "-0# +"
 # define SPECS "cspdiuxX%nf"

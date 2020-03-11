@@ -1,12 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 23:46:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/03/11 11:15:42 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +58,6 @@ void	print_by_info(t_fmt_info *info, int *count)
 		print_percent(count); 
 	else if (info->spec == 'n')
 		write(1, "", 0);
-//	else if (info->spec == 'f')
-//		print_float(info, count);
 }
 
 int	ft_printf(const char *fmt, ...)
