@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/31 23:45:01 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/01 15:05:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ int	main_loop_process(t_game *game)
 {
 	static int	update = TRUE;
 
-	if (game->player.move.x || game->player.move.y)
+	if (game->moved)
 	{
 		update = TRUE;
 	}
 	if (update)
 	{
+		update_player(game);
+		mlx_clear_window(game->window.mlx_ptr, game->window.win_ptr);
+		render_map(&game->map, &game->window);
 		render_player(game);
 	}
+	game->moved = FALSE;
 	update = FALSE;
 	return (0);
 }
@@ -48,9 +52,8 @@ int	main(void)
 	game.map.map_grid = grid;
 	game.window.mlx_ptr = mlx_init();
 	game.window.win_ptr = mlx_new_window(game.window.mlx_ptr, 500, 500, "test");
-//	render_map(&map, &window);
 	mlx_hook(game.window.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 
-	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, KeyReleaseMask, release_key, &game); 
+//	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, KeyReleaseMask, release_key, &game); 
 	mlx_loop_hook(game.window.mlx_ptr, main_loop_process, &game);
 	mlx_loop(game.window.mlx_ptr);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:42:44 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/31 23:45:32 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/01 15:53:34 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,36 @@ void	render_ray(t_map *map, t_window *window, t_player *player)
 
 	x = player->pos_x;
 	y = player->pos_y;
-	if ((player->ray.angle >= 0 && player->ray.angle < 90) ||
-			(player->ray.angle > 270 && player->ray.angle < 360))
+	if ((player->pov_angle >= 0 && player->pov_angle < 0.5 * M_PI) ||
+			(player->pov_angle > 1.5 * M_PI && player->pov_angle < 2 * M_PI))
 	{
 		while (x < map->width * map->tile_w)
 		{
 			x++;
-			y = (player->ray.angle == 0) ? y : y + tan(get_rad(player->ray.angle));
+			y = (player->pov_angle == 0) ? y : y + tan(player->pov_angle);
 			mlx_pixel_put(window->mlx_ptr,
 				window->win_ptr,
 				x,
 				y,
-				player->ray.color);
+				player->ray_color);
 		}
 	}
-	else if (player->ray.angle > 90 && player->ray.angle < 270)
+	else if (player->pov_angle > 0.5 * M_PI && player->pov_angle < 1.5 * M_PI)
 	{
 		while (x > map->width * map->tile_w * -1)
 		{
 			x--;
-			y = (player->ray.angle == 180) ? y : y - tan(get_rad(player->ray.angle));
+			y = (player->pov_angle == M_PI) ? y : y - tan(player->pov_angle);
 			mlx_pixel_put(window->mlx_ptr,
 				window->win_ptr,
 				x,
 				y,
-				player->ray.color);
+				player->ray_color);
 		}
 	}
 	else
 	{
-		if (player->ray.angle == 90)
+		if (player->pov_angle == 0.5 * M_PI)
 		{
 			while (y < map->height * map->tile_h)
 			{
@@ -94,10 +94,10 @@ void	render_ray(t_map *map, t_window *window, t_player *player)
 					window->win_ptr,
 					x,
 					y,
-					player->ray.color);
+					player->ray_color);
 			}
 		}
-		else if (player->ray.angle == 270)
+		else if (player->pov_angle == 1.5 * M_PI)
 		{
 			while (y > map->height * map->tile_h * -1)
 			{
@@ -106,7 +106,7 @@ void	render_ray(t_map *map, t_window *window, t_player *player)
 					window->win_ptr,
 					x,
 					y,
-					player->ray.color);
+					player->ray_color);
 			}
 		}
 	}
@@ -119,5 +119,5 @@ void	render_player(t_game *game)
 			game->player.pos_x, 
 			game->player.pos_y,
 			game->player.color);
-//	render_ray(&game->map, &game->window, &game->player);
+	render_ray(&game->map, &game->window, &game->player);
 }

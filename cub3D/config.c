@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:35:09 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/31 23:34:49 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/01 15:47:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	init_player(t_map *map, t_player *player)
 	player->pos_x = (map->height * map->tile_h) * 0.5;
 	player->pos_y = (map->width * map->tile_w) * 0.5;
 	player->color = 0xff0000;
-	player->ray.angle = 45;
-	player->ray.color = 0x00ff00;
-	player->move.x = 0;
-	player->move.y = 0;
-	player->rotate.r = 0;
-	player->rotate.l = 0;
+	player->pov_angle = 90;
+	player->move_dir = 0;
+	player->rotation_dir = 0;
+	player->ray_color = 0x00ff00;
 }
 
 void	init_map(t_map *map)

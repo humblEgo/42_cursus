@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/31 23:27:36 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/01 15:31:04 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,22 @@
 
 # define TRUE 1
 # define FALSE 0
+
 # define DEAL_KEY_PRESS 2
 # define DEAL_KEY_RELEASE 3
+
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_RIGHT 65363
+# define KEY_LEFT 65361
+
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_A 97
+
+# define MOVE_SPEED 1.0
+# define ROT_SPEED 2 
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -42,32 +56,16 @@ typedef struct	s_map
 	char	(*map_grid)[10];
 }				t_map;
 
-typedef struct	s_ray
-{
-	double	angle;
-	int		color;
-}				t_ray;
-
-typedef struct	s_move
-{
-	double	x;
-	double	y;
-}				t_move;
-
-typedef	struct	s_rotate
-{
-	double	r;
-	double	l;
-}				t_rotate;
-
 typedef struct	s_player
 {
 	double		pos_x;
 	double		pos_y;
 	int			color;
-	t_rotate	rotate;
-	t_move		move;
-	t_ray		ray;
+	double		pov_angle;
+	double		move_dir;
+	double		rotation_dir;
+	int			ray_color;
+
 }				t_player;
 
 typedef struct	s_game
@@ -75,6 +73,8 @@ typedef struct	s_game
 	t_map		map;
 	t_window	window;
 	t_player	player;
+	int			key_code;
+	int			moved;
 }				t_game;
 
 void	init_map(t_map *map);
@@ -85,8 +85,10 @@ void	render_tile(int x, int y, t_map *map, t_window *window);
 void	render_map(t_map *map, t_window *window);
 void	render_ray(t_map *map, t_window *window, t_player *player);
 void	render_player(t_game *game);
+
 int		press_key(int key, t_game *game);
+void	update_player(t_game *game);
 int		release_key(int key, t_game *game);
 
-double	get_rad(int num);
+double	get_rad(double num);
 #endif
