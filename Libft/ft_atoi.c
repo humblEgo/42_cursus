@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 12:02:43 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 17:42:18 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/06 16:21:36 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_numeric(char *tmp)
 	return (0);
 }
 
-int	ft_atoi(const char *nptr)
+int			ft_atoi(const char *nptr)
 {
 	char	*tmp;
 	int		sign;
