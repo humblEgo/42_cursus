@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 20:21:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 19:38:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/07 08:49:12 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_memcmp(const void *b1, const void *b2, size_t len)
 	tmp_b1 = (unsigned char *)b1;
 	tmp_b2 = (unsigned char *)b2;
 	i = 0;
-	while (i < len && tmp_b1[i] && tmp_b2[i] && tmp_b1[i] == tmp_b2[i])
+	while (i < len && tmp_b1[i] == tmp_b2[i])
 		i++;
 	if (i == len)
 		return (0);

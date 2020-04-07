@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:35:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/25 18:10:42 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/07 09:02:54 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	unsigned char	*tmp_src;
 	unsigned char	*tmp_dst;
 
+	if (!dst || !src || len == 0)
+		return (dst);
 	tmp_dst = (unsigned char *)dst;
 	tmp_src = (unsigned char *)src;
 	if (dst <= src)
