@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:37:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 11:43:34 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:38:07 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_format_info
 	int		prec;
 	int		leng;
 	char	spec;
-	int		spec_lh;
+	int		lh;
 }				t_fmt_info;
 
 /*

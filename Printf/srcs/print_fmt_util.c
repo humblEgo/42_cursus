@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:35:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 02:52:27 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:54:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	set_dec_str(t_fmt_info *info, char **dec_str, char *base)
 
 	if (info->spec == 'd' || info->spec == 'i')
 	{
-		if (info->spec_lh == 'l')
+		if (info->lh == 'l')
 			tmp_lli = (long long int)va_arg(info->arg, long int);
-		else if (info->spec_lh == 'l' + 'l')
+		else if (info->lh == 'l' + 'l')
 			tmp_lli = (long long int)va_arg(info->arg, long long int);
 		else
 			tmp_lli = (long long int)va_arg(info->arg, int);
@@ -98,9 +98,9 @@ void	set_dec_str(t_fmt_info *info, char **dec_str, char *base)
 	}
 	else
 	{
-		if (info->spec_lh == 'l')
+		if (info->lh == 'l')
 			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned long);
-		else if (info->spec_lh == 'l' + 'l')
+		else if (info->lh == 'l' + 'l')
 			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned long long);
 		else
 			tmp_llu = (unsigned long long)va_arg(info->arg, unsigned int);

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 11:17:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:47:04 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_p_addr(t_fmt_info *info, int *count)
 	if (ft_strncmp(addr_str, "(nil)", 5))
 		free(addr_str);
 }
-		
+
 void	print_dec(t_fmt_info *info, int *count)
 {
 	char	*dec_str;
@@ -88,7 +88,8 @@ void	print_dec(t_fmt_info *info, int *count)
 	set_dec_str(info, &dec_str, base);
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
-	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
+	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC ||
+				info->prec == 0))
 		len = 0;
 	set_prec_width(info, len, dec_str);
 	if (dec_str[0] == '-' || info->flag.space == 1 || info->flag.plus == 1)
@@ -109,8 +110,9 @@ void	print_unsigned_int(t_fmt_info *info, int *count)
 	set_dec_str(info, &dec_str, base);
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
-	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
-		len = 0;	
+	if (dec_str[0] == '0' &&
+			(info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
+		len = 0;
 	set_prec_width(info, len, dec_str);
 	if (info->flag.space == 1 || info->flag.plus == 1)
 		put_sign_num(dec_str, len, count, info);

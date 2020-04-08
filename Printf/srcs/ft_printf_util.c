@@ -6,14 +6,14 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 21:27:20 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 01:57:24 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:41:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 
-int		ft_putnstr_fd(char	*str, int n, int fd)
+int		ft_putnstr_fd(char *str, int n, int fd)
 {
 	int	i;
 	int	count;
@@ -25,7 +25,7 @@ int		ft_putnstr_fd(char	*str, int n, int fd)
 	return (count);
 }
 
-int	is_numeric(char c)
+int		is_numeric(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

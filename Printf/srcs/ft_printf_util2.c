@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 21:27:20 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 02:29:03 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:10:36 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	*ft_itoa_base_lli(long long int n, char *base)
 {
 	char				*res;
 	int					arr_size;
-	long long int		bs_len;
+	long long int		b_len;
 
-	bs_len = (long long int)ft_strlen(base);
-	arr_size = n < 0 ? digit_size_lli(n, bs_len) + 1 : digit_size_lli(n, bs_len);
+	b_len = (long long int)ft_strlen(base);
+	arr_size = n < 0 ? digit_size_lli(n, b_len) + 1 : digit_size_lli(n, b_len);
 	if (!(res = (char *)malloc(sizeof(char) * (arr_size + 1))))
 		return (NULL);
 	if (n < 0)
@@ -48,8 +48,8 @@ char	*ft_itoa_base_lli(long long int n, char *base)
 	res[arr_size] = '\0';
 	while (--arr_size > -1)
 	{
-		res[arr_size] = base[(int)(n % bs_len)];
-		n /= bs_len;
+		res[arr_size] = base[(int)(n % b_len)];
+		n /= b_len;
 		if (n == 0)
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:21:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/10 16:10:28 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:48:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,25 @@ void	put_space_prec_str(char *str, int len, int *count, t_fmt_info *info)
 {
 	while (info->width-- > 0)
 		*count += write(STDOUT_FILENO, " ", 1);
-	if (info->spec == 'd' || info->spec == 'i' || 
-			info->spec == 'u' || info->spec == 'x' || info->spec =='X')
+	if (info->spec == 'd' || info->spec == 'i' ||
+			info->spec == 'u' || info->spec == 'x' || info->spec == 'X')
 		while (info->prec-- > 0)
 			*count += write(STDOUT_FILENO, "0", 1);
 	*count += ft_putnstr_fd(str, len, STDOUT_FILENO);
 }
 
-void	put_space_sign_prec_str(char *dec, int len, int *count, t_fmt_info *info)
+void	put_space_sign_prec_str(char *dec, int len, int *cnt, t_fmt_info *info)
 {
 	if (info->prec != INIT_VALUE)
 		while (info->width-- > 0)
-			*count += write(STDOUT_FILENO, " ", 1);
-	*count += write(STDOUT_FILENO, &dec[0], 1);
+			*cnt += write(STDOUT_FILENO, " ", 1);
+	*cnt += write(STDOUT_FILENO, &dec[0], 1);
 	if (info->prec == INIT_VALUE && info->flag.zero == 1)
 		while (info->width-- > 0)
-			*count += write(STDOUT_FILENO, "0", 1);
+			*cnt += write(STDOUT_FILENO, "0", 1);
 	while (info->prec-- > 0)
-			*count += write(STDOUT_FILENO, "0", 1);
-	*count += ft_putnstr_fd(&dec[1], len, STDOUT_FILENO);
+		*cnt += write(STDOUT_FILENO, "0", 1);
+	*cnt += ft_putnstr_fd(&dec[1], len, STDOUT_FILENO);
 }
 
 void	put_sign_num(char *dec, int len, int *count, t_fmt_info *info)

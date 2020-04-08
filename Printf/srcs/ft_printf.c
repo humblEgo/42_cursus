@@ -1,7 +1,12 @@
-/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.co.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/05 12:34:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 11:15:42 by iwoo             ###   ########.fr       */
+/*   Created: 2020/04/08 21:42:27 by iwoo              #+#    #+#             */
+/*   Updated: 2020/04/08 21:50:07 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +25,7 @@ void	init_fmt_info(t_fmt_info *info, int *idx, int *count, char *status)
 	info->prec = -1;
 	info->leng = -1;
 	info->spec = -1;
-	info->spec_lh = 0;
+	info->lh = 0;
 	info->flag.minus = -1;
 	info->flag.zero = -1;
 	info->flag.pound = -1;
@@ -48,19 +53,19 @@ void	print_by_info(t_fmt_info *info, int *count)
 		print_str(info, count);
 	else if (info->spec == 'p')
 		print_p_addr(info, count);
-	else if (info->spec == 'd' || info-> spec == 'i')
+	else if (info->spec == 'd' || info->spec == 'i')
 		print_dec(info, count);
 	else if (info->spec == 'u')
 		print_unsigned_int(info, count);
 	else if (info->spec == 'x' || info->spec == 'X')
 		print_unsigned_hex(info, count);
 	else if (info->spec == '%')
-		print_percent(count); 
+		print_percent(count);
 	else if (info->spec == 'n')
 		write(1, "", 0);
 }
 
-int	ft_printf(const char *fmt, ...)
+int		ft_printf(const char *fmt, ...)
 {
 	int			i;
 	int			count;
@@ -80,9 +85,9 @@ int	ft_printf(const char *fmt, ...)
 			print_by_info(&info, &count);
 			init_fmt_info(&info, &i, &count, "in_progress");
 		}
-		else 
+		else
 			count += write(STDOUT_FILENO, &fmt[i], 1);
-	} 
+	}
 	va_end(info.arg);
 	return (count);
 }

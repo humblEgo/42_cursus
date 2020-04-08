@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/08 17:53:42 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 21:40:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 	set_dec_str(info, &dec_str, base);
 	set_prefix(info, &dec_str);
 	len = (int)ft_strlen(dec_str);
-	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC || info->prec == 0))
+	if (dec_str[0] == '0' && (info->prec == ONLY_DOT_NO_PREC ||
+				info->prec == 0))
 		len = 0;
 	set_prec_width(info, len, dec_str);
 	if (info->flag.space == 1 || info->flag.plus == 1)
@@ -40,5 +41,5 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 
 void	print_percent(int *count)
 {
-	*count += write(STDOUT_FILENO, "%", 1); 
+	*count += write(STDOUT_FILENO, "%", 1);
 }
