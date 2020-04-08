@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 18:20:40 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 21:53:02 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/06 16:21:12 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	is_in_set(char c, char const *set)
 
 static int	get_len_trimmed(char const *s1, char const *set)
 {
-	int	start_idx;
-	int	end_idx;
+	int		start_idx;
+	int		end_idx;
 
 	start_idx = 0;
 	while (s1[start_idx] && is_in_set(s1[start_idx], set))
@@ -41,7 +41,7 @@ static int	get_len_trimmed(char const *s1, char const *set)
 	return (end_idx - start_idx + 1);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char		*ft_strtrim(char const *s1, char const *set)
 {
 	char	*res;
 	int		len;

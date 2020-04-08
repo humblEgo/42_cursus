@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 12:03:20 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/27 14:44:55 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/06 17:26:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	get_arr_size(int n)
 	return (arr_size);
 }
 
-char	*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
 	char			*res;
 	int				arr_size;

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 01:42:23 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/25 15:32:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/07 08:33:19 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 	unsigned char	*tmp_dst;
 	unsigned char	*tmp_src;
 
+	if (!dest || !src)
+		return (dest);
 	tmp_dst = (unsigned char *)dest;
 	tmp_src = (unsigned char *)src;
 	i = 0;
 	while (i < n)
 	{
 		tmp_dst[i] = tmp_src[i];
-		if (tmp_src[i] == c)
+		if (tmp_src[i] == (unsigned char)c)
 			return ((void *)(tmp_dst + i + 1));
 		i++;
 	}

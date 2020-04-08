@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 22:15:10 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/25 01:25:25 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/06 18:29:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	unsigned char	*tmp_src;
 	size_t			i;
 
+	if (!src || !dest)
+		return (dest);
 	tmp_dest = (unsigned char *)dest;
 	tmp_src = (unsigned char *)src;
 	i = 0;

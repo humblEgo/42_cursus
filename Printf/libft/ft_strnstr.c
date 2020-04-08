@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 01:15:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 20:28:46 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/07 10:48:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char		*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	char	*tmp_hs;
 
 	tmp_hs = (char *)haystack;
-	if (needle == NULL)
+	if (!needle || !needle[0])
 		return (tmp_hs);
 	i = 0;
 	while (i < len && *tmp_hs)

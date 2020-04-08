@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:37:01 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/26 15:59:34 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/07 10:11:50 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	if (!(dup = (char *)malloc(sizeof(char) * len)))
+	if (!(dup = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);
 	i = -1;
 	while (++i < len)

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/11 11:32:32 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 17:53:42 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 	char	*dec_str;
 	int		len;
 	char	*base;
+
 	set_if_asterisk(info);
+	base = "";
 	if (info->spec == 'x')
 		base = "0123456789abcdef";
 	else if (info->spec == 'X')

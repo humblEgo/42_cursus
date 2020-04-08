@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:26:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/07 22:25:51 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/08 17:16:05 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (!(res = (char *)malloc(nmemb * size)))
 		return (NULL);
 	i = 0;
-	while (i < nmemb)
+	while (i < nmemb * size)
 	{
 		res[i] = 0;
 		i++;
