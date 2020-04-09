@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/28 15:29:28 by iwoo              #+#    #+#             */
-/*   Updated: 2020/02/28 22:27:15 by iwoo             ###   ########.fr       */
+/*   Created: 2020/02/27 20:06:19 by iwoo              #+#    #+#             */
+/*   Updated: 2020/02/28 21:20:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*new_lst;
-	t_list	*tmp;
-
-	if (lst != NULL && f != NULL)
-	{
-		if (!(tmp = ft_lstnew(lst->content)))
-			return (NULL);
-		if (!(new_lst = ft_lstnew(f(tmp->content))))
-			return (NULL);
-		new_lst->next = ft_lstmap(lst->next, f, del);
-		return (new_lst);
-	}
-	return (NULL);
+	if (*lst != NULL && new != NULL)
+		ft_lstlast(*lst)->next = new;
+	if (*lst == NULL && new != NULL)
+		*lst = new;
 }

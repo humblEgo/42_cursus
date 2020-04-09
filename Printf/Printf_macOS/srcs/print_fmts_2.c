@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/08 21:40:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/09 22:14:11 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,21 @@ void	print_unsigned_hex(t_fmt_info *info, int *count)
 	free(dec_str);
 }
 
-void	print_percent(int *count)
+void	print_percent(t_fmt_info *info, int *count)
 {
-	*count += write(STDOUT_FILENO, "%", 1);
+	char	*str;
+	int		len;
+
+	set_if_asterisk(info);
+	str = "%";
+	len = (int)ft_strlen(str);
+	if (info->prec >= 0)
+		len = (len > info->prec) ? (info->prec) : len;
+	else if (info->prec == ONLY_DOT_NO_PREC)
+		len = 0;
+	info->width -= len;
+	if (info->flag.minus == 1)
+		put_prec_str_space(str, len, count, info);
+	else
+		put_space_prec_str(str, len, count, info);
 }
