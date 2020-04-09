@@ -9,5 +9,5 @@ It is also manages combination of the following flags: `-0.*# +`.
 If input has not valid format in real `printf`, `ft_printf` will do undefined behavior(*like print nothing*).
 
  - Leak check : ✅
- - Norm check : ❌
+ - Norm check : ✅
  - Tested by [pft_2019](https://github.com/cclaude42/PFT_2019) ✅

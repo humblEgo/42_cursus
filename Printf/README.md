@@ -1,5 +1,6 @@
 # Printf
  - Write a library that contains ft_printf, a funciton that will mimic the real printf
+ - Since `printf` works differently depending on OS, I made it in two versions-macOS, ubuntu.
 
 ----
 This function manages some conversions: `c s p d i u x X % n l ll h hh`. 
