@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 23:51:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/03/04 02:49:04 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/10 00:06:13 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_strlen_bfnl(char *str)
 char	*ft_strjoin_bfnl(char *s1, char *s2)
 {
 	int		len1;
-	int 	len2;
+	int		len2;
 	char	*res;
 	int		i;
 
