@@ -14,4 +14,9 @@ This program is able to manage multiple file descriptor.
 
  - Leak check : ✅
  - Norm check : ✅
- - Tested by [GNL_lover](https://github.com/charMstr/GNL_lover) ✅
+ - Tested by 
+	- [GNL_lover](https://github.com/charMstr/GNL_lover) ✅
+	- [42TESTERS-GNL](https://github.com/Mazoise/42TESTERS-GNL) ✅
+	- [gnlkiller](https://github.com/DontBreakAlex/gnlkiller) ✅
+	- [gnlkiller2](https://github.com/Sherchryst/gnlkiller) ✅
+

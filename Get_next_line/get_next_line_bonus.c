@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:27 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 00:03:54 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/10 23:32:52 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_next_line(int fd, char **line)
 {
 	static t_buf	buf[FILE_ERA];
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
+	if (fd < 0 || fd > FILE_ERA || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
 	if (init_line(line) < 0 || read_if_buf_empty(fd, &buf[fd]) < 0)
 		return (-1);
