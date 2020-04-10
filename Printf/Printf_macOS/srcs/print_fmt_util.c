@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:35:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/09 22:50:37 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/10 22:52:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	set_prec_width(t_fmt_info *info, int len, char *dec_str)
 	{
 		if (dec_str[0] == '-' || info->flag.space == 1 ||
 				info->flag.plus == 1)
-			info->prec = (info->prec > len) ? info->prec - len + 1 : 0;
+			info->prec = (info->prec > len - 1) ? info->prec - len + 1 : 0;
 		else
 			info->prec = (info->prec > len) ? info->prec - len : 0;
 		info->width -= info->prec + len;
