@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 18:39:10 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/08 21:55:04 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/11 18:26:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	check_valid(t_fmt_info *tmp)
 {
 	if (tmp->spec == 'c')
 	{
-		if (tmp->prec != INIT_VALUE)
-			return (0);
 		if (tmp->flag.zero != INIT_VALUE)
 			return (0);
 	}

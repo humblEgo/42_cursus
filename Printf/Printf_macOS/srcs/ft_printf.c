@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.co.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:42:27 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/09 22:22:01 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/11 16:27:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_fmt_info(t_fmt_info *info, int *idx, int *count, char *status)
 	info->width = -1;
 	info->tmp_width = 0;
 	info->prec = -1;
+	info->prec_info = 0;
 	info->leng = -1;
 	info->spec = -1;
 	info->lh = 0;
@@ -62,7 +63,7 @@ void	print_by_info(t_fmt_info *info, int *count)
 	else if (info->spec == '%')
 		print_percent(info, count);
 	else if (info->spec == 'n')
-		write(1, "", 0);
+		print_n(info, count);
 }
 
 int		ft_printf(const char *fmt, ...)

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:37:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/09 23:57:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/11 17:31:20 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 # include <stdarg.h>
 # include "libft.h"
 
+#include <stdio.h>
+
 # define FLAGS "-0# +"
 # define SPECS "cspdiuxX%nf"
 # define INIT_VALUE -1
 # define ASTERISK -2
 # define ONLY_DOT_NO_PREC -3
-# define MINUS_NUM_WITH_ASTERISK -4
+# define NEG_WITH_ASTERISK -4
 
 typedef struct	s_flag
 {
@@ -40,6 +42,7 @@ typedef struct	s_format_info
 	int		width;
 	int		tmp_width;
 	int		prec;
+	int		prec_info;
 	int		leng;
 	char	spec;
 	int		lh;
@@ -106,6 +109,7 @@ void			print_unsigned_int(t_fmt_info *info, int *count);
 
 void			print_unsigned_hex(t_fmt_info *info, int *count);
 void			print_percent(t_fmt_info *info, int *count);
+void			print_n(t_fmt_info *info, int *count);
 
 /*
 **		put_value_util.c

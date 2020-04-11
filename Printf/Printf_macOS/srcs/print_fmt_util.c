@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:35:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 22:52:39 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/11 17:31:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	set_if_asterisk(t_fmt_info *info)
 	if (info->prec == ASTERISK)
 	{
 		info->prec = va_arg(info->arg, int);
+		if (info->prec < 0)
+			info->prec_info = NEG_WITH_ASTERISK;
 		if (info->prec == ONLY_DOT_NO_PREC)
-			info->prec = MINUS_NUM_WITH_ASTERISK;
+			info->prec = NEG_WITH_ASTERISK;
 	}
 }
 

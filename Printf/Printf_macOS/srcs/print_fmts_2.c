@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:20:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/09 22:14:11 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/11 18:26:13 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,18 @@ void	print_percent(t_fmt_info *info, int *count)
 	set_if_asterisk(info);
 	str = "%";
 	len = (int)ft_strlen(str);
-	if (info->prec >= 0)
-		len = (len > info->prec) ? (info->prec) : len;
-	else if (info->prec == ONLY_DOT_NO_PREC)
-		len = 0;
 	info->width -= len;
 	if (info->flag.minus == 1)
 		put_prec_str_space(str, len, count, info);
 	else
 		put_space_prec_str(str, len, count, info);
+}
+
+void	print_n(t_fmt_info *info, int *count)
+{
+	int	*res;
+
+	res = va_arg(info->arg, int *);
+	write(1, "", 0);
+	*res = *count;
 }
