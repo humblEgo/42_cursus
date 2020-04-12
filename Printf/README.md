@@ -3,7 +3,7 @@
  - Since `printf` works differently depending on OS, I made it in two versions-macOS, ubuntu.
 
 ----
-This function manages some conversions: `c s p d i u x X % n l ll`. 
+This function manages some conversions: `c s p d i u x X % n l ll h hh`. 
 
 It is also manages combination of the following flags: `-0.*`.
 
