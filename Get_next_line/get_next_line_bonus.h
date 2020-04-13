@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 00:37:53 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/14 01:46:59 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+
 # define FILE_ERA 2048
 
 typedef struct	s_buf

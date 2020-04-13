@@ -6,11 +6,11 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:27 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 23:32:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/14 01:47:13 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	init_line(char **line)
 {
@@ -73,5 +73,16 @@ int	get_next_line(int fd, char **line)
 			return (1);
 		}
 	}
+	return (0);
+}
+#include <stdio.h>
+int	main(void)
+{
+	int		fd;
+	char	*line;
+	fd = open("test", O_RDONLY);
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+
 	return (0);
 }
