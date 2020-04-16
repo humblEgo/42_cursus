@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 00:29:41 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/19 23:28:47 by iwoo             ###   ########.fr        #
+#    Updated: 2020/04/17 01:12:47 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,12 @@ RUN	apt-get update
 
 # Install nginx && mysql
 RUN	apt-get install -y nginx && \
-		apt-get install -y mariadb-server mariadb-client && \
+		apt-get install -y mariadb-server && \
 		apt-get install -y php-fpm php-mysql
 
 COPY srcs/nginx_setting /etc/nginx/sites-available/localhost
 
-RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost && \
-		rm /var/www/html/index.nginx-debian.html
+RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost
 
 # Set SSL
 RUN apt-get install -y libssl-dev openssl && \
@@ -68,6 +67,6 @@ COPY srcs/wp-config.php /var/www/html/wordpress/
 EXPOSE 80
 EXPOSE 443
 
-CMD service nginx start && \
-		service mysql start && \
-		service php7.3-fpm start
+CMD service mysql start; \
+		service php7.3-fpm start; \
+		nginx -g 'daemon off;'
