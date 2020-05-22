@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:42:44 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/01 15:53:34 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/20 23:39:02 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	render_map(t_map *map, t_window *window)
 		y = -1;
 		while (++y < map->height)
 		{
-			if (map->map_grid[y][x] == 1)
+			if (map->grid[y][x] == 1)
 				render_tile(x, y, map, window);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 17:35:09 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/01 15:47:39 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/20 22:51:50 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_player(t_map *map, t_player *player)
 
 void	init_map(t_map *map)
 {
-	map->height = 9;
-	map->width = 10;
+	map->height = MAP_HEIGHT;
+	map->width = MAP_WIDTH;
 	map->tile_h = 32;
 	map->tile_w = 32;
 	map->color = 0xffffff;

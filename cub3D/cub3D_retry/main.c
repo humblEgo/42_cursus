@@ -6,26 +6,23 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/20 23:37:29 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/22 20:59:59 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
+#include "ft_cub3d_test.h"
 
 int	main_loop_process(t_game *game)
 {
 	static int	update = TRUE;
 
 	if (game->moved)
-	{
 		update = TRUE;
-	}
 	if (update)
 	{
 		update_player(game);
-		mlx_clear_window(game->window.mlx_ptr, game->window.win_ptr);
-		render_map(&game->map, &game->window);
-		render_player(game);
+		render_screen(game);
 	}
 	game->moved = FALSE;
 	update = FALSE;
@@ -36,7 +33,7 @@ int	main(void)
 {
 	t_game		game;
 
-	char grid[9][10] = {
+	char grid[MAP_HEIGHT][MAP_WIDTH] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -45,10 +42,12 @@ int	main(void)
 		{1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
 	init_game(&game);
+	init_game_test(&game);
 	game.map.grid = grid;
 	game.window.mlx_ptr = mlx_init();
 	game.window.win_ptr = mlx_new_window(game.window.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "test");

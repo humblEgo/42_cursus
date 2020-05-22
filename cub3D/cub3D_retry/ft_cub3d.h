@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/20 22:51:48 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/22 22:29:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,27 @@
 # define DEAL_KEY_PRESS 2
 # define DEAL_KEY_RELEASE 3
 
-# define KEY_UP 65362
-# define KEY_DOWN 65364
-# define KEY_RIGHT 65363
-# define KEY_LEFT 65361
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_RIGHT 124
+# define KEY_LEFT 123
 
-# define KEY_W 119
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_A 97
+# define KEY_W 13 
+# define KEY_S 1 
+# define KEY_D 2
+# define KEY_A 0
 
-# define MOVE_SPEED 1.0
-# define ROT_SPEED 2 
+# define KEY_ESC 53
 
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 9
-# define TILE_HEIGHT 32
-# define TILE_WIDTH 32
+# define MOVE_SPEED 0.3
+# define ROT_SPEED 0.1 
+
 # define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
+# define SCREEN_HEIGHT 480 
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
+# define MAP_WIDTH 10
+# define MAP_HEIGHT 10
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -56,22 +58,43 @@ typedef struct	s_map
 {
 	int		height;
 	int		width;
-	int		tile_h;
-	int		tile_w;
-	int		color;
 	char	(*grid)[10];
 }				t_map;
+
+typedef struct	s_img
+{
+	int		*img;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	int		*data;
+}				t_img;
+
 
 typedef struct	s_player
 {
 	double		pos_x;
 	double		pos_y;
-	int			color;
-	double		pov_angle;
-	double		move_dir;
-	double		rotation_dir;
-	int			ray_color;
-
+	int			map_x;
+	int			map_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		move_speed;
+	double		rot_speed;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
 }				t_player;
 
 typedef struct	s_game
@@ -83,18 +106,9 @@ typedef struct	s_game
 	int			moved;
 }				t_game;
 
-void	init_map(t_map *map);
-void	init_player(t_map *map, t_player *player);
-void	init_game(t_game *game);
+void			init_game(t_game *game);
 
-void	render_tile(int x, int y, t_map *map, t_window *window);
-void	render_map(t_map *map, t_window *window);
-void	render_ray(t_map *map, t_window *window, t_player *player);
-void	render_player(t_game *game);
-
-int		press_key(int key, t_game *game);
-void	update_player(t_game *game);
-int		release_key(int key, t_game *game);
-
-double	get_rad(double num);
+void			render_screen(t_game *game);
+void			update_player(t_game *game);
+int				press_key(int key, t_game *game);
 #endif
