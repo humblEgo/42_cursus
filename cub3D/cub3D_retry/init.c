@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/22 09:48:23 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/23 12:59:42 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,7 @@ void	init_game(t_game *game)
 	game->player.rot_speed = ROT_SPEED;
 	game->map.width = MAP_WIDTH;
 	game->map.height = MAP_HEIGHT;
+	game->key_code[0] = 0;
+	game->key_code[1] = 0;
+	game->key_code[2] = 0;
 }

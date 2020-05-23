@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/22 22:29:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/23 19:04:34 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct	s_game
 	t_map		map;
 	t_window	window;
 	t_player	player;
-	int			key_code;
+	int			key_code[3];
 	int			moved;
 }				t_game;
 
@@ -111,4 +111,5 @@ void			init_game(t_game *game);
 void			render_screen(t_game *game);
 void			update_player(t_game *game);
 int				press_key(int key, t_game *game);
+int				release_key(int key, t_game *game);
 #endif

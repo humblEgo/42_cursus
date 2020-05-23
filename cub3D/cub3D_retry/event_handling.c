@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 22:00:23 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/22 22:45:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/23 23:32:55 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,85 +14,173 @@
 
 int		press_key(int key, t_game *game)
 {
-	printf("key: %d\n", key);
-	game->key_code = key;
-	if (key == KEY_W)
-	{
-		game->player.dir_x *= 1.0;
-		game->player.dir_y *= 1.0;
-	}
-	else if (key == KEY_S)
-	{
-		game->player.dir_x *= -1.0;
-		game->player.dir_y *= -1.0;
-	}
-	else if (key == KEY_D)
-		game->player.dir_x = 1.0;
-	else if (key == KEY_A)
-		game->player.dir_y = -1.0;
-	else if (key == KEY_RIGHT)
-		game->player.rot_speed *= 1;
-	else if (key == KEY_LEFT)
-		game->player.rot_speed *= -1;
+	printf("pressed key: %d\n", key);
+	if (key == KEY_W || key == KEY_S)
+		game->key_code[0] = key;
+	else if (key == KEY_D || key == KEY_A)
+		game->key_code[1] = key;
+	else if (key == KEY_RIGHT || key == KEY_LEFT)
+		game->key_code[2] = key;
 	game->moved = TRUE;
 	return (0);
 }
 
-int		is_wall(t_game *game, int x, int y)
+int		release_key(int key, t_game *game)
 {
-	if (game->map.grid[x][y] != 0)
+	printf("released key: %d\n", key);
+	if (key == KEY_W || key == KEY_S)
+		game->key_code[0] = -1;
+	else if (key == KEY_D || key == KEY_A)
+		game->key_code[1] = -1;
+	else if (key == KEY_RIGHT || key == KEY_LEFT)
+		game->key_code[2] = -1;
+	game->moved = TRUE;
+	return (0);
+}
+
+
+int		is_wall(t_map *map, int x, int y)
+{
+	if (map->grid[x][y] != 0)
 		return (TRUE);
 	return (FALSE);
 }
 
-void	update_player(t_game *game)
+void	move_forward(t_player *player, t_map *map)
 {
+	printf("move_forward\n");
+	int	new_map_x;
+	int	new_map_y;
+	
+	new_map_x = (int)(player->pos_x + 
+			player->dir_x * player->move_speed);
+	new_map_y = (int)(player->pos_y + 
+			player->dir_y * player->move_speed);
+	if (is_wall(map, new_map_x, new_map_y))
+		return ;
+	player->pos_x += player->dir_x * player->move_speed;
+	player->pos_y += player->dir_y * player->move_speed;
+}
+
+void	move_backward(t_player *player, t_map *map)
+{
+	int	new_map_x;
+	int	new_map_y;
+	
+	printf("move_backward\n");
+	new_map_x = (int)(player->pos_x - 
+			player->dir_x * player->move_speed);
+	new_map_y = (int)(player->pos_y - 
+			player->dir_y * player->move_speed);
+	if (is_wall(map, new_map_x, new_map_y))
+		return ;
+	player->pos_x -= player->dir_x * player->move_speed;
+	player->pos_y -= player->dir_y * player->move_speed;
+}
+
+void	move_rightward(t_player *player, t_map *map)
+{
+	printf("move_rightward\n");
 	int		new_map_x;
 	int		new_map_y;
 	double	temp_dir_x;
-	double	temp_plane_x;
+	double	temp_dir_y;
 
-	if (game->key_code == KEY_W || game->key_code == KEY_S)
-	{
-		new_map_x = (int)(game->player.pos_x + 
-				game->player.dir_x * game->player.move_speed);
-		new_map_y = (int)(game->player.pos_y + 
-				game->player.dir_y * game->player.move_speed);
-		if (is_wall(game, new_map_x, new_map_y))
-			return ;
-		game->player.pos_x += game->player.dir_x * game->player.move_speed;
-		game->player.pos_y += game->player.dir_y * game->player.move_speed;
-	}
-	else if (game->key_code == KEY_D || game->key_code == KEY_A)
-	{
+	temp_dir_x = player->dir_y; 
+	temp_dir_y = player->dir_x; 
+	new_map_x = (int)(player->pos_x + temp_dir_x * player->move_speed);
+	new_map_y = (int)(player->pos_y - temp_dir_y * player->move_speed);
+	if (is_wall(map, new_map_x, new_map_y))
 		return ;
-	}
-	if (game->key_code == KEY_RIGHT || game->key_code == KEY_LEFT)
-	{
-		temp_dir_x = game->player.dir_x;
-		game->player.dir_x = temp_dir_x * cos(game->player.rot_speed) -
-			game->player.dir_y * sin(game->player.rot_speed);
-		game->player.dir_y = temp_dir_x * sin(game->player.rot_speed) +
-			game->player.dir_y * cos(game->player.rot_speed);
-		temp_plane_x = game->player.plane_x;
-		game->player.plane_x = temp_plane_x * cos(game->player.rot_speed) -
-			game->player.plane_y * sin(game->player.rot_speed);
-		game->player.plane_y = temp_plane_x * sin(game->player.rot_speed) +
-			game->player.plane_y * cos(game->player.rot_speed);
-		return ;
-	}
+	player->pos_x += temp_dir_x * player->move_speed;
+	player->pos_y -= temp_dir_y * player->move_speed;
 }
-/*
-int		release_key(int	key, t_game *game)
+
+void	move_leftward(t_player *player, t_map *map)
 {
-	printf("%d\n", key);
-	if (key == 'w')
-		game->player.pos_y++;
-	else if (key == 's')
-		game->player.pos_y--;
-	else if (key == 'd')
-		game->player.pos_x++;
-	else if (key == 'a')
-		game->player.pos_x--; 
-	return (0);
-}*/
+	printf("move_leftward\n");
+	int		new_map_x;
+	int		new_map_y;
+	double	temp_dir_x;
+	double	temp_dir_y;
+
+	temp_dir_x = player->dir_y; 
+	temp_dir_y = player->dir_x; 
+	new_map_x = (int)(player->pos_x - temp_dir_x * player->move_speed);
+	new_map_y = (int)(player->pos_y + temp_dir_y * player->move_speed);
+	if (is_wall(map, new_map_x, new_map_y))
+		return ;
+	player->pos_x -= temp_dir_x * player->move_speed;
+	player->pos_y += temp_dir_y * player->move_speed;
+}
+
+
+void	turn_right(t_player *player)
+{
+	double	temp_dir_x;
+	double	temp_plane_x;
+	double	rot_speed;
+
+	printf("turn_right\n");
+	temp_dir_x = player->dir_x;
+	rot_speed = player->rot_speed;
+	player->dir_x = temp_dir_x * cos(-rot_speed) -
+		player->dir_y * sin(-rot_speed);
+	player->dir_y = temp_dir_x * sin(-rot_speed) +
+		player->dir_y * cos(-rot_speed);
+	temp_plane_x = player->plane_x;
+	player->plane_x = temp_plane_x * cos(-rot_speed) -
+		player->plane_y * sin(-rot_speed);
+	player->plane_y = temp_plane_x * sin(-rot_speed) +
+		player->plane_y * cos(-rot_speed);
+}
+
+void	turn_left(t_player *player)
+{
+	double	temp_dir_x;
+	double	temp_plane_x;
+	double	rot_speed;
+
+	printf("turn_left\n");
+	temp_dir_x = player->dir_x;
+	rot_speed = player->rot_speed;
+	player->dir_x = temp_dir_x * cos(rot_speed) -
+		player->dir_y * sin(rot_speed);
+	player->dir_y = temp_dir_x * sin(rot_speed) +
+		player->dir_y * cos(rot_speed);
+	temp_plane_x = player->plane_x;
+	player->plane_x = temp_plane_x * cos(rot_speed) -
+		player->plane_y * sin(rot_speed);
+	player->plane_y = temp_plane_x * sin(rot_speed) +
+		player->plane_y * cos(rot_speed);
+}
+
+void	init_key_code(t_game *game)
+{
+	printf("init!\n");
+	game->key_code[0] = -1;
+	game->key_code[1] = -1;
+	game->key_code[2] = -1;
+}
+
+void	update_player(t_game *game)
+{
+	t_player 	*player;
+	t_map		*map;
+
+	player = &game->player;
+	map	= &game->map;
+	if (game->key_code[0] == KEY_W)
+		move_forward(player, map);
+	else if (game->key_code[0] == KEY_S)
+		move_backward(player, map);
+	if (game->key_code[1] == KEY_D)
+		move_rightward(player, map);
+	else if (game->key_code[1] == KEY_A)
+		move_leftward(player, map);
+	if (game->key_code[2] == KEY_RIGHT)
+		turn_right(player);
+	else if (game->key_code[2] == KEY_LEFT)
+		turn_left(player);
+	init_key_code(game);
+}
