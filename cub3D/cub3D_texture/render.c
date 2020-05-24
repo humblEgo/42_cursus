@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 00:15:53 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/24 23:15:30 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,22 @@ void	calculate_dist_from_wall(t_game *game)
 }
 
 
-void	fill_vertical_line(int x, int draw_start, int draw_end, t_img *temp)
+void	fill_vertical_line(int x, int draw_start, int draw_end, t_img *temp, t_game *game)
 {
 	int h;
+	int	color;
+	int	temp_color;
 
 	h = -1;
+	color = 0xFFFFFF;
 	while (++h + draw_start <= draw_end)
-		temp->data[(draw_start + h) * SCREEN_WIDTH + x] = 0xFFFFFF;
+	{
+		if (game->player.side == 1)
+			temp_color = color / 2;
+		else
+			temp_color = color;
+		temp->data[(draw_start + h) * SCREEN_WIDTH + x] = temp_color;
+	}
 }
 
 void	fill_wall(t_game *game, int x, t_img *temp)
@@ -141,7 +150,7 @@ void	fill_wall(t_game *game, int x, t_img *temp)
 	draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
-	fill_vertical_line(x, draw_start, draw_end, temp);
+	fill_vertical_line(x, draw_start, draw_end, temp, game);
 }
 
 void	render_screen(t_game *game)

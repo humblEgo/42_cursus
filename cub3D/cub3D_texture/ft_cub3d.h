@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 00:04:23 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/24 23:15:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ typedef struct	s_img
 	int		size_line;
 	int		endian;
 	int		*data;
+	char	*file;
+	int		width;
+	int		height;
 }				t_img;
 
 
@@ -102,6 +105,7 @@ typedef struct	s_game
 	t_map		map;
 	t_window	window;
 	t_player	player;
+	t_img		texture[5];
 	int			key_code;
 	int			moved;
 }				t_game;
