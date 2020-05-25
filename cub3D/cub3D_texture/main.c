@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 21:49:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/25 16:08:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	main(void)
 	};
 
 	init_game(&game);
-	init_game_test(&game);
 	game.map.grid = grid;
 	game.window.mlx_ptr = mlx_init();
 	game.window.win_ptr = mlx_new_window(game.window.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "test");
+	open_img(&game);
 	mlx_hook(game.window.win_ptr, DEAL_KEY_PRESS, 1L << 0, press_key, &game); 
 //	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, 1L << 1, release_key, &game); 
 	mlx_loop_hook(game.window.mlx_ptr, main_loop_process, &game);

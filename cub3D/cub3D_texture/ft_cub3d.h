@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 23:15:09 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/25 17:01:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct	s_map
 
 typedef struct	s_img
 {
-	int		*img;
+	void	*img;
 	int		bpp;
 	int		size_line;
 	int		endian;
@@ -71,6 +71,8 @@ typedef struct	s_img
 	char	*file;
 	int		width;
 	int		height;
+	double	tex_x;
+	double	tex_y;
 }				t_img;
 
 
@@ -116,4 +118,6 @@ void			render_screen(t_game *game);
 void			update_player(t_game *game);
 int				press_key(int key, t_game *game);
 int				release_key(int key, t_game *game);
+
+void			open_img(t_game *game);
 #endif

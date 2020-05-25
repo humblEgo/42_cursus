@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 23:15:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/25 23:46:36 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,36 @@ void	calculate_dist_from_wall(t_game *game)
 }
 
 
-void	fill_vertical_line(int x, int draw_start, int draw_end, t_img *temp, t_game *game)
+void	fill_vertical_line(int line_height, int x, int draw_start, int draw_end, t_img *temp, t_game *game)
 {
 	int h;
 	int	color;
 	int	temp_color;
 
+	double	wall_x;
+	int		tex_x;
+	int		tex_y;
+	double	step;
+	double	tex_pos;
+
+	if (game->player.side == 0)
+		wall_x = game->player.pos_y + game->player.perp_wall_dist * game->player.ray_dir_y;
+	else
+		wall_x = game->player.pos_x + game->player.perp_wall_dist * game->player.ray_dir_x;
+	tex_x = (int)(wall_x * (double)game->texture[0].width);
+	if (game->player.side == 0 && game->player.ray_dir_x > 0)
+		tex_x = game->texture[0].width - tex_x - 1;
+	if (game->player.side == 1 && game->player.ray_dir_y < 0)
+		tex_x = game->texture[0].width - tex_x - 1;
+
+	step = 1.0 * game->texture[0].height / line_height;
+	tex_pos = (draw_start - (double)SCREEN_HEIGHT / 2 + line_height / 2) * step;
 	h = -1;
-	color = 0xFFFFFF;
 	while (++h + draw_start <= draw_end)
 	{
+		tex_y = (int)tex_pos & (game->texture[0].height - 1);
+		tex_pos += step;
+		color = game->texture[0].data[game->texture[0].height * tex_y + tex_x];
 		if (game->player.side == 1)
 			temp_color = color / 2;
 		else
@@ -150,7 +170,7 @@ void	fill_wall(t_game *game, int x, t_img *temp)
 	draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
-	fill_vertical_line(x, draw_start, draw_end, temp, game);
+	fill_vertical_line(line_height, x, draw_start, draw_end, temp, game);
 }
 
 void	render_screen(t_game *game)
@@ -168,4 +188,5 @@ void	render_screen(t_game *game)
 		fill_wall(game, x, &temp);
 	}
 	mlx_put_image_to_window(game->window.mlx_ptr, game->window.win_ptr, temp.img, 0, 0);
+	mlx_destroy_image(game->window.mlx_ptr, temp.img);
 }
