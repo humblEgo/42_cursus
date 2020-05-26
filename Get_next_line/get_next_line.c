@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:27 by iwoo              #+#    #+#             */
-/*  Updated: 2020/03/01 22:51:51 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/10 00:06:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_last_line_eof(int fd, t_buf *buf)
 int	get_next_line(int fd, char **line)
 {
 	static t_buf	buf;
-	
+
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
 	if (init_line(line) < 0 || read_if_buf_empty(fd, &buf) < 0)

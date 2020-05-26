@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:27 by iwoo              #+#    #+#             */
-/*  Updated: 2020/03/01 22:51:51 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/14 01:47:13 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	init_line(char **line)
 {
@@ -52,8 +52,8 @@ int	is_last_line_eof(int fd, t_buf *buf)
 int	get_next_line(int fd, char **line)
 {
 	static t_buf	buf[FILE_ERA];
-	
-	if (fd < 0 || line == NULL || BUFFER_SIZE < 1)
+
+	if (fd < 0 || fd > FILE_ERA || line == NULL || BUFFER_SIZE < 1)
 		return (-1);
 	if (init_line(line) < 0 || read_if_buf_empty(fd, &buf[fd]) < 0)
 		return (-1);
@@ -73,5 +73,16 @@ int	get_next_line(int fd, char **line)
 			return (1);
 		}
 	}
+	return (0);
+}
+#include <stdio.h>
+int	main(void)
+{
+	int		fd;
+	char	*line;
+	fd = open("test", O_RDONLY);
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+
 	return (0);
 }

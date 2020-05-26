@@ -6,7 +6,7 @@ Projects
   - [Ft_server](https://github.com/humblEgo/42_cursus/tree/master/Ft_server)
   
   - [cub3D](https://github.com/humblEgo/42_cursus/tree/master/cub3D)
-    - 
+    - not yet completed
   
 ### 2 circle
   - [Get_next_line](https://github.com/humblEgo/42_cursus/tree/master/Get_next_line)

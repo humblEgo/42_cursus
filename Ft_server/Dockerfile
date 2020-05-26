@@ -6,7 +6,11 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 00:29:41 by iwoo              #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2020/04/14 14:38:27 by iwoo             ###   ########.fr        #
+=======
+#    Updated: 2020/04/17 01:12:47 by iwoo             ###   ########.fr        #
+>>>>>>> 54bd4be898d4299136a13a7f3361a6e36c1f6423
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +22,12 @@ RUN	apt-get update
 
 # Install nginx && mysql
 RUN	apt-get install -y nginx && \
-		apt-get install -y mariadb-server mariadb-client && \
+		apt-get install -y mariadb-server && \
 		apt-get install -y php-fpm php-mysql
 
 COPY srcs/nginx_setting /etc/nginx/sites-available/localhost
 
-RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost && \
-		rm /var/www/html/index.nginx-debian.html
+RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost
 
 # Set SSL
 RUN apt-get install -y libssl-dev openssl && \
@@ -68,7 +71,13 @@ COPY srcs/wp-config.php /var/www/html/wordpress/
 EXPOSE 80
 EXPOSE 443
 
+<<<<<<< HEAD
 #CMD service nginx start && \
 CMD	service mysql start && \
 	service php7.3-fpm start && \
 	nginx -g 'daemon off;'
+=======
+CMD service mysql start; \
+		service php7.3-fpm start; \
+		nginx -g 'daemon off;'
+>>>>>>> 54bd4be898d4299136a13a7f3361a6e36c1f6423
