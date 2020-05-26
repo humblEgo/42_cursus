@@ -1,35 +1,29 @@
 server {
-		listen 443 ssl;
-		listen [::]:443 ssl;
-		include snippets/self-signed.conf;
-		include snippets/ssl-params.conf;
-		
-		root /var/www/html;
+    listen 80;
+    listen [::]:80;
 
-		index index.php index.html index.htm index.nginx-debian.html;
-
-		server_name localhost www.localhost;
-		
-		location / {
-			try_files $uri $uri/ =404;
-			autoindex on;
-		}
-
-		location ~ \.php$ {
-			include snippets/fastcgi-php.conf;
-			fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
-		}
-
+    server_name localhost;
+    return 302 https://$server_name$request_uri;
 }
 
 server {
-	    listen 80;
-	    listen [::]:80;
+    listen 443 ssl;
+    listen [::]:443 ssl;
 
-	    root /var/www/html;
-	    index index.php index.html index.htm;
+    server_name localhost;
+    root /var/www/html;
+    index index.php index.html index.htm;
 
-	    server_name localhost www.loacalhost;
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+        autoindex on;
+    }
 
-		return 302 http://$server_name$request_uri;
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+    }
+
+    ssl_certificate /tmp/localhost.pem;
+    ssl_certificate_key /tmp/localhost-key.pem;
 }

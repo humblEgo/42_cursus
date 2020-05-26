@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/01 15:31:04 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/02 18:28:04 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,20 @@ typedef struct	s_player
 
 }				t_player;
 
+typedef struct	s_keycode
+{
+	int			w_s;
+	int			a_d;
+	int			l_r;
+}				t_keycode;
+
 typedef struct	s_game
 {
 	t_map		map;
 	t_window	window;
 	t_player	player;
-	int			key_code;
+	t_keycode	key;
+//	int			key_code;
 	int			moved;
 }				t_game;
 

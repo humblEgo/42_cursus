@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 00:29:41 by iwoo              #+#    #+#              #
-#    Updated: 2020/03/19 23:28:47 by iwoo             ###   ########.fr        #
+#    Updated: 2020/04/14 14:38:27 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ COPY srcs/wp-config.php /var/www/html/wordpress/
 EXPOSE 80
 EXPOSE 443
 
-CMD service nginx start && \
-		service mysql start && \
-		service php7.3-fpm start
+#CMD service nginx start && \
+CMD	service mysql start && \
+	service php7.3-fpm start && \
+	nginx -g 'daemon off;'

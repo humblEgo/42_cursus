@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/01 15:05:39 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/04/02 18:31:10 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(void)
 	game.window.mlx_ptr = mlx_init();
 	game.window.win_ptr = mlx_new_window(game.window.mlx_ptr, 500, 500, "test");
 	mlx_hook(game.window.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 
-//	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, KeyReleaseMask, release_key, &game); 
+	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, KeyReleaseMask, release_key, &game); 
 	mlx_loop_hook(game.window.mlx_ptr, main_loop_process, &game);
 	mlx_loop(game.window.mlx_ptr);
 	return (0);
