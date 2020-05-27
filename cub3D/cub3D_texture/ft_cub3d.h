@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/26 12:06:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/28 00:59:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@
 # define MAP_WIDTH 10
 # define MAP_HEIGHT 10
 
+# define ARG_ERROR -1 
+# define INIT_ERROR -2 
+# define FILE_ERROR -3
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -68,12 +72,6 @@
 /* UBUNTU SETTING */
 # include <X11/Xlib.h>
 /* UBUNTU SETTING */
-
-typedef struct	s_window
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-}				t_window;
 
 typedef struct	s_map
 {
@@ -96,6 +94,12 @@ typedef struct	s_img
 	double	tex_y;
 }				t_img;
 
+typedef	struct	s_sprite
+{
+	double	x;
+	double	y;
+	int		texture;
+}				t_sprite;
 
 typedef struct	s_player
 {
@@ -130,17 +134,29 @@ typedef	struct	s_vertical_line
 	int			end;
 }				t_vertical_line;
 
+typedef	struct	s_color
+{
+	int			floor;
+	int			ceiling;
+}				t_color;
+
 typedef struct	s_game
 {
 	t_map		map;
-	t_window	window;
 	t_player	player;
 	t_img		texture[5];
+	t_color		color;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	int			screen_w;
+	int			screen_h;
 	int			key_code;
 	int			moved;
+	double		zbuffer[SCREEN_WIDTH];
+	int			init_success;
 }				t_game;
 
-void			init_game(t_game *game);
+void			init_game(t_game *game, char *file);
 
 void			render_screen(t_game *game);
 void			update_player(t_game *game);
@@ -148,4 +164,9 @@ int				press_key(int key, t_game *game);
 int				release_key(int key, t_game *game);
 
 void			open_img(t_game *game);
+
+int				error(int error_type);
+
+void			free_split(char **split, int n);
+
 #endif

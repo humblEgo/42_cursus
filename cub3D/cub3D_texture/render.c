@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/26 16:05:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/27 16:43:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,9 @@ void	calculate_dist_from_wall(t_game *game)
 	set_perp_dist_between_player_and_wall(&game->player);
 }
 
-
 void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 {
-	int h;
+	int y;
 	int	color;
 	int	temp_color;
 
@@ -114,6 +113,17 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 	int		tex_y;
 	double	step;
 	double	tex_pos;
+
+	double	floor_x_wall;
+	double	floor_y_wall;
+	double	dist_wall;
+	double	dist_player;
+	double	current_dist;
+	double	weight;
+	double	current_floor_x;
+	double	current_floor_y;
+	int		floor_tex_x;
+	int		floor_tex_y;
 
 	if (game->player.side == 0)
 		wall_x = game->player.pos_y + game->player.perp_wall_dist * game->player.ray_dir_y;
@@ -128,8 +138,35 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 
 	step = 1.0 * (double)game->texture[3].height / (double)vline.height;
 	tex_pos = (vline.start - (double)SCREEN_HEIGHT / 2 + (double)vline.height / 2) * step;
-	h = -1;
-	while (++h + vline.start < vline.end)
+
+	/* floor and ceiling */
+	if (game->player.side == 0 && game->player.ray_dir_x > 0)
+	{
+		floor_x_wall = game->player.map_x;
+		floor_y_wall = game->player.map_y + wall_x;
+	}
+	else if (game->player.side == 0 && game->player.ray_dir_x < 0)
+	{
+		floor_x_wall = game->player.map_x + 1.0;
+		floor_y_wall = game->player.map_y + wall_x;
+	}
+	else if (game->player.side == 0 && game->player.ray_dir_x < 0)
+	{
+		floor_x_wall = game->player.map_x + wall_x;
+		floor_y_wall = game->player.map_y;
+	}
+	else
+	{
+		floor_x_wall = game->player.map_x + wall_x;
+		floor_y_wall = game->player.map_y + 1.0;
+	}
+	dist_wall = game->player.perp_wall_dist;
+
+	/* floor and ceiling*/
+
+	dist_player = 0.0;
+	y = 0 + vline.start;
+	while (y < vline.end)
 	{
 		tex_y = (int)tex_pos & (game->texture[0].height - 1);
 		tex_pos += step;
@@ -138,21 +175,30 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 			temp_color = color / 2;
 		else
 			temp_color = color;
-		temp->data[(vline.start + h) * SCREEN_WIDTH + x] = temp_color;
+		temp->data[y * SCREEN_WIDTH + x] = temp_color;
+		y++;
+	}
+
+	int z;
+	z = vline.start;
+	while (++y < SCREEN_HEIGHT)
+	{
+		current_dist = SCREEN_HEIGHT / (2.0 * y - SCREEN_HEIGHT);
+		weight = (current_dist - dist_player) / (dist_wall - dist_player);
+		current_floor_x = weight * floor_x_wall + (1.0 - weight) * game->player.pos_x; 
+		current_floor_y = weight * floor_y_wall + (1.0 - weight) * game->player.pos_y; 
+		floor_tex_x = (int)(current_floor_x * game->texture[1].width) % game->texture[1].width;
+		floor_tex_y = (int)(current_floor_y * game->texture[1].height) % game->texture[1].height;
+		temp_color = game->texture[1].data[(int)(game->texture[1].width * floor_tex_y + floor_tex_x)];
+		temp->data[y * SCREEN_WIDTH + x] = temp_color;
+		temp_color = game->texture[2].data[(int)(game->texture[2].width * floor_tex_y + floor_tex_x)];
+		temp->data[z * SCREEN_WIDTH + x] = temp_color;
+		z--;
 	}
 }
 
-void	fill_wall(t_game *game, int x, t_img *temp)
+void	fill_wall(t_game *game, int x, t_img *temp, t_vertical_line vline)
 {
-	t_vertical_line	vline;
-
-	vline.height = (int)(SCREEN_HEIGHT / game->player.perp_wall_dist);
-	vline.start = (-1 * vline.height / 2) + (SCREEN_HEIGHT / 2);
-	if (vline.start < 0)
-		vline.start = 0;
-	vline.end = (vline.height / 2) + (SCREEN_HEIGHT / 2);
-	if (vline.end >= SCREEN_HEIGHT)
-		vline.end = SCREEN_HEIGHT - 1;
 	fill_vertical_line(vline, x, temp, game);
 }
 
@@ -160,16 +206,30 @@ void	render_screen(t_game *game)
 {
 	t_img	temp;
 	int		x;
+	t_vertical_line	vline;
 
-	temp.img = mlx_new_image(game->window.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	temp.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	temp.data = (int *)mlx_get_data_addr(temp.img, &temp.bpp, &temp.size_line, &temp.endian);
+
 	x = -1;
 	while (++x <= SCREEN_WIDTH)
 	{
 		calculate_ray_position_and_direction(&game->player, x);
 		calculate_dist_from_wall(game);
-		fill_wall(game, x, &temp);
+		game->zbuffer[x] = game->player.perp_wall_dist;
+
+		vline.height = (int)(SCREEN_HEIGHT / game->player.perp_wall_dist);
+		vline.start = (-1 * vline.height / 2) + (SCREEN_HEIGHT / 2);
+		if (vline.start < 0)
+			vline.start = 0;
+		vline.end = (vline.height / 2) + (SCREEN_HEIGHT / 2);
+		if (vline.end >= SCREEN_HEIGHT)
+			vline.end = SCREEN_HEIGHT - 1;
+		fill_wall(game, x, &temp, vline);
 	}
-	mlx_put_image_to_window(game->window.mlx_ptr, game->window.win_ptr, temp.img, 0, 0);
-	mlx_destroy_image(game->window.mlx_ptr, temp.img);
+//	fill_item(game);
+
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, temp.img, 0, 0);
+	mlx_destroy_image(game->mlx_ptr, temp.img);
+
 }

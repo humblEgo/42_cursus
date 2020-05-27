@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/26 12:56:48 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/27 14:12:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	init_game(t_game *game)
 	game->map.height = MAP_HEIGHT;
 	game->key_code = -1;
 	game->texture[0].file = "./imgs/redbrick.xpm";
-	game->texture[1].file = "./imgs/bluestone.xpm";
+	game->texture[1].file = "./imgs/greystone.xpm";
 	game->texture[2].file = "./imgs/wood.xpm";
 	game->texture[3].file = "./imgs/eagle.xpm";
+	game->texture[4].file = "./imgs/barrel.xpm";
 }

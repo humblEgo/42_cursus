@@ -6,11 +6,12 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/26 11:10:53 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/27 23:38:19 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
+#include "libft.h"
 
 int	main_loop_process(t_game *game)
 {
@@ -28,7 +29,7 @@ int	main_loop_process(t_game *game)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_game		game;
 
@@ -37,25 +38,29 @@ int	main(void)
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-		{1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
-		{1, 1, 1, 1, 0, 0, 0, 0, 0, 1},
+		{1, 0, 1, 1, 0, 0, 0, 1, 1, 1},
+		{1, 0, 1, 1, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
-	init_game(&game);
+	if (!(argc == 2))
+		return (error(ARG_ERROR));
+//	if (is_valid_file(fd))
+//		init_game(&game, argv[1]);
 	game.map.grid = grid;
-	game.window.mlx_ptr = mlx_init();
-	game.window.win_ptr = mlx_new_window(game.window.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "test");
+	init_game(&game, argv[1]);
 	open_img(&game);
 /* MAC OS KeyPressMask
-	mlx_hook(game.window.win_ptr, DEAL_KEY_PRESS, 1L << 0, press_key, &game); 
-//	mlx_hook(game.window.win_ptr, DEAL_KEY_RELEASE, 1L << 1, release_key, &game); 
+	mlx_hook(game.win_ptr, DEAL_KEY_PRESS, 1L << 0, press_key, &game); 
+//	mlx_hook(game.win_ptr, DEAL_KEY_RELEASE, 1L << 1, release_key, &game); 
 */
-	mlx_hook(game.window.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 
-	mlx_loop_hook(game.window.mlx_ptr, main_loop_process, &game);
-	mlx_loop(game.window.mlx_ptr);
+	if (game.init_success == FALSE)
+		return (error(INIT_ERROR));
+	mlx_hook(game.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 
+	mlx_loop_hook(game.mlx_ptr, main_loop_process, &game);
+	mlx_loop(game.mlx_ptr);
 	return (0);
 }
