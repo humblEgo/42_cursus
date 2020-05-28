@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/28 00:59:39 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/28 23:25:48 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@
 
 typedef struct	s_map
 {
-	int		height;
-	int		width;
-	char	(*grid)[10];
+	char	(*temp)[10];
+	int		row_count;
+	char	**grid;
 }				t_map;
 
 typedef struct	s_img
@@ -105,10 +105,14 @@ typedef struct	s_player
 {
 	double		pos_x;
 	double		pos_y;
-	int			map_x;
-	int			map_y;
 	double		dir_x;
 	double		dir_y;
+}				t_player;
+
+typedef struct	s_render
+{
+	int			map_x;
+	int			map_y;
 	double		plane_x;
 	double		plane_y;
 	double		camera_x;
@@ -125,7 +129,8 @@ typedef struct	s_player
 	int			step_y;
 	int			hit;
 	int			side;
-}				t_player;
+}				t_render;
+
 
 typedef	struct	s_vertical_line
 {
@@ -144,6 +149,7 @@ typedef struct	s_game
 {
 	t_map		map;
 	t_player	player;
+	t_render	rend;
 	t_img		texture[5];
 	t_color		color;
 	void		*mlx_ptr;
@@ -154,6 +160,7 @@ typedef struct	s_game
 	int			moved;
 	double		zbuffer[SCREEN_WIDTH];
 	int			init_success;
+	int			**map_grid;
 }				t_game;
 
 void			init_game(t_game *game, char *file);
@@ -167,6 +174,6 @@ void			open_img(t_game *game);
 
 int				error(int error_type);
 
-void			free_split(char **split, int n);
+void			free_double_arr(char **arr, int n);
 
 #endif

@@ -6,17 +6,20 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/27 16:43:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/28 23:26:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	calculate_ray_position_and_direction(t_player *player, int x)
+void	calculate_ray_position_and_direction(t_game *game, int x)
 {
-	player->camera_x = (2 * x / (double)SCREEN_WIDTH) - 1;
-	player->ray_dir_x = player->dir_x + player->plane_x * player->camera_x;
-	player->ray_dir_y = player->dir_y + player->plane_y * player->camera_x;
+	t_render	*rend;
+
+	rend = game->rend;
+	rend->camera_x = (2 * x / (double)game->screen_w) - 1;
+	game->player.ray_dir_x = game->player.dir_x + game->player.plane_x * game->player.camera_x;
+	game->player.ray_dir_y = game->player.dir_y + game->player.plane_y * game->player.camera_x;
 }
 
 void	set_delta_dist(t_player *player)
@@ -71,14 +74,14 @@ void	find_wall(t_player *player, t_map *map)
 			player->map_y += player->step_y;
 			player->side = 1;
 		}
-		if (map->grid[player->map_x][player->map_y] == 1)
+		if (map->temp[player->map_x][player->map_y] > 0)
 			player->hit = 1;
 	}
 }
 
-double	get_perp_wall_dist(double map_n, double pos_n, double step_n, double ray_dir_n)
+double	get_perp_wall_dist(int map_n, double pos_n, int step_n, double ray_dir_n)
 {
-	return ((map_n - pos_n + (1 - step_n) / 2) / ray_dir_n);
+	return (((double)map_n - pos_n + (1 - (double)step_n) / 2) / ray_dir_n);
 }
 
 void	set_perp_dist_between_player_and_wall(t_player *player)
@@ -102,11 +105,11 @@ void	calculate_dist_from_wall(t_game *game)
 	set_perp_dist_between_player_and_wall(&game->player);
 }
 
-void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
+void	fill_vertical_line(t_vertical_line vline, int x, t_img *screen, t_game *game)
 {
 	int y;
 	int	color;
-	int	temp_color;
+	int	screen_color;
 
 	double	wall_x;
 	int		tex_x;
@@ -136,8 +139,10 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 	if (game->player.side == 1 && game->player.ray_dir_y < 0)
 		tex_x = game->texture[3].width - tex_x - 1;
 
+
 	step = 1.0 * (double)game->texture[3].height / (double)vline.height;
-	tex_pos = (vline.start - (double)SCREEN_HEIGHT / 2 + (double)vline.height / 2) * step;
+	tex_pos = (vline.start - (double)game->screen_h / 2 + (double)vline.height / 2) * step;
+
 
 	/* floor and ceiling */
 	if (game->player.side == 0 && game->player.ray_dir_x > 0)
@@ -164,6 +169,7 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 
 	/* floor and ceiling*/
 
+
 	dist_player = 0.0;
 	y = 0 + vline.start;
 	while (y < vline.end)
@@ -172,64 +178,65 @@ void	fill_vertical_line(t_vertical_line vline, int x, t_img *temp, t_game *game)
 		tex_pos += step;
 		color = game->texture[3].data[(int)(game->texture[3].width * tex_y + tex_x)];
 		if (game->player.side == 1)
-			temp_color = color / 2;
+			screen_color = color / 2;
 		else
-			temp_color = color;
-		temp->data[y * SCREEN_WIDTH + x] = temp_color;
+			screen_color = color;
+		screen->data[y * game->screen_w + x] = screen_color;
 		y++;
 	}
 
 	int z;
 	z = vline.start;
-	while (++y < SCREEN_HEIGHT)
+	while (++y < game->screen_h)
 	{
-		current_dist = SCREEN_HEIGHT / (2.0 * y - SCREEN_HEIGHT);
+		current_dist = game->screen_h / (2.0 * y - game->screen_h);
 		weight = (current_dist - dist_player) / (dist_wall - dist_player);
 		current_floor_x = weight * floor_x_wall + (1.0 - weight) * game->player.pos_x; 
 		current_floor_y = weight * floor_y_wall + (1.0 - weight) * game->player.pos_y; 
 		floor_tex_x = (int)(current_floor_x * game->texture[1].width) % game->texture[1].width;
 		floor_tex_y = (int)(current_floor_y * game->texture[1].height) % game->texture[1].height;
-		temp_color = game->texture[1].data[(int)(game->texture[1].width * floor_tex_y + floor_tex_x)];
-		temp->data[y * SCREEN_WIDTH + x] = temp_color;
-		temp_color = game->texture[2].data[(int)(game->texture[2].width * floor_tex_y + floor_tex_x)];
-		temp->data[z * SCREEN_WIDTH + x] = temp_color;
+		screen_color = game->texture[1].data[(int)(game->texture[1].width * floor_tex_y + floor_tex_x)];
+		screen->data[y * game->screen_w + x] = screen_color;
+		screen_color = game->texture[2].data[(int)(game->texture[2].width * floor_tex_y + floor_tex_x)];
+		screen->data[z * game->screen_w + x] = screen_color;
 		z--;
 	}
 }
 
-void	fill_wall(t_game *game, int x, t_img *temp, t_vertical_line vline)
+void	fill_wall(t_game *game, int x, t_img *screen, t_vertical_line vline)
 {
-	fill_vertical_line(vline, x, temp, game);
+	fill_vertical_line(vline, x, screen, game);
 }
 
 void	render_screen(t_game *game)
 {
-	t_img	temp;
-	int		x;
+	t_img			screen;
 	t_vertical_line	vline;
+	int		x;
 
-	temp.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
-	temp.data = (int *)mlx_get_data_addr(temp.img, &temp.bpp, &temp.size_line, &temp.endian);
-
+	screen.img = mlx_new_image(game->mlx_ptr, game->screen_w, game->screen_h);
+	screen.data = (int *)mlx_get_data_addr(screen.img, &screen.bpp, &screen.size_line, &screen.endian);
 	x = -1;
-	while (++x <= SCREEN_WIDTH)
+	while (++x <= game->screen_w)
 	{
-		calculate_ray_position_and_direction(&game->player, x);
+		calculate_ray_position_and_direction(game, x);
 		calculate_dist_from_wall(game);
 		game->zbuffer[x] = game->player.perp_wall_dist;
 
-		vline.height = (int)(SCREEN_HEIGHT / game->player.perp_wall_dist);
-		vline.start = (-1 * vline.height / 2) + (SCREEN_HEIGHT / 2);
+		vline.height = (int)(game->screen_h / game->player.perp_wall_dist);
+		vline.start = (-1 * vline.height / 2) + (game->screen_h / 2);
 		if (vline.start < 0)
 			vline.start = 0;
-		vline.end = (vline.height / 2) + (SCREEN_HEIGHT / 2);
-		if (vline.end >= SCREEN_HEIGHT)
-			vline.end = SCREEN_HEIGHT - 1;
-		fill_wall(game, x, &temp, vline);
+		vline.end = (vline.height / 2) + (game->screen_h / 2);
+		if (vline.end >= game->screen_h)
+			vline.end = game->screen_h - 1;
+		fill_wall(game, x, &screen, vline);
 	}
-//	fill_item(game);
+	//fill_item(game);
 
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, temp.img, 0, 0);
-	mlx_destroy_image(game->mlx_ptr, temp.img);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, screen.img, 0, 0);
+	mlx_destroy_image(game->mlx_ptr, screen.img);
+
+
 
 }

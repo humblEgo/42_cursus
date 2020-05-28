@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/28 01:06:12 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/28 22:47:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ void	get_render_size(t_game *game, char *line)
 	char	**split;
 
 	split = ft_split(line, ' ');
-	printf("%s\n", line);
 	game->screen_w = ft_atoi(split[1]);
 	game->screen_h = ft_atoi(split[2]);
-	printf("%d\n", game->screen_w);
-	printf("%d\n", game->screen_h);
 	line = NULL;
+	free_double_arr(split, 3);
 }
 
 void	get_texture(t_game *game, char *line)
@@ -44,6 +42,7 @@ void	get_texture(t_game *game, char *line)
 		game->texture[3].file = ft_strdup(file);
 	else if (!ft_strncmp("S", line, 1))
 		game->texture[4].file = ft_strdup(file);
+	free_double_arr(split, 2);
 }
 
 void	get_floor_and_celing_color(t_game *game, char *line)
@@ -52,19 +51,45 @@ void	get_floor_and_celing_color(t_game *game, char *line)
 	int		temp;
 
 	rgb = ft_split(&line[2], ',');
-	printf("%s\n", rgb[0]);
-	printf("%s\n", rgb[1]);
-	printf("%s\n", rgb[2]);
 	temp = ft_atoi(rgb[0]) * 16 * 16 * 16 * 16;
-	printf("%d\n", temp);
 	temp += ft_atoi(rgb[1]) * 16 * 16;
 	temp += ft_atoi(rgb[2]);
 	if (!ft_strncmp("F", line, 1))
 		game->color.floor = temp;
 	else
 		game->color.ceiling = temp;
-	//TODO seg fault 잡기
-// 	free_split(rgb, 3);
+ 	free_double_arr(rgb, 3);
+}
+
+void	add_line_to_map_grid(t_game *game, char *line)
+{
+	char**	temp;
+	int		i;
+
+	if (!(temp = (char **)malloc(sizeof(char *) * (game->map.row_count + 2))))
+		return ;
+	i = -1;
+	while (++i < game->map.row_count)
+		temp[i] = ft_strdup(game->map.grid[i]);
+	temp[i] = ft_strdup(line);
+	temp[i + 1] = NULL;
+	free_double_arr(game->map.grid, game->map.row_count);
+	game->map.grid = temp;
+}
+
+
+void	get_map_grid(t_game *game, char *line)
+{
+	if (game->map.row_count == 0)
+	{
+		if (!(game->map.grid = (char **)malloc(sizeof(char *) * 2)))
+			return ;
+		game->map.grid[0] = ft_strdup(line);
+		game->map.grid[1] = NULL;
+	}
+	else
+		add_line_to_map_grid(game, line);
+	game->map.row_count += 1;
 }
 
 int	parsing_file_to_game(char *file, t_game *game)
@@ -83,6 +108,8 @@ int	parsing_file_to_game(char *file, t_game *game)
 			get_texture(game, line);
 		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 			get_floor_and_celing_color(game, line);
+		else if (ft_strlen(line))
+			get_map_grid(game, line);
 		else
 			free(line);
 	}
@@ -90,21 +117,32 @@ int	parsing_file_to_game(char *file, t_game *game)
 	return (1);
 }
 
-
 void	init_game(t_game *game, char *file)
 {
+	int i;
+
+	game->map.row_count = 0;
 	if (!(parsing_file_to_game(file, game)))
 		game->init_success = FALSE;
-	for(int i = 0; i < 5; i++)
+	// test
+	printf("screen_w %d\n", game->screen_w);
+	printf("screen_h %d\n", game->screen_h);
+	for(i = 0; i < 5; i++)
 		printf("%s\n", game->texture[i].file);
-	printf("%d\n, %d\n", game->color.floor, game->color.ceiling);
+	printf("%d\n%d\n", game->color.floor, game->color.ceiling);
 	printf("%s\n", file);
-	game->screen_w = SCREEN_WIDTH;
-	game->screen_h = SCREEN_HEIGHT;
+	i = -1;
+	while (game->map.grid[++i])
+		printf("%s\n", game->map.grid[i]);
+	double x = 5.0;
+	double y = 5.0;
+	printf("grid[%f][%f] = %d\n", x, y, game->map.grid[(int)x][(int)y]);
+	printf("rows %d\n", game->map.row_count);
+	// test
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "test");
-	game->player.pos_x = 5;
-	game->player.pos_y = 6;
+	game->player.pos_x = x;
+	game->player.pos_y = y;
 	game->player.dir_x = -1;
 	game->player.dir_y = 0;
 	game->player.plane_x = 0;
@@ -112,13 +150,6 @@ void	init_game(t_game *game, char *file)
 	game->player.camera_x = 0;
 	game->player.move_speed = MOVE_SPEED;
 	game->player.rot_speed = ROT_SPEED;
-	game->map.width = MAP_WIDTH;
-	game->map.height = MAP_HEIGHT;
 	game->key_code = -1;
-	game->texture[0].file = "./images/redbrick.xpm";
-	game->texture[1].file = "./images/greystone.xpm";
-	game->texture[2].file = "./images/wood.xpm";
-	game->texture[3].file = "./images/eagle.xpm";
-	game->texture[4].file = "./images/ITEM.xpm";
 	game->init_success = TRUE;
 }

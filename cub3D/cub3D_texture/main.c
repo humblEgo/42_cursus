@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/27 23:38:19 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/28 17:58:07 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	main(int argc, char *argv[])
 		return (error(ARG_ERROR));
 //	if (is_valid_file(fd))
 //		init_game(&game, argv[1]);
-	game.map.grid = grid;
 	init_game(&game, argv[1]);
+	game.map.temp = grid;
 	open_img(&game);
 /* MAC OS KeyPressMask
 	mlx_hook(game.win_ptr, DEAL_KEY_PRESS, 1L << 0, press_key, &game); 
