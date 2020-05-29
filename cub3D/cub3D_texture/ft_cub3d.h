@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 12:25:11 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 19:16:05 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,6 @@ typedef struct	s_img
 	double	tex_y;
 }				t_img;
 
-typedef	struct	s_sprite
-{
-	double	x;
-	double	y;
-	int		texture;
-}				t_sprite;
-
 typedef struct	s_player
 {
 	double		pos_x;
@@ -147,7 +140,6 @@ typedef struct	s_render
 	int			floor_tex_y;
 }				t_render;
 
-
 typedef	struct	s_line
 {
 	int			height;
@@ -161,6 +153,13 @@ typedef	struct	s_color
 	int			ceiling;
 }				t_color;
 
+typedef	struct	s_item
+{
+	double		x;
+	double		y;
+	double		dist;
+}				t_item;
+
 typedef struct	s_game
 {
 	t_map		map;
@@ -168,13 +167,17 @@ typedef struct	s_game
 	t_render	rend;
 	t_img		texture[5];
 	t_color		color;
+	t_item		*item;
+	int			item_count;
+	int			*item_order;
+	double		*item_dist;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	int			screen_w;
 	int			screen_h;
 	int			key_code;
 	int			moved;
-	double		zbuffer[SCREEN_WIDTH];
+	double		*zbuffer;
 	int			init_success;
 	int			**map_grid;
 	int			x;
@@ -194,4 +197,5 @@ int				error(int error_type);
 
 void			free_double_arr(char **arr, int n);
 
+void			calculate_dist_from_wall(t_game *game);
 #endif

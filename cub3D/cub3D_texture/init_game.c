@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 14:07:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 20:00:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	add_line_to_map_grid(t_game *game, char *line)
 	game->map.grid = temp;
 }
 
-
 void	get_map_grid(t_game *game, char *line)
 {
 	if (game->map.row_count == 0)
@@ -90,6 +89,19 @@ void	get_map_grid(t_game *game, char *line)
 	else
 		add_line_to_map_grid(game, line);
 	game->map.row_count += 1;
+}
+
+int	count_item(char *line)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = -1;
+	while (++i < (int)ft_strlen(line))
+		if (line[i] == '2')
+			count += 1;
+	return (count);
 }
 
 int	parsing_file_to_game(char *file, t_game *game)
@@ -109,7 +121,10 @@ int	parsing_file_to_game(char *file, t_game *game)
 		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 			get_floor_and_celing_color(game, line);
 		else if (ft_strlen(line))
+		{
 			get_map_grid(game, line);
+			game->item_count += count_item(line);
+		}
 		else
 			free(line);
 	}
@@ -117,13 +132,106 @@ int	parsing_file_to_game(char *file, t_game *game)
 	return (1);
 }
 
+void	init_player_pos_and_dir(t_game *game, int row, int col)
+{
+	char		dir;
+	double		rotate;
+	double		temp_plane_x;
+	double		temp_dir_x;
+	t_player	*player;
+
+	player = &game->player;
+	dir = game->map.grid[row][col];
+	game->player.pos_x = row;
+	game->player.pos_y = col;
+	printf("row: %d col: %d\n", row, col);
+	printf("%c\n", dir);
+	game->map.grid[row][col] = '0';
+	if (dir == 'N')
+		return ;
+	else if (dir == 'S')
+		rotate = M_PI;
+	else if (dir == 'E')
+		rotate = M_PI * 0.5;
+	else if (dir == 'W')
+		rotate = M_PI * 1.5;
+	printf("rotate: %f\n", rotate);
+	temp_dir_x = player->dir_x;
+	temp_plane_x = player->plane_x;
+	player->dir_x = temp_dir_x * cos(-rotate) - player->dir_y * sin(-rotate);
+	player->dir_y = temp_dir_x * sin(-rotate) + player->dir_y * cos(-rotate);
+	player->plane_x = temp_plane_x * cos(-rotate) - player->plane_y * sin(-rotate);
+	player->plane_y = temp_plane_x * sin(-rotate) + player->plane_y * cos(-rotate);
+
+}
+
+void	init_item(t_game *game, int row, int col)
+{
+	static int	i = 0;
+
+	game->item[i].x = row;
+	game->item[i].y = col;
+	game->item[i].dist = -1;
+	i += 1;
+}
+
+void	set_player_and_item_pos(t_game *game)
+{
+	int		row;
+	int		col;
+
+	row = -1;
+	while (game->map.grid[++row])
+	{
+		col = -1;
+		while (game->map.grid[row][++col])
+		{
+			if (game->map.grid[row][col] == 'N' || game->map.grid[row][col] == 'S' ||
+					game->map.grid[row][col] == 'E' || game->map.grid[row][col] == 'W')
+				init_player_pos_and_dir(game, row, col);
+			else if (game->map.grid[row][col] == '2')
+				init_item(game, row, col);
+		}
+	}
+}
+
+
 void	init_game(t_game *game, char *file)
 {
 	int i;
 
+	
+
 	game->map.row_count = 0;
+	game->item_count = 0;
 	if (!(parsing_file_to_game(file, game)))
 		game->init_success = FALSE;
+	if (!(game->zbuffer = (double *)malloc(sizeof(double) * game->screen_w)))
+		game->init_success = FALSE;
+	if (!(game->item_order = (int *)malloc(sizeof(int) * game->item_count)))
+		game->init_success = FALSE;
+	if (!(game->item_dist = (double *)malloc(sizeof(double) * game->item_count)))
+		game->init_success = FALSE;
+	if (!(game->item = (t_item *)malloc(sizeof(t_item) * game->item_count)))
+		game->init_success = FALSE;
+
+	game->player.dir_x = -1;
+	game->player.dir_y = 0;
+	game->player.plane_x = 0;
+	game->player.plane_y = 0.66;
+	game->player.move_speed = MOVE_SPEED;
+	game->player.rot_speed = ROT_SPEED;
+	
+	set_player_and_item_pos(game);
+
+	game->mlx_ptr = mlx_init();
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "test");
+	game->rend.camera_x = 0;
+	game->key_code = -1;
+
+	game->init_success = TRUE;
+
+
 	// test
 	printf("screen_w %d\n", game->screen_w);
 	printf("screen_h %d\n", game->screen_h);
@@ -134,30 +242,10 @@ void	init_game(t_game *game, char *file)
 	i = -1;
 	while (game->map.grid[++i])
 		printf("%s\n", game->map.grid[i]);
-	double x = 5.0;
-	double y = 5.0;
-	printf("grid[%f][%f] = %d\n", x, y, game->map.grid[(int)x][(int)y]);
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 10; j++)
-			printf("%c", game->map.grid[i][j]);
-		printf("\n");
-	}
-
-
 	printf("rows %d\n", game->map.row_count);
+	i = -1;
+	while (++i < game->item_count)
+		printf("itme[%d] x: %f y: %f\n", i, game->item[i].x, game->item[i].y);
 	// test
-	game->mlx_ptr = mlx_init();
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "test");
-	game->player.pos_x = x;
-	game->player.pos_y = y;
-	game->player.dir_x = -1;
-	game->player.dir_y = 0;
-	game->player.plane_x = 0;
-	game->player.plane_y = 0.66;
-	game->rend.camera_x = 0;
-	game->player.move_speed = MOVE_SPEED;
-	game->player.rot_speed = ROT_SPEED;
-	game->key_code = -1;
-	game->init_success = TRUE;
+
 }
