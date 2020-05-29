@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/27 15:24:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 13:45:31 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	calculate_ray_position_and_direction(t_player *player, int x)
 	player->camera_x = (2 * x / (double)SCREEN_WIDTH) - 1;
 	player->ray_dir_x = player->dir_x + player->plane_x * player->camera_x;
 	player->ray_dir_y = player->dir_y + player->plane_y * player->camera_x;
+	printf("%f\n", player->ray_dir_x);
 }
 
 void	set_delta_dist(t_player *player)

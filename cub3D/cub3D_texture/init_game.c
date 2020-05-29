@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/28 22:47:47 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 14:07:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,14 @@ void	init_game(t_game *game, char *file)
 	double x = 5.0;
 	double y = 5.0;
 	printf("grid[%f][%f] = %d\n", x, y, game->map.grid[(int)x][(int)y]);
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+			printf("%c", game->map.grid[i][j]);
+		printf("\n");
+	}
+
+
 	printf("rows %d\n", game->map.row_count);
 	// test
 	game->mlx_ptr = mlx_init();
@@ -147,7 +155,7 @@ void	init_game(t_game *game, char *file)
 	game->player.dir_y = 0;
 	game->player.plane_x = 0;
 	game->player.plane_y = 0.66;
-	game->player.camera_x = 0;
+	game->rend.camera_x = 0;
 	game->player.move_speed = MOVE_SPEED;
 	game->player.rot_speed = ROT_SPEED;
 	game->key_code = -1;

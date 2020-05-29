@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 22:00:23 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/24 21:49:28 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 13:26:40 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		press_key(int key, t_game *game)
 {
-	printf("pressed key: %d\n", key);
 	if (key == KEY_W || key == KEY_S)
 		game->key_code = key;
 	else if (key == KEY_D || key == KEY_A)
@@ -34,7 +33,6 @@ int		is_wall(t_map *map, int new_map_x, int new_map_y)
 
 void	move_forward(t_player *player, t_map *map)
 {
-	printf("move_forward\n");
 	int	new_map_x;
 	int	new_map_y;
 	
@@ -51,7 +49,6 @@ void	move_backward(t_player *player, t_map *map)
 	int	new_map_x;
 	int	new_map_y;
 	
-	printf("move_backward\n");
 	new_map_x = (int)(player->pos_x - player->dir_x * player->move_speed);
 	new_map_y = (int)(player->pos_y - player->dir_y * player->move_speed);
 	if (is_wall(map, new_map_x, new_map_y))
@@ -62,7 +59,6 @@ void	move_backward(t_player *player, t_map *map)
 
 void	move_rightward(t_player *player, t_map *map)
 {
-	printf("move_rightward\n");
 	int		new_map_x;
 	int		new_map_y;
 	double	temp_dir_x;
@@ -80,7 +76,6 @@ void	move_rightward(t_player *player, t_map *map)
 
 void	move_leftward(t_player *player, t_map *map)
 {
-	printf("move_leftward\n");
 	int		new_map_x;
 	int		new_map_y;
 	double	temp_dir_x;
@@ -102,7 +97,6 @@ void	turn_right(t_player *player)
 	double	temp_plane_x;
 	double	rot_speed;
 
-	printf("turn_right\n");
 	temp_dir_x = player->dir_x;
 	rot_speed = player->rot_speed;
 	player->dir_x = temp_dir_x * cos(-rot_speed) -
@@ -122,7 +116,6 @@ void	turn_left(t_player *player)
 	double	temp_plane_x;
 	double	rot_speed;
 
-	printf("turn_left\n");
 	temp_dir_x = player->dir_x;
 	rot_speed = player->rot_speed;
 	player->dir_x = temp_dir_x * cos(rot_speed) -
