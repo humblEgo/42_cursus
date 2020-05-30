@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 19:48:53 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 23:08:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	is_valid_file(t_game *game, char *file)
 
 	init_valid_factor(game);
 	if ((fd = open(file, O_RDONLY)) <= 0)
-		return(error(FILE_ERROR));
+		return(error(CUB_FILE_ERROR));
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp("R", line, 1))
@@ -155,7 +155,7 @@ int	is_valid_file(t_game *game, char *file)
 	close(fd);
 	res = is_all_valid_factor(game);
 	if (res == FALSE)
-		error(FILE_ERROR);
+		error(CUB_FILE_ERROR);
 	printf("res %d\n", res);
 	return (res);
 }

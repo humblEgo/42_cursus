@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 18:42:01 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 23:14:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@
 
 # define ARG_ERROR -1 
 # define INIT_ERROR -2 
-# define FILE_ERROR -3
+# define CUB_FILE_ERROR -3
+# define CUB_FILE_OPEN_ERROR -4
+# define TEXTURE_FILE_ERROR -5
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -75,7 +77,6 @@
 
 typedef struct	s_map
 {
-	char	(*temp)[10];
 	int		row_count;
 	char	**grid;
 }				t_map;
@@ -221,7 +222,7 @@ void			update_player(t_game *game);
 int				press_key(int key, t_game *game);
 int				release_key(int key, t_game *game);
 
-void			open_img(t_game *game);
+int				open_img(t_game *game);
 
 int				error(int error_type);
 

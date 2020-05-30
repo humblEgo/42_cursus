@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 19:50:47 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 23:26:04 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ int	parsing_file_to_game(char *file, t_game *game)
 	char	*line;
 	int		fd;
 
-	if ((fd = open(file, O_RDONLY)) <= 0)
-		return(error(FILE_ERROR));
+	if ((fd = open(file, O_RDONLY)) < 0)
+		return (error(CUB_FILE_OPEN_ERROR));
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp("R", line, 1))
@@ -129,7 +129,7 @@ int	parsing_file_to_game(char *file, t_game *game)
 			free(line);
 	}
 	close(fd);
-	return (1);
+	return (TRUE);
 }
 
 void	set_player_pos_and_dir(t_game *game, int row, int col)
@@ -210,20 +210,23 @@ void	init_game(t_game *game, char *file)
 {
 	int i;
 
+	game->init_success = FALSE;
 	game->map.row_count = 0;
 	game->item_count = 0;
 	if (!(parsing_file_to_game(file, game)))
-		game->init_success = FALSE;
+		return ;
 	if (!(game->zbuffer = (double *)malloc(sizeof(double) * game->screen_w)))
-		game->init_success = FALSE;
+		return ;
 	if (!(game->item = (t_item *)malloc(sizeof(t_item) * game->item_count)))
-		game->init_success = FALSE;
+		return ;
 	init_player(game);
 	set_player_and_item_pos(game);
 	game->mlx_ptr = mlx_init();
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "test");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "iwoo");
 	game->rend.camera_x = 0;
 	game->key_code = -1;
+	if (!(open_img(game)))
+		return ;
 	game->init_success = TRUE;
 
 	// test
@@ -241,5 +244,4 @@ void	init_game(t_game *game, char *file)
 	while (++i < game->item_count)
 		printf("itme[%d] x: %f y: %f\n", i, game->item[i].x, game->item[i].y);
 	// test
-
 }

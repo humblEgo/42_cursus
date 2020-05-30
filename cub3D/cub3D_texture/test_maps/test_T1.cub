@@ -1,4 +1,4 @@
-R 640 480 213
+R 640 480
 NOO ./images/NO.xpm
 SO ./images/SO.xpm 
 WE ./images/WE.xpm
