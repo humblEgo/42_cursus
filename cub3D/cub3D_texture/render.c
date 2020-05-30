@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 19:15:47 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/29 20:09:14 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	render_screen(t_game *game)
 		calculate_dist_from_wall(game);
 		fill_map_image(game, &screen);
 	}
-//	fill_item_image(game, &screen);
+	fill_item_image(game, &screen);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, screen.img, 0, 0);
 	mlx_destroy_image(game->mlx_ptr, screen.img);
 }

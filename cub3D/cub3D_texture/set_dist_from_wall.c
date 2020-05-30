@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 14:33:48 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 14:49:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 02:26:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	find_wall_grid(t_game *game)
 			rend->map_y += rend->step_y;
 			rend->side = 1;
 		}
-		if (map->grid[rend->map_x][rend->map_y] != '0')
+		if (map->grid[rend->map_x][rend->map_y] == '1')
 			rend->hit = 1;
 	}
 }

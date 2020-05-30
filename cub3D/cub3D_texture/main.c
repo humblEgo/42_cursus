@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/28 17:58:07 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 18:10:57 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	main(int argc, char *argv[])
 
 	if (!(argc == 2))
 		return (error(ARG_ERROR));
-//	if (is_valid_file(fd))
-//		init_game(&game, argv[1]);
-	init_game(&game, argv[1]);
+	if (is_valid_file(&game, argv[1]))
+		init_game(&game, argv[1]);
 	game.map.temp = grid;
 	open_img(&game);
 /* MAC OS KeyPressMask

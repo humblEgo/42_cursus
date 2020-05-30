@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 20:00:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 02:03:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	parsing_file_to_game(char *file, t_game *game)
 	return (1);
 }
 
-void	init_player_pos_and_dir(t_game *game, int row, int col)
+void	set_player_pos_and_dir(t_game *game, int row, int col)
 {
 	char		dir;
 	double		rotate;
@@ -144,8 +144,6 @@ void	init_player_pos_and_dir(t_game *game, int row, int col)
 	dir = game->map.grid[row][col];
 	game->player.pos_x = row;
 	game->player.pos_y = col;
-	printf("row: %d col: %d\n", row, col);
-	printf("%c\n", dir);
 	game->map.grid[row][col] = '0';
 	if (dir == 'N')
 		return ;
@@ -162,10 +160,10 @@ void	init_player_pos_and_dir(t_game *game, int row, int col)
 	player->dir_y = temp_dir_x * sin(-rotate) + player->dir_y * cos(-rotate);
 	player->plane_x = temp_plane_x * cos(-rotate) - player->plane_y * sin(-rotate);
 	player->plane_y = temp_plane_x * sin(-rotate) + player->plane_y * cos(-rotate);
-
+	//TODO 딱 붙여서 리스폰 했을 때 벽 뚫는 현상 해결하기, 벽사이로 통과가능한 것 해결
 }
 
-void	init_item(t_game *game, int row, int col)
+void	set_item(t_game *game, int row, int col)
 {
 	static int	i = 0;
 
@@ -188,19 +186,29 @@ void	set_player_and_item_pos(t_game *game)
 		{
 			if (game->map.grid[row][col] == 'N' || game->map.grid[row][col] == 'S' ||
 					game->map.grid[row][col] == 'E' || game->map.grid[row][col] == 'W')
-				init_player_pos_and_dir(game, row, col);
+				set_player_pos_and_dir(game, row, col);
 			else if (game->map.grid[row][col] == '2')
-				init_item(game, row, col);
+				set_item(game, row, col);
 		}
 	}
 }
 
+void	init_player(t_game *game)
+{
+	t_player	*player;
+
+	player = &game->player;
+	player->dir_x = -1;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0.66;
+	player->move_speed = MOVE_SPEED;
+	player->rot_speed = ROT_SPEED;
+}
 
 void	init_game(t_game *game, char *file)
 {
 	int i;
-
-	
 
 	game->map.row_count = 0;
 	game->item_count = 0;
@@ -208,29 +216,15 @@ void	init_game(t_game *game, char *file)
 		game->init_success = FALSE;
 	if (!(game->zbuffer = (double *)malloc(sizeof(double) * game->screen_w)))
 		game->init_success = FALSE;
-	if (!(game->item_order = (int *)malloc(sizeof(int) * game->item_count)))
-		game->init_success = FALSE;
-	if (!(game->item_dist = (double *)malloc(sizeof(double) * game->item_count)))
-		game->init_success = FALSE;
 	if (!(game->item = (t_item *)malloc(sizeof(t_item) * game->item_count)))
 		game->init_success = FALSE;
-
-	game->player.dir_x = -1;
-	game->player.dir_y = 0;
-	game->player.plane_x = 0;
-	game->player.plane_y = 0.66;
-	game->player.move_speed = MOVE_SPEED;
-	game->player.rot_speed = ROT_SPEED;
-	
+	init_player(game);
 	set_player_and_item_pos(game);
-
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "test");
 	game->rend.camera_x = 0;
 	game->key_code = -1;
-
 	game->init_success = TRUE;
-
 
 	// test
 	printf("screen_w %d\n", game->screen_w);

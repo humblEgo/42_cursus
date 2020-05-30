@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 18:42:01 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 18:19:34 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,8 @@ typedef	struct	s_item
 typedef	struct	s_valid
 {
 	int			render_size;
-	int			tex_no;
-	int			tex_so;
-	int			tex_we;
-	int			tex_ea;
-	int			tex_s;
-	int			color_floor;
-	int			color_ceiling;
+	int			texture;
+	int			color;
 	int			map;
 }				t_valid;
 
