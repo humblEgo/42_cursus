@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 02:03:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 19:50:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ void	set_player_pos_and_dir(t_game *game, int row, int col)
 
 	player = &game->player;
 	dir = game->map.grid[row][col];
-	game->player.pos_x = row;
-	game->player.pos_y = col;
+	game->player.pos_x = row + 0.5;
+	game->player.pos_y = col + 0.5;
 	game->map.grid[row][col] = '0';
 	if (dir == 'N')
 		return ;

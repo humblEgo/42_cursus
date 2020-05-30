@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 14:50:35 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 18:52:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/30 21:47:13 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	sort_item_by_distance(t_game *game, t_item *item)
 			}
 			j++; }
 		i++;
-	}
-}
+	} }
 
 void	set_item_distance(t_game *game, t_item *item)
 {
@@ -55,8 +54,8 @@ void	calculate_render_item_info(t_game *game, t_item *item, t_rend_item *rd_item
 	t_player	*player;
 
 	player = &game->player;
-	rd_item->x = item->x - player->pos_x;
-	rd_item->y = item->y - player->pos_y;
+	rd_item->x = item->x - player->pos_x + 0.5;
+	rd_item->y = item->y - player->pos_y + 0.5;
 	rd_item->inv_det = 1.0 / (player->plane_x * player->dir_y - player->dir_x * player->plane_y);
 	rd_item->transform_x = rd_item->inv_det * (player->dir_y * rd_item->x - player->dir_x * rd_item->y);
 	rd_item->transform_y = rd_item->inv_det * (-player->plane_y * rd_item->x + player->plane_x * rd_item->y);
