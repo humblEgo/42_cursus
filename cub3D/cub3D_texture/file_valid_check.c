@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 23:08:26 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/31 14:43:59 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,57 @@ void	check_valid_texture_info(char *line, t_game *game)
 		game->valid.tex_s += is_valid_item_texture(line);
 }
 
+int	is_num_str(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (FALSE);
+	return (TRUE);
+}
+
+int	is_valid_color(char *line)
+{
+	char	**split;
+	char	**rgb;
+	int		count;
+	int		rgb_value;
+
+	split = ft_split(line, ' ');
+	count = -1;
+	while (split[++count])
+		if (count > 1)
+			return (FALSE);
+	if (!(ft_strlen(split[0]) == 1))
+		return (FALSE);
+	free(split[0]);
+	rgb = ft_split(split[1], ',');
+	free(split[1]);
+	count = -1;
+	while (rgb[++count])
+	{
+		if (count > 2)
+			return (FALSE);
+		if (!is_num_str(rgb[count]))
+			return (FALSE);
+		rgb_value = ft_atoi(rgb[count]);
+		if (!(rgb_value < 256 && rgb_value >= 0))
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+void	check_valid_color_info(t_game *game, char *line)
+{
+	if (!ft_strncmp("F", line, 1))
+		game->valid.color_floor += is_valid_color(line);
+	else if (!ft_strncmp("C", line, 1))
+		game->valid.color_ceiling += is_valid_color(line);
+}
+
+
 void	init_valid_factor(t_game *game)
 {
 	game->valid.render_size = FALSE;
@@ -111,16 +162,9 @@ int		is_all_valid_factor(t_game *game)
 		return (FALSE);
 	if (valid.tex_no != TRUE || valid.tex_so != TRUE || valid.tex_we != TRUE 
 			|| valid.tex_ea != TRUE || valid.tex_s != TRUE)
-	{
-		printf("no %d\n", valid.tex_no);
-		printf("so %d\n", valid.tex_so);
-		printf("we %d\n", valid.tex_we);
-		printf("ea %d\n", valid.tex_ea);
-		printf("s %d\n", valid.tex_s);
 		return (FALSE);
-	}
-//	if (game->valid.color != TRUE)
-//		return (FALSE);
+	if (game->valid.color_floor != TRUE || game->valid.color_ceiling != TRUE)
+		return (FALSE);
 //	if (game->valid.map != TRUE)
 //		return (FALSE);
 	return (TRUE);
@@ -142,8 +186,8 @@ int	is_valid_file(t_game *game, char *file)
 		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) 
 					|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
 			check_valid_texture_info(line, game);
-//		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
-//			get_floor_and_celing_color(game, line);
+		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
+			check_valid_color_info(game, line);
 //		else if (ft_strlen(line))
 //		{
 //			get_map_grid(game, line);
@@ -156,6 +200,5 @@ int	is_valid_file(t_game *game, char *file)
 	res = is_all_valid_factor(game);
 	if (res == FALSE)
 		error(CUB_FILE_ERROR);
-	printf("res %d\n", res);
 	return (res);
 }
