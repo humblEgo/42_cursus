@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 14:50:35 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 21:47:13 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/31 17:55:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,4 @@ void	fill_item_image(t_game *game, t_img *screen)
 		calculate_render_item_info(game, &item[i], &rd_item);
 		fill_item_image_color(game, &rd_item, img_item, screen);
 	}
-	//TODO: 벽뚫는 아이템 해결!
 }

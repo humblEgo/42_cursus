@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/29 20:09:14 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/31 17:21:21 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wal
 	{
 		if (y < draw_line.start)
 			screen->data[y * game->screen_w + game->x] = game->color.ceiling;
-		else if (y < draw_line.end)
+		else if (y <= draw_line.end)
 		{
 			rend->tex_y = (int)rend->tex_pos & (wall_texture.height - 1);
 			rend->tex_pos += rend->step;

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 23:14:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/05/31 18:33:46 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@
 # define CUB_FILE_ERROR -3
 # define CUB_FILE_OPEN_ERROR -4
 # define TEXTURE_FILE_ERROR -5
+
+# define MAP_FACTORS "012 NSWE"
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -188,6 +190,7 @@ typedef	struct	s_valid
 	int			tex_s;
 	int			color_floor;
 	int			color_ceiling;
+	int			map_player;
 	int			map;
 }				t_valid;
 
@@ -216,6 +219,8 @@ typedef struct	s_game
 }				t_game;
 
 void			init_game(t_game *game, char *file);
+void			add_line_to_map_grid(t_game *game, char *line);
+void			get_map_grid(t_game *game, char *line);
 
 void			render_screen(t_game *game);
 void			update_player(t_game *game);
