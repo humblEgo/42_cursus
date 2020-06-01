@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 00:25:41 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:00:02 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 03:41:33 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,36 +53,6 @@ unsigned char	get_color(t_game *game, t_img *screen, int x, int y)
 	return (rgb);
 }
 
-int	write_bmp_data(int fd, t_game *game, t_img *screen)
-{
-	unsigned char		*pixel_data;
-	int					x;
-	int					y;
-	int					i;
-	unsigned char		color[3];
-
-	ft_bzero(color, 3);
-	i = 0;
-	if (!(pixel_data = (unsigned char *)malloc(sizeof(unsigned char) * game->screen_w * game->screen_h * 3)))
-		return (FALSE);
-	y = -1;
-	while (++y < game->screen_h)
-	{
-		x = -1;
-		while (++x < game->screen_w)
-		{
-			color[2] = (unsigned char)((screen->data[y *game->screen_h + x] & 0xFF0000) >> 16);
-			color[1] = (unsigned char)((screen->data[y *game->screen_h + x] & 0xFF00) >> 8);
-			color[0] = (unsigned char)(screen->data[y *game->screen_h + x] & 0xFF);
-			ft_memmove(&pixel_data[i], color, 3); 
-			i += 3;
-		}
-	}
-	write(fd, pixel_data, game->screen_w * game->screen_h * 3);
-	free(pixel_data);
-	return (TRUE);
-}
-
 int	save_bmp(t_game *game, t_img *screen)
 {
 	int	fd;
@@ -96,17 +66,12 @@ int	save_bmp(t_game *game, t_img *screen)
 	bmp_info_header_size = 40;
 	bmp_pixel_data_size = 4 * game->screen_w * game->screen_h;
 	file_size = bmp_file_header_size + bmp_info_header_size + bmp_pixel_data_size;
-	printf("file_size : %d\n", file_size);
 	if ((fd = open("screenshot.bmp", O_RDWR | O_CREAT | O_TRUNC, 0644)) < 0)
-		return (error(SAVE_FILE_ERROR));
+		return (error(SAVING_FILE_ERROR));
 	if (!(write_bmp_header(fd, file_size, game)))
-		return (error(SAVE_FILE_ERROR));
-	write(fd, screen->data, (game->screen_w * game->screen_h * 4));
-//	if (!(write_bmp_data(fd, game, screen)))
-//		return (error(SAVE_FILE_ERROR));
-	printf("save_bmp success\n");
-//	if (!(write(fd, screen->data, bmp_pixel_data_size)))
-//		return (error(SAVE_FILE_ERROR));
+		return (error(SAVING_FILE_ERROR));
+	if (!(write(fd, screen->data, (game->screen_w * game->screen_h * 4))))
+		return (error(SAVING_FILE_ERROR));
 	close(fd);
 	return (TRUE);
 }

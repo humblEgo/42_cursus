@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 02:14:24 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 03:35:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@
 # define CUB_FILE_ERROR -3
 # define CUB_FILE_OPEN_ERROR -4
 # define TEXTURE_FILE_ERROR -5
-# define SAVE_FILE_ERROR -6
+# define SAVING_FILE_ERROR -6
+# define GETTING_MAP_ERROR -7
 
 # define MAP_FACTORS "012 NSWE"
 # define MAX_SCREEN_W 1920
@@ -250,19 +251,53 @@ void			check_valid_color_info(t_game *game, char *line);
 int				is_closed_map(t_game *game, int i, int j);
 int				is_valid_map(t_game *game);
 
-int				is_num_str(char *str);
-int				ft_count_strings(char **split);
-int				is_correct_num_of_splits(char **split, int correct_num);
+/*
+**				parsing_map_info.c
+*/
 
+void			get_render_size(t_game *game, char *line);
+void			get_texture(t_game *game, char *line);
+void			get_floor_and_ceiling_color(t_game *game, char *line);
+void			get_floor_and_ceiling(t_game *game, char *line);
+int				parsing_file_to_game(char *file, t_game *game);
 
+/*
+**				parsing_map_grid.c
+*/
+
+int				add_line_to_map_grid(t_game *game, char *line);
+int				get_map_grid(t_game *game, char *line);
+int				count_item(char *line);
+
+/*
+**				init_game.c
+*/
+
+void			set_player_pos_and_dir(t_game *game, int row, int col);
+void			set_item(t_game *game, int row, int col);
+void			set_player_and_item_pos(t_game *game);
+void			init_player(t_game *game);
 void			init_game(t_game *game, int argc, char *file);
-void			add_line_to_map_grid(t_game *game, char *line);
-void			get_map_grid(t_game *game, char *line);
+
+/*
+**				update_player.c
+*/
+
+int				is_wall(t_game *game, int new_map_x, int new_map_y);
+void			move_forward_or_backward(t_game *game);
+void			move_rightward_or_leftward(t_game *game);
+void			turn_pov(t_game *game);
+void			update_player(t_game *game);
+
+/*
+**				event_hook.c
+*/
+
+int				exit_game(t_game *game);
+int				press_key(int key, t_game *game);
+
 
 void			render_screen(t_game *game);
-void			update_player(t_game *game);
-int				press_key(int key, t_game *game);
-int				exit_game(t_game *game);
 
 int				open_img(t_game *game);
 
@@ -277,4 +312,9 @@ int				is_valid_file(t_game *game, char *line);
 int				is_valid_save_option(char *argv);
 
 int				save_bmp(t_game *game, t_img *screen);
+
+int				is_num_str(char *str);
+int				ft_count_strings(char **split);
+int				is_correct_num_of_splits(char **split, int correct_num);
+
 #endif
