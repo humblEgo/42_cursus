@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:56:04 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 21:52:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,21 @@ void	cast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line)
 	rend = &game->rend;
 	player = &game->player;
 	set_floor_wall(game);
-	rend->dist_wall = rend->perp_wall_dist;
-
-	/* floor and ceiling*/
 	ceiling_y = draw_line.start;
-	rend->dist_player = 0.0;
 	floor_y = draw_line.end;
 	while (++floor_y < game->screen_h)
 	{
 		rend->current_dist = game->screen_h / (2.0 * floor_y - game->screen_h);
-		rend->weight = (rend->current_dist - rend->dist_player) / (rend->dist_wall - rend->dist_player);
+		rend->weight = rend->current_dist / rend->perp_wall_dist;
 		rend->current_floor_x = rend->weight * rend->floor_x_wall + (1.0 - rend->weight) * player->pos_x; 
 		rend->current_floor_y = rend->weight * rend->floor_y_wall + (1.0 - rend->weight) * player->pos_y; 
-		rend->floor_tex_x = (int)(rend->current_floor_x * game->texture[1].width) % game->texture[1].width;
-		rend->floor_tex_y = (int)(rend->current_floor_y * game->texture[1].height) % game->texture[1].height;
-		color = game->texture[1].data[(int)(game->texture[1].width * rend->floor_tex_y + rend->floor_tex_x)];
+		rend->floor_tex_x = (int)(rend->current_floor_x * game->texture[5].width) % game->texture[5].width;
+		rend->floor_tex_y = (int)(rend->current_floor_y * game->texture[5].height) % game->texture[5].height;
+		color = game->texture[5].data[(int)(game->texture[5].width * rend->floor_tex_y + rend->floor_tex_x)];
 		screen->data[floor_y * game->screen_w + game->x] = color;
-		color = game->texture[2].data[(int)(game->texture[2].width * rend->floor_tex_y + rend->floor_tex_x)];
+		rend->floor_tex_x = (int)(rend->current_floor_x * game->texture[6].width) % game->texture[6].width;
+		rend->floor_tex_y = (int)(rend->current_floor_y * game->texture[6].height) % game->texture[6].height;
+		color = game->texture[6].data[(int)(game->texture[6].width * rend->floor_tex_y + rend->floor_tex_x)];
 		screen->data[ceiling_y * game->screen_w + game->x] = color;
 		ceiling_y--;
 	}

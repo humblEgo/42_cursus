@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:45:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 21:53:19 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ void	get_texture(t_game *game, char *line)
 		game->texture[3].file = ft_strdup(file);
 	else if (!ft_strncmp("S", line, 1))
 		game->texture[4].file = ft_strdup(file);
+	else if (!ft_strncmp("F", line, 1))
+		game->texture[5].file = ft_strdup(file);
+	else if (!ft_strncmp("C", line, 1))
+		game->texture[6].file = ft_strdup(file);
 	free_double_arr(split, 2);
 }
 
-void	get_floor_and_celing_color(t_game *game, char *line)
+void	get_floor_and_ceiling_color(t_game *game, char *line)
 {
 	char	**rgb;
 	int		temp;
@@ -59,6 +63,14 @@ void	get_floor_and_celing_color(t_game *game, char *line)
 	else
 		game->color.ceiling = temp;
  	free_double_arr(rgb, 3);
+}
+
+void	get_floor_and_ceiling(t_game *game, char *line)
+{
+	if (game->floor_ceiling_texture == TRUE)
+		get_texture(game, line);
+	else
+		get_floor_and_ceiling_color(game, line);
 }
 
 void	add_line_to_map_grid(t_game *game, char *line)
@@ -118,9 +130,8 @@ int	parsing_file_to_game(char *file, t_game *game)
 		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) 
 					|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
 			get_texture(game, line);
-		else if ((!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1)) && 
-				game->floor_ceiling_texture == FALSE)
-			get_floor_and_celing_color(game, line);
+		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
+			get_floor_and_ceiling(game, line);
 		else if (ft_strlen(line))
 		{
 			get_map_grid(game, line);

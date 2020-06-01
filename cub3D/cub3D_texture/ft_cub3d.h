@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:16:31 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 21:01:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,6 @@ typedef struct	s_render
 
 	double		floor_x_wall;
 	double		floor_y_wall;
-	double		dist_wall;
-	double		dist_player;
 	double		current_dist;
 	double		weight;
 	double		current_floor_x;
