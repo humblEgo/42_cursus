@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 04:20:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:41:51 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,11 +307,11 @@ t_img			get_wall_texture(t_game *game);
 void			raycast_screen(t_game *game);
 
 /*
-**				raycast_floor_ceiling.c
+**				fill_texture_to_floor_ceiling.c
 */
 
 void			set_floor_wall(t_game *game);
-void			raycast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line);
+void			fill_texture_to_floor_ceiling(t_game *game, t_img *screen, t_line draw_line);
 
 /*
 **				calculate_dist_from_wall.c
@@ -323,23 +323,41 @@ void			find_wall_grid(t_game *game);
 void			set_perp_dist_between_player_and_wall(t_game *game);
 void			calculate_dist_from_wall(t_game *game);
 
+/*
+**				fill_item_image.c
+*/
 
-int				open_img(t_game *game);
+void			sort_item_by_distance(t_game *game, t_item *item);
+void			set_item_distance(t_game *game, t_item *item);
+void			calculate_rendering_item_info(t_game *game, t_item *item, t_rend_item *rd_item);
+void			fill_item_image_color(t_game *game, t_rend_item *rd_item, t_img img_item, t_img *screen);
+void			fill_item_image(t_game *game, t_img *screen);
+
+/*
+**				error.c
+*/
 
 int				error(int error_type);
 
+/*
+**				open_img.c
+*/
+
+int				open_img(t_game *game);
+
+/*
+**				utils.c
+*/
+
+int				ft_count_strings(char **split);
+int				is_num_str(char *str);
+int				is_correct_num_of_splits(char **split, int correct_num);
 void			free_double_arr(char **arr, int n);
 
-void			calculate_dist_from_wall(t_game *game);
-void			fill_item_image(t_game *game, t_img *screen);
+/*
+**				save_bmp.c
+*/
 
-int				is_valid_file(t_game *game, char *line);
 int				is_valid_save_option(char *argv);
-
 int				save_bmp(t_game *game, t_img *screen);
-
-int				is_num_str(char *str);
-int				ft_count_strings(char **split);
-int				is_correct_num_of_splits(char **split, int correct_num);
-
 #endif

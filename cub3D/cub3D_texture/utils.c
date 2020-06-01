@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 01:07:49 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 01:26:53 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:24:01 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,3 +45,12 @@ int	is_correct_num_of_splits(char **split, int correct_num)
 	return (FALSE);
 }
 
+void	free_double_arr(char **arr, int n)
+{
+	int	i;
+
+	i = -1;
+	while (++i < n)
+		free(arr[i]);
+	free(arr);
+}

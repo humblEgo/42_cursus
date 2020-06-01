@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast_floor_ceiling.c                            :+:      :+:    :+:   */
+/*   fill_texture_to_floor_ceilng.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 04:21:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:33:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	set_floor_wall(t_game *game)
 	}
 }
 
-void	raycast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line)
+void	fill_texture_to_floor_ceiling(t_game *game, t_img *screen, t_line draw_line)
 {
 	t_render	*rend;
 	t_player	*player;
