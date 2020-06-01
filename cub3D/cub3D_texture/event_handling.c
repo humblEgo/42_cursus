@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 22:00:23 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 16:30:12 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 22:35:22 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		exit_game(t_game *game)
 
 int		press_key(int key, t_game *game)
 {
-	printf("%d\n", key);
 	if (key == KEY_W || key == KEY_S)
 		game->key_code = key;
 	else if (key == KEY_D || key == KEY_A)

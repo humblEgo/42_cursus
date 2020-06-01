@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 21:01:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 00:30:51 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,24 @@ typedef struct	s_game
 	int			save_option;
 	int			floor_ceiling_texture;
 }				t_game;
+
+
+int				is_valid_file(t_game *game, char *file);
+void			init_valid_factor(t_game *game);
+int				is_all_factors_valid(t_game *game);
+
+int				is_valid_map_size_info(char *line);
+void			check_valid_texture_info(t_game *game, char *line);
+int				is_valid_wall_texture(char *line);
+int				is_valid_item_texture(char *line);
+void			check_valid_color_info(t_game *game, char *line);
+int				is_valid_color(char *line);
+int				is_closed_map(t_game *game, int i, int j);
+int				is_valid_map(t_game *game);
+void			check_info_valid_and_get_map(t_game *game, int fd);
+
+int				is_num_str(char *str);
+
 
 void			init_game(t_game *game, int argc, char *file);
 void			add_line_to_map_grid(t_game *game, char *line);

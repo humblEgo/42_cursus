@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 21:53:19 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 22:35:51 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void	set_player_pos_and_dir(t_game *game, int row, int col)
 		rotate = M_PI * 0.5;
 	else if (dir == 'W')
 		rotate = M_PI * 1.5;
-	printf("rotate: %f\n", rotate);
 	temp_dir_x = player->dir_x;
 	temp_plane_x = player->plane_x;
 	player->dir_x = temp_dir_x * cos(-rotate) - player->dir_y * sin(-rotate);
@@ -219,8 +218,6 @@ void	init_player(t_game *game)
 
 void	init_game(t_game *game, int argc, char *file)
 {
-	int i;
-
 	game->init_success = FALSE;
 	game->map.row_count = 0;
 	game->item_count = 0;
@@ -241,20 +238,4 @@ void	init_game(t_game *game, int argc, char *file)
 	if (argc == 3)
 		game->save_option = TRUE;
 	game->init_success = TRUE;
-
-	// test
-	printf("screen_w %d\n", game->screen_w);
-	printf("screen_h %d\n", game->screen_h);
-	for(i = 0; i < 5; i++)
-		printf("%s\n", game->texture[i].file);
-	printf("%X\n%X\n", game->color.floor, game->color.ceiling);
-	printf("%s\n", file);
-	i = -1;
-	while (game->map.grid[++i])
-		printf("%s\n", game->map.grid[i]);
-	printf("rows %d\n", game->map.row_count);
-	i = -1;
-	while (++i < game->item_count)
-		printf("itme[%d] x: %f y: %f\n", i, game->item[i].x, game->item[i].y);
-	// test
 }

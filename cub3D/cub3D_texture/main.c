@@ -6,12 +6,21 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:44:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 22:40:52 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 #include "libft.h"
+
+int	is_valid_save_option(char *argv)
+{
+	if (ft_strlen(argv) != 6)
+		return (FALSE);
+	if (ft_strncmp("--save", argv, 6))
+		return (FALSE);
+	return (TRUE);
+}
 
 int	main_loop_process(t_game *game)
 {
@@ -37,7 +46,6 @@ int	main(int argc, char *argv[])
 		return (error(ARG_ERROR));
 	if (is_valid_file(&game, argv[1]))
 	{
-		printf("it's valid_file\n");
 		init_game(&game, argc, argv[1]);
 		if (game.init_success == FALSE)
 			return (error(INIT_ERROR));

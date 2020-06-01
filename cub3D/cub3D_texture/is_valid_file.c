@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_valid_check.c                                 :+:      :+:    :+:   */
+/*   is_valid_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 20:57:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 00:32:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 #include "libft.h"
 #include "get_next_line.h"
-
-int	is_valid_save_option(char *argv)
-{
-	if (ft_strlen(argv) != 6)
-		return (FALSE);
-	if (ft_strncmp("--save", argv, 6))
-		return (FALSE);
-	return (TRUE);
-}
 
 int	is_valid_map_size_info(char *line)
 {
@@ -84,7 +75,7 @@ int	is_valid_item_texture(char *line)
 	return (TRUE);
 }
 
-void	check_valid_texture_info(char *line, t_game *game)
+void	check_valid_texture_info(t_game *game, char *line)
 {
 	if (!ft_strncmp("NO", line, 2))
 		game->valid.tex_no += is_valid_wall_texture(line);
@@ -176,30 +167,30 @@ int		is_closed_map(t_game *game, int i, int j)
 
 int		is_valid_map(t_game *game)
 {
-	char	*map_factors;
 	int		i;
 	int		j;
 
-	map_factors = MAP_FACTORS;
 	i = -1;
 	while (++i < game->map.row_count)
 	{
 		j = -1;
 		while (game->map.grid[i][++j])
 		{
-			if (!(ft_strchr(map_factors, game->map.grid[i][j])))
+			if (!(ft_strchr(MAP_FACTORS, game->map.grid[i][j])))
 				return (FALSE);
 			if (ft_strchr("NSEW", game->map.grid[i][j]))
-				game->valid.map_player += 1;
+				game->valid.map_player += TRUE;
 			if (game->map.grid[i][j] == '0' || game->map.grid[i][j] == '2')
 				if (!(is_closed_map(game, i, j)))
+				{
+					free_double_arr(game->map.grid, game->map.row_count);
 					return (FALSE);
+				}
 		}
 	}
-	game->valid.map = TRUE;
-	return (TRUE);
+	free_double_arr(game->map.grid, game->map.row_count);
+	return (game->valid.map = TRUE);
 }
-
 
 void	init_valid_factor(t_game *game)
 {
@@ -217,7 +208,7 @@ void	init_valid_factor(t_game *game)
 	game->floor_ceiling_texture = FALSE;
 }
 
-int		is_all_valid_factor(t_game *game)
+int		is_all_factors_valid(t_game *game)
 {
 	t_valid	valid;
 
@@ -234,23 +225,17 @@ int		is_all_valid_factor(t_game *game)
 	return (TRUE);
 }
 
-int	is_valid_file(t_game *game, char *file)
+void	check_info_valid_and_get_map(t_game *game, int fd)
 {
 	char	*line;
-	int		res;
-	int		fd;
 
-	res = FALSE;
-	init_valid_factor(game);
-	if ((fd = open(file, O_RDONLY)) <= 0)
-		return(error(CUB_FILE_ERROR));
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp("R", line, 1))
 			game->valid.render_size += is_valid_map_size_info(line);
-		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) 
-					|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
-			check_valid_texture_info(line, game);
+		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) || !ft_strncmp("WE", line, 2)
+				|| !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
+			check_valid_texture_info(game, line);
 		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 			check_valid_color_info(game, line);
 		else if (ft_strlen(line))
@@ -258,11 +243,18 @@ int	is_valid_file(t_game *game, char *file)
 		else
 			free(line);
 	}
+}
+
+int	is_valid_file(t_game *game, char *file)
+{
+	int		fd;
+
+	init_valid_factor(game);
+	if ((fd = open(file, O_RDONLY)) <= 0)
+		return (error(CUB_FILE_ERROR));
+	check_info_valid_and_get_map(game, fd);
 	close(fd);
-	if (is_valid_map(game))
-		res = is_all_valid_factor(game);
-	free_double_arr(game->map.grid, game->map.row_count);
-	if (res == FALSE)
-		error(CUB_FILE_ERROR);
-	return (res);
+	if (is_valid_map(game) && is_all_factors_valid(game))
+		return (TRUE);
+	return (error(CUB_FILE_ERROR));
 }
