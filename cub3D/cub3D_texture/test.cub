@@ -1,8 +1,8 @@
 R 640 480
-NO ./images/NO2.xpm
-SO ./images/SO2.xpm 
+NO ./images/NO.xpm
+SO ./images/SO.xpm 
 WE ./images/WE.xpm
-EA ./images/EA2.xpm
+EA ./images/EA.xpm
 S ./images/ITEM.xpm
 F ./images/FLOOR.xpm
 C ./images/CEILING.xpm

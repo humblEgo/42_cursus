@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/02/28 16:33:24 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/02 01:12:41 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ SRCS = ft_memset.c \
 	   ft_putchar_fd.c \
 	   ft_putstr_fd.c \
 	   ft_putendl_fd.c \
-	   ft_putnbr_fd.c
+	   ft_putnbr_fd.c \
+	   ft_strcmp.c
 _bonus = ft_lstnew.c \
 			 ft_lstadd_front.c \
 			 ft_lstsize.c \

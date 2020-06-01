@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 00:30:51 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 02:14:24 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@
 # define SAVE_FILE_ERROR -6
 
 # define MAP_FACTORS "012 NSWE"
+# define MAX_SCREEN_W 1920
+# define MIN_SCREEN_W 640
+# define MAX_SCREEN_H 1080
+# define MIN_SCREEN_H 480
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -218,22 +222,37 @@ typedef struct	s_game
 	int			floor_ceiling_texture;
 }				t_game;
 
+/*
+**				is_valid_file.c
+*/
 
 int				is_valid_file(t_game *game, char *file);
 void			init_valid_factor(t_game *game);
+void			check_map_info_and_get_map(t_game *game, int fd);
 int				is_all_factors_valid(t_game *game);
 
+/*
+**				valid_check_1.c
+*/
+
 int				is_valid_map_size_info(char *line);
-void			check_valid_texture_info(t_game *game, char *line);
 int				is_valid_wall_texture(char *line);
 int				is_valid_item_texture(char *line);
-void			check_valid_color_info(t_game *game, char *line);
+void			check_valid_texture_info(t_game *game, char *line);
+
+/*
+**				valid_check_2.c
+*/
+
+int				is_valid_rgb_values(char **rgb);
 int				is_valid_color(char *line);
+void			check_valid_color_info(t_game *game, char *line);
 int				is_closed_map(t_game *game, int i, int j);
 int				is_valid_map(t_game *game);
-void			check_info_valid_and_get_map(t_game *game, int fd);
 
 int				is_num_str(char *str);
+int				ft_count_strings(char **split);
+int				is_correct_num_of_splits(char **split, int correct_num);
 
 
 void			init_game(t_game *game, int argc, char *file);
