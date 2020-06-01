@@ -6,20 +6,30 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 22:00:23 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 16:11:17 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 16:30:12 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
+int		exit_game(t_game *game)
+{
+	printf("exit\n");
+	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	return (0);
+}
+
 int		press_key(int key, t_game *game)
 {
+	printf("%d\n", key);
 	if (key == KEY_W || key == KEY_S)
 		game->key_code = key;
 	else if (key == KEY_D || key == KEY_A)
 		game->key_code = key;
 	else if (key == KEY_RIGHT || key == KEY_LEFT)
 		game->key_code = key;
+	else if (key == KEY_ESC)
+		exit_game(game);
 	game->moved = TRUE;
 	return (0);
 }
@@ -27,11 +37,12 @@ int		press_key(int key, t_game *game)
 int		is_wall(t_game *game, int new_map_x, int new_map_y)
 {
 	t_map		*map;
-	t_render	*rend;
+	t_player	*player;
 
 	map = &game->map;
-	rend = &game->rend;
-	if (map->grid[(int)game->player.pos_x][new_map_y] != '0' && map->grid[new_map_x][(int)game->player.pos_y] != '0')
+	player = &game->player;
+	if (map->grid[(int)player->pos_x][new_map_y] != '0' && 
+			map->grid[new_map_x][(int)player->pos_y] != '0')
 		return (TRUE);
 	if (map->grid[new_map_x][new_map_y] != '0')
 		return (TRUE);
@@ -142,7 +153,6 @@ void	turn_left(t_game *game)
 
 void	update_player(t_game *game)
 {
-
 	if (game->key_code == KEY_W)
 		move_forward(game);
 	else if (game->key_code == KEY_S)

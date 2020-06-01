@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 01:23:00 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 20:01:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define FALSE 0
 
 # define DEAL_KEY_PRESS 2
-# define DEAL_KEY_RELEASE 3
+# define DEAL_DESTROY_NOTIFY 17
 
 /* MAC OS KEY SETTINGS
 
@@ -31,7 +31,6 @@
 # define KEY_S 1 
 # define KEY_D 2
 # define KEY_A 0
-
 # define KEY_ESC 53
 */
 
@@ -46,6 +45,7 @@
 # define KEY_S 115 
 # define KEY_D 100
 # define KEY_A 97
+# define KEY_ESC 65307
 
 /* UBUNTU KEY  SETTINGS */
 
@@ -201,7 +201,7 @@ typedef struct	s_game
 	t_map		map;
 	t_player	player;
 	t_render	rend;
-	t_img		texture[5];
+	t_img		texture[7];
 	t_color		color;
 	t_item		*item;
 	t_valid		valid;
@@ -217,6 +217,7 @@ typedef struct	s_game
 	int			x;
 	int			y;
 	int			save_option;
+	int			floor_ceiling_texture;
 }				t_game;
 
 void			init_game(t_game *game, int argc, char *file);
@@ -226,7 +227,7 @@ void			get_map_grid(t_game *game, char *line);
 void			render_screen(t_game *game);
 void			update_player(t_game *game);
 int				press_key(int key, t_game *game);
-int				release_key(int key, t_game *game);
+int				exit_game(t_game *game);
 
 int				open_img(t_game *game);
 

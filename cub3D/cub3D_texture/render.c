@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 01:11:29 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 19:59:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	init_wall_info(t_game *game, t_img wall_texture, t_line draw_line)
 	rend->tex_pos = (double)(draw_line.start - game->screen_h / 2 + draw_line.height / 2) * rend->step;
 }
 
+void	cast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line)
+{
+
+}
+
 void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture)
 {
 	int			y;
@@ -41,10 +46,12 @@ void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wal
 	
 	rend = &game->rend;
 	init_wall_info(game, wall_texture, draw_line);
+	if (game->floor_ceiling_texture == TRUE)
+		cast_floor_and_ceiling(game, screen, draw_line);
 	y = -1;
 	while (++y < game->screen_h)
 	{
-		if (y < draw_line.start)
+		if (y < draw_line.start && game->floor_ceilng_texture == FALSE)
 			screen->data[y * game->screen_w + game->x] = game->color.ceiling;
 		else if (y <= draw_line.end)
 		{
@@ -53,7 +60,7 @@ void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wal
 			color = wall_texture.data[(int)(wall_texture.width * rend->tex_y + rend->tex_x)];
 			screen->data[y * game->screen_w + game->x] = color;
 		}
-		else
+		else if (y > game->screen_h && game->floor_ceiling_texture == FALSE)
 			screen->data[y * game->screen_w + game->x] = game->color.floor;
 	}
 }
