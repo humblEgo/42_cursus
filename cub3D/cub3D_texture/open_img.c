@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:46:52 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 22:53:19 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 20:43:30 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	open_img(t_game *game)
 {
 	int	i;
 
+	printf("open_img start\n");
 	i = -1;
 	while (++i < 5)
 	{
@@ -27,5 +28,6 @@ int	open_img(t_game *game)
 		game->texture[i].data = (int *)mlx_get_data_addr(game->texture[i].img,
 				&game->texture[i].bpp, &game->texture[i].size_line, &game->texture[i].endian);
 	}
+	printf("open_img end\n");
 	return (TRUE);
 }

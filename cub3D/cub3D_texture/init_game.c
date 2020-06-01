@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 01:18:09 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 20:45:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int	parsing_file_to_game(char *file, t_game *game)
 		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) 
 					|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
 			get_texture(game, line);
-		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
+		else if ((!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1)) && 
+				game->floor_ceiling_texture == FALSE)
 			get_floor_and_celing_color(game, line);
 		else if (ft_strlen(line))
 		{
@@ -160,7 +161,6 @@ void	set_player_pos_and_dir(t_game *game, int row, int col)
 	player->dir_y = temp_dir_x * sin(-rotate) + player->dir_y * cos(-rotate);
 	player->plane_x = temp_plane_x * cos(-rotate) - player->plane_y * sin(-rotate);
 	player->plane_y = temp_plane_x * sin(-rotate) + player->plane_y * cos(-rotate);
-	//TODO 딱 붙여서 리스폰 했을 때 벽 뚫는 현상 해결하기, 벽사이로 통과가능한 것 해결
 }
 
 void	set_item(t_game *game, int row, int col)
@@ -236,7 +236,7 @@ void	init_game(t_game *game, int argc, char *file)
 	printf("screen_h %d\n", game->screen_h);
 	for(i = 0; i < 5; i++)
 		printf("%s\n", game->texture[i].file);
-	printf("%d\n%d\n", game->color.floor, game->color.ceiling);
+	printf("%X\n%X\n", game->color.floor, game->color.ceiling);
 	printf("%s\n", file);
 	i = -1;
 	while (game->map.grid[++i])

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 01:22:27 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 20:57:21 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,23 @@ int	is_valid_color(char *line)
 
 void	check_valid_color_info(t_game *game, char *line)
 {
+	int len;
+
+	len = ft_strlen(line);
+	if (len < 6)
+		return ;
 	if (!ft_strncmp("F", line, 1))
-		game->valid.color_floor += is_valid_color(line);
+		if (!ft_strncmp(".xpm", &line[len - 4], 4) && (game->floor_ceiling_texture = TRUE))
+			game->valid.color_floor += TRUE;
+		else
+			game->valid.color_floor += is_valid_color(line);
 	else if (!ft_strncmp("C", line, 1))
-		game->valid.color_ceiling += is_valid_color(line);
+		if (!ft_strncmp(".xpm", &line[len - 4], 4) && (game->floor_ceiling_texture = TRUE))
+			game->valid.color_ceiling += TRUE;
+		else
+			game->valid.color_ceiling += is_valid_color(line);
+	else
+		return ;
 }
 
 int		is_closed_map(t_game *game, int i, int j)
@@ -201,6 +214,7 @@ void	init_valid_factor(t_game *game)
 	game->valid.color_ceiling = FALSE;
 	game->valid.map_player = FALSE;
 	game->valid.map = FALSE;
+	game->floor_ceiling_texture = FALSE;
 }
 
 int		is_all_valid_factor(t_game *game)
