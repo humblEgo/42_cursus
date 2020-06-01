@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 03:35:26 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:20:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,8 +296,33 @@ void			update_player(t_game *game);
 int				exit_game(t_game *game);
 int				press_key(int key, t_game *game);
 
+/*
+**				render_screen.c
+*/
 
-void			render_screen(t_game *game);
+void			init_wall_info(t_game *game, t_img wall_texture, t_line draw_line);
+void			fill_map_image(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture);
+t_line			get_draw_line(t_game *game);
+t_img			get_wall_texture(t_game *game);
+void			raycast_screen(t_game *game);
+
+/*
+**				raycast_floor_ceiling.c
+*/
+
+void			set_floor_wall(t_game *game);
+void			raycast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line);
+
+/*
+**				calculate_dist_from_wall.c
+*/
+
+void			set_camera_raydir_currentpos(t_game *game);
+void			set_deltadist_sidedist_step(t_game *game);
+void			find_wall_grid(t_game *game);
+void			set_perp_dist_between_player_and_wall(t_game *game);
+void			calculate_dist_from_wall(t_game *game);
+
 
 int				open_img(t_game *game);
 

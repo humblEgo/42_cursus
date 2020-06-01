@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_dist_from_wall.c                               :+:      :+:    :+:   */
+/*   calculate_dist_from_wall.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 14:33:48 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 02:26:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:00:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	set_camera_and_ray_dir(t_game *game)
+void	set_camera_raydir_currentpos(t_game *game)
 {
 	t_render	*rend;
 	t_player	*player;
@@ -22,13 +22,17 @@ void	set_camera_and_ray_dir(t_game *game)
 	rend->camera_x = (2 * game->x / (double)game->screen_w) - 1;
 	rend->ray_dir_x = player->dir_x + player->plane_x * rend->camera_x;
 	rend->ray_dir_y = player->dir_y + player->plane_y * rend->camera_x;
+	rend->map_x = (int)player->pos_x;
+	rend->map_y = (int)player->pos_y;
 }
 
-void	set_delta_dist(t_game *game)
+void	set_deltadist_sidedist_step(t_game *game)
 {
 	t_render	*rend;
+	t_player	*player;
 
 	rend = &game->rend;
+	player = &game->player;
 	if (rend->ray_dir_y == 0)
 		rend->delta_dist_x = 0;
 	else
@@ -37,15 +41,6 @@ void	set_delta_dist(t_game *game)
 		rend->delta_dist_y = 0;
 	else
 		rend->delta_dist_y = (rend->ray_dir_y == 0) ? 1 : fabs(1 / rend->ray_dir_y);
-}
-
-void	set_side_dist_and_step(t_game *game)
-{
-	t_render	*rend;
-	t_player	*player;
-
-	rend = &game->rend;
-	player = &game->player;
 	if (rend->ray_dir_x < 0 && (rend->step_x = -1))
 		rend->side_dist_x = (player->pos_x - rend->map_x) * rend->delta_dist_x;
 	else if (rend->ray_dir_x >= 0 && (rend->step_x = 1))
@@ -54,17 +49,6 @@ void	set_side_dist_and_step(t_game *game)
 		rend->side_dist_y = (player->pos_y - rend->map_y) * rend->delta_dist_y;
 	else if (rend->ray_dir_y >= 0 && (rend->step_y = 1))
 		rend->side_dist_y = (rend->map_y + 1.0 - player->pos_y) * rend->delta_dist_y;
-}
-
-void	set_map_grid_of_current_pos(t_game *game)
-{
-	t_player	*player;
-	t_render	*rend;
-
-	player = &game->player;
-	rend = &game->rend;
-	rend->map_x = (int)player->pos_x;
-	rend->map_y = (int)player->pos_y;
 }
 
 void	find_wall_grid(t_game *game)
@@ -110,10 +94,8 @@ void	set_perp_dist_between_player_and_wall(t_game *game)
 
 void	calculate_dist_from_wall(t_game *game)
 {
-	set_camera_and_ray_dir(game);
-	set_map_grid_of_current_pos(game);
-	set_delta_dist(game);
-	set_side_dist_and_step(game);
+	set_camera_raydir_currentpos(game);
+	set_deltadist_sidedist_step(game);
 	find_wall_grid(game);
 	set_perp_dist_between_player_and_wall(game);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   raycast_screen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 21:52:47 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 04:20:57 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,65 +33,7 @@ void	init_wall_info(t_game *game, t_img wall_texture, t_line draw_line)
 	rend->tex_pos = (double)(draw_line.start - game->screen_h / 2 + draw_line.height / 2) * rend->step;
 }
 
-void	set_floor_wall(t_game *game)
-{
-	t_render	*rend;
-
-	rend = &game->rend;
-	if (rend->side == 0 && rend->ray_dir_x > 0)
-	{
-		rend->floor_x_wall = rend->map_x;
-		rend->floor_y_wall = rend->map_y + rend->wall_x;
-	}
-	else if (rend->side == 0 && rend->ray_dir_x < 0)
-	{
-		rend->floor_x_wall = rend->map_x + 1.0;
-		rend->floor_y_wall = rend->map_y + rend->wall_x;
-	}
-	else if (rend->side == 0 && rend->ray_dir_x < 0)
-	{
-		rend->floor_x_wall = rend->map_x + rend->wall_x;
-		rend->floor_y_wall = rend->map_y;
-	}
-	else
-	{
-		rend->floor_x_wall = rend->map_x + rend->wall_x;
-		rend->floor_y_wall = rend->map_y + 1.0;
-	}
-}
-
-void	cast_floor_and_ceiling(t_game *game, t_img *screen, t_line draw_line)
-{
-	t_render	*rend;
-	t_player	*player;
-	int			floor_y;
-	int			ceiling_y;
-	int			color;
-
-	rend = &game->rend;
-	player = &game->player;
-	set_floor_wall(game);
-	ceiling_y = draw_line.start;
-	floor_y = draw_line.end;
-	while (++floor_y < game->screen_h)
-	{
-		rend->current_dist = game->screen_h / (2.0 * floor_y - game->screen_h);
-		rend->weight = rend->current_dist / rend->perp_wall_dist;
-		rend->current_floor_x = rend->weight * rend->floor_x_wall + (1.0 - rend->weight) * player->pos_x; 
-		rend->current_floor_y = rend->weight * rend->floor_y_wall + (1.0 - rend->weight) * player->pos_y; 
-		rend->floor_tex_x = (int)(rend->current_floor_x * game->texture[5].width) % game->texture[5].width;
-		rend->floor_tex_y = (int)(rend->current_floor_y * game->texture[5].height) % game->texture[5].height;
-		color = game->texture[5].data[(int)(game->texture[5].width * rend->floor_tex_y + rend->floor_tex_x)];
-		screen->data[floor_y * game->screen_w + game->x] = color;
-		rend->floor_tex_x = (int)(rend->current_floor_x * game->texture[6].width) % game->texture[6].width;
-		rend->floor_tex_y = (int)(rend->current_floor_y * game->texture[6].height) % game->texture[6].height;
-		color = game->texture[6].data[(int)(game->texture[6].width * rend->floor_tex_y + rend->floor_tex_x)];
-		screen->data[ceiling_y * game->screen_w + game->x] = color;
-		ceiling_y--;
-	}
-}
-
-void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture)
+void	fill_map_image(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture)
 {
 	int			y;
 	int			color;
@@ -115,7 +57,7 @@ void	fill_vertical_line(t_game *game, t_img *screen, t_line draw_line, t_img wal
 			screen->data[y * game->screen_w + game->x] = game->color.floor;
 	}
 	if (game->floor_ceiling_texture == TRUE)
-		cast_floor_and_ceiling(game, screen, draw_line);
+		raycast_floor_and_ceiling(game, screen, draw_line);
 }
 
 
@@ -158,20 +100,11 @@ t_img	get_wall_texture(t_game *game)
 	return (texture);
 }
 
-
-void	fill_map_image(t_game *game, t_img *screen)
-{
-	t_line	draw_line;
-	t_img	wall_texture;
-
-	draw_line = get_draw_line(game);
-	wall_texture = get_wall_texture(game);
-	fill_vertical_line(game, screen, draw_line, wall_texture);
-}
-
-void	render_screen(t_game *game)
+void	raycast_screen(t_game *game)
 {
 	t_img	screen;
+	t_line	draw_line;
+	t_img	wall_texture;
 
 	screen.img = mlx_new_image(game->mlx_ptr, game->screen_w, game->screen_h);
 	screen.data = (int *)mlx_get_data_addr(screen.img, &screen.bpp, &screen.size_line, &screen.endian);
@@ -179,13 +112,13 @@ void	render_screen(t_game *game)
 	while (++game->x < game->screen_w)
 	{
 		calculate_dist_from_wall(game);
-		fill_map_image(game, &screen);
+		draw_line = get_draw_line(game);
+		wall_texture = get_wall_texture(game);
+		fill_map_image(game, &screen, draw_line, wall_texture);
 	}
 	fill_item_image(game, &screen);
 	if (game->save_option == TRUE)
 		save_bmp(game, &screen);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, screen.img, 0, 0);
 	mlx_destroy_image(game->mlx_ptr, screen.img);
-
-
 }
