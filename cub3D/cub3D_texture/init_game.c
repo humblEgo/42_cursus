@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/31 18:49:18 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 01:18:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void	init_player(t_game *game)
 	player->rot_speed = ROT_SPEED;
 }
 
-void	init_game(t_game *game, char *file)
+void	init_game(t_game *game, int argc, char *file)
 {
 	int i;
 
@@ -227,6 +227,8 @@ void	init_game(t_game *game, char *file)
 	game->key_code = -1;
 	if (!(open_img(game)))
 		return ;
+	if (argc == 3)
+		game->save_option = TRUE;
 	game->init_success = TRUE;
 
 	// test

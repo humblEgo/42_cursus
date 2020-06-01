@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/31 18:51:16 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 01:17:42 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	main(int argc, char *argv[])
 {
 	t_game		game;
 
-	if (!(argc == 2))
+	if (!(argc == 2 || (argc == 3 && is_valid_save_option(argv[2]))))
 		return (error(ARG_ERROR));
 	if (is_valid_file(&game, argv[1]))
 	{
-		init_game(&game, argv[1]);
+		init_game(&game, argc, argv[1]);
 		if (game.init_success == FALSE)
 			return (error(INIT_ERROR));
 		mlx_hook(game.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 

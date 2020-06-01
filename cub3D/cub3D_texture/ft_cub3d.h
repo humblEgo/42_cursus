@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/31 18:33:46 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 01:23:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define CUB_FILE_ERROR -3
 # define CUB_FILE_OPEN_ERROR -4
 # define TEXTURE_FILE_ERROR -5
+# define SAVE_FILE_ERROR -6
 
 # define MAP_FACTORS "012 NSWE"
 
@@ -213,12 +214,12 @@ typedef struct	s_game
 	int			moved;
 	double		*zbuffer;
 	int			init_success;
-	int			**map_grid;
 	int			x;
 	int			y;
+	int			save_option;
 }				t_game;
 
-void			init_game(t_game *game, char *file);
+void			init_game(t_game *game, int argc, char *file);
 void			add_line_to_map_grid(t_game *game, char *line);
 void			get_map_grid(t_game *game, char *line);
 
@@ -237,4 +238,7 @@ void			calculate_dist_from_wall(t_game *game);
 void			fill_item_image(t_game *game, t_img *screen);
 
 int				is_valid_file(t_game *game, char *line);
+int				is_valid_save_option(char *argv);
+
+int				save_bmp(t_game *game, t_img *screen);
 #endif

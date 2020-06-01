@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 22:30:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/30 23:13:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 00:39:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int	error(int error_type)
 		ft_putstr_fd("Not valid texture file\n", 2);
 	else if (error_type == INIT_ERROR)
 		ft_putstr_fd("Failed to initialize game\n", 2);
+	else if (error_type == SAVE_FILE_ERROR)
+		ft_putstr_fd("Failed to save screenshot\n", 2);
 	return (0);
 }

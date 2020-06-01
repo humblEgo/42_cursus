@@ -6,13 +6,22 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/05/31 19:24:28 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/01 01:22:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 #include "libft.h"
 #include "get_next_line.h"
+
+int	is_valid_save_option(char *argv)
+{
+	if (ft_strlen(argv) != 6)
+		return (FALSE);
+	if (ft_strncmp("--save", argv, 6))
+		return (FALSE);
+	return (TRUE);
+}
 
 int	is_valid_map_size_info(char *line)
 {
