@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 16:32:48 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 20:54:24 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@ t_img	get_wall_texture(t_game *game)
 	{
 		if ((rend->ray_dir_x <= 0 && rend->ray_dir_y <= 0) ||
 				(rend->ray_dir_x >= 0 && rend->ray_dir_y <= 0))
-			texture = game->texture[0];
+			texture = game->texture[2];
 		else
-			texture = game->texture[1];
+			texture = game->texture[3];
 	}
 	else
 	{
 		if ((rend->ray_dir_x <= 0 && rend->ray_dir_y <= 0) ||
 				(rend->ray_dir_x <= 0 && rend->ray_dir_y >= 0))
-			texture = game->texture[2];
+			texture = game->texture[0];
 		else
-			texture = game->texture[3];
+			texture = game->texture[1];
 	}
 	return (texture);
 }

@@ -6,10 +6,10 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/02 17:37:55 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/02 20:47:03 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** # 
-#
+
 NAME = cub3D
 
 CUB_SRC = main.c \
@@ -38,7 +38,7 @@ ENGINE_DIR = ./engine
 LIBFT_DIR = ./libs/libft
 MLX_DIR = ./libs/minilibx_linux
 
-HEADER = -I ./includes -I $(LIBFTDIR) -I $(MLXDIR)
+HEADER = -I ./includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 
 CUB_SRCS = $(addprefix $(CUB_DIR)/, $(CUB_SRC))
 ENGINE_SRCS = $(addprefix $(ENGINE_DIR)/, $(ENGINE_SRC))
@@ -59,7 +59,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@cd $(LIBFT_DIR) ; make
 	@cd $(MLX_DIR) ; make
-	$(CC) $(CFLAGS) $^ -L $(MLX_DIR) $(MLX_LIB) -L $(LIBFT_DIR) $(FT_LIB) -lm
+	$(CC) $(CFLAGS) $^ -L $(MLX_DIR) $(MLX_LIB) -L $(LIBFT_DIR) $(FT_LIB) -lm -o $@
 
 $.o: .c
 	$(CC) $(CFLAGS) -o $@ -c $<
