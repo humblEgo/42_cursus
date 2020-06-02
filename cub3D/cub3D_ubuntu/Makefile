@@ -6,45 +6,68 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/02 12:11:31 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/02 17:37:55 by iwoo             ###   ########.fr        #
 #                                                                              #
-# **************************************************************************** #
-
+# **************************************************************************** # 
+#
 NAME = cub3D
 
-NAME = libft.a
+CUB_SRC = main.c \
+	  is_valid_file.c \
+	  valid_check_1.c \
+	  valid_check_2.c \
+	  init_game.c \
+	  parsing_map_info.c \
+	  parsing_map_grid.c \
+	  open_img.c \
+	  save_bmp.c \
+	  error.c \
+	  utils.c \
+	  get_next_line.c \
+	  get_next_line_utils.c 
 
-LIBDIR = libs/libft
-LIBFT_FLAGS = -L./libft -lft
+ENGINE_SRC = update_player.c \
+			 event_hook.c \
+			 raycast_screen.c \
+			 calculate_dist_from_wall.c \
+			 fill_item_image.c \
+			 fill_texture_to_floor_ceiling.c
 
+CUB_DIR = ./srcs
+ENGINE_DIR = ./engine
+LIBFT_DIR = ./libs/libft
+MLX_DIR = ./libs/minilibx_linux
+
+HEADER = -I ./includes -I $(LIBFTDIR) -I $(MLXDIR)
+
+CUB_SRCS = $(addprefix $(CUB_DIR)/, $(CUB_SRC))
+ENGINE_SRCS = $(addprefix $(ENGINE_DIR)/, $(ENGINE_SRC))
+SRCS = $(CUB_SRCS) $(ENGINE_SRCS)
 OBJS = $(SRCS:%c=%o)
-HEADER = libft.h
 
 CC = gcc
 # Ubuntu 18.04 option
-CFLAGS = -Wall -Wextra -Werror -lmlx -X11 -Xext -lm -lft
+CFLAGS = -Wall -Wextra -Werror $(HEADER)
+MLX_LIB = -lmlx -lX11 -lXext
+FT_LIB = -lft
 
+.SUFFIXES: .c .o
+.PHONY: all clean fclean re bonus
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $@ $^
+	@cd $(LIBFT_DIR) ; make
+	@cd $(MLX_DIR) ; make
+	$(CC) $(CFLAGS) $^ -L $(MLX_DIR) $(MLX_LIB) -L $(LIBFT_DIR) $(FT_LIB) -lm
 
-bonus: all $(OBJS_BONUS)
-	$(CC) $(CFLAGS) -c $(_bonus)
-	ar rcs $(NAME) $(OBJS_BONUS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $< -include $(HEADER) 
+$.o: .c
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -f $(OBJS) $(OBJS_BONUS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-re_bonus: fclean bonus
-
-.PHONAY: all clean fclean re bonus

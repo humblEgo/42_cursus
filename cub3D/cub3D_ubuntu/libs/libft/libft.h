@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 21:51:12 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 01:05:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 17:38:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *l, void *(*f)(void *), void (*del)(void *));
 
-int				ft_strcmp(char *s1, char *s2);
+int				ft_strcmp(const char *s1, const char *s2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 22:40:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 16:31:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main_loop_process(t_game *game)
 	if (update)
 	{
 		update_player(game);
-		render_screen(game);
+		raycast_screen(game);
 	}
 	game->moved = FALSE;
 	update = FALSE;

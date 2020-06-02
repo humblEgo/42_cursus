@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 04:20:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 16:32:48 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	fill_map_image(t_game *game, t_img *screen, t_line draw_line, t_img wall_te
 			screen->data[y * game->screen_w + game->x] = game->color.floor;
 	}
 	if (game->floor_ceiling_texture == TRUE)
-		raycast_floor_and_ceiling(game, screen, draw_line);
+		fill_texture_to_floor_ceiling(game, screen, draw_line);
 }
 
 

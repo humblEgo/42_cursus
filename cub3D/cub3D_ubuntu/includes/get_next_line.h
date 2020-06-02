@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 00:35:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/02 16:31:02 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# define BUFFER_SIZE 2
+
 typedef struct	s_buf
 {
 	int		idx;
 	int		read_nb;
-	char	buf[BUFFER_SIZE + 1];
+	char	buf[BUFFER_SIZE];
 	int		res;
 }				t_buf;
 
