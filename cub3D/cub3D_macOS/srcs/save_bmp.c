@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 00:25:41 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 03:41:33 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 13:49:37 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,19 @@ int	write_bmp_header(int fd, int file_size, t_game *game)
 	return (res);
 }
 
-unsigned char	get_color(t_game *game, t_img *screen, int x, int y)
-{
-	unsigned char	rgb;
-	int				color;
-
-	color = screen->data[y * game->screen_h + x];
-	if (x % 4 == 1 && (color & 0xFF0000))
-		rgb = (unsigned char)(color >> 4);
-	else if (x % 4 == 2 && (color & 0x00FF00))
-		rgb = (unsigned char)(color >> 2);
-	else if (x % 4 == 3 && (color & 0x0000FF))
-		rgb = (unsigned char)(color);
-	return (rgb);
-}
-
 int	save_bmp(t_game *game, t_img *screen)
 {
 	int	fd;
 	int	file_size;
-	int	bmp_file_header_size;
-	int	bmp_info_header_size;
-	int	bmp_pixel_data_size;
+	int	file_header_size;
+	int	info_header_size;
+	int	pixel_data_size;
 
 	game->save_option = FALSE;
-	bmp_file_header_size = 14;
-	bmp_info_header_size = 40;
-	bmp_pixel_data_size = 4 * game->screen_w * game->screen_h;
-	file_size = bmp_file_header_size + bmp_info_header_size + bmp_pixel_data_size;
+	file_header_size = 14;
+	info_header_size = 40;
+	pixel_data_size = 4 * game->screen_w * game->screen_h;
+	file_size = file_header_size + info_header_size + pixel_data_size;
 	if ((fd = open("screenshot.bmp", O_RDWR | O_CREAT | O_TRUNC, 0644)) < 0)
 		return (error(SAVING_FILE_ERROR));
 	if (!(write_bmp_header(fd, file_size, game)))

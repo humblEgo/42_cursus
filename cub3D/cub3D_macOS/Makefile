@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/03 10:43:15 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/03 15:17:15 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** # 
 
@@ -30,8 +30,8 @@ ENGINE_SRC = update_player.c \
 			 event_hook.c \
 			 raycast_screen.c \
 			 calculate_dist_from_wall.c \
-			 fill_item_image.c \
-			 fill_texture_to_floor_ceiling.c
+			 fill_item_img.c \
+			 fill_texture_floor_ceiling.c
 
 CUB_DIR = ./srcs
 ENGINE_DIR = ./engine
@@ -70,3 +70,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+norm:
+	norminette $(SRCS)

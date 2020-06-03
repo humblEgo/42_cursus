@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 10:27:20 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 14:02:15 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-int	is_valid_map_size_info(char *line)
+int		is_valid_map_size_info(char *line)
 {
 	char	**split;
 	int		screen_w;
@@ -36,7 +36,7 @@ int	is_valid_map_size_info(char *line)
 	return (TRUE);
 }
 
-int	is_valid_wall_texture(char *line)
+int		is_valid_wall_texture(char *line)
 {
 	char	**split;
 	int		len;
@@ -55,7 +55,7 @@ int	is_valid_wall_texture(char *line)
 	return (res);
 }
 
-int	is_valid_item_floor_ceiling_texture(char *line)
+int		is_valid_itm_flr_ciling_texture(char *line)
 {
 	char	**split;
 	int		len;
@@ -85,5 +85,5 @@ void	check_valid_texture_info(t_game *game, char *line)
 	else if (!ft_strncmp("SO", line, 2))
 		game->valid.tex_so += is_valid_wall_texture(line);
 	else if (!ft_strncmp("S", line, 1))
-		game->valid.tex_s += is_valid_item_floor_ceiling_texture(line);
+		game->valid.tex_s += is_valid_itm_flr_ciling_texture(line);
 }

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 09:35:04 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 13:56:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	get_floor_and_ceiling_color(t_game *game, char *line)
 		game->color.floor = temp;
 	else
 		game->color.ceiling = temp;
- 	free_double_arr(rgb, 3);
+	free_double_arr(rgb, 3);
 }
 
 void	get_floor_and_ceiling(t_game *game, char *line)
@@ -74,20 +74,20 @@ void	get_floor_and_ceiling(t_game *game, char *line)
 		get_floor_and_ceiling_color(game, line);
 }
 
-int	parsing_file_to_game(char *file, t_game *game)
+int		parsing_file_to_game(char *file, t_game *game)
 {
 	char	*line;
 	int		fd;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		return (error(CUB_FILE_OPEN_ERROR));
-	line = NULL;
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp("R", line, 1))
 			get_render_size(game, line);
-		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) || !ft_strncmp("WE", line, 2)
-				|| !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
+		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2)
+				|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2)
+				|| !ft_strncmp("S", line, 1))
 			get_texture(game, line);
 		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 			get_floor_and_ceiling(game, line);

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 10:41:23 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 15:23:34 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,30 @@
 
 # define DEAL_KEY_PRESS 2
 # define DEAL_DESTROY_NOTIFY 17
-# define KEY_PRESS_MASK 1L<<0
-# define STRUCTURE_NOTIFY_MASK 1L<<17
 
-define KEY_UP 126
-define KEY_DOWN 125
-define KEY_RIGHT 124
-define KEY_LEFT 123
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_RIGHT 124
+# define KEY_LEFT 123
 
-define KEY_W 13 
-define KEY_S 1 
-define KEY_D 2
-define KEY_A 0
-define KEY_ESC 53
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_A 0
+# define KEY_ESC 53
 
 # define MOVE_SPEED 0.3
-# define ROT_SPEED 0.1 
+# define ROT_SPEED 0.1
 
 # define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480 
+# define SCREEN_HEIGHT 480
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
 # define MAP_WIDTH 10
 # define MAP_HEIGHT 10
 
-# define ARG_ERROR -1 
-# define INIT_ERROR -2 
+# define ARG_ERROR -1
+# define INIT_ERROR -2
 # define CUB_FILE_ERROR -3
 # define CUB_FILE_OPEN_ERROR -4
 # define TEXTURE_FILE_ERROR -5
@@ -101,8 +99,8 @@ typedef	struct	s_rend_item
 	double		x;
 	double		y;
 	double		inv_det;
-	double		transform_x;
-	double		transform_y;
+	double		tf_x;
+	double		tf_y;
 	int			draw_start_x;
 	int			draw_start_y;
 	int			draw_end_x;
@@ -178,7 +176,6 @@ typedef	struct	s_valid
 	int			map;
 }				t_valid;
 
-
 typedef struct	s_game
 {
 	t_map		map;
@@ -218,7 +215,7 @@ int				is_all_factors_valid(t_game *game);
 
 int				is_valid_map_size_info(char *line);
 int				is_valid_wall_texture(char *line);
-int				is_valid_item_floor_ceiling_texture(char *line);
+int				is_valid_itm_flr_ciling_texture(char *line);
 void			check_valid_texture_info(t_game *game, char *line);
 
 /*
@@ -278,20 +275,26 @@ int				press_key(int key, t_game *game);
 
 /*
 **				render_screen.c
+**				param wall: wall_texture
+**				param dl: draw_line
+**				param srn: screen
 */
 
-void			init_wall_info(t_game *game, t_img wall_texture, t_line draw_line);
-void			fill_map_image(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture);
+void			init_wall_info(t_game *game, t_img wall, t_line dl);
+void			fill_map_img(t_game *game, t_img *srn, t_line dl, t_img wall);
 t_line			get_draw_line(t_game *game);
 t_img			get_wall_texture(t_game *game);
 void			raycast_screen(t_game *game);
 
 /*
-**				fill_texture_to_floor_ceiling.c
+**				fill_texture_floor_ceiling.c
 */
 
 void			set_floor_wall(t_game *game);
-void			fill_texture_to_floor_ceiling(t_game *game, t_img *screen, t_line draw_line);
+void			calculate_rend(t_game *game, int floor_y);
+void			fill_floor_color(t_game *game, int floor_y, t_img *screen);
+void			fill_ceiling_color(t_game *game, int ceiling_y, t_img *screen);
+void			fill_texture_floor_ceiling(t_game *g, t_img *s, t_line l);
 
 /*
 **				calculate_dist_from_wall.c
@@ -304,14 +307,18 @@ void			set_perp_dist_between_player_and_wall(t_game *game);
 void			calculate_dist_from_wall(t_game *game);
 
 /*
-**				fill_item_image.c
+**				fill_item_img.c
+**				param g: game
+**				param ri: rd_itme
+**				param i: img_item
+**				param s: screen
 */
 
 void			sort_item_by_distance(t_game *game, t_item *item);
 void			set_item_distance(t_game *game, t_item *item);
-void			calculate_rendering_item_info(t_game *game, t_item *item, t_rend_item *rd_item);
-void			fill_item_image_color(t_game *game, t_rend_item *rd_item, t_img img_item, t_img *screen);
-void			fill_item_image(t_game *game, t_img *screen);
+void			calculate_rend_item(t_game *g, t_item *i, t_rend_item *ri);
+void			fill_item_color(t_game *g, t_rend_item *ri, t_img i, t_img *s);
+void			fill_item_img(t_game *game, t_img *screen);
 
 /*
 **				error.c

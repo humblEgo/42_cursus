@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 21:33:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 21:25:24 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 14:59:23 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,36 +30,36 @@ void	init_wall_info(t_game *game, t_img wall_texture, t_line draw_line)
 	if (rend->side == 1 && rend->ray_dir_y < 0)
 		rend->tex_x = wall_texture.width - rend->tex_x - 1;
 	rend->step = 1.0 * (double)wall_texture.height / (double)draw_line.height;
-	rend->tex_pos = (double)(draw_line.start - game->screen_h / 2 + draw_line.height / 2) * rend->step;
+	rend->tex_pos = (double)(draw_line.start - game->screen_h / 2
+			+ draw_line.height / 2) * rend->step;
 }
 
-void	fill_map_image(t_game *game, t_img *screen, t_line draw_line, t_img wall_texture)
+void	fill_map_img(t_game *game, t_img *srn, t_line draw_line, t_img texture)
 {
 	int			y;
 	int			color;
 	t_render	*rend;
-	
+
 	rend = &game->rend;
-	init_wall_info(game, wall_texture, draw_line);
+	init_wall_info(game, texture, draw_line);
 	y = -1;
 	while (++y < game->screen_h)
 	{
 		if (y < draw_line.start && (game->floor_ceiling_texture == FALSE))
-			screen->data[y * game->screen_w + game->x] = game->color.ceiling;
+			srn->data[y * game->screen_w + game->x] = game->color.ceiling;
 		else if (y >= draw_line.start && y <= draw_line.end)
 		{
-			rend->tex_y = (int)rend->tex_pos & (wall_texture.height - 1);
+			rend->tex_y = (int)rend->tex_pos & (texture.height - 1);
 			rend->tex_pos += rend->step;
-			color = wall_texture.data[(int)(wall_texture.width * rend->tex_y + rend->tex_x)];
-			screen->data[y * game->screen_w + game->x] = color;
+			color = texture.data[texture.width * rend->tex_y + rend->tex_x];
+			srn->data[y * game->screen_w + game->x] = color;
 		}
 		else if (y < game->screen_h && (game->floor_ceiling_texture == FALSE))
-			screen->data[y * game->screen_w + game->x] = game->color.floor;
+			srn->data[y * game->screen_w + game->x] = game->color.floor;
 	}
 	if (game->floor_ceiling_texture == TRUE)
-		fill_texture_to_floor_ceiling(game, screen, draw_line);
+		fill_texture_floor_ceiling(game, srn, draw_line);
 }
-
 
 t_line	get_draw_line(t_game *game)
 {
@@ -110,16 +110,17 @@ void	raycast_screen(t_game *game)
 	screen.size_line = 0;
 	screen.endian = 0;
 	screen.img = mlx_new_image(game->mlx_ptr, game->screen_w, game->screen_h);
-	screen.data = (int *)mlx_get_data_addr(screen.img, &screen.bpp, &screen.size_line, &screen.endian);
+	screen.data = (int *)mlx_get_data_addr(screen.img,
+			&screen.bpp, &screen.size_line, &screen.endian);
 	game->x = -1;
 	while (++game->x < game->screen_w)
 	{
 		calculate_dist_from_wall(game);
 		draw_line = get_draw_line(game);
 		wall_texture = get_wall_texture(game);
-		fill_map_image(game, &screen, draw_line, wall_texture);
+		fill_map_img(game, &screen, draw_line, wall_texture);
 	}
-	fill_item_image(game, &screen);
+	fill_item_img(game, &screen);
 	if (game->save_option == TRUE)
 		save_bmp(game, &screen);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, screen.img, 0, 0);
