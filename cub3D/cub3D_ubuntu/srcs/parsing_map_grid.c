@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 22:19:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 13:47:02 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	add_line_to_map_grid(t_game *game, char *line)
 {
-	char**	temp;
+	char	**temp;
 	int		i;
 
 	if (!(temp = (char **)malloc(sizeof(char *) * (game->map.row_count + 2))))

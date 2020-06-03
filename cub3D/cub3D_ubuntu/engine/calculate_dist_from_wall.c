@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 14:33:48 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 04:00:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 14:36:53 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ void	set_camera_raydir_currentpos(t_game *game)
 
 void	set_deltadist_sidedist_step(t_game *game)
 {
-	t_render	*rend;
+	t_render	*rd;
 	t_player	*player;
 
-	rend = &game->rend;
+	rd = &game->rend;
 	player = &game->player;
-	if (rend->ray_dir_y == 0)
-		rend->delta_dist_x = 0;
+	if (rd->ray_dir_y == 0)
+		rd->delta_dist_x = 0;
 	else
-		rend->delta_dist_x = (rend->ray_dir_x == 0) ? 1 : fabs(1 / rend->ray_dir_x);
-	if (rend->ray_dir_x == 0)
-		rend->delta_dist_y = 0;
+		rd->delta_dist_x = (rd->ray_dir_x == 0) ? 1 : fabs(1 / rd->ray_dir_x);
+	if (rd->ray_dir_x == 0)
+		rd->delta_dist_y = 0;
 	else
-		rend->delta_dist_y = (rend->ray_dir_y == 0) ? 1 : fabs(1 / rend->ray_dir_y);
-	if (rend->ray_dir_x < 0 && (rend->step_x = -1))
-		rend->side_dist_x = (player->pos_x - rend->map_x) * rend->delta_dist_x;
-	else if (rend->ray_dir_x >= 0 && (rend->step_x = 1))
-		rend->side_dist_x = (rend->map_x + 1.0 - player->pos_x) * rend->delta_dist_x;
-	if (rend->ray_dir_y < 0 && (rend->step_y = -1))
-		rend->side_dist_y = (player->pos_y - rend->map_y) * rend->delta_dist_y;
-	else if (rend->ray_dir_y >= 0 && (rend->step_y = 1))
-		rend->side_dist_y = (rend->map_y + 1.0 - player->pos_y) * rend->delta_dist_y;
+		rd->delta_dist_y = (rd->ray_dir_y == 0) ? 1 : fabs(1 / rd->ray_dir_y);
+	if (rd->ray_dir_x < 0 && (rd->step_x = -1))
+		rd->side_dist_x = (player->pos_x - rd->map_x) * rd->delta_dist_x;
+	else if (rd->ray_dir_x >= 0 && (rd->step_x = 1))
+		rd->side_dist_x = (rd->map_x + 1.0 - player->pos_x) * rd->delta_dist_x;
+	if (rd->ray_dir_y < 0 && (rd->step_y = -1))
+		rd->side_dist_y = (player->pos_y - rd->map_y) * rd->delta_dist_y;
+	else if (rd->ray_dir_y >= 0 && (rd->step_y = 1))
+		rd->side_dist_y = (rd->map_y + 1.0 - player->pos_y) * rd->delta_dist_y;
 }
 
 void	find_wall_grid(t_game *game)
@@ -86,9 +86,11 @@ void	set_perp_dist_between_player_and_wall(t_game *game)
 	player = &game->player;
 	rend = &game->rend;
 	if (rend->side == 0)
-		rend->perp_wall_dist = (rend->map_x - player->pos_x + (1 - rend->step_x) / 2) / rend->ray_dir_x;
+		rend->perp_wall_dist = (rend->map_x - player->pos_x
+				+ (1 - rend->step_x) / 2) / rend->ray_dir_x;
 	else
-		rend->perp_wall_dist = (rend->map_y - player->pos_y + (1 - rend->step_y) / 2) / rend->ray_dir_y;
+		rend->perp_wall_dist = (rend->map_y - player->pos_y
+				+ (1 - rend->step_y) / 2) / rend->ray_dir_y;
 	game->zbuffer[game->x] = rend->perp_wall_dist;
 }
 

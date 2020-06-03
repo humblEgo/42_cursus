@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 14:00:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 18:09:57 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		is_valid_map(t_game *game)
 {
 	int		i;
 	int		j;
+	char	map_factor;
 
 	i = -1;
 	while (++i < game->map.row_count)
@@ -100,16 +101,16 @@ int		is_valid_map(t_game *game)
 		j = -1;
 		while (game->map.grid[i][++j])
 		{
-			if (!(ft_strchr(MAP_FACTORS, game->map.grid[i][j])))
+			map_factor = game->map.grid[i][j];
+			if (!(ft_strchr(MAP_FACTORS, map_factor)))
 				return (FALSE);
-			if (ft_strchr("NSEW", game->map.grid[i][j]))
+			if (ft_strchr("NSEW", map_factor))
 				game->valid.map_player += TRUE;
-			if (game->map.grid[i][j] == '0' || game->map.grid[i][j] == '2')
+			if (map_factor == '0' || map_factor == '2'
+					|| map_factor == 'N' || map_factor == 'S'
+					|| map_factor == 'W' || map_factor == 'E')
 				if (!(is_closed_map(game, i, j)))
-				{
-					free_double_arr(game->map.grid, game->map.row_count);
 					return (FALSE);
-				}
 		}
 	}
 	return (game->valid.map = TRUE);

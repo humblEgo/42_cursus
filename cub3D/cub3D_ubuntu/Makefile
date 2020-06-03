@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/02 20:47:03 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/03 17:53:28 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** # 
 
@@ -30,8 +30,8 @@ ENGINE_SRC = update_player.c \
 			 event_hook.c \
 			 raycast_screen.c \
 			 calculate_dist_from_wall.c \
-			 fill_item_image.c \
-			 fill_texture_to_floor_ceiling.c
+			 fill_item_img.c \
+			 fill_texture_floor_ceiling.c
 
 CUB_DIR = ./srcs
 ENGINE_DIR = ./engine
@@ -46,8 +46,11 @@ SRCS = $(CUB_SRCS) $(ENGINE_SRCS)
 OBJS = $(SRCS:%c=%o)
 
 CC = gcc
-# Ubuntu 18.04 option
 CFLAGS = -Wall -Wextra -Werror $(HEADER)
+# MAC OS option
+#MLX_LIB = -lmlx -framework OpenGL -framework AppKit
+
+# UBUNTU option
 MLX_LIB = -lmlx -lX11 -lXext
 FT_LIB = -lft
 
@@ -71,3 +74,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+norm:
+	norminette $(SRCS)
