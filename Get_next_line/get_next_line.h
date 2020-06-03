@@ -6,12 +6,14 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 22:41:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/04/10 00:35:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 09:40:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# define TRUE 1
+# define FALSE 0
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>

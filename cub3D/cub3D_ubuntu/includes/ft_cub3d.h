@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 04:41:51 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 10:38:39 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 # define DEAL_KEY_PRESS 2
 # define DEAL_DESTROY_NOTIFY 17
+# define KEY_PRESS_MASK 1L<<0
+# define STRUCTURE_NOTIFY_MASK 1<<17
 
 /* MAC OS KEY SETTINGS
 
@@ -238,7 +240,7 @@ int				is_all_factors_valid(t_game *game);
 
 int				is_valid_map_size_info(char *line);
 int				is_valid_wall_texture(char *line);
-int				is_valid_item_texture(char *line);
+int				is_valid_item_floor_ceiling_texture(char *line);
 void			check_valid_texture_info(t_game *game, char *line);
 
 /*
@@ -353,6 +355,7 @@ int				ft_count_strings(char **split);
 int				is_num_str(char *str);
 int				is_correct_num_of_splits(char **split, int correct_num);
 void			free_double_arr(char **arr, int n);
+void			free_textures(t_game *game);
 
 /*
 **				save_bmp.c
