@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 14:02:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 11:20:10 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-int		is_valid_map_size_info(char *line)
+int		is_valid_map_size_info(t_game *game, char *line)
 {
 	char	**split;
 	int		screen_w;
 	int		screen_h;
 
+	if (!game->valid.before_map)
+		return (FALSE);
 	split = ft_split(line, ' ');
-	if (!is_correct_num_of_splits(split, 3) || ft_strcmp(split[0], "R"))
+	if (!is_correct_num_of_splits(split, 3) || ft_strcmp(split[0], "R") 
+				|| !is_num_str(split[1]) || !is_num_str(split[2]))
 	{
 		free_double_arr(split, ft_count_strings(split));
 		return (FALSE);
@@ -76,6 +79,8 @@ int		is_valid_itm_flr_ciling_texture(char *line)
 
 void	check_valid_texture_info(t_game *game, char *line)
 {
+	if (!game->valid.before_map)
+		return ;
 	if (!ft_strncmp("NO", line, 2))
 		game->valid.tex_no += is_valid_wall_texture(line);
 	else if (!ft_strncmp("WE", line, 2))

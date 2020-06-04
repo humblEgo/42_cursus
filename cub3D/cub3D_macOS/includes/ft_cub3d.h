@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 17:56:12 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 11:27:10 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ typedef	struct	s_valid
 	int			color_ceiling;
 	int			map_player;
 	int			map;
+	int			before_map;
 }				t_valid;
 
 typedef struct	s_game
@@ -206,7 +207,7 @@ int				is_all_factors_valid(t_game *game);
 **				valid_check_1.c
 */
 
-int				is_valid_map_size_info(char *line);
+int				is_valid_map_size_info(t_game *game, char *line);
 int				is_valid_wall_texture(char *line);
 int				is_valid_itm_flr_ciling_texture(char *line);
 void			check_valid_texture_info(t_game *game, char *line);

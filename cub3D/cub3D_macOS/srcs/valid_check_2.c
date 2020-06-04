@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 18:09:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 11:17:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	check_valid_color_info(t_game *game, char *line)
 {
 	int len;
 
+	if (!game->valid.before_map)
+		return ;
 	len = ft_strlen(line);
 	if (len < 6)
 		return ;
