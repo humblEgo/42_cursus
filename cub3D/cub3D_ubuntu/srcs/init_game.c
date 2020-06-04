@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 16:03:06 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 21:20:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 13:54:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 void	set_player_pos_and_dir(t_game *game, int row, int col)
 {
 	double		rotate;
-	double		temp_plane_x;
-	double		temp_dir_x;
+	double		tmp_p_x;
+	double		tmp_dir_x;
 	t_player	*player;
 
 	player = &game->player;
@@ -32,12 +32,12 @@ void	set_player_pos_and_dir(t_game *game, int row, int col)
 	else if (game->map.grid[row][col] == 'W')
 		rotate = M_PI * 1.5;
 	game->map.grid[row][col] = '0';
-	temp_dir_x = player->dir_x;
-	temp_plane_x = player->plane_x;
-	player->dir_x = temp_dir_x * cos(-rotate) - player->dir_y * sin(-rotate);
-	player->dir_y = temp_dir_x * sin(-rotate) + player->dir_y * cos(-rotate);
-	player->plane_x = temp_plane_x * cos(-rotate) - player->plane_y * sin(-rotate);
-	player->plane_y = temp_plane_x * sin(-rotate) + player->plane_y * cos(-rotate);
+	tmp_dir_x = player->dir_x;
+	tmp_p_x = player->plane_x;
+	player->dir_x = tmp_dir_x * cos(-rotate) - player->dir_y * sin(-rotate);
+	player->dir_y = tmp_dir_x * sin(-rotate) + player->dir_y * cos(-rotate);
+	player->plane_x = tmp_p_x * cos(-rotate) - player->plane_y * sin(-rotate);
+	player->plane_y = tmp_p_x * sin(-rotate) + player->plane_y * cos(-rotate);
 }
 
 void	set_item(t_game *game, int row, int col)
@@ -54,6 +54,7 @@ void	set_player_and_item_pos(t_game *game)
 {
 	int		row;
 	int		col;
+	char	map_factor;
 
 	row = -1;
 	while (game->map.grid[++row])
@@ -61,10 +62,11 @@ void	set_player_and_item_pos(t_game *game)
 		col = -1;
 		while (game->map.grid[row][++col])
 		{
-			if (game->map.grid[row][col] == 'N' || game->map.grid[row][col] == 'S' ||
-					game->map.grid[row][col] == 'E' || game->map.grid[row][col] == 'W')
+			map_factor = game->map.grid[row][col];
+			if (map_factor == 'N' || map_factor == 'S' ||
+					map_factor == 'E' || map_factor == 'W')
 				set_player_pos_and_dir(game, row, col);
-			else if (game->map.grid[row][col] == '2')
+			else if (map_factor == '2')
 				set_item(game, row, col);
 		}
 	}
@@ -98,7 +100,8 @@ void	init_game(t_game *game, int argc, char *file)
 	init_player(game);
 	set_player_and_item_pos(game);
 	game->mlx_ptr = mlx_init();
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w, game->screen_h, "iwoo");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->screen_w,
+			game->screen_h, "iwoo");
 	game->rend.camera_x = 0;
 	game->key_code = -1;
 	if (!(open_img(game)))

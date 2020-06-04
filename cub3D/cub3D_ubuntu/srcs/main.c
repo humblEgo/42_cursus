@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 21:36:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/02 16:31:49 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 02:07:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,10 @@ int	main(int argc, char *argv[])
 		init_game(&game, argc, argv[1]);
 		if (game.init_success == FALSE)
 			return (error(INIT_ERROR));
-		mlx_hook(game.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game); 
+		mlx_hook(game.win_ptr, DEAL_KEY_PRESS, KeyPressMask, press_key, &game);
 		mlx_hook(game.win_ptr, DEAL_DESTROY_NOTIFY, StructureNotifyMask, exit_game, &game);
 		mlx_loop_hook(game.mlx_ptr, main_loop_process, &game);
 		mlx_loop(game.mlx_ptr);
 	}
-/* MAC OS KeyPressMask
-	mlx_hook(game.win_ptr, DEAL_KEY_PRESS, 1L << 0, press_key, &game); 
-//	mlx_hook(game.win_ptr, DEAL_KEY_RELEASE, 1L << 1, release_key, &game)
-//	mlx_hook(game.win_ptr, DESTROY_NOTIFY, 1L<<17, esc_game, &game);
-*/
 	return (0);
 }

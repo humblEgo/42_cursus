@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 17:00:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 09:36:17 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 11:20:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_valid_factor(t_game *game)
 	game->valid.color_ceiling = FALSE;
 	game->valid.map_player = FALSE;
 	game->valid.map = FALSE;
+	game->valid.before_map = TRUE;
 	game->floor_ceiling_texture = FALSE;
 	game->save_option = FALSE;
 }
@@ -38,7 +39,7 @@ int		is_all_factors_valid(t_game *game)
 	valid = game->valid;
 	if (valid.render_size != TRUE)
 		return (FALSE);
-	if (valid.tex_no != TRUE || valid.tex_so != TRUE || valid.tex_we != TRUE 
+	if (valid.tex_no != TRUE || valid.tex_so != TRUE || valid.tex_we != TRUE
 			|| valid.tex_ea != TRUE || valid.tex_s != TRUE)
 		return (FALSE);
 	if (game->valid.color_floor != TRUE || game->valid.color_ceiling != TRUE)
@@ -56,20 +57,24 @@ void	check_map_info_and_get_map(t_game *game, int fd)
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp("R", line, 1))
-			game->valid.render_size += is_valid_map_size_info(line);
-		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2) || !ft_strncmp("WE", line, 2)
-				|| !ft_strncmp("EA", line, 2) || !ft_strncmp("S", line, 1))
+			game->valid.render_size += is_valid_map_size_info(game, line);
+		else if (!ft_strncmp("NO", line, 2) || !ft_strncmp("SO", line, 2)
+				|| !ft_strncmp("WE", line, 2) || !ft_strncmp("EA", line, 2)
+				|| !ft_strncmp("S", line, 1))
 			check_valid_texture_info(game, line);
 		else if (!ft_strncmp("F", line, 1) || !ft_strncmp("C", line, 1))
 			check_valid_color_info(game, line);
 		else if (ft_strlen(line))
+		{
 			get_map_grid(game, line);
+			game->valid.before_map = FALSE;
+		}
 		free(line);
 	}
 	free(line);
 }
 
-int	is_valid_file(t_game *game, char *file)
+int		is_valid_file(t_game *game, char *file)
 {
 	int		fd;
 

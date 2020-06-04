@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 18:06:54 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 11:56:57 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,18 @@ int		is_valid_color(char *line)
 
 	split = ft_split(line, ' ');
 	res = TRUE;
-	if (!is_correct_num_of_splits(split, 2))
-		res = FALSE;
-	if (ft_strlen(split[0]) != 1)
-		res = FALSE;
-	rgb = ft_split(split[1], ',');
-	if (!is_valid_rgb_values(rgb))
+	if (is_correct_num_of_splits(split, 2))
+	{
+		if (ft_strlen(split[0]) != 1)
+			res = FALSE;
+		rgb = ft_split(split[1], ',');
+		if (!is_valid_rgb_values(rgb))
+			res = FALSE;
+		free_double_arr(rgb, ft_count_strings(rgb));
+	}
+	else
 		res = FALSE;
 	free_double_arr(split, ft_count_strings(split));
-	free_double_arr(rgb, ft_count_strings(rgb));
 	return (res);
 }
 
@@ -57,6 +60,8 @@ void	check_valid_color_info(t_game *game, char *line)
 {
 	int len;
 
+	if (!game->valid.before_map)
+		return ;
 	len = ft_strlen(line);
 	if (len < 6)
 		return ;

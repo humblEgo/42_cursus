@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 01:07:49 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 10:34:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 13:47:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_count_strings(char **split)
 	return (i);
 }
 
-int	is_num_str(char *str)
+int		is_num_str(char *str)
 {
 	int i;
 
@@ -33,7 +33,7 @@ int	is_num_str(char *str)
 	return (TRUE);
 }
 
-int	is_correct_num_of_splits(char **split, int correct_num)
+int		is_correct_num_of_splits(char **split, int correct_num)
 {
 	int	count;
 

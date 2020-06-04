@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 12:46:52 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/01 21:51:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/04 02:09:46 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ int	open_img(t_game *game)
 		texture_era = 7;
 	while (++i < texture_era)
 	{
-		game->texture[i].img = mlx_xpm_file_to_image(game->mlx_ptr, 
-				game->texture[i].file, &game->texture[i].width, 
+		game->texture[i].img = mlx_xpm_file_to_image(game->mlx_ptr,
+				game->texture[i].file, &game->texture[i].width,
 				&game->texture[i].height);
 		if (game->texture[i].img == NULL)
 			return (error(TEXTURE_FILE_ERROR));
 		game->texture[i].data = (int *)mlx_get_data_addr(game->texture[i].img,
-				&game->texture[i].bpp, &game->texture[i].size_line, &game->texture[i].endian);
+				&game->texture[i].bpp, &game->texture[i].size_line,
+				&game->texture[i].endian);
 	}
 	return (TRUE);
 }
