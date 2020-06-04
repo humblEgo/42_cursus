@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 18:26:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/03 15:23:34 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/03 17:32:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,6 @@
 
 # define MOVE_SPEED 0.3
 # define ROT_SPEED 0.1
-
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
-# define TEXTURE_WIDTH 64
-# define TEXTURE_HEIGHT 64
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
 
 # define ARG_ERROR -1
 # define INIT_ERROR -2
