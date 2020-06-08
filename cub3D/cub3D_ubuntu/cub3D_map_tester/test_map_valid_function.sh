@@ -22,10 +22,10 @@ CLEAR_COLOR="\033[m"
 
 
 TEST_R_COUNT=10
-TEST_W_COUNT=8
-TEST_FC_COUNT=8
-TEST_MAP_COUNT=17
-TEST_I_COUNT=3
+TEST_W_COUNT=7
+TEST_FC_COUNT=12
+TEST_MAP_COUNT=19
+TEST_I_COUNT=7
 
 if [ $# -gt 1 ]
 then
@@ -46,7 +46,7 @@ fi
 
 if [ ! -e ${CUB3D} ]
 then
-	echo -e "\t\t${ALERT_BG}Please check if the cub3D file exists in the parent directory${CLEAR_COLOR}"
+	echo -e "\n\t\t${ALERT_BG}Please check if the cub3D file exists in the parent directory${CLEAR_COLOR}"
 	exit 1
 else
 	echo -e "\n\t\t${MAIN_BG}cub3D file exists${CLEAR_COLOR}"
@@ -84,7 +84,7 @@ do
 	${CUB3D} ${MAPS_FOLDER}${TEST_MAP}
 	if [ $? ]
 	then
-		echo -e "\n${SUCCESS_BG}-->SUCCESS${CLEAR_COLOR}"
+		echo -e "\n${SUCCESS_BG}-->PASS${CLEAR_COLOR}"
 	else
 		echo -e "\n${FAIL_BG}-->FAIL${CLEAR_COLOR}"
 	fi
@@ -97,7 +97,7 @@ do
 	${CUB3D} ${MAPS_FOLDER}${TEST_MAP}
 	if [ $? ]
 	then
-		echo -e "\n${SUCCESS_BG}-->SUCCESS${CLEAR_COLOR}"
+		echo -e "\n${SUCCESS_BG}-->PASS${CLEAR_COLOR}"
 	else
 		echo -e "\n${FAIL_BG}-->FAIL${CLEAR_COLOR}"
 	fi
@@ -110,7 +110,7 @@ do
 	${CUB3D} ${MAPS_FOLDER}${TEST_MAP}
 	if [ $? ]
 	then
-		echo -e "\n${SUCCESS_BG}-->SUCCESS${CLEAR_COLOR}"
+		echo -e "\n${SUCCESS_BG}-->PASS${CLEAR_COLOR}"
 	else
 		echo -e "\n${FAIL_BG}-->FAIL${CLEAR_COLOR}"
 	fi
@@ -123,7 +123,7 @@ do
 	${CUB3D} ${MAPS_FOLDER}${TEST_MAP}
 	if [ $? ]
 	then
-		echo -e "\n${SUCCESS_BG}-->SUCCESS${CLEAR_COLOR}"
+		echo -e "\n${SUCCESS_BG}-->PASS${CLEAR_COLOR}"
 	else
 		echo -e "\n${FAIL_BG}-->FAIL${CLEAR_COLOR}"
 	fi
@@ -136,7 +136,7 @@ do
 	${CUB3D} ${MAPS_FOLDER}${TEST_MAP}
 	if [ $? ]
 	then
-		echo -e "\n${SUCCESS_BG}-->SUCCESS${CLEAR_COLOR}"
+		echo -e "\n${SUCCESS_BG}-->PASS${CLEAR_COLOR}"
 	else
 		echo -e "\n${FAIL_BG}-->FAIL${CLEAR_COLOR}"
 	fi
