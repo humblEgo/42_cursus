@@ -17,7 +17,7 @@ ft_write:
 		mov		rax, 1
 		syscall
 		cmp		rax, 0x0
-		jb		error
+		js		error
 		ret
 
 error:

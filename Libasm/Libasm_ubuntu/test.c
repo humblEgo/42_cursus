@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:50:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/08 23:32:13 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/09 21:44:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <fcntl.h>
 #include "libasm.h"
+
 
 void	test_strlen(void)
 {
@@ -156,7 +157,7 @@ void	test_read(void)
 	int		a;
 	int		b;
 
-/*	printf("\n\t\t\t   test1\n");
+	printf("\n\t\t\t   test1\n");
 	src = "read1.txt";
 	fd1 = open(src, O_RDONLY);
 	printf("fd1: %d\n", fd1);
@@ -169,21 +170,21 @@ void	test_read(void)
 	b = ft_read(fd2, dest, 6);
 	printf("b: %d\n", b);
 	close(fd2);
-	assert(a == b);*/
+	assert(a == b);
 
-//	printf("\n\t\t\t   test2\n");
-//	src = "read2.txt";
+	printf("\n\t\t\t   test2\n");
+	src = "read2.txt";
 	fd1 = open(src, O_RDONLY);
 	a = read(fd1, dest, 6);
 
-//	printf("fd1: %d\n", fd1);
-//	printf("a: %d\n", a);
+	printf("fd1: %d\n", fd1);
+	printf("a: %d\n", a);
 
 	fd2 = open(src, O_RDONLY);
 	b = ft_read(fd2, dest, 6);
 
-//	printf("fd2: %d\n", fd2);
-//	printf("b: %d\n", b);
+	printf("fd2: %d\n", fd2);
+	printf("b: %d\n", b);
 
 	close(fd1);
 	close(fd2);
@@ -191,6 +192,50 @@ void	test_read(void)
 
 }
 
+t_list	*ft_lstnew(void *data)
+{
+	t_list	*new_node;
+
+	if (!(new_node = (t_list *)malloc(sizeof(t_list) * 1)))
+		return (NULL);
+	if (data == NULL)
+		new_node->data = NULL;
+	else
+		new_node->data = data;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+void	print_all_list(t_list *lst)
+{
+	while (lst)
+	{
+		printf("%s\n", (char *)lst->data);
+		lst = lst->next;
+	}
+}
+
+void	test_list_push_front(void)
+{
+	char	*b;
+	t_list	*list;
+	t_list	*node;
+	t_list	test;
+
+	b = "list start";
+	list = ft_lstnew(b);
+
+//	printf("t_list:			%ld\n", sizeof(t_list));
+//	printf("t_list->next:	%ld\n", sizeof(test.next));
+//	printf("t_list->data:	%ld\n", sizeof(test.data));
+	b = "123";
+	ft_list_push_front(&list, b);
+	b = "456";
+	ft_list_push_front(&list, b);
+	b = "789";
+	ft_list_push_front(&list, b);
+	print_all_list(list);
+}
 
 int		main(void)
 {
@@ -209,10 +254,15 @@ int		main(void)
 //	printf("\n------ft_write test start------\n");
 //	test_write();
 //	printf("------ft_write test success------\n");
-
+//
 //	printf("\n------ft_read test start------\n");
-	test_read();
+//	test_read();
 //	printf("------ft_read test success------\n");
+
+	printf("\n------ft_lstadd_front test start------\n");
+	test_list_push_front();
+	printf("------ft_lstadd_front test success------\n");
+
 
 	return (0);
 }
