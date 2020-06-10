@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:50:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/09 13:38:37 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/09 21:44:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <string.h>
 #include <assert.h>
 #include <fcntl.h>
-#include <errno.h>
 #include "libasm.h"
+
 
 void	test_strlen(void)
 {
@@ -152,85 +152,39 @@ void	test_read(void)
 {
 	char	*src;
 	char	dest[100];
-	char	*fault;
 	int		fd1;
 	int		fd2;
 	int		a;
 	int		b;
-	int		err;
-
-	memset(dest, 0, 100);
 
 	printf("\n\t\t\t   test1\n");
-	err = 0;
 	src = "read1.txt";
 	fd1 = open(src, O_RDONLY);
 	printf("fd1: %d\n", fd1);
 	a = read(fd1, dest, 6);
-	err = errno;
-	printf("err: %d\n", errno);
 	printf("a: %d\n", a);
 	close(fd1);
 
-
-	err = 0;
 	fd2 = open(src, O_RDONLY);
 	printf("fd2: %d\n", fd2);
 	b = ft_read(fd2, dest, 6);
 	printf("b: %d\n", b);
-	err = errno;
-	printf("err: %d\n", errno);
-
 	close(fd2);
 	assert(a == b);
 
 	printf("\n\t\t\t   test2\n");
-	err = 0;
 	src = "read2.txt";
 	fd1 = open(src, O_RDONLY);
 	a = read(fd1, dest, 6);
-	err = errno;
-	printf("err: %d\n", errno);
 
 	printf("fd1: %d\n", fd1);
 	printf("a: %d\n", a);
-	printf("%s\n", dest);
 
-	err = 0;
 	fd2 = open(src, O_RDONLY);
 	b = ft_read(fd2, dest, 6);
-	err = errno;
-	printf("err: %d\n", errno);
 
 	printf("fd2: %d\n", fd2);
 	printf("b: %d\n", b);
-	printf("%s\n", dest);
-
-	close(fd1);
-	close(fd2);
-	assert(a == b);
-
-	printf("\n\t\t\t   test3\n");
-	err = 0;
-	src = "read1.txt";
-	fd1 = open(src, O_RDONLY);
-	a = read(fd1, fault, 6);
-	err = errno;
-	printf("err: %d\n", errno);
-
-	printf("fd1: %d\n", fd1);
-	printf("a: %d\n", a);
-	printf("%s\n", fault);
-
-	err = 0;
-	fd2 = open(src, O_RDONLY);
-	b = ft_read(fd2, fault, 6);
-	err = errno;
-	printf("err: %d\n", errno);
-
-	printf("fd2: %d\n", fd2);
-	printf("b: %d\n", b);
-	printf("%s\n", fault);
 
 	close(fd1);
 	close(fd2);
@@ -238,84 +192,77 @@ void	test_read(void)
 
 }
 
-void	test_strdup(void)
+t_list	*ft_lstnew(void *data)
 {
-	char	*src;
-	char	*dst1;
-	char	*dst2;
-	int		num;
+	t_list	*new_node;
 
-	printf("\n\t\t\t   test1\n");
-	src = "abcde";
-	dst1 = strdup(src);
-	dst2 = ft_strdup(src);
+	if (!(new_node = (t_list *)malloc(sizeof(t_list) * 1)))
+		return (NULL);
+	if (data == NULL)
+		new_node->data = NULL;
+	else
+		new_node->data = data;
+	new_node->next = NULL;
+	return (new_node);
+}
 
-	printf("dst1:     %s\n", dst1);
-	printf("dst2:     %s\n", dst2);
-	assert(!(strcmp(dst1, dst2)));
-	free(dst1);
-	free(dst2);
+void	print_all_list(t_list *lst)
+{
+	while (lst)
+	{
+		printf("%s\n", (char *)lst->data);
+		lst = lst->next;
+	}
+}
 
-	printf("\n\t\t\t   test2\n");
-	src = "";
-	dst1 = strdup(src);
-	dst2 = ft_strdup(src);
-	printf("dst1:     %s\n", dst1);
-	printf("dst2:     %s\n", dst2);
-	assert(!(strcmp(dst1, dst2)));
-	free(dst1);
-	free(dst2);
+void	test_list_push_front(void)
+{
+	char	*b;
+	t_list	*list;
+	t_list	*node;
+	t_list	test;
 
-//	printf("\n\t\t\t   test3\n");
-//	char	*src2;
-//	dst1 = strdup(src2);
-//	int a = errno;
-//	printf("error:    %d\n", a);
-//	dst2 = ft_strdup(src2);
-//	int b = errno;
-//	printf("error:    %d\n", a);
-//	printf("dst1:     %s\n", dst1);
-//	printf("dst2:     %s\n", dst2);
-//	assert(!(strcmp(dst1, dst2)));
-//	free(dst1);
-//	free(dst2);
+	b = "list start";
+	list = ft_lstnew(b);
 
-	printf("\n\t\t\t   test4\n");
-	src = "wow mandantory part is completed!";
-	dst1 = strdup(src);
-	dst2 = ft_strdup(src);
-	printf("dst1:     %s\n", dst1);
-	printf("dst2:     %s\n", dst2);
-	assert(!(strcmp(dst1, dst2)));
-	free(dst1);
-	free(dst2);
+//	printf("t_list:			%ld\n", sizeof(t_list));
+//	printf("t_list->next:	%ld\n", sizeof(test.next));
+//	printf("t_list->data:	%ld\n", sizeof(test.data));
+	b = "123";
+	ft_list_push_front(&list, b);
+	b = "456";
+	ft_list_push_front(&list, b);
+	b = "789";
+	ft_list_push_front(&list, b);
+	print_all_list(list);
 }
 
 int		main(void)
 {
-	printf("------ft_strlen test start------\n");
-	test_strlen();
-	printf("------ft_strlen test success------\n\n");
+//	printf("------ft_strlen test start------\n");
+//	test_strlen();
+//	printf("------ft_strlen test success------\n\n");
+//
+//	printf("\n------ft_strcpy test start------\n");
+//	test_strcpy();
+//	printf("------ft_strcpy test success------\n");
+//
+//	printf("\n------ft_strcmp test start------\n");
+//	test_strcmp();
+//	printf("------ft_strcmp test success------\n");
+//
+//	printf("\n------ft_write test start------\n");
+//	test_write();
+//	printf("------ft_write test success------\n");
+//
+//	printf("\n------ft_read test start------\n");
+//	test_read();
+//	printf("------ft_read test success------\n");
 
-	printf("\n------ft_strcpy test start------\n");
-	test_strcpy();
-	printf("------ft_strcpy test success------\n");
+	printf("\n------ft_lstadd_front test start------\n");
+	test_list_push_front();
+	printf("------ft_lstadd_front test success------\n");
 
-	printf("\n------ft_strcmp test start------\n");
-	test_strcmp();
-	printf("------ft_strcmp test success------\n");
-
-	printf("\n------ft_write test start------\n");
-	test_write();
-	printf("------ft_write test success------\n");
-
-	printf("\n------ft_read test start------\n");
-	test_read();
-	printf("------ft_read test success------\n");
-
-	printf("\n------ft_strdup test start------\n");
-	test_strdup();
-	printf("------ft_strdup test success------\n");
 
 	return (0);
 }

@@ -14,7 +14,6 @@ section	.text
 extern	_malloc
 extern	_ft_strlen
 extern	_ft_strcpy
-extern	___error
 		global	_ft_strdup
 
 _ft_strdup:
@@ -32,8 +31,5 @@ _ft_strdup:
 		ret
 
 error:
-		push	rax
-		call	___error
-		pop		qword [rax]
 		mov		rax, 0x0
 		ret

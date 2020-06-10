@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/09 13:41:19 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/10 10:04:47 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,14 @@ SRC = ft_strlen.s \
 	  ft_read.s \
 	  ft_strdup.s
 
-_bonus = ft_atoi_base.s \
+SRC_BONUS = ft_list_push_front.s
 
 SRCDIR = ./srcs
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
+SRCS_BONUS = $(addprefix $(SRCDIR)/, $(SRC_BONUS))
 OBJS = $(SRCS:%s=%o)
-#OBJS_BONUS = $(_bonus:%s=%o)
+OBJS_BONUS = $(SRCS_BONUS:%s=%o)
 INC = ./includes
 
 CC = gcc
@@ -38,8 +39,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
-#bonus: all $(OBJS_BONUS)
-#	ar rcs $(NAME) $(OBJS_BONUS)
+bonus: all $(OBJS_BONUS)
+	ar rcs $(NAME) $(OBJS_BONUS)
 
 %.o: %.s
 	$(NASM) $(NFLAGS_MAC) -o $@ $<
@@ -54,7 +55,7 @@ re: fclean all
 
 re_bonus: fclean bonus
 
-test: re
+test: re_bonus
 	$(CC) -I$(INC) -o test test.c -L. -lasm
 
 print:

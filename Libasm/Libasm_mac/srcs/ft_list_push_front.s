@@ -25,10 +25,10 @@
 ;}
 
 section	.text
-extern	malloc
-		global	ft_list_push_front
+extern	_malloc
+		global	_ft_list_push_front
 
-ft_list_push_front:
+_ft_list_push_front:
 		push	rbp	
 		mov		rbp, rsp
 
@@ -41,7 +41,7 @@ ft_list_push_front:
 		push	rsi
 
 		mov		rdi, 16
-		call	malloc
+		call	_malloc
 		cmp		rax, 0
 		jz		end
 		pop		rsi
