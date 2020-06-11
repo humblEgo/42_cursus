@@ -29,7 +29,25 @@
 ;}
 
 section	.text
+extern	malloc
+extern	ft_strlen
+extern	ft_strcpy
 		global	ft_strdup
 
 ft_strdup:
-		mov		rax, rax
+		push	rdi
+		call	ft_strlen
+		inc		rax
+		mov		rdi, rax
+		call	malloc
+		push	rax
+		cmp		rax, 0
+		jbe		error
+		pop		rdi
+		pop		rsi
+		call	ft_strcpy
+		ret
+
+error:
+		mov		rax, 0x0
+		ret

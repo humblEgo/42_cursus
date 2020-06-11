@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:50:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/09 21:44:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/10 22:19:40 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,30 @@ void	test_read(void)
 
 }
 
+void	test_strdup(void)
+{
+	char	*a;
+	char	*b;
+	char	*src;
+
+	printf("\n\t\t\t   test1\n");
+	src = "abcde";
+	a = strdup(src);
+	b = ft_strdup(src);
+	printf("a:	%s\n", a);
+	printf("b:	%s\n", a);
+	assert(!strcmp(a, b));
+
+	printf("\n\t\t\t   test2\n");
+	src = "";
+	a = strdup(src);
+	b = ft_strdup(src);
+	printf("a:	%s\n", a);
+	printf("b:	%s\n", a);
+	assert(!strcmp(a, b));
+
+}
+
 t_list	*ft_lstnew(void *data)
 {
 	t_list	*new_node;
@@ -215,12 +239,69 @@ void	print_all_list(t_list *lst)
 	}
 }
 
+int		ft_list_size_piscine(t_list *begin_list)
+{
+	int		size;
+	t_list	*node;
+
+	size = 0;
+	node = begin_list;
+	while (node)
+	{
+		node = node->next;
+		size++;
+	}
+	return (size);
+}
+
+
+void	free_all_list(t_list *list)
+{
+	t_list *tmp;
+
+	tmp = list;
+	while (tmp != NULL)
+	{
+		list = list->next;
+		free(tmp);
+		tmp = list;
+	}
+}
+
+
 void	test_list_push_front(void)
 {
 	char	*b;
 	t_list	*list;
 	t_list	*node;
 	t_list	test;
+
+	b = "list start";
+	list = ft_lstnew(b);
+//	print_all_list(list);
+
+//	printf("t_list:			%ld\n", sizeof(t_list));
+//	printf("t_list->next:	%ld\n", sizeof(test.next));
+//	printf("t_list->data:	%ld\n", sizeof(test.data));
+	b = "123";
+	ft_list_push_front(&list, b);
+	b = "456";
+	ft_list_push_front(&list, b);
+	b = "789";
+	ft_list_push_front(&list, b);
+	print_all_list(list);
+
+	free_all_list(list);
+}
+
+void	test_list_size(void)
+{
+	char	*b;
+	t_list	*list;
+	t_list	*node;
+	t_list	test;
+	int		res1;
+	int		res2;
 
 	b = "list start";
 	list = ft_lstnew(b);
@@ -235,6 +316,70 @@ void	test_list_push_front(void)
 	b = "789";
 	ft_list_push_front(&list, b);
 	print_all_list(list);
+
+	res1 = ft_list_size_piscine(list);
+	printf("res1:	%d\n", res1);
+	res2 = ft_list_size(list);
+	printf("res2:	%d\n", res2);
+	assert(res1 == res2);
+
+	free_all_list(list);
+}
+
+void	ft_list_sort_piscine(t_list **begin_list, int (*cmp)())
+{
+	t_list	*p;
+	t_list	remember;
+	int		len;
+	int		i;
+	
+	if (!begin_list || !(*begin_list) || !cmp)
+		return ;
+	len = ft_list_size(*begin_list);
+	i = 0;
+	while (i < len)
+	{
+		p = *begin_list;
+		while (p->next != NULL)
+		{
+			if (cmp(p->data, p->next->data) > 0)
+			{
+				remember.data = p->next->data;
+				p->next->data = p->data;
+				p->data = remember.data;
+			}
+			p = p->next;
+		}
+		i++;
+	}
+}
+
+void	test_list_sort(void)
+{
+	char	*b;
+	t_list	*list;
+	t_list	*node;
+	t_list	test;
+	int		res1;
+	int		res2;
+
+	printf("==>Before sort\n");
+	b = "C";
+	list = ft_lstnew(b);
+	b = "D";
+	ft_list_push_front(&list, b);
+	b = "A";
+	ft_list_push_front(&list, b);
+	b = "B";
+	ft_list_push_front(&list, b);
+	print_all_list(list);
+
+	ft_list_sort(&list, ft_strcmp);
+//	ft_list_sort_piscine(&list, ft_strcmp);
+	printf("==>After sort\n");
+	print_all_list(list);
+
+	free_all_list(list);
 }
 
 int		main(void)
@@ -259,10 +404,21 @@ int		main(void)
 //	test_read();
 //	printf("------ft_read test success------\n");
 
-	printf("\n------ft_lstadd_front test start------\n");
-	test_list_push_front();
-	printf("------ft_lstadd_front test success------\n");
+//	printf("\n------ft_strdup test start------\n");
+//	test_strdup();
+//	printf("------ft_strdup test success------\n");
 
+//	printf("\n------ft_lstadd_front test start------\n");
+//	test_list_push_front();
+//	printf("------ft_lstadd_front test success------\n");
+//
+//	printf("\n------ft_list_size test start------\n");
+//	test_list_size();
+//	printf("------ft_list_size test success------\n");
+
+	printf("\n------ft_list_sort test start------\n");
+	test_list_sort();
+	printf("------ft_list_sort test success------\n");
 
 	return (0);
 }

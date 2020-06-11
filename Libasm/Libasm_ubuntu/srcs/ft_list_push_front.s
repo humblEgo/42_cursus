@@ -24,32 +24,32 @@
 ;	}
 ;}
 
-section	.text
-extern	malloc
+		section	.text
+		extern	malloc
 		global	ft_list_push_front
 
 ft_list_push_front:
-		push	rbp	
+		push	rbp
 		mov		rbp, rsp
 
-		cmp		rdi, 0
+		cmp		rdi, 0				; if begin_list != NULL --> jump to end
 		je		end
 		push	rdi
 
-		cmp		rsi, 0
+		cmp		rsi, 0				; if data == NULL --> jump to end
 		je		end
 		push	rsi
 
-		mov		rdi, 16
+		mov		rdi, 16				; allocate memory of new_node (sizeof(t_list) is 16)
 		call	malloc
-		cmp		rax, 0
+		cmp		rax, 0				; if malloc failed --> jump to end
 		jz		end
 		pop		rsi
 		pop		rdi
-		mov		[rax], rsi
+		mov		[rax], rsi			; insert address of data to new_node->data
 		mov		rcx, [rdi]
-		mov		[rax + 8], rcx
-		mov		[rdi], rax
+		mov		[rax + 8], rcx		; insert address of begin_list ptr to new_node->next
+		mov		[rdi], rax			; insert address of new_node address to begin_list ptr address
 
 end:
 		pop		rbp
