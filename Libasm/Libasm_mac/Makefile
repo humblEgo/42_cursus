@@ -6,7 +6,7 @@
 #    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/24 17:57:59 by iwoo              #+#    #+#              #
-#    Updated: 2020/06/10 10:04:47 by iwoo             ###   ########.fr        #
+#    Updated: 2020/06/11 15:29:11 by iwoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ SRC = ft_strlen.s \
 	  ft_read.s \
 	  ft_strdup.s
 
-SRC_BONUS = ft_list_push_front.s
+SRC_BONUS = ft_list_push_front.s \
+			ft_list_sort.s \
+			ft_list_size.s
 
 SRCDIR = ./srcs
 
@@ -55,11 +57,10 @@ re: fclean all
 
 re_bonus: fclean bonus
 
-test: re_bonus
-	$(CC) -I$(INC) -o test test.c -L. -lasm
+test: re
+	$(CC) -I$(INC) -o test main.c -L. -lasm
 
-print:
-	echo "$(SRCS)"
-	echo "$(OBJS)"
+test_bonus: re_bonus
+	$(CC) -I$(INC) -o test main_bonus.c -L. -lasm
 
-.PHONAY: all clean fclean re bonus
+.PHONAY: all clean fclean re bonus test test_bonus

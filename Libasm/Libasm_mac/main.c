@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:50:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/09 21:44:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/11 15:28:17 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,20 @@ void	test_strcpy(void)
 	printf("src:    %s\n", src);
 	printf("dest:   %s\n", dest);
 	assert(!(strcmp(src, dest)));
+
+//	printf("\n\t\t\t   test3\n");
+//	src = "abcdefghijklnmopq";
+//	strcpy(dest, src);
+//	printf("src:    %s\n", src);
+//	printf("dest:   %s\n", dest);
+//	assert(!(strcmp(src, dest)));
+
+//	printf("\n\t\t\t   test4\n");
+//	src = NULL;
+//	strcpy(dest, src);
+//	printf("src:    %s\n", src);
+//	printf("dest:   %s\n", dest);
+//	assert(!(strcmp(src, dest)));
 
 }
 
@@ -126,6 +140,17 @@ void	test_strcmp(void)
 	printf("res2:   %d\n", res2);
 	assert(res1 == res2);
 
+//	printf("\n\t\t\t   test6\n");
+//	s1 = NULL;
+//	s2 = "abc";
+//	printf("s1:     %s\n", s1);
+//	printf("s2:     %s\n", s2);
+//	res1 = strcmp(s1, s2);
+//	printf("res1:   %d\n", res1);
+//	res2 = ft_strcmp(s1, s2);
+//	printf("res2:   %d\n", res2);
+//	assert(res1 == res2);
+
 }
 
 void	test_write(void)
@@ -143,6 +168,7 @@ void	test_write(void)
 	printf("\n\t\t\t   test2\n");
 	src = "";
 	a = write(1, src, 5);
+	printf("\n");
 	b = ft_write(1, src, 5);
 	assert(a == b);
 	printf("\n");
@@ -157,21 +183,28 @@ void	test_read(void)
 	int		a;
 	int		b;
 
+
+	memset(dest, 0, 100);
 	printf("\n\t\t\t   test1\n");
 	src = "read1.txt";
 	fd1 = open(src, O_RDONLY);
 	printf("fd1: %d\n", fd1);
 	a = read(fd1, dest, 6);
 	printf("a: %d\n", a);
+	printf("read:		%s\n", dest);
 	close(fd1);
 
+	memset(dest, 0, 100);
 	fd2 = open(src, O_RDONLY);
 	printf("fd2: %d\n", fd2);
 	b = ft_read(fd2, dest, 6);
 	printf("b: %d\n", b);
+	printf("ft_read:	%s\n", dest);
 	close(fd2);
 	assert(a == b);
 
+	memset(dest, 0, 100);
+	fd2 = open(src, O_RDONLY);
 	printf("\n\t\t\t   test2\n");
 	src = "read2.txt";
 	fd1 = open(src, O_RDONLY);
@@ -179,12 +212,15 @@ void	test_read(void)
 
 	printf("fd1: %d\n", fd1);
 	printf("a: %d\n", a);
+	printf("read:		%s\n", dest);
 
+	memset(dest, 0, 100);
 	fd2 = open(src, O_RDONLY);
 	b = ft_read(fd2, dest, 6);
 
 	printf("fd2: %d\n", fd2);
 	printf("b: %d\n", b);
+	printf("ft_read:	%s\n", dest);
 
 	close(fd1);
 	close(fd2);
@@ -192,77 +228,63 @@ void	test_read(void)
 
 }
 
-t_list	*ft_lstnew(void *data)
+void	test_strdup(void)
 {
-	t_list	*new_node;
-
-	if (!(new_node = (t_list *)malloc(sizeof(t_list) * 1)))
-		return (NULL);
-	if (data == NULL)
-		new_node->data = NULL;
-	else
-		new_node->data = data;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void	print_all_list(t_list *lst)
-{
-	while (lst)
-	{
-		printf("%s\n", (char *)lst->data);
-		lst = lst->next;
-	}
-}
-
-void	test_list_push_front(void)
-{
+	char	*a;
 	char	*b;
-	t_list	*list;
-	t_list	*node;
-	t_list	test;
+	char	*src;
 
-	b = "list start";
-	list = ft_lstnew(b);
+	printf("\n\t\t\t   test1\n");
+	src = "abcde";
+	a = strdup(src);
+	b = ft_strdup(src);
+	printf("a:	%s\n", a);
+	printf("b:	%s\n", b);
+	assert(!strcmp(a, b));
 
-//	printf("t_list:			%ld\n", sizeof(t_list));
-//	printf("t_list->next:	%ld\n", sizeof(test.next));
-//	printf("t_list->data:	%ld\n", sizeof(test.data));
-	b = "123";
-	ft_list_push_front(&list, b);
-	b = "456";
-	ft_list_push_front(&list, b);
-	b = "789";
-	ft_list_push_front(&list, b);
-	print_all_list(list);
+	printf("\n\t\t\t   test2\n");
+	src = "";
+	a = strdup(src);
+	b = ft_strdup(src);
+	printf("a:	%s\n", a);
+	printf("b:	%s\n", b);
+	assert(!strcmp(a, b));
+
+//	printf("\n\t\t\t   test3\n");
+//	src = NULL;
+//	a = strdup(src);
+//	printf("a:	%s\n", a);
+//	b = ft_strdup(src);
+//	printf("b:	%s\n", b);
+//	assert(!strcmp(a, b));
+
 }
 
 int		main(void)
 {
-//	printf("------ft_strlen test start------\n");
-//	test_strlen();
-//	printf("------ft_strlen test success------\n\n");
-//
-//	printf("\n------ft_strcpy test start------\n");
-//	test_strcpy();
-//	printf("------ft_strcpy test success------\n");
-//
-//	printf("\n------ft_strcmp test start------\n");
-//	test_strcmp();
-//	printf("------ft_strcmp test success------\n");
-//
-//	printf("\n------ft_write test start------\n");
-//	test_write();
-//	printf("------ft_write test success------\n");
-//
-//	printf("\n------ft_read test start------\n");
-//	test_read();
-//	printf("------ft_read test success------\n");
+	printf("------ft_strlen test start------\n");
+	test_strlen();
+	printf("------ft_strlen test success------\n\n");
 
-	printf("\n------ft_lstadd_front test start------\n");
-	test_list_push_front();
-	printf("------ft_lstadd_front test success------\n");
+	printf("\n------ft_strcpy test start------\n");
+	test_strcpy();
+	printf("------ft_strcpy test success------\n");
 
+	printf("\n------ft_strcmp test start------\n");
+	test_strcmp();
+	printf("------ft_strcmp test success------\n");
+
+	printf("\n------ft_write test start------\n");
+	test_write();
+	printf("------ft_write test success------\n");
+
+	printf("\n------ft_read test start------\n");
+	test_read();
+	printf("------ft_read test success------\n");
+
+	printf("\n------ft_strdup test start------\n");
+	test_strdup();
+	printf("------ft_strdup test success------\n");
 
 	return (0);
 }

@@ -24,33 +24,34 @@
 ;	}
 ;}
 
-section	.text
-extern	_malloc
+		section	.text
+		extern	_malloc
 		global	_ft_list_push_front
 
 _ft_list_push_front:
-		push	rbp	
-		mov		rbp, rsp
+		sub		rsp, 16		
 
 		cmp		rdi, 0
-		je		end
-		push	rdi
-
+		je		END
 		cmp		rsi, 0
-		je		end
-		push	rsi
+		je		END
+
+		mov		[rsp], rdi
+		mov		[rsp + 8], rsi
+
 
 		mov		rdi, 16
 		call	_malloc
 		cmp		rax, 0
-		jz		end
-		pop		rsi
-		pop		rdi
+		jz		END
+
+		mov		rdi, qword [rsp]
+		mov		rsi, qword [rsp + 8]
 		mov		[rax], rsi
 		mov		rcx, [rdi]
 		mov		[rax + 8], rcx
 		mov		[rdi], rax
 
-end:
-		pop		rbp
+END:
+		add		rsp, 16
 		ret

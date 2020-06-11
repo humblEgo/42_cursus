@@ -10,26 +10,29 @@
 ;                                                                              #
 ; **************************************************************************** #
 
-section	.text
-extern	_malloc
-extern	_ft_strlen
-extern	_ft_strcpy
+		section	.text
+		extern	_malloc
+		extern	_ft_strlen
+		extern	_ft_strcpy
 		global	_ft_strdup
 
 _ft_strdup:
 		push	rdi
+		cmp		rdi, 0
+		je		ERROR
+
 		call	_ft_strlen
 		inc		rax
 		mov		rdi, rax
 		call	_malloc
-		push	rax
 		cmp		rax, 0
-		jbe		error
-		pop		rdi
+		jbe		ERROR
 		pop		rsi
+		mov		rdi, rax
 		call	_ft_strcpy
 		ret
 
-error:
+ERROR:
+		pop		rdi
 		mov		rax, 0x0
 		ret

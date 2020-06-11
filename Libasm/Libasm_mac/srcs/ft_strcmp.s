@@ -30,20 +30,20 @@ _ft_strcmp:
 		xor		rax, rax
 		xor		rcx, rcx
 
-strcmp_loop:
+STRCMP_LOOP:
 		cmp		BYTE [rdi + rcx], 0
-		je		end
+		je		END
 		cmp		BYTE [rsi + rcx], 0
-		je		end
+		je		END
 		mov		al, BYTE [rdi + rcx]
 		cmp		BYTE [rsi + rcx], al
-		jne		end
+		jne		END
 		inc		rcx
-		jmp		strcmp_loop
+		jmp		STRCMP_LOOP
 
-end:
+END:
 		mov		al, BYTE [rdi + rcx]
 		sub		al, BYTE [rsi + rcx]
 		movsx	rax, al
-		pop		rbp
+		leave
 		ret

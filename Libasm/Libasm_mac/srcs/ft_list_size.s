@@ -1,50 +1,47 @@
 ; **************************************************************************** #
 ;                                                                              #
 ;                                                         :::      ::::::::    #
-;    ft_strcpy.s                                        :+:      :+:    :+:    #
+;    ft_list_size.s                                     :+:      :+:    :+:    #
 ;                                                     +:+ +:+         +:+      #
 ;    By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+         #
 ;                                                 +#+#+#+#+#+   +#+            #
-;    Created: 2020/06/08 18:09:10 by iwoo              #+#    #+#              #
-;    Updated: 2020/06/08 18:09:10 by iwoo             ###   ########.fr        #
+;    Created: 2020/06/10 10:20:02 by iwoo              #+#    #+#              #
+;    Updated: 2020/06/10 10:20:02 by iwoo             ###   ########.fr        #
 ;                                                                              #
 ; **************************************************************************** #
 
-;char	*ft_strcpy(char *dest, const char *src)
+;int	ft_list_size(t_list *begin_list)
 ;{
-;	int	i;
+;	int		size;
+;	t_list	*node;
 ;
-;	i = 0;
-;	while (src[i])
+;	size = 0;
+;	node = begin_list 
+;	while (node)
 ;	{
-;		dest[i] = src[i];
-;		i++;
+;		size++;
+;		node = node->next;
 ;	}
-;	return (dest);
+;	return (size);
 ;}
 
-		section .text
-		global	_ft_strcpy
+		section	.text
+		global	_ft_list_size
 
-_ft_strcpy:
-		push	rbp
-		mov		rbp, rsp
-
-		xor		al, al
+_ft_list_size:
+		push	rsp
 		xor		rcx, rcx
+		cmp		rdi, 0
+		je		END
 
-STRCPY_LOOP:
-		cmp		byte [rsi + rcx], 0
-		je		SET_NULL_TERMINATOR
-		mov		al, byte [rsi + rcx]
-		mov		byte [rdi + rcx], al
+SIZE_LOOP:
+		cmp		rdi, 0
+		jz		END
 		inc		rcx
-		jne		STRCPY_LOOP
-
-SET_NULL_TERMINATOR:
-		mov		BYTE [rdi + rcx], 0
+		mov		rdi, [rdi + 8]
+		jmp		SIZE_LOOP	
 
 END:
-		mov		rax, rdi
-		leave
+		pop		rsp
+		mov		rax, rcx
 		ret
