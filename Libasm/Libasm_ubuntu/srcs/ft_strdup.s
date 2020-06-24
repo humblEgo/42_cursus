@@ -35,19 +35,34 @@ extern	ft_strcpy
 		global	ft_strdup
 
 ft_strdup:
-		push	rdi
+;		push	rbp
+;		mov		rbp, rsp
+	;	push	rsp
+		sub		rsp, 8
+;		push	rdi
+		mov		[rsp], rdi
+
 		call	ft_strlen
 		inc		rax
 		mov		rdi, rax
 		call	malloc
-		push	rax
+;		mov		[rsp + 8], rax
+;		push	rax
 		cmp		rax, 0
 		jbe		error
-		pop		rdi
-		pop		rsi
+		mov		rdi, rax
+;		mov		rdi, qword [rsp + 8]
+		mov		rsi, qword [rsp]
+;		pop		rdi
+;		pop		rsi
 		call	ft_strcpy
+;		pop		rbp
+;		pop		rsp
+		add		rsp, 8
 		ret
 
 error:
+		add		rsp, 8
+;		pop		rbp
 		mov		rax, 0x0
 		ret

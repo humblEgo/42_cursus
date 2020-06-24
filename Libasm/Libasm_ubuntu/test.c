@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 15:50:17 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/10 22:19:40 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/06/11 11:35:15 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,10 @@ void	test_strdup(void)
 	src = "abcde";
 	a = strdup(src);
 	b = ft_strdup(src);
+	if (b == NULL)
+		printf("it's error!\n");
 	printf("a:	%s\n", a);
-	printf("b:	%s\n", a);
+	printf("b:	%s\n", b);
 	assert(!strcmp(a, b));
 
 	printf("\n\t\t\t   test2\n");
@@ -211,7 +213,7 @@ void	test_strdup(void)
 	a = strdup(src);
 	b = ft_strdup(src);
 	printf("a:	%s\n", a);
-	printf("b:	%s\n", a);
+	printf("b:	%s\n", b);
 	assert(!strcmp(a, b));
 
 }
@@ -404,9 +406,9 @@ int		main(void)
 //	test_read();
 //	printf("------ft_read test success------\n");
 
-//	printf("\n------ft_strdup test start------\n");
-//	test_strdup();
-//	printf("------ft_strdup test success------\n");
+	printf("\n------ft_strdup test start------\n");
+	test_strdup();
+	printf("------ft_strdup test success------\n");
 
 //	printf("\n------ft_lstadd_front test start------\n");
 //	test_list_push_front();
@@ -416,9 +418,9 @@ int		main(void)
 //	test_list_size();
 //	printf("------ft_list_size test success------\n");
 
-	printf("\n------ft_list_sort test start------\n");
-	test_list_sort();
-	printf("------ft_list_sort test success------\n");
+//	printf("\n------ft_list_sort test start------\n");
+//	test_list_sort();
+//	printf("------ft_list_sort test success------\n");
 
 	return (0);
 }
