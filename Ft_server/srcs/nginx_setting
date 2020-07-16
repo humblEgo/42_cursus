@@ -1,5 +1,4 @@
 server {
-<<<<<<< HEAD
     listen 80;
     listen [::]:80;
 
@@ -28,34 +27,3 @@ server {
     ssl_certificate /tmp/localhost.pem;
     ssl_certificate_key /tmp/localhost-key.pem;
 }
-=======
-	    listen 80;
-	    listen [::]:80;
-
-	    server_name localhost www.loacalhost;
-		return 302 http://$server_name$request_uri;
-}
-
-server {
-		listen 443 ssl;
-		listen [::]:443 ssl;
-
-		include snippets/self-signed.conf;
-		include snippets/ssl-params.conf;
-		
-		server_name localhost www.localhost;
-		root /var/www/html;
-		index index.php index.html index.htm;
-
-		location / {
-			try_files $uri $uri/ /index.php$is_args$args;
-			autoindex on;
-		}
-
-		location ~ \.php$ {
-			include snippets/fastcgi-php.conf;
-			fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
-		}
-}
-
->>>>>>> 54bd4be898d4299136a13a7f3361a6e36c1f6423
