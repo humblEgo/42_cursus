@@ -15,7 +15,7 @@ Projects
     - Used Docker.
     - Learned about the docker.
 
-  - [cub3D](https://github.com/humblEgo/42_cursus/tree/master/cub3D)
+  - [cub3D](https://github.com/humblEgo/42_cursus/tree/master/Cub3D)
     - "Realistic" 3D graphical representation of the inside of a maze from a first person perspective.
     - Used C language, minilibx library.
     - Learned about the Ray-Casting principles.
