@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-nginx
+  labels:
+    run: nginx
+spec:
+  type: LoadBalancer
+  ports: #포트가 두개 일때 포트 이름을 명시해줘야 합니다.
+  - port: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  selector:
+    run: nginx
+    tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-nginx
+spec:
+  selector:
+    matchLabels:
+      run: nginx
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: nginx
+        tier: backend
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
+      containers:
+      - name: nginx
+        image: iwoo_nginx:1.0
+        imagePullPolicy: Never #이미지가 로컬에 있다고 가정합니다.
+        ports:
+        - containerPort: 443
+        - containerPort: 80
+        volumeMounts: #nginx, ssl 설정을 볼륨 마운트를 통해 전달!
+        - mountPath: /etc/nginx/ssl
+          name: secret-volume
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
