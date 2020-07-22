@@ -11,7 +11,7 @@ fi
 
 # Get docker image from minikube
 echo "Minikube start ..."
-minikube start --vm-driver virtualbox > /dev/null
+minikube start --vm-driver virtualbox
 eval $(minikube docker-env)
 
 echo "Get minikube ip"
@@ -48,20 +48,21 @@ echo $(PWD)
 docker build -t ft_nginx:1.0 srcs/nginx
 kubectl apply -f srcs/yaml/nginx
 
-# =============  docker build without nginx ================
-# echo "docker image build start"
-# echo "mysql..."
-# docker build -t ft_mysql srcs/mysql
-# echo "phpmyadmin..."
-# docker build -t ft_phpmyadmin srcs/phpmyadmin 
+echo "after nginx setup"
+
+# =============  docker build ================
+echo "docker image build start"
+echo "mysql..."
+docker build -t ft_mysql srcs/mysql
+echo "phpmyadmin..."
+docker build -t ft_phpmyadmin srcs/phpmyadmin 
 
 # echo "wordpress..."
 # docker build -t ft_wordpress ./srcs/wordpress > /dev/null
 
 echo "create deployment and service objects"
-
-# kubectl create -f srcs/yaml/mysql > /dev/null
-# kubectl create -f srcs/yaml/phpmyadmin > /dev/null
+kubectl create -f srcs/yaml/mysql > /dev/null
+kubectl create -f srcs/yaml/phpmyadmin > /dev/null
 
 # echo "dashboard activate"
 # https://minikube.sigs.k8s.io/docs/handbook/dashboard/

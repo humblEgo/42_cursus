@@ -13,8 +13,8 @@ kubectl delete secret nginxsecret
 echo "nginx configmap create"
 kubectl delete configmap nginxconfigmap
 echo "nginx deployment delete"
-kubectl delete -f nginx.yaml
-sleep 5
+kubectl delete -f srcs/yaml/nginx.yaml
+sleep 2
 echo "nginx image delete"
 docker rmi ft_nginx:1.0
 
