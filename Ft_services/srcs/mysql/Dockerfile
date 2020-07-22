@@ -6,6 +6,7 @@ RUN apk update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./start.sh /bin/start.sh
+RUN chmod +x /bin/start.sh
 COPY files/my.cnf /etc/mysql/my.cnf
 
 VOLUME ["/var/lib/mysql"]
