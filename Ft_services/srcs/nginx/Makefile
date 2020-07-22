@@ -1,5 +1,5 @@
-KEY = /Users/iwoo/Desktop/nginx.key
-CERT = /Users/iwoo/Desktop/nginx.crt
+KEY = ./nginx.key
+CERT = ./nginx.crt
 
 keys:
 	# The CName used here is specific to the service specified in nginx-app.yaml.

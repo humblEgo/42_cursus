@@ -25,12 +25,12 @@ MINIKUBE_IP=$(minikube ip)
 
 # =============  metalLB setup  ================
 echo "metalLB.."
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml > /dev/null
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml > /dev/null
 # On first install only
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 cd srcs/metallb
-kubectl apply -f config.yaml
+kubectl apply -f config.yaml > /dev/null
 
 # =============  nginx setup  ================
 echo "fieldPath: status.hostIP"
@@ -38,24 +38,24 @@ cd ../nginx
 # "ssl create"
 make keys
 # "nginx ssl secret create"
-kubectl create secret tls nginxsecret --key /Users/iwoo/Desktop/nginx.key --cert /Users/iwoo/Desktop/nginx.crt > /dev/null
+kubectl create secret tls nginxsecret --key ./nginx.key --cert ./nginx.crt > /dev/null
 # "nginx configmap create"
 kubectl create configmap nginxconfigmap --from-file=default.conf > /dev/null
 # nginx docker build
 cd ..
 cd ..
 echo $(PWD)
-docker build -t ft_nginx:1.0 srcs/nginx
-kubectl apply -f srcs/yaml/nginx
+docker build -t ft_nginx:1.0 srcs/nginx > /dev/null
+kubectl apply -f srcs/yaml/nginx > /dev/null
 
 echo "after nginx setup"
 
 # =============  docker build ================
 echo "docker image build start"
 echo "mysql..."
-docker build -t ft_mysql srcs/mysql
+docker build -t ft_mysql srcs/mysql > /dev/null
 echo "phpmyadmin..."
-docker build -t ft_phpmyadmin srcs/phpmyadmin 
+docker build -t ft_phpmyadmin srcs/phpmyadmin  > /dev/null
 
 # echo "wordpress..."
 # docker build -t ft_wordpress ./srcs/wordpress > /dev/null
