@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  replicas: 1
+  template:
+    metadata:
+      name: phpmyadmin
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+        - name: phpmyadmin
+          image: ft_phpmyadmin
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: phpmyadmin-config
+              subPath: config.inc.php
+              mountPath: /etc/phpmyadmin/config.inc.php
+              readOnly: true
+      volumes:
+        - name: phpmyadmin-config
+          configMap:
+            name: phpmyadmin
