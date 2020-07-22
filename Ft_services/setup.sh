@@ -1,5 +1,6 @@
 
 echo "kubernetes setup start!"
+eval $(minikube -p minikube docker-env)
 
 echo "metalLB.."
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
