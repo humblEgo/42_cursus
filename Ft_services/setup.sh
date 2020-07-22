@@ -1,8 +1,5 @@
 echo "kubernetes setup start!"
 
-# Get docker image from local to minikube
-eval $(minikube docker-env)
-
 # Setup in /goinfre for 42
 if [ -d "/goinfre" ]; then
 	[ -z "${USER}" ] && export USER='whoami'
@@ -12,8 +9,10 @@ if [ -d "/goinfre" ]; then
 	export MINIKUBE_HOME="/goinfre/$USER"
 fi
 
+# Get docker image from minikube
 echo "Minikube start ..."
-minikube start --vm-driver virtualbox --extra-config=apiserver.service-node-port-range=21-32767 > /dev/null
+minikube start --vm-driver virtualbox > /dev/null
+eval $(minikube docker-env)
 
 echo "Get minikube ip"
 MINIKUBE_IP=$(minikube ip)
@@ -23,7 +22,6 @@ MINIKUBE_IP=$(minikube ip)
 # sed -i '' "s/MINIKUBE_IP/$MINIKUBE_IP/g" srcs/wordpress/files/wordpress-tmp.sql
 # cp srcs/ftps/scripts/start.sh srcs/ftps/scripts/start-tmp.sh
 # sed -i '' "s/MINIKUBE_IP/$MINIKUBE_IP/g" srcs/ftps/scripts/start-tmp.sh
-
 
 # =============  metalLB setup  ================
 echo "metalLB.."
@@ -43,24 +41,27 @@ make keys
 kubectl create secret tls nginxsecret --key /Users/iwoo/Desktop/nginx.key --cert /Users/iwoo/Desktop/nginx.crt > /dev/null
 # "nginx configmap create"
 kubectl create configmap nginxconfigmap --from-file=default.conf > /dev/null
+# nginx docker build
+cd ..
+cd ..
+echo $(PWD)
+docker build -t ft_nginx:1.0 srcs/nginx
+kubectl apply -f srcs/yaml/nginx
 
-# =============  docker build  ================
-echo "docker image build start"
-echo "nginx..."
-docker build -t ft_nginx:1.0 . > /dev/null
-echo "mysql..."
-docker build -t ft_mysql ./srcs/mysql > /dev/null
-echo "phpmyadmin..."
-docker build -t ft_phpmyadin ./srcs/phpmyadmin > /dev/null
+# =============  docker build without nginx ================
+# echo "docker image build start"
+# echo "mysql..."
+# docker build -t ft_mysql srcs/mysql
+# echo "phpmyadmin..."
+# docker build -t ft_phpmyadmin srcs/phpmyadmin 
 
 # echo "wordpress..."
 # docker build -t ft_wordpress ./srcs/wordpress > /dev/null
 
 echo "create deployment and service objects"
-kubectl apply -f nginx.yaml > /dev/null
-kubectl create -f ./srcs/yaml/mysql > /dev/null
-kubectl create -f ./srcs/yaml/phpmyadmin > /dev/null
 
+# kubectl create -f srcs/yaml/mysql > /dev/null
+# kubectl create -f srcs/yaml/phpmyadmin > /dev/null
 
 # echo "dashboard activate"
 # https://minikube.sigs.k8s.io/docs/handbook/dashboard/

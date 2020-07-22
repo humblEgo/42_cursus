@@ -16,4 +16,21 @@ echo "nginx deployment delete"
 kubectl delete -f nginx.yaml
 sleep 5
 echo "nginx image delete"
-docker rmi iwoo_nginx:1.0
+docker rmi ft_nginx:1.0
+
+echo "phpmyadmin service delete"
+kubectl delete services phpmyadmin
+echo "phpmyadmin deployment delete"
+kubectl delete deployment phpmyadmin
+sleep 2
+echo "phpmyadmin image delete"
+docker rmi ft_phpmyadmin:latest
+
+
+echo "mysql service delete"
+kubectl delete services mysql
+echo "mysql deployment delete"
+kubectl delete deployment mysql
+sleep 2
+echo "mysql image delete"
+docker rmi ft_mysql:latest
