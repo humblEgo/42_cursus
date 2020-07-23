@@ -23,13 +23,13 @@ spec:
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          value: iwoo123
         - name: MYSQL_DATABASE
           value: wordpress
         - name: MYSQL_USER
-          value: root
+          value: iwoo
         - name: MYSQL_PASSWORD
-          value: password
+          value: iwoo123
         ports:
         - containerPort: 3306
           name: mysql

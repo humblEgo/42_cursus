@@ -12,8 +12,10 @@ echo "nginx ssl secret delete"
 kubectl delete secret nginxsecret
 echo "nginx configmap create"
 kubectl delete configmap nginxconfigmap
+echo "nginx service delete"
+kubectl delete services nginx
 echo "nginx deployment delete"
-kubectl delete -f srcs/yaml/nginx
+kubectl delete deployment nginx
 sleep 2
 echo "nginx image delete"
 docker rmi ft_nginx:1.0
@@ -34,3 +36,11 @@ kubectl delete deployment mysql
 sleep 2
 echo "mysql image delete"
 docker rmi ft_mysql:latest
+
+echo "wordpress service delete"
+kubectl delete services wordpress
+echo "wordpress deployment delete"
+kubectl delete deployment wordpress
+sleep 2
+echo "wordpress image delete"
+docker rmi wordpress:latest

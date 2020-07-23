@@ -17,12 +17,6 @@ eval $(minikube docker-env)
 echo "Get minikube ip"
 MINIKUBE_IP=$(minikube ip)
 
-# MINIKUBE_IP EDIT
-# cp srcs/wordpress/files/wordpress.sql srcs/wordpress/files/wordpress-tmp.sql
-# sed -i '' "s/MINIKUBE_IP/$MINIKUBE_IP/g" srcs/wordpress/files/wordpress-tmp.sql
-# cp srcs/ftps/scripts/start.sh srcs/ftps/scripts/start-tmp.sh
-# sed -i '' "s/MINIKUBE_IP/$MINIKUBE_IP/g" srcs/ftps/scripts/start-tmp.sh
-
 # =============  metalLB setup  ================
 echo "metalLB.."
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml > /dev/null
@@ -53,16 +47,19 @@ echo "after nginx setup"
 # =============  docker build ================
 echo "docker image build start"
 echo "mysql..."
-docker build -t ft_mysql srcs/mysql > /dev/null
+docker build -t ft_mysql srcs/mysql
 echo "phpmyadmin..."
-docker build -t ft_phpmyadmin srcs/phpmyadmin  > /dev/null
-
-# echo "wordpress..."
-# docker build -t ft_wordpress ./srcs/wordpress > /dev/null
+docker build -t ft_phpmyadmin srcs/phpmyadmin
+echo "wordpress..."
+docker build -t ft_wordpress srcs/wordpress
 
 echo "create deployment and service objects"
-kubectl create -f srcs/yaml/mysql > /dev/null
-kubectl create -f srcs/yaml/phpmyadmin > /dev/null
+kubectl create -f srcs/yaml/mysql
+kubectl create -f srcs/yaml/phpmyadmin
+kubectl create -f srcs/yaml/wordpress
+
+echo "Wordpress setup"
+sh wordpress_setup.sh
 
 # echo "dashboard activate"
 # https://minikube.sigs.k8s.io/docs/handbook/dashboard/
