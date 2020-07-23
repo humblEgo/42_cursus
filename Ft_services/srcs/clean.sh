@@ -44,3 +44,11 @@ kubectl delete deployment wordpress
 sleep 2
 echo "wordpress image delete"
 docker rmi wordpress:latest
+
+echo "influxdb service delete"
+kubectl delete services influxdb
+echo "influxdb deployment delete"
+kubectl delete deployment influxdb
+sleep 2
+echo "influxdb image delete"
+docker rmi wordpress:latest

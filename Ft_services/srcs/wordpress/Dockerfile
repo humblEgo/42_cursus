@@ -11,10 +11,10 @@ COPY files/wp-config.php /etc/wordpress/
 
 RUN apk add mysql-client
 COPY files/wordpress.sql /tmp/
-COPY files/init-wordpress.sh /tmp/
+COPY scripts/init-wordpress.sh /tmp/
 
 EXPOSE 5050
 
 RUN rm -rf /var/cache/apk/*
-COPY files/run.sh /tmp/
+COPY scripts/run.sh /tmp/
 ENTRYPOINT ["sh", "/tmp/run.sh"]

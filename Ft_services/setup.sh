@@ -52,11 +52,14 @@ echo "phpmyadmin..."
 docker build -t ft_phpmyadmin srcs/phpmyadmin
 echo "wordpress..."
 docker build -t ft_wordpress srcs/wordpress
+echo "influxDB..."
+docker build -t ft_influxDB srcs/influxdb
 
 echo "create deployment and service objects"
 kubectl create -f srcs/yaml/mysql
 kubectl create -f srcs/yaml/phpmyadmin
 kubectl create -f srcs/yaml/wordpress
+kubectl create -f srcs/yaml/influxdb
 
 echo "Wordpress setup"
 sh wordpress_setup.sh
