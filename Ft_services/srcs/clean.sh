@@ -48,7 +48,21 @@ docker rmi wordpress:latest
 echo "influxdb service delete"
 kubectl delete services influxdb
 echo "influxdb deployment delete"
-kubectl delete deployment influxdb
+kubectl delete deployment influxdb-deployment
 sleep 2
 echo "influxdb image delete"
-docker rmi wordpress:latest
+docker rmi influxdb:1.7.4
+
+echo "telegraf deployment delete"
+kubectl delete deployment telegraf-deployment
+sleep 2
+echo "telegraf image delete"
+docker rmi telegraf:1.10.0
+
+echo "grafana service delete"
+kubectl delete services grafana
+echo "grafana deployment delete"
+kubectl delete deployment grafana-deployment
+sleep 2
+echo "grafana image delete"
+docker rmi grafana:latest

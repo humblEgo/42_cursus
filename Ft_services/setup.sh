@@ -54,12 +54,18 @@ echo "wordpress..."
 docker build -t ft_wordpress srcs/wordpress
 echo "influxDB..."
 docker build -t ft_influxDB srcs/influxdb
+echo "telegraf..."
+docker build -t ft_telegraf srcs/telegraf
+echo "grafana..."
+docker build -t ft_grafana srcs/grafana
 
 echo "create deployment and service objects"
 kubectl create -f srcs/yaml/mysql
 kubectl create -f srcs/yaml/phpmyadmin
 kubectl create -f srcs/yaml/wordpress
 kubectl create -f srcs/yaml/influxdb
+kubectl create -f srcs/yaml/telegraf
+kubectl create -f srcs/yaml/grafana
 
 echo "Wordpress setup"
 sh wordpress_setup.sh

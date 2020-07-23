@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: ft_grafana
+          imagePullPolicy: Never
+          #          livenessProbe: # 컨테이너의 동작 여부 확인. 만약 죽었다면 재시작한다.
+          #            initialDelaySeconds: 20
+          #            periodSeconds: 10
+          #            timeoutSeconds: 5
+          #            httpGet: # 이건 뭘까?
+          #              path: /api/health
+          #              port: 3000
+          volumeMounts:
+            - name: grafana-config
+              subPath: grafana.ini
+              mountPath: /etc/grafana/grafana.ini
+              readOnly: true
+          envFrom:
+            - secretRef:
+                name: grafana
+      volumes:
+        - name: grafana-config
+          configMap:
+            name: grafana
