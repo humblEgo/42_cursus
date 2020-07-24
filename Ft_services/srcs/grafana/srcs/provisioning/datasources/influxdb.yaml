@@ -1,7 +1,7 @@
 apiVersion: 1
 
 datasources:
-- name: Analysis Server
+- name: iwoo_analysis_server
   orgId: 1
   type: influxdb
   access: proxy

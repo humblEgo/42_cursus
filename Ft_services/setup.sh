@@ -70,5 +70,6 @@ kubectl create -f srcs/yaml/grafana
 echo "Wordpress setup"
 sh wordpress_setup.sh
 
-# echo "dashboard activate"
+echo "dashboard activate"
+minikube dashboard&
 # https://minikube.sigs.k8s.io/docs/handbook/dashboard/
