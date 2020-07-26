@@ -5,7 +5,8 @@ if [ -d "/goinfre" ]; then
 	[ -z "${USER}" ] && export USER='whoami'
 
 	mkdir -p /goinfre/$USER
-
+	
+	brew install minikube
 	export MINIKUBE_HOME="/goinfre/$USER"
 fi
 
