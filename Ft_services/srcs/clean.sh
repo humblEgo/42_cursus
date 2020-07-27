@@ -43,21 +43,21 @@ echo "wordpress deployment delete"
 kubectl delete deployment wordpress
 sleep 2
 echo "wordpress image delete"
-docker rmi wordpress:latest
+docker rmi ft_wordpress:latest
 
 echo "influxdb service delete"
 kubectl delete services influxdb
 echo "influxdb deployment delete"
-kubectl delete deployment influxdb-deployment
+kubectl delete deployment influxdb
 sleep 2
 echo "influxdb image delete"
-docker rmi influxdb:1.7.4
+docker rmi ft_influx
 
 echo "telegraf deployment delete"
-kubectl delete deployment telegraf-deployment
+kubectl delete deployment telegraf
 sleep 2
 echo "telegraf image delete"
-docker rmi telegraf:1.10.0
+docker rmi ft_telegraf
 
 echo "grafana service delete"
 kubectl delete services grafana
@@ -65,4 +65,12 @@ echo "grafana deployment delete"
 kubectl delete deployment grafana
 sleep 2
 echo "grafana image delete"
-docker rmi grafana:latest
+docker rmi ft_grafana
+
+echo "ftps service delete"
+kubectl delete services ftps
+echo "ftps deployment delete"
+kubectl delete deployment ftps
+sleep 2
+echo "ftps image delete"
+docker rmi ft_ftps

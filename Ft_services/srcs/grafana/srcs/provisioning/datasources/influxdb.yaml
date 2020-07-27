@@ -1,11 +1,10 @@
 apiVersion: 1
-
 datasources:
-- name: iwoo_analysis_server
+- name: influxdb
   orgId: 1
   type: influxdb
   access: proxy
-  url: http://influxdb-service:8086
+  url: http://influxdb:8086
   database: telegraf
   isDefault: false
   version: 1

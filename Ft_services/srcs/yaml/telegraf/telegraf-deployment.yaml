@@ -1,29 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: telegraf-deployment
+  name: telegraf
+  labels:
+    app: telegraf
 spec:
   selector:
     matchLabels:
       app: telegraf
-  minReadySeconds: 5
   template:
     metadata:
       labels:
         app: telegraf
     spec:
       containers:
-        - image: telegraf:1.10.0
-          name: telegraf
+        - name: telegraf
+          image: ft_telegraf
+          imagePullPolicy: Never
           volumeMounts:
-            - mountPath: /etc/telegraf/telegraf.conf
-              name: telegraf-config
+            - name: telegraf-config
               subPath: telegraf.conf
+              mountPath: /etc/telegraf/telegraf.conf
               readOnly: true
-          envFrom:
+            - name: docker-unix-socket
+              mountPath: /var/run/docker.sock
+          envFrom: # secret로 환경 변수 가져온다. 환경 변수에 db 정보 들어있음.
             - secretRef:
-                name: telegraf-secrets
+                name: telegraf
       volumes:
         - name: telegraf-config
           configMap:
-            name: telegraf-config
+            name: telegraf
+        - name: docker-unix-socket # 이 소켓을 통해서 데이터를 가져온다.
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket

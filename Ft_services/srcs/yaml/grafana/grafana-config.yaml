@@ -210,7 +210,7 @@ data:
     ;allowed_organizations =
     #################################### Auth Proxy ##########################
     [auth.proxy]
-    ;enabled = false
+    ;enabled = true
     ;header_name = X-WEBAUTH-USER
     ;header_property = username
     ;auto_sign_up = true

@@ -1,36 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: influxdb-deployment
+  name: influxdb
+  labels:
+    app: influxdb
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: influxdb
-  minReadySeconds: 5
   template:
     metadata:
       labels:
         app: influxdb
     spec:
       containers:
-        - image: influxdb:1.7.4
-          name: influxdb
+        - name: influxdb
+          image: ft_influxdb
+          imagePullPolicy: Never
           ports:
             - containerPort: 8086
+          # livenessProbe:
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   httpGet:
+          #     path: /ping
+          #     port: 8086
           volumeMounts:
-            - mountPath: /var/lib/influxdb
-              name: influxdb-data
-            - mountPath: /etc/influxdb/influxdb.conf
-              name: influxdb-config
+            - name: influxdb-data # influxdb-config 파일 [data] 부분을 보면 데이터가 저장되는 위치를 설정할 수 있다. 디폴트 값이 /var/lib/influxdb 이므로 이 위치 볼륨시킨다.
+              mountPath: /var/lib/influxdb
+            - name: influxdb-config
               subPath: influxdb.conf
+              mountPath: /etc/influxdb/influxdb.conf
               readOnly: true
-          envFrom:
+          envFrom: # secret.yaml 에 정의해 놓은 환경변수를 가져온다.
             - secretRef:
-                name: influxdb-secrets
+                name: influxdb
       volumes:
         - name: influxdb-data
           persistentVolumeClaim:
             claimName: influxdb-data
         - name: influxdb-config
           configMap:
-            name: influxdb-config
+            name: influxdb
