@@ -17,16 +17,12 @@ kubectl delete services nginx
 echo "nginx deployment delete"
 kubectl delete deployment nginx
 sleep 2
-echo "nginx image delete"
-docker rmi ft_nginx:1.0
 
 echo "phpmyadmin service delete"
 kubectl delete services phpmyadmin
 echo "phpmyadmin deployment delete"
 kubectl delete deployment phpmyadmin
 sleep 2
-echo "phpmyadmin image delete"
-docker rmi ft_phpmyadmin:latest
 
 
 echo "mysql service delete"
@@ -34,8 +30,7 @@ kubectl delete services mysql
 echo "mysql deployment delete"
 kubectl delete deployment mysql
 sleep 2
-echo "mysql image delete"
-docker rmi ft_mysql:latest
+
 
 echo "wordpress service delete"
 kubectl delete services wordpress
@@ -50,8 +45,7 @@ kubectl delete services influxdb
 echo "influxdb deployment delete"
 kubectl delete deployment influxdb
 sleep 2
-echo "influxdb image delete"
-docker rmi ft_influx
+
 
 echo "telegraf deployment delete"
 kubectl delete deployment telegraf
@@ -64,13 +58,10 @@ kubectl delete services grafana
 echo "grafana deployment delete"
 kubectl delete deployment grafana
 sleep 2
-echo "grafana image delete"
-docker rmi ft_grafana
+
 
 echo "ftps service delete"
 kubectl delete services ftps
 echo "ftps deployment delete"
 kubectl delete deployment ftps
 sleep 2
-echo "ftps image delete"
-docker rmi ft_ftps
