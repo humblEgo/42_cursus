@@ -49,30 +49,30 @@ minikube dashboard&
 
 # =============  docker build ================
 echo "docker image build start"
-# echo "ftps..."
-# docker build -t ft_ftps srcs/ftps
+echo "ftps..."
+docker build -t ft_ftps srcs/ftps
 echo "mysql..."
 docker build -t ft_mysql srcs/mysql
 echo "phpmyadmin..."
 docker build -t ft_phpmyadmin srcs/phpmyadmin
 echo "wordpress..."
 docker build -t ft_wordpress srcs/wordpress
-# echo "influxDB..."
-# docker build -t ft_influxdb srcs/influxdb
-# echo "telegraf..."
-# docker build -t ft_telegraf srcs/telegraf
-# echo "grafana..."
-# docker build -t ft_grafana srcs/grafana
+echo "influxDB..."
+docker build -t ft_influxdb srcs/influxdb
+echo "telegraf..."
+docker build -t ft_telegraf srcs/telegraf
+echo "grafana..."
+docker build -t ft_grafana srcs/grafana
 
 
 echo "create deployment and service objects"
-# kubectl create -f srcs/yaml/ftps
+kubectl create -f srcs/yaml/ftps
 kubectl create -f srcs/yaml/mysql
 kubectl create -f srcs/yaml/phpmyadmin
 kubectl create -f srcs/yaml/wordpress
-# kubectl create -f srcs/yaml/influxdb
-# kubectl create -f srcs/yaml/telegraf
-# kubectl create -f srcs/yaml/grafana
+kubectl create -f srcs/yaml/influxdb
+kubectl create -f srcs/yaml/telegraf
+kubectl create -f srcs/yaml/grafana
 
 
 # =============  wordpress setup  ================
