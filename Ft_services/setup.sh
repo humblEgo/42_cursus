@@ -41,9 +41,11 @@ cd ..
 cd ..
 echo $(PWD)
 docker build -t ft_nginx:1.0 srcs/nginx > /dev/null
-kubectl apply -f srcs/yaml/nginx > /dev/null
+kubectl create -f srcs/yaml/nginx > /dev/null
 
 echo "after nginx setup"
+echo "exec minikube dashboard"
+minikube dashboard&
 
 # =============  docker build ================
 echo "docker image build start"
@@ -65,7 +67,6 @@ docker build -t ft_grafana srcs/grafana
 
 echo "create deployment and service objects"
 kubectl create -f srcs/yaml/ftps
-#kubectl apply -f srcs/ftps/ftps.yaml
 kubectl create -f srcs/yaml/mysql
 kubectl create -f srcs/yaml/phpmyadmin
 kubectl create -f srcs/yaml/wordpress
@@ -77,6 +78,4 @@ kubectl create -f srcs/yaml/grafana
 echo "Wordpress setup"
 sh wordpress_setup.sh
 
-echo "dashboard activate"
-minikube dashboard&
-# https://minikube.sigs.k8s.io/docs/handbook/dashboard/
+echo "Setting finished"

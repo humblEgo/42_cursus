@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:60",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -15,320 +16,42 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 17,
   "links": [],
   "panels": [
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB",
-      "description": "Container CPU node requests ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 6,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 18,
-        "x": 0,
-        "y": 0
-      },
-      "hiddenSeries": false,
-      "id": 6,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 3,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": true,
-      "pluginVersion": "7.0.4",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "cpu_usage_nanocores"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "distinct"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Container CPU Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "hertz",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "InfluxDB",
-      "description": "Current container working memory request",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "decimals": 2,
-          "displayName": "CPU",
-          "mappings": [],
-          "max": 40000000,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 30000000
-              },
-              {
-                "color": "red",
-                "value": 35000000
-              }
-            ]
-          },
-          "unit": "hertz"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 18,
-        "y": 0
-      },
-      "id": 8,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.0.4",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "cpu_usage_nanocores"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPU Usage",
-      "type": "gauge"
-    },
     {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
-      "description": "Container working memory request",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 6,
+      "datasource": "influxdb",
+      "description": "traffic transmitted/received by container",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 18,
+        "h": 8,
+        "w": 24,
         "x": 0,
-        "y": 7
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 7,
+      "id": 4,
       "legend": {
-        "alignAsTable": false,
         "avg": false,
         "current": false,
-        "hideEmpty": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
       "lines": false,
-      "linewidth": 3,
+      "linewidth": 1,
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
-      "percentage": true,
-      "pluginVersion": "7.0.4",
+      "percentage": false,
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -338,6 +61,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "TX",
           "groupBy": [
             {
               "params": [
@@ -352,7 +76,50 @@
               "type": "fill"
             }
           ],
-          "measurement": "kubernetes_pod_container",
+          "measurement": "docker_container_net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "tx_bytes"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "app",
+              "operator": "=",
+              "value": "wordpress"
+            }
+          ]
+        },
+        {
+          "alias": "RX",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "docker_container_net",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -361,19 +128,19 @@
             [
               {
                 "params": [
-                  "memory_working_set_bytes"
+                  "rx_bytes"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               }
             ]
           ],
           "tags": [
             {
-              "key": "container_name",
+              "key": "app",
               "operator": "=",
               "value": "wordpress"
             }
@@ -384,12 +151,13 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory Usage",
+      "title": "Traffic",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -400,8 +168,8 @@
       },
       "yaxes": [
         {
-          "decimals": null,
-          "format": "decbytes",
+          "$$hashKey": "object:431",
+          "format": "bytes",
           "label": "",
           "logBase": 1,
           "max": null,
@@ -409,12 +177,13 @@
           "show": true
         },
         {
+          "$$hashKey": "object:432",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -423,151 +192,47 @@
       }
     },
     {
-      "datasource": "InfluxDB",
-      "description": "Current container working memory request",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "displayName": "Memory",
-          "mappings": [],
-          "max": 3000000000,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 2000000000
-              },
-              {
-                "color": "red",
-                "value": 2500000000
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 18,
-        "y": 7
-      },
-      "id": 9,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.0.4",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "memory_working_set_bytes"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory Usage",
-      "type": "gauge"
-    },
-    {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb",
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 24,
         "x": 0,
-        "y": 14
+        "y": 8
       },
-      "id": 11,
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
+        "dataLinks": []
       },
-      "pluginVersion": "7.0.4",
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
+          "alias": "Memory Usage",
           "groupBy": [
             {
               "params": [
@@ -582,7 +247,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "kubernetes_pod_container",
+          "measurement": "docker_container_mem",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -591,312 +256,83 @@
             [
               {
                 "params": [
-                  "rootfs_used_bytes"
+                  "usage_percent"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
           "tags": [
             {
-              "key": "container_name",
+              "key": "app",
               "operator": "=",
               "value": "wordpress"
             }
           ]
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Used Disk Space",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "decbytes"
+      "title": "Memory Usage %",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:831",
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 6,
-        "y": 14
-      },
-      "id": 13,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.4",
-      "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rootfs_available_bytes"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
+          "$$hashKey": "object:832",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Available Disk Space",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 12,
-        "y": 14
-      },
-      "id": 12,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.4",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "restarts_total"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Restarts",
-      "type": "stat"
-    },
-    {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "folderId": null,
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 16,
-        "y": 14
-      },
-      "headings": false,
-      "id": 14,
-      "limit": 10,
-      "pluginVersion": "7.0.4",
-      "query": "metrics",
-      "recent": false,
-      "search": true,
-      "starred": false,
-      "tags": [],
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kubernetes_pod_container",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "restarts_total"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "container_name",
-              "operator": "=",
-              "value": "wordpress"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Dashboards",
-      "type": "dashlist"
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 25,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
+      "5s",
       "10s",
       "30s",
       "1m",
@@ -909,6 +345,10 @@
     ]
   },
   "timezone": "",
-  "title": "wordpress metrics",
-  "version": 2
+  "title": "wordpress",
+  "uid": "db5Iha6Wk",
+  "variables": {
+    "list": []
+  },
+  "version": 3
 }

@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:60",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -15,34 +16,52 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 15,
   "links": [],
   "panels": [
     {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "folderId": null,
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb",
+      "description": "traffic transmitted/received by container",
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 5,
+        "h": 8,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "headings": false,
-      "id": 6,
-      "limit": 10,
-      "query": "Metrics",
-      "recent": false,
-      "search": true,
-      "starred": false,
-      "tags": [],
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
+          "alias": "TX",
           "groupBy": [
             {
               "params": [
@@ -57,100 +76,35 @@
               "type": "fill"
             }
           ],
+          "measurement": "docker_container_net",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "tx_bytes"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
-          "tags": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Container Dashboards",
-      "type": "dashlist"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB",
-      "description": "Overall Cluster CPU",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "Misc"
+          "tags": [
+            {
+              "key": "app",
+              "operator": "=",
+              "value": "telegraf"
+            }
+          ]
         },
-        "overrides": []
-      },
-      "fill": 3,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 15,
-        "x": 5,
-        "y": 0
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": true,
-      "pluginVersion": "7.0.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
         {
-          "alias": "",
+          "alias": "RX",
           "groupBy": [
             {
               "params": [
@@ -160,12 +114,12 @@
             },
             {
               "params": [
-                "none"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "cpu",
+          "measurement": "docker_container_net",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -174,21 +128,21 @@
             [
               {
                 "params": [
-                  "usage_system"
+                  "rx_bytes"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               }
             ]
           ],
           "tags": [
             {
-              "key": "cpu",
+              "key": "app",
               "operator": "=",
-              "value": "cpu-total"
+              "value": "telegraf"
             }
           ]
         }
@@ -197,12 +151,13 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU",
+      "title": "Traffic",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -213,15 +168,16 @@
       },
       "yaxes": [
         {
-          "decimals": null,
-          "format": "short",
-          "label": "% percent",
+          "$$hashKey": "object:431",
+          "format": "bytes",
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:432",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -236,56 +192,47 @@
       }
     },
     {
-      "datasource": "InfluxDB",
-      "description": "Used disk storage space",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb",
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 4,
-        "x": 20,
-        "y": 0
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
       },
-      "id": 4,
-      "maxDataPoints": 100,
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
       "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "dataLinks": []
       },
-      "pluginVersion": "7.0.4",
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
+          "alias": "Memory Usage",
           "groupBy": [
             {
               "params": [
@@ -300,7 +247,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "disk",
+          "measurement": "docker_container_mem",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -309,38 +256,83 @@
             [
               {
                 "params": [
-                  "used_percent"
+                  "usage_percent"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "mean"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "app",
+              "operator": "=",
+              "value": "telegraf"
+            }
+          ]
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Disk Storage",
-      "type": "gauge"
+      "title": "Memory Usage %",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:831",
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:832",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 25,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
+      "5s",
       "10s",
       "30s",
       "1m",
@@ -353,6 +345,10 @@
     ]
   },
   "timezone": "",
-  "title": "Home Dashboard",
+  "title": "telegraf",
+  "uid": "kVhM2-6Zk",
+  "variables": {
+    "list": []
+  },
   "version": 2
 }

@@ -2,21 +2,23 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:60",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
   },
+  "description": "ha..",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 18,
+  "id": 11,
   "links": [],
   "panels": [
     {
@@ -25,12 +27,17 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "influxdb",
-      "description": "traffic transmitted/received by container",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -61,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TX",
+          "alias": "Number of containers",
           "groupBy": [
             {
               "params": [
@@ -76,88 +83,76 @@
               "type": "fill"
             }
           ],
-          "measurement": "docker_container_net",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "tx_bytes"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "app",
-              "operator": "=",
-              "value": "mysql"
-            }
-          ]
-        },
-        {
-          "alias": "RX",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker_container_net",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "query": "select n_containers from docker\n",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "rx_bytes"
+                  "value"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
-          "tags": [
+          "tags": []
+        },
+        {
+          "groupBy": [
             {
-              "key": "app",
-              "operator": "=",
-              "value": "mysql"
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
             }
-          ]
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select usage from docker_container_mem",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Traffic",
+      "title": "DOCKER!",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -168,16 +163,14 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:431",
-          "format": "bytes",
-          "label": "",
+          "format": "short",
+          "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
-          "$$hashKey": "object:432",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -196,17 +189,23 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb",
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 24,
+        "h": 9,
+        "w": 12,
         "x": 0,
         "y": 8
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 2,
       "legend": {
         "avg": false,
         "current": false,
@@ -230,62 +229,16 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Memory Usage",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker_container_mem",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "usage_percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "app",
-              "operator": "=",
-              "value": "mysql"
-            }
-          ]
-        }
-      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory Usage %",
+      "title": "Panel Title",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -296,8 +249,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:831",
-          "format": "percentunit",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -305,7 +257,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:832",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -320,19 +271,19 @@
       }
     }
   ],
-  "schemaVersion": 22,
+  "refresh": false,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-6h",
-    "to": "now"
+    "from": "2020-07-07T22:24:14.382Z",
+    "to": "2020-07-08T10:24:14.382Z"
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
       "10s",
       "30s",
       "1m",
@@ -344,11 +295,8 @@
       "1d"
     ]
   },
-  "timezone": "",
-  "title": "mysql",
-  "uid": "fsgD2aeZk",
-  "variables": {
-    "list": []
-  },
-  "version": 3
+  "timezone": "browser",
+  "title": "SAVED",
+  "uid": "sQUNpQMMk",
+  "version": 2
 }

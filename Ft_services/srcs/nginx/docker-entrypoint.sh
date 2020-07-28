@@ -1,6 +1,10 @@
 #!/bin/sh
 # vim:sw=4:ts=4:et
 
+# execute ssh
+ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ""
+/usr/sbin/sshd
+
 set -e
 
 if [ -z "${NGINX_ENTRYPOINT_QUIET_LOGS:-}" ]; then

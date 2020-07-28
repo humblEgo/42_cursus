@@ -1,6 +1,7 @@
 #! /bin/bash
 cd ./srcs/wordpress/files
 
+echo "-------------------------------Set wordpress--------------------------------------"
 # IP 처리하는 부분
 # external ip가 아직 할당안되서 <pending> 이면 할당 될 때 까지 반복
 kubectl get services | grep wordpress | awk '{print $4}' > WORDPRESS_IP
@@ -19,6 +20,7 @@ sed "s/WORDPRESS_IP/$WORDPRESS_IP/g" ./data/wordpress.sql > ./wordpress.sql
 sed "s/WORDPRESS_IP/$WORDPRESS_IP/g" ./data/wp-config.php > ./wp-config.php
 kubectl cp wordpress.sql $WORDPRESS_POD:/tmp/
 kubectl cp wp-config.php $WORDPRESS_POD:/etc/wordpress/
+echo "init-wordpress"
 kubectl exec $WORDPRESS_POD -- sh /tmp/init-wordpress.sh
 rm WORDPRESS_IP
 rm WORDPRESS_POD
