@@ -6,7 +6,7 @@ metadata:
     app: influxdb
 data:
   influxdb.conf: |
-    reporting-disabled = false # 24시간 주기로 influxdb.com에 데이터 보낼지
+    reporting-disabled = false # 24시간 주기로 influxdb.com에 데이터 보낼지 여부
     bind-address = "127.0.0.1:8088" # RPC(remote procedure controler) 네트워크 상의 다른 컴퓨터와 통신할 때 사용하는 프로토콜. 다른 네트워크에 있는 telegraf, grafana 등의 프로그램과 통신을 사용해야 하므로 열어준다.
     ###
     ### [meta]

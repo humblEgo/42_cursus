@@ -35,7 +35,7 @@ spec:
               subPath: influxdb.conf
               mountPath: /etc/influxdb/influxdb.conf
               readOnly: true
-          envFrom: # secret.yaml 에 정의해 놓은 환경변수를 가져온다.
+          envFrom:
             - secretRef:
                 name: influxdb
       volumes:

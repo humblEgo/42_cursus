@@ -46,7 +46,7 @@ data:
     ###############################################################################
     # 위에서 output은 telegraf가 수집한 데이터를 보내는 설정이었다면
     # 이 input은 데이터를 어디서 수집할지에 대한 문제다.
-    # 기본 설정파일을 보면 aws, azureㄷ 등 수많은 방법을 통해서 데이터를 가져올 수 있다.
+    # 기본 설정파일을 보면 aws, azure 등 수많은 방법을 통해서 데이터를 가져올 수 있다.
     # 우리는 쿠버네티스를 이용하고 각 파드(컨테이너)에서 뿜어져 나오는 데이터를 사용하므로
     # 도커 관련 설정을 보면 된다.
     # 그리고 그냥 기본 디폴트로 사용하면 된다. 주석처리 되어있는거 해제만 해주면 됨.
@@ -67,7 +67,7 @@ data:
       container_name_exclude = []
       #
       # ## Timeout for docker list, info, and stats commands
-      # timeout = "5s"
+      timeout = "5s"
       #
       ## Whether to report for each container per-device blkio (8:0, 8:1...) and
       ## network (eth0, eth1, ...) stats or not
@@ -79,4 +79,5 @@ data:
       docker_label_include = []
       docker_label_exclude = []
       ## Which environment variables should we use as a tag
-      # tag_env = ["JAVA_HOME", "HEAP_SIZE"]
+      tag_env = ["JAVA_HOME", "HEAP_SIZE"]
+      

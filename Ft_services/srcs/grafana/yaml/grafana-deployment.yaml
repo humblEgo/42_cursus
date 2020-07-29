@@ -17,11 +17,11 @@ spec:
         - name: grafana
           image: ft_grafana
           imagePullPolicy: Never
-          #          livenessProbe: # 컨테이너의 동작 여부 확인. 만약 죽었다면 재시작한다.
+          #          livenessProbe:
           #            initialDelaySeconds: 20
           #            periodSeconds: 10
           #            timeoutSeconds: 5
-          #            httpGet: # 이건 뭘까?
+          #            httpGet:
           #              path: /api/health
           #              port: 3000
           volumeMounts:
