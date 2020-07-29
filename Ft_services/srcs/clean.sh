@@ -4,64 +4,16 @@ echo "metalLB manifest delete"
 # As clean namespace, other parts are deleted automatically.
 kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
 
-echo "cd to nginx directory"
-cd ./nginx
-echo "ssl delete"
+echo "nginx ssl delete"
+cd srcs/nginx
 make clean
-echo "nginx ssl secret delete"
-kubectl delete secret nginxsecret
-echo "nginx configmap create"
-kubectl delete configmap nginxconfigmap
-echo "nginx service delete"
-kubectl delete services nginx
-echo "nginx deployment delete"
-kubectl delete deployment nginx
+cd ..
 sleep 2
 
-echo "phpmyadmin service delete"
-kubectl delete services phpmyadmin
-echo "phpmyadmin deployment delete"
-kubectl delete deployment phpmyadmin
-sleep 2
+SERVICE_LIST="nginx ftps grafana influxdb mysql nginx phpmyadmin telegraf wordpress"
 
-
-echo "mysql service delete"
-kubectl delete services mysql
-echo "mysql deployment delete"
-kubectl delete deployment mysql
-sleep 2
-
-
-echo "wordpress service delete"
-kubectl delete services wordpress
-echo "wordpress deployment delete"
-kubectl delete deployment wordpress
-sleep 2
-echo "wordpress image delete"
-docker rmi ft_wordpress:latest
-
-echo "influxdb service delete"
-kubectl delete services influxdb
-echo "influxdb deployment delete"
-kubectl delete deployment influxdb
-sleep 2
-
-
-echo "telegraf deployment delete"
-kubectl delete deployment telegraf
-sleep 2
-echo "telegraf image delete"
-docker rmi ft_telegraf
-
-echo "grafana service delete"
-kubectl delete services grafana
-echo "grafana deployment delete"
-kubectl delete deployment grafana
-sleep 2
-
-
-echo "ftps service delete"
-kubectl delete services ftps
-echo "ftps deployment delete"
-kubectl delete deployment ftps
-sleep 2
+for SERVICE in $SERVICE_LIST
+do
+    echo "Clean $SERVICE"
+    kubectl delete -f ./$SERVICE/yaml > /dev/null 2>&1
+done
