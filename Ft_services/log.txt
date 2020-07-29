@@ -1,0 +1,5 @@
+😄  minikube v1.11.0 on Darwin 10.14.6
+    ▪ MINIKUBE_HOME=/goinfre/iwoo
+✨  Using the virtualbox driver based on user configuration
+👍  Starting control plane node minikube in cluster minikube
+🔥  Creating virtualbox VM (CPUs=2, Memory=6000MB, Disk=20000MB) ...

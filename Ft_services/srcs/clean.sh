@@ -16,52 +16,43 @@ echo "nginx service delete"
 kubectl delete services nginx
 echo "nginx deployment delete"
 kubectl delete deployment nginx
-sleep 2
-
-echo "phpmyadmin service delete"
-kubectl delete services phpmyadmin
-echo "phpmyadmin deployment delete"
-kubectl delete deployment phpmyadmin
-sleep 2
 
 
-echo "mysql service delete"
-kubectl delete services mysql
-echo "mysql deployment delete"
-kubectl delete deployment mysql
-sleep 2
-
-
-echo "wordpress service delete"
-kubectl delete services wordpress
-echo "wordpress deployment delete"
-kubectl delete deployment wordpress
-sleep 2
-echo "wordpress image delete"
-docker rmi ft_wordpress:latest
-
-echo "influxdb service delete"
-kubectl delete services influxdb
-echo "influxdb deployment delete"
-kubectl delete deployment influxdb
-sleep 2
-
-
-echo "telegraf deployment delete"
-kubectl delete deployment telegraf
-sleep 2
-echo "telegraf image delete"
-docker rmi ft_telegraf
-
-echo "grafana service delete"
-kubectl delete services grafana
-echo "grafana deployment delete"
-kubectl delete deployment grafana
-sleep 2
-
-
-echo "ftps service delete"
+echo "Delete kubernetes objects: ftps"
 kubectl delete services ftps
-echo "ftps deployment delete"
 kubectl delete deployment ftps
-sleep 2
+kubectl delete configmap ftps-config
+
+
+echo "Delete kubernetes objects: phpmyadmin"
+kubectl delete services phpmyadmin
+kubectl delete deployment phpmyadmin
+kubectl delete configmap phpmyadmin
+
+
+echo "Delete kubernetes objects: mysql"
+kubectl delete services mysql
+kubectl delete deployment mysql
+
+
+echo "Delete kubernetes objects: wordpress"
+kubectl delete services wordpress
+kubectl delete deployment wordpress
+# kubectl delete configmap wordpress
+
+
+echo "Delete kubernetes objects: influxdb"
+kubectl delete services influxdb
+kubectl delete deployment influxdb
+kubectl delete configmap influxdb
+
+
+echo "Delete kubernetes objects: telegraf"
+kubectl delete deployment telegraf
+kubectl delete configmap telegraf
+
+
+echo "Delete kubernetes objects: grafana"
+kubectl delete services grafana
+kubectl delete deployment grafana
+kubectl delete configmap grafana

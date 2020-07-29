@@ -5,13 +5,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: nginx
+      app: nginx
       tier: backend
   replicas: 1
   template:
     metadata:
       labels:
-        run: nginx
+        app: nginx
         tier: backend
     spec:
       volumes:
@@ -23,7 +23,7 @@ spec:
           name: nginxconfigmap
       containers:
       - name: nginx
-        image: ft_nginx:1.0
+        image: ft_nginx
         imagePullPolicy: Never #이미지가 로컬에 있다고 가정합니다.
         ports:
         - containerPort: 443

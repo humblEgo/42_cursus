@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: nginx
   labels:
-    run: nginx
+    app: nginx
 spec:
   type: LoadBalancer
   ports: #포트가 두개 일때 포트 이름을 명시해줘야함. #target port가 기본적으로 port와 같게 설정되어있다.
@@ -16,5 +16,5 @@ spec:
   - port: 22
     name: ssh
   selector:
-    run: nginx
+    app: nginx
     tier: backend
