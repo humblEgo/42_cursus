@@ -2,82 +2,51 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/time.h>
  
-// 쓰레드 함수
+// 뮤텍스 객체 선언
+pthread_mutex_t mutex_lock;
+struct timeval p1_time;
+struct timeval p2_time;
+ 
+int g_count = 0;  // 쓰레드 공유자원.
+ 
 void *t_function(void *data)
 {
-    pid_t pid;            // process id
-    pthread_t tid;        // thread id
- 
-    pid = getpid();
-    tid = pthread_self();
- 
+    int i;
     char* thread_name = (char*)data;
-    int i = 0;
  
-    while (i<3)   // 0,1,2 까지만 loop 돌립니다.
+    pthread_mutex_lock(&mutex_lock);
+ 
+    // critical section
+    g_count = 0;   // 쓰레드마다 0부터 시작.
+    while (g_count < 3)
     {
-        // 넘겨받은 쓰레드 이름과 
-        // 현재 process id 와 thread id 를 함께 출력
-        printf("[%s] pid:%u, tid:%x --- %d\n", 
-            thread_name, (unsigned int)pid, (unsigned int)tid, i);
-        i++;
-        sleep(1);  // 1초간 대기
+        gettimeofday(&p1_time, NULL);
+        printf("%d %ud %s COUNT %d\n", p1_time.tv_usec, (int)pthread_self(), thread_name, g_count);
+        g_count++;  // 쓰레드 공유자원
+        sleep(1);
     }
-    return (NULL);
-}
  
-void *t_function2(void *data)
-{
-    pid_t pid;            // process id
-    pthread_t tid;        // thread id
- 
-    pid = getpid();
-    tid = pthread_self();
- 
-    char* thread_name = (char*)data;
-    int i = 0;
- 
-    while (i<5)   // 0,1,2 까지만 loop 돌립니다.
-    {
-        // 넘겨받은 쓰레드 이름과 
-        // 현재 process id 와 thread id 를 함께 출력
-        printf("[%s] pid:%u, tid:%x --- %d\n", 
-            thread_name, (unsigned int)pid, (unsigned int)tid, i);
-        i++;
-        sleep(1);  // 1초간 대기
-    }
+    pthread_mutex_unlock(&mutex_lock);
     return (NULL);
 }
 
 int main()
 {
-    pthread_t   p_thread[2]; 
-    int         thr_id;
-    int         status;
-    char        p1[] = "thread_1";
-    char        p2[] = "thread_2";
-    char        p3[] = "thread_3";
+    pthread_t p_thread1, p_thread2;
+    int status;
+    // 뮤텍스 객체 초기화, 기본 특성으로 초기화 했음
+    pthread_mutex_init(&mutex_lock, NULL);
 
-    sleep(1);
+    pthread_create(&p_thread1, NULL, t_function, (void *)"Thread1");
+    pthread_create(&p_thread2, NULL, t_function, (void *)"Thread2");
+ 
+    // case 1
+    pthread_join(p_thread1, (void *)&status);
+    pthread_join(p_thread2, (void *)&status);
 
-    thr_id = pthread_create(&p_thread[0], NULL, t_function, (void *)p1);
-    if (thr_id < 0)
-    {
-        perror("thread create error : ");
-        exit(0);
-    }
-
-    thr_id = pthread_create(&p_thread[1], NULL, t_function2, (void *)p2);
-    if (thr_id < 0)
-    {
-        perror("thread create error : ");
-        exit(0);
-    }
-
-    t_function((void *)p3);
-    pthread_join(p_thread[1], (void **)&status);
-    pthread_join(p_thread[0], (void **)&status);
-
-    return 0;
+    // case 2
+    // pthread_join(p_thread2, (void *)&status);
+    // pthread_join(p_thread1, (void *)&status);
 }

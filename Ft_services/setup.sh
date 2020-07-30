@@ -50,14 +50,12 @@ minikube dashboard&
 #==========-====================================>	Setup services
 cd srcs
 
-./setup_metalLB.sh								#	I recommend installing metalLB first since it allocates EXTERNAL_IP to other services.
-./setup_nginx.sh
-./setup_ftps.sh
-./setup_mysql.sh
-./setup_phpmyadmin.sh
-./setup_influxDB.sh
-./setup_telegraf.sh
-./setup_grafana.sh
-./setup_wordpress.sh
+SERVICE_LIST="metalLB nginx ftps mysql phpmyadmin influxDB telegraf grafana wordpress"
+
+#	I recommend installing metalLB first since it allocates EXTERNAL_IP to other services.
+for SERVICE in $SERVICE_LIST
+do
+	./setup_$SERVICE.sh
+done
 
 echo "Setup finished. Check log.txt if you need :)"

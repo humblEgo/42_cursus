@@ -1,243 +1,269 @@
 Log start~
-namespace/metallb-system unchanged
+namespace/metallb-system created
 podsecuritypolicy.policy/controller configured
 podsecuritypolicy.policy/speaker configured
-serviceaccount/controller unchanged
-serviceaccount/speaker unchanged
+serviceaccount/controller created
+serviceaccount/speaker created
 clusterrole.rbac.authorization.k8s.io/metallb-system:controller unchanged
 clusterrole.rbac.authorization.k8s.io/metallb-system:speaker unchanged
-role.rbac.authorization.k8s.io/config-watcher unchanged
-role.rbac.authorization.k8s.io/pod-lister unchanged
+role.rbac.authorization.k8s.io/config-watcher created
+role.rbac.authorization.k8s.io/pod-lister created
 clusterrolebinding.rbac.authorization.k8s.io/metallb-system:controller unchanged
 clusterrolebinding.rbac.authorization.k8s.io/metallb-system:speaker unchanged
-rolebinding.rbac.authorization.k8s.io/config-watcher unchanged
-rolebinding.rbac.authorization.k8s.io/pod-lister unchanged
-daemonset.apps/speaker unchanged
-deployment.apps/controller unchanged
-configmap/config unchanged
+rolebinding.rbac.authorization.k8s.io/config-watcher created
+rolebinding.rbac.authorization.k8s.io/pod-lister created
+daemonset.apps/speaker created
+deployment.apps/controller created
+secret/memberlist created
+configmap/config created
 Sending build context to Docker daemon  24.06kB
 Step 1/16 : FROM alpine:3.11
  ---> f70734b6a266
 Step 2/16 : LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
  ---> Using cache
- ---> 56fba212be66
+ ---> 9759f8fdefc9
 Step 3/16 : ENV NGINX_VERSION 1.19.1
  ---> Using cache
- ---> 82c5a1b97706
+ ---> d2e9dbdffdd1
 Step 4/16 : ENV NJS_VERSION   0.4.2
  ---> Using cache
- ---> e51c162890a7
+ ---> 9407c71695bb
 Step 5/16 : ENV PKG_RELEASE   1
  ---> Using cache
- ---> 4ba7ef52e6bd
+ ---> d21827da7b96
 Step 6/16 : RUN set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch="$(cat /etc/apk/arch)"     && nginxPackages="         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     "     && case "$apkArch" in         x86_64)             set -x             && KEY_SHA512="e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin"             && apk add --no-cache --virtual .cert-deps                 openssl             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if [ "$(openssl rsa -pubin -in /tmp/nginx_signing.rsa.pub -text -noout | openssl sha512 -r)" = "$KEY_SHA512" ]; then                 echo "key verification succeeded!";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo "key verification failed!";                 exit 1;             fi             && apk del .cert-deps             && apk add -X "https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir="$(mktemp -d)"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 perl-dev                 libedit-dev                 mercurial                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c "                 export HOME=${tempDir}                 && cd ${tempDir}                 && hg clone https://hg.nginx.org/pkg-oss                 && cd pkg-oss                 && hg up ${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make all                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 "             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && if [ -n "$tempDir" ]; then rm -rf "$tempDir"; fi     && if [ -n "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps="$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )"     && apk add --no-cache $runDeps     && apk del .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && apk add --no-cache curl ca-certificates     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d
  ---> Using cache
- ---> fc337c48b158
+ ---> 7f4d5b5ad158
 Step 7/16 : COPY docker-entrypoint.sh /
  ---> Using cache
- ---> 52909c82a9f9
+ ---> fd49c27c4daa
 Step 8/16 : COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
  ---> Using cache
- ---> f4203643575e
+ ---> c5c0d79867b4
 Step 9/16 : COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
  ---> Using cache
- ---> 06b12aa12595
+ ---> 6bda7729e625
 Step 10/16 : RUN apk add openssh
  ---> Using cache
- ---> d718e3d9d0e5
+ ---> d92114dad65b
 Step 11/16 : RUN adduser -D iwoo
  ---> Using cache
- ---> 2ea7123d8fb6
+ ---> 7a2e7cc5c504
 Step 12/16 : RUN echo "iwoo:iwoo123"|chpasswd
  ---> Using cache
- ---> 0982aedce3ac
+ ---> b198598d13af
 Step 13/16 : ENTRYPOINT ["/docker-entrypoint.sh"]
  ---> Using cache
- ---> 7f95cde5fc19
+ ---> aad0e406640c
 Step 14/16 : EXPOSE 80 443 22
  ---> Using cache
- ---> 1b5dccdfbe62
+ ---> b81504f01b06
 Step 15/16 : STOPSIGNAL SIGTERM
  ---> Using cache
- ---> 9375af50d39f
+ ---> 0fcc47ff21e3
 Step 16/16 : CMD ["nginx", "-g", "daemon off;"]
  ---> Using cache
- ---> 70fb5c20121a
-Successfully built 70fb5c20121a
+ ---> 764197ae2e96
+Successfully built 764197ae2e96
 Successfully tagged ft_nginx:1.0
+deployment.apps/nginx created
+service/nginx created
 Sending build context to Docker daemon  8.192kB
 Step 1/6 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/6 : RUN apk upgrade && apk add openssl vsftpd
  ---> Using cache
- ---> e87a5f4810e6
+ ---> d1d268f25186
 Step 3/6 : COPY ./entry.sh /tmp/entry.sh
  ---> Using cache
- ---> 31112933b5cf
+ ---> 14db9e81551c
 Step 4/6 : RUN chmod 777 /tmp/entry.sh
  ---> Using cache
- ---> 50b8ee9e3e0c
+ ---> 21ecae2c89f4
 Step 5/6 : EXPOSE 20 21 20000-20001
  ---> Using cache
- ---> 4e69902e351a
+ ---> 62bd808b0520
 Step 6/6 : ENTRYPOINT ["/tmp/entry.sh"]
  ---> Using cache
- ---> 80b292447bb9
-Successfully built 80b292447bb9
+ ---> 67b586ccf870
+Successfully built 67b586ccf870
 Successfully tagged ft_ftps:latest
+configmap/ftps-config created
+deployment.apps/ftps created
+service/ftps created
 Sending build context to Docker daemon  9.728kB
 Step 1/8 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/8 : RUN apk update && 	apk add mysql mysql-client && 	addgroup mysql mysql && 	rm -rf /var/cache/apk/*
  ---> Using cache
- ---> 4968fb04ada1
+ ---> e45a3864aa51
 Step 3/8 : COPY ./start.sh /bin/start.sh
  ---> Using cache
- ---> 350a217b5bd4
+ ---> eb892b419c91
 Step 4/8 : RUN chmod +x /bin/start.sh
  ---> Using cache
- ---> 39cebc8cfa98
+ ---> 41e9a8920097
 Step 5/8 : COPY files/my.cnf /etc/mysql/my.cnf
  ---> Using cache
- ---> f9103367a646
+ ---> 4b8ebca43ae8
 Step 6/8 : VOLUME ["/var/lib/mysql"]
  ---> Using cache
- ---> bfbb11624c42
+ ---> 28ad23ee7306
 Step 7/8 : EXPOSE 3306
  ---> Using cache
- ---> 8b14ceaa0b5f
+ ---> 764fd39adab3
 Step 8/8 : ENTRYPOINT ["/bin/start.sh"]
  ---> Using cache
- ---> 5674c41c2c7c
-Successfully built 5674c41c2c7c
+ ---> a09946fd578e
+Successfully built a09946fd578e
 Successfully tagged ft_mysql:latest
+deployment.apps/mysql created
+persistentvolumeclaim/mysql-pv-claim created
+service/mysql created
 Sending build context to Docker daemon  7.168kB
 Step 1/10 : FROM alpine
  ---> a24bb4013296
 Step 2/10 : RUN apk update
  ---> Using cache
- ---> 0441784bb196
+ ---> e0fcd741a230
 Step 3/10 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
  ---> Using cache
- ---> 6fde1dde1deb
+ ---> 1c4456eb89ec
 Step 4/10 : RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.5/phpMyAdmin-4.9.5-all-languages.tar.gz
  ---> Using cache
- ---> 77420ef1200a
+ ---> 436d77f0b6ff
 Step 5/10 : RUN tar -xvf /phpMyAdmin-4.9.5-all-languages.tar.gz
  ---> Using cache
- ---> 855155b7ae5c
+ ---> 5fd927a1da49
 Step 6/10 : RUN rm -f /phpMyAdmin-4.9.5-all-languages.tar.gz
  ---> Using cache
- ---> 3379ce757328
+ ---> 4c9e8970f9ec
 Step 7/10 : RUN mv /phpMyAdmin-4.9.5-all-languages /etc/phpmyadmin
  ---> Using cache
- ---> 7e29f1069320
+ ---> 5ad3dea81ca0
 Step 8/10 : RUN rm -rf /var/cache/apk/*
  ---> Using cache
- ---> 83d0592bf1ea
+ ---> 74b17bfdd475
 Step 9/10 : EXPOSE 5000
  ---> Using cache
- ---> 4acd6ffd7c06
+ ---> 08759917edc7
 Step 10/10 : CMD php -S 0.0.0.0:5000 -t /etc/phpmyadmin/
  ---> Using cache
- ---> 282b90fd75a9
-Successfully built 282b90fd75a9
+ ---> 4343fb2d75a8
+Successfully built 4343fb2d75a8
 Successfully tagged ft_phpmyadmin:latest
+configmap/phpmyadmin created
+deployment.apps/phpmyadmin created
+service/phpmyadmin created
 Sending build context to Docker daemon  43.52kB
 Step 1/4 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/4 : RUN apk add influxdb --no-cache
  ---> Using cache
- ---> 5c2be6eab915
+ ---> 5eb10e41b449
 Step 3/4 : EXPOSE 8086
  ---> Using cache
- ---> 7090e969f4c0
+ ---> 2834d9d404fa
 Step 4/4 : ENTRYPOINT ["/usr/sbin/influxd"]
  ---> Using cache
- ---> b5dd44ee248a
-Successfully built b5dd44ee248a
+ ---> aeafd89d5d8b
+Successfully built aeafd89d5d8b
 Successfully tagged ft_influxdb:latest
+configmap/influxdb created
+persistentvolumeclaim/influxdb-data created
+deployment.apps/influxdb created
+secret/influxdb created
+service/influxdb created
 Sending build context to Docker daemon  10.24kB
 Step 1/4 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/4 : ENV TELEGRAF_VERSION 1.14.0
  ---> Using cache
- ---> c57152495126
+ ---> 9e6b1e8cff84
 Step 3/4 : RUN	wget https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz 	&& tar -C . -xzf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz 	&& chmod +x telegraf/telegraf 	&& cp telegraf/telegraf /usr/bin/ 	&& rm -rf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz telegraf/
  ---> Using cache
- ---> f9a404f0b155
+ ---> 1d1d1411e079
 Step 4/4 : ENTRYPOINT ["usr/bin/telegraf"]
  ---> Using cache
- ---> 8669136a05d3
-Successfully built 8669136a05d3
+ ---> 95de09ea6bbc
+Successfully built 95de09ea6bbc
 Successfully tagged ft_telegraf:latest
+configmap/telegraf created
+deployment.apps/telegraf created
+secret/telegraf created
 Sending build context to Docker daemon    169kB
 Step 1/7 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/7 : RUN apk add grafana --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --no-cache
  ---> Using cache
- ---> d9081510bcc9
+ ---> 21ce8a4903f6
 Step 3/7 : COPY srcs/dashboards /var/lib/grafana/dashboards/
  ---> Using cache
- ---> 119ca9f8c96e
+ ---> a2e82b3bd477
 Step 4/7 : COPY srcs/provisioning/dashboards/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/
  ---> Using cache
- ---> 1673f6864677
+ ---> 91c9010501f9
 Step 5/7 : COPY srcs/provisioning/datasources/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/
  ---> Using cache
- ---> 2a099bf66921
+ ---> 925b6e0eb540
 Step 6/7 : EXPOSE 3000
  ---> Using cache
- ---> 8e341588730b
+ ---> c11f0ca0edc0
 Step 7/7 : ENTRYPOINT ["/usr/sbin/grafana-server", "--config=/etc/grafana/grafana.ini", "--homepath=/usr/share/grafana"]
  ---> Using cache
- ---> b4d1d0fb38b4
-Successfully built b4d1d0fb38b4
+ ---> f78bf98e361d
+Successfully built f78bf98e361d
 Successfully tagged ft_grafana:latest
+configmap/grafana created
+deployment.apps/grafana created
+secret/grafana created
+service/grafana created
+service/wordpress created
 Sending build context to Docker daemon  103.4kB
 Step 1/15 : FROM alpine
  ---> a24bb4013296
 Step 2/15 : RUN apk update
  ---> Using cache
- ---> 0441784bb196
+ ---> e0fcd741a230
 Step 3/15 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
  ---> Using cache
- ---> 6fde1dde1deb
+ ---> 1c4456eb89ec
 Step 4/15 : RUN wget https://wordpress.org/latest.tar.gz
  ---> Using cache
- ---> a1dfa282c616
+ ---> d6f250e261f5
 Step 5/15 : RUN tar -xvf latest.tar.gz
  ---> Using cache
- ---> a9624f17c1b8
+ ---> 6cba7f9f9c3a
 Step 6/15 : RUN rm -f latest.tar.gz
  ---> Using cache
- ---> 94a974785aa7
+ ---> 136a8c1c2e0d
 Step 7/15 : RUN mv wordpress /etc/
  ---> Using cache
- ---> 8436bc9a2d5d
+ ---> c7d594b96ad8
 Step 8/15 : COPY files/wp-config.php /etc/wordpress/
  ---> Using cache
- ---> 960684ce908c
+ ---> 721aba260a03
 Step 9/15 : RUN apk add mysql-client
  ---> Using cache
- ---> 0dd34368a7cb
+ ---> 114a57a6b007
 Step 10/15 : COPY files/wordpress.sql /tmp/
  ---> Using cache
- ---> 1033847ed86e
+ ---> b0b68dcbdc88
 Step 11/15 : COPY scripts/init-wordpress.sh /tmp/
  ---> Using cache
- ---> 3bfe12da759e
+ ---> d8c5767743a2
 Step 12/15 : EXPOSE 5050
  ---> Using cache
- ---> 30291ebfc290
+ ---> 48e148ab18a1
 Step 13/15 : RUN rm -rf /var/cache/apk/*
  ---> Using cache
- ---> dfe23862f87a
+ ---> 5e67b52e0c62
 Step 14/15 : COPY scripts/run.sh /tmp/
  ---> Using cache
- ---> c39c18229c34
+ ---> 40508b1a7957
 Step 15/15 : ENTRYPOINT ["sh", "/tmp/run.sh"]
  ---> Using cache
- ---> b20029b22151
-Successfully built b20029b22151
+ ---> 368faecc3128
+Successfully built 368faecc3128
 Successfully tagged ft_wordpress:latest
+deployment.apps/wordpress created

@@ -13,7 +13,7 @@ int is_num_str(char *str)
     return (TRUE);
 }
 
-int is_valid(char **argv)
+int is_valid_arg(char **argv)
 {
     int i;
 
@@ -49,24 +49,58 @@ int     init_mutex(t_ph_info *ph_info)
     return (0);
 }
 
+int     init_fork(t_ph_info *t_ph_info)
+{
+    if (!(g_fork = (int *)malloc(sizeof(int) * t_ph_info->num_of_ph)))
+        return (FALSE);
+    memset(g_fork, 0, t_ph_info->num_of_ph);
+    return (TRUE);
+}
+
+void   odd_ph_action(t_ph_info *ph_info, int position_num)
+{
+    if (g_fork[position_num] == 0)
+    {
+        g_fork[position_num] = 1;
+        print_status_taken_fork(position_num);
+    }
+    if (g_fork[position_num] == 1 && g_fork[(position_num + 1) % ph_info->num_of_ph] == 0)
+    {
+        g_fork[(position_num + 1) % ph_info->num_of_ph] = 1;
+        print_status_eating(position_num);
+        usleep(ph_info->time_to_eat);
+        g_fork[position_num] = 0;
+        g_fork[(position_num + 1) % ph_info->num_of_ph] = 0;
+    }
+}
+
 void    philosopher_one(t_ph_info *ph_info)
 {
-    print_status_taken_fork(1);
-    if (!(init_mutex(ph_info)))
+    int i;
+
+    // if (!(init_mutex(ph_info)))
+    //     return ;
+    if (!(init_fork(ph_info)))
+    {
+        ft_putstr_fd("Init fork error\n", 2);
         return ;
+    }
+    i = -1;
+    odd_ph_action(ph_info, i % ph_info->num_of_ph);
 }
 
 int main(int argc, char *argv[])
 {
     t_ph_info   ph_info;
-//    int         i;
 
-    // TODO: number_of_times_each_philosopher_must_eat
-    if ((argc == 5 || argc == 6) && is_valid(&argv[1]))
+    if (argc < 5 || argc > 6)
+        return (0);
+    if (is_valid_arg(&argv[1]))
     {
         set_ph_info(&ph_info, argc, &argv[1]);
         philosopher_one(&ph_info);
-        free(g_mutex);
+        // free(g_mutex);
+        free(g_fork);
     }
     return (0);
 }
