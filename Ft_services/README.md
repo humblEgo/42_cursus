@@ -90,3 +90,8 @@ NodePort가 ClusterIP의 특징을 그대로 가지고 있었던 것처럼, Load
 [참고3](https://m.blog.naver.com/PostView.nhn?blogId=sbd38&logNo=50191972929&proxyReferer=https:%2F%2Fwww.google.co.kr%2F)
 [참고4](https://metallb.universe.tf/concepts/)
 [참고5](https://medium.com/@emirmujic/istio-and-metallb-on-minikube-242281b1134b)
+
+
+
+----
+
