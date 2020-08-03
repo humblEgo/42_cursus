@@ -52,7 +52,6 @@ cd srcs
 
 SERVICE_LIST="metalLB nginx ftps mysql phpmyadmin influxDB telegraf grafana wordpress"
 
-#	I recommend installing metalLB first since it allocates EXTERNAL_IP to other services.
 for SERVICE in $SERVICE_LIST
 do
 	./setup_$SERVICE.sh

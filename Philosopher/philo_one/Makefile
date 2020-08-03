@@ -19,7 +19,7 @@ all: $(NAME)
 
 ${NAME}: ${OBJS}
 	@echo "$(GREEN)PHIOLOSOPHY START$(RESET)"
-	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME} -pthread
 	@echo "$(GREEN)DONE"
 
 ${OBJS}: ${SRCS}

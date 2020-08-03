@@ -64,3 +64,11 @@ void    print_status_died(int ph_num)
     }
     printf("%d %d died\n", tv.tv_usec, ph_num);
 }
+
+
+void    print_status(int type)
+{
+    static int  done = 0;
+
+    
+}
