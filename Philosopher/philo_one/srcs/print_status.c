@@ -68,7 +68,6 @@ void    print_status_died(int ph_num)
 
 void    print_status(int type)
 {
-    static int  done = 0;
-
-    
+    // TODO: refactoring all
+    (void)type;
 }

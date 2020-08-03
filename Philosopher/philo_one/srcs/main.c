@@ -26,81 +26,105 @@ int is_valid_arg(char **argv)
     return (TRUE);
 }
 
-void    set_ph_info(t_ph_info *ph_info, int argc, char **argv)
+void    set_cond(t_cond *cond, int argc, char **argv)
 {
-    ph_info->num_of_ph = ft_atoi(argv[0]);
-    ph_info->time_to_die = ft_atoi(argv[1]);
-    ph_info->time_to_eat = ft_atoi(argv[2]);
-    ph_info->time_to_sleep = ft_atoi(argv[3]);
-    ph_info->time_ph_must_eat = -1;
+    cond->num_of_ph = ft_atoi(argv[0]);
+    cond->time_to_die = ft_atoi(argv[1]);
+    cond->time_to_eat = ft_atoi(argv[2]);
+    cond->time_to_sleep = ft_atoi(argv[3]);
+    cond->time_ph_must_eat = -1;
     if (argc == 6)
-        ph_info->time_ph_must_eat = ft_atoi(argv[4]);
+        cond->time_ph_must_eat = ft_atoi(argv[4]);
 }
 
-int     init_mutex(t_ph_info *ph_info)
+int get_cur_time(void)
 {
-    int i;
+    struct timeval  tv;
 
-    if (!(g_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * 1)))
+    gettimeofday(&tv, NULL);
+    return (tv.tv_usec);
+}
+
+int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
+{
+    t_cond  *cond;
+    t_fork  *forks;
+    t_ph    *ph;
+    int     i;
+
+    //TODO: malloc guard
+    if (!(ph_info->cond = (t_cond *)malloc(sizeof(t_cond))))
         return (FALSE);
+    cond = ph_info->cond;
+    set_cond(cond, argc, argv);
+    ph_info->forks = (t_fork *)malloc(sizeof(t_fork) * cond->num_of_ph);
+    forks = ph_info->forks;
+    ph_info->ph = (t_ph *)malloc(sizeof(t_ph) * cond->num_of_ph);
+    ph = ph_info->ph;
+
+    //Set ph
     i = -1;
-    while (++i < ph_info->num_of_ph)
-        pthread_mutex_init(&g_mutex[i], NULL);
-    return (0);
-}
+    while (++i < cond->num_of_ph)
+        ph[i].ph_num = i + 1;
 
-int     init_fork(t_ph_info *t_ph_info)
-{
-    if (!(g_fork = (int *)malloc(sizeof(int) * t_ph_info->num_of_ph)))
-        return (FALSE);
-    memset(g_fork, 0, t_ph_info->num_of_ph);
+    //Set fork on table
+    i = -1;
+    while (++i < cond->num_of_ph)
+    {
+        if (i == 0)
+            ph[i].left_fork = &forks[cond->num_of_ph - 1];
+        else
+            ph[i].left_fork = &forks[i - 1];
+        if (i == cond->num_of_ph - 1)
+            ph[i].right_fork = &forks[0];
+        else
+            ph[i].right_fork = &forks[i];
+    }
+
+    cond->time_start = get_cur_time();
     return (TRUE);
 }
 
-void   odd_ph_action(t_ph_info *ph_info, int position_num)
+void    ph_routine(void *ph_void)
 {
-    if (g_fork[position_num] == 0)
-    {
-        g_fork[position_num] = 1;
-        print_status_taken_fork(position_num);
-    }
-    if (g_fork[position_num] == 1 && g_fork[(position_num + 1) % ph_info->num_of_ph] == 0)
-    {
-        g_fork[(position_num + 1) % ph_info->num_of_ph] = 1;
-        print_status_eating(position_num);
-        usleep(ph_info->time_to_eat);
-        g_fork[position_num] = 0;
-        g_fork[(position_num + 1) % ph_info->num_of_ph] = 0;
-    }
+    t_ph    *ph;
+
+    ph = (t_ph *)ph_void;
+    printf("I'm %d philosopher!\n", ph->ph_num);
 }
 
-void    philosopher_one(t_ph_info *ph_info)
-{
-    int i;
 
-    // if (!(init_mutex(ph_info)))
-    //     return ;
-    if (!(init_fork(ph_info)))
-    {
-        ft_putstr_fd("Init fork error\n", 2);
-        return ;
-    }
+int     dining_start(t_ph_info *ph_info)
+{
+    t_ph        *ph;
+    t_cond      *cond;
+    int         i;
+
+    ph = ph_info->ph;
+    cond = ph_info->cond;
     i = -1;
-    odd_ph_action(ph_info, i % ph_info->num_of_ph);
+    while (++i < cond->num_of_ph)
+    {
+        if(pthread_create(&(ph[i].tid), NULL, (void *)ph_routine, &ph[i]) != 0)
+        {
+            ft_putstr_fd("Error: failed to create thread\n", 2);
+            return (FALSE);
+        }
+        pthread_detach(ph[i].tid);
+    }
+    return (TRUE);
 }
 
 int main(int argc, char *argv[])
 {
-    t_ph_info   ph_info;
+    t_ph_info ph_info;
 
     if (argc < 5 || argc > 6)
         return (0);
     if (is_valid_arg(&argv[1]))
     {
-        set_ph_info(&ph_info, argc, &argv[1]);
-        philosopher_one(&ph_info);
-        // free(g_mutex);
-        free(g_fork);
+        init_ph_info(&ph_info, argc, &argv[1]);
+        dining_start(&ph_info);
     }
     return (0);
 }
