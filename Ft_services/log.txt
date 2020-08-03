@@ -28,27 +28,27 @@ Digest: sha256:9a839e63dad54c3a6d1834e29692c8492d93f90c59c978c1ed79109ea4fb9a54
 Status: Downloaded newer image for alpine:3.11
  ---> f70734b6a266
 Step 2/16 : LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
- ---> Running in fd06eb446251
-Removing intermediate container fd06eb446251
- ---> d2ca3f6d2cb7
+ ---> Running in 7817e2e308cd
+Removing intermediate container 7817e2e308cd
+ ---> 6f2bda3fb816
 Step 3/16 : ENV NGINX_VERSION 1.19.1
- ---> Running in 91735ea6ac2c
-Removing intermediate container 91735ea6ac2c
- ---> fd19e5f93a8b
+ ---> Running in b0b43e92e8da
+Removing intermediate container b0b43e92e8da
+ ---> 3314b84ee00d
 Step 4/16 : ENV NJS_VERSION   0.4.2
- ---> Running in 20452316474d
-Removing intermediate container 20452316474d
- ---> a15f7e43c2db
+ ---> Running in b227c9d3a8b9
+Removing intermediate container b227c9d3a8b9
+ ---> 4449de84c49f
 Step 5/16 : ENV PKG_RELEASE   1
- ---> Running in 0c1b99c14803
-Removing intermediate container 0c1b99c14803
- ---> 9e61f09bd51f
+ ---> Running in f6d53a547a2d
+Removing intermediate container f6d53a547a2d
+ ---> 6300c991cfd1
 Step 6/16 : RUN set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch="$(cat /etc/apk/arch)"     && nginxPackages="         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     "     && case "$apkArch" in         x86_64)             set -x             && KEY_SHA512="e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin"             && apk add --no-cache --virtual .cert-deps                 openssl             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if [ "$(openssl rsa -pubin -in /tmp/nginx_signing.rsa.pub -text -noout | openssl sha512 -r)" = "$KEY_SHA512" ]; then                 echo "key verification succeeded!";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo "key verification failed!";                 exit 1;             fi             && apk del .cert-deps             && apk add -X "https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir="$(mktemp -d)"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 perl-dev                 libedit-dev                 mercurial                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c "                 export HOME=${tempDir}                 && cd ${tempDir}                 && hg clone https://hg.nginx.org/pkg-oss                 && cd pkg-oss                 && hg up ${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make all                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 "             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && if [ -n "$tempDir" ]; then rm -rf "$tempDir"; fi     && if [ -n "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps="$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )"     && apk add --no-cache $runDeps     && apk del .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && apk add --no-cache curl ca-certificates     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d
- ---> Running in 0fca94dfdd0a
+ ---> Running in 13d477797b69
 [91m+ addgroup -g 101 -S nginx
 [0m[91m+ adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
 [0m[91m+ cat /etc/apk/arch
-+ apkArch=x86_64
+[0m[91m+ apkArch=x86_64
 + nginxPackages='         nginx=1.19.1-r1         nginx-module-xslt=1.19.1-r1         nginx-module-geoip=1.19.1-r1         nginx-module-image-filter=1.19.1-r1         nginx-module-njs=1.19.1.0.4.2-r1     '
 + set -x
 + KEY_SHA512='e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin'
@@ -56,30 +56,30 @@ Step 6/16 : RUN set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -
 [0mfetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
 (1/2) Installing openssl (1.1.1g-r0)
-(2/2) Installing .cert-deps (20200731.091704)
+(2/2) Installing .cert-deps (20200801.094313)
 Executing busybox-1.31.1-r9.trigger
 OK: 6 MiB in 16 packages
 [91m+ wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub
-[0m[91mConnecting to nginx.org (52.58.199.22:443)
+[0m[91mConnecting to nginx.org (3.125.197.172:443)
 [0m[91msaving to '/tmp/nginx_signing.rsa.pub'
 nginx_signing.rsa.pu 100% |********************************|   451  0:00:00 ETA
-'/tmp/nginx_signing.rsa.pub' saved
-+ openssl sha512 -r
-+ openssl rsa -pubin -in /tmp/nginx_signing.rsa.pub -text -noout
-[0m[91m+ '[' 'e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin' '=' 'e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin' ]
-+ echo 'key verification succeeded!'
+[0m[91m'/tmp/nginx_signing.rsa.pub' saved
+[0m[91m+ openssl rsa -pubin -in /tmp/nginx_signing.rsa.pub -text -noout
+[0m[91m+ openssl sha512 -r
 [0mkey verification succeeded!
-[91m+ mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/
+[91m+ '[' 'e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin' '=' 'e7fa8303923d9b95db37a77ad46c68fd4755ff935d0a534d26eba83de193c76166c68bfe7f65471bf8881004ef4aa6df3e34689c305662750c0172fca5d8552a *stdin' ]
++ echo 'key verification succeeded!'
++ mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/
 [0m[91m+ apk del .cert-deps
-[0m(1/2) Purging .cert-deps (20200731.091704)
+[0m(1/2) Purging .cert-deps (20200801.094313)
 (2/2) Purging openssl (1.1.1g-r0)
 Executing busybox-1.31.1-r9.trigger
 [91mWARNING: Ignoring APKINDEX.70f61090.tar.gz: No such file or directory
 WARNING: Ignoring APKINDEX.ca2fea5b.tar.gz: No such file or directory
-[0m[91m+ egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release
-+ apk add -X https://nginx.org/packages/mainline/alpine/v3.11/main --no-cache 'nginx=1.19.1-r1' 'nginx-module-xslt=1.19.1-r1' 'nginx-module-geoip=1.19.1-r1' 'nginx-module-image-filter=1.19.1-r1' 'nginx-module-njs=1.19.1.0.4.2-r1'
 [0mOK: 6 MiB in 14 packages
-fetch https://nginx.org/packages/mainline/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
+[91m+ egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release
+[0m[91m+ apk add -X https://nginx.org/packages/mainline/alpine/v3.11/main --no-cache 'nginx=1.19.1-r1' 'nginx-module-xslt=1.19.1-r1' 'nginx-module-geoip=1.19.1-r1' 'nginx-module-image-filter=1.19.1-r1' 'nginx-module-njs=1.19.1.0.4.2-r1'
+[0mfetch https://nginx.org/packages/mainline/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
 (1/21) Installing pcre (8.43-r0)
@@ -179,12 +179,12 @@ http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 ----------------------------------------------------------------------
 Executing busybox-1.31.1-r9.trigger
 OK: 19 MiB in 35 packages
-[91m+ [0m[91m'[' -n  ][0m[91m
-[0m[91m+ [0m[91m'[' -n /etc/apk/keys/abuild-key.rsa.pub[0m[91m ]
-[0m[91m+ [0m[91mrm -f /etc/apk/keys/abuild-key.rsa.pub
-[0m[91m+ [0m[91m'['[0m[91m -n[0m[91m /etc/apk/keys/nginx_signing.rsa.pub[0m[91m ]
-[0m[91m+ [0m[91mrm[0m[91m -f /etc/apk/keys/nginx_signing.rsa.pub
-[0m[91m+ [0m[91mapk add --no-cache --virtual .gettext gettext
+[91m+ '[' -n  ]
++ '[' -n /etc/apk/keys/abuild-key.rsa.pub ]
++ rm -f /etc/apk/keys/abuild-key.rsa.pub
+[0m[91m+ '[' -n /etc/apk/keys/nginx_signing.rsa.pub ]
++ rm -f /etc/apk/keys/nginx_signing.rsa.pub
+[0m[91m+ apk add --no-cache --virtual .gettext gettext
 [0mfetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
 (1/6) Installing libgomp (9.2.0-r4)
@@ -192,15 +192,15 @@ fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.g
 (3/6) Installing libunistring (0.9.10-r0)
 (4/6) Installing gettext-libs (0.20.1-r2)
 (5/6) Installing gettext (0.20.1-r2)
-(6/6) Installing .gettext (20200731.091715)
+(6/6) Installing .gettext (20200801.094324)
 Executing busybox-1.31.1-r9.trigger
 OK: 23 MiB in 41 packages
 [91m+ mv /usr/bin/envsubst /tmp/
-[0m[91m+ [0m[91msort[0m[91m -u[0m[91m
-[0m[91m+ [0m[91mxargs[0m[91m -r[0m[91m apk[0m[91m info[0m[91m --installed[0m[91m
-[0m[91m+ [0m[91msort[0m[91m -u[0m[91m
-[0m[91m+ [0m[91mawk[0m[91m '{ gsub(/,/, "\nso:", $2); print "so:" $2 }'[0m[91m
-[0m[91m+ [0m[91mscanelf[0m[91m --needed[0m[91m --nobanner[0m[91m /tmp/envsubst[0m[91m
+[0m[91m+ awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }'
++ scanelf --needed --nobanner /tmp/envsubst
++ sort -u
++ xargs -r apk info --installed
++ sort -u
 [0m[91m+ runDeps='libintl
 musl'
 + apk add --no-cache libintl musl
@@ -210,7 +210,7 @@ OK: 23 MiB in 41 packages
 [91m+ apk del .gettext
 [0m[91mWARNING: Ignoring APKINDEX.70f61090.tar.gz: No such file or directory
 WARNING: Ignoring APKINDEX.ca2fea5b.tar.gz: No such file or directory
-[0m(1/5) Purging .gettext (20200731.091715)
+[0m(1/5) Purging .gettext (20200801.094324)
 (2/5) Purging gettext (0.20.1-r2)
 (3/5) Purging libgomp (9.2.0-r4)
 (4/5) Purging gettext-libs (0.20.1-r2)
@@ -235,18 +235,18 @@ Executing busybox-1.31.1-r9.trigger
 Executing ca-certificates-20191127-r2.trigger
 OK: 24 MiB in 41 packages
 [91m+ ln -sf /dev/stdout /var/log/nginx/access.log
-[0m[91m+ ln -sf[0m[91m /dev/stderr /var/log/nginx/error.log
+[0m[91m+ ln -sf /dev/stderr /var/log/nginx/error.log
 [0m[91m+ mkdir /docker-entrypoint.d
-[0mRemoving intermediate container 0fca94dfdd0a
- ---> efc2ed0a93ba
+[0mRemoving intermediate container 13d477797b69
+ ---> 26dcd3184e70
 Step 7/16 : COPY docker-entrypoint.sh /
- ---> d4c2f7103bd8
+ ---> b777aeca2ebf
 Step 8/16 : COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
- ---> d118db755c39
+ ---> bd18ee47d5b5
 Step 9/16 : COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
- ---> b02a0d795225
+ ---> 7b7678d35652
 Step 10/16 : RUN apk add openssh
- ---> Running in db7a35462106
+ ---> Running in 5791a0ec4f3d
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
 (1/6) Installing openssh-keygen (8.1_p1-r0)
@@ -257,34 +257,34 @@ fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.g
 (6/6) Installing openssh (8.1_p1-r0)
 Executing busybox-1.31.1-r9.trigger
 OK: 29 MiB in 47 packages
-Removing intermediate container db7a35462106
- ---> 2227ed261b96
+Removing intermediate container 5791a0ec4f3d
+ ---> faf071517c31
 Step 11/16 : RUN adduser -D iwoo
- ---> Running in 6ae57484ee26
-Removing intermediate container 6ae57484ee26
- ---> 87a4fdbcaddb
+ ---> Running in 9e3b5a47e421
+Removing intermediate container 9e3b5a47e421
+ ---> 355e70817788
 Step 12/16 : RUN echo "iwoo:iwoo123"|chpasswd
- ---> Running in 2d0507206fe6
+ ---> Running in ef4de9a87776
 [91mchpasswd: password for 'iwoo' changed
-[0mRemoving intermediate container 2d0507206fe6
- ---> a7e7c7a275c8
+[0mRemoving intermediate container ef4de9a87776
+ ---> 322ed33ba397
 Step 13/16 : ENTRYPOINT ["/docker-entrypoint.sh"]
- ---> Running in fbadb6c3d22a
-Removing intermediate container fbadb6c3d22a
- ---> 7a0a0c96fe78
+ ---> Running in c1f4444d72c2
+Removing intermediate container c1f4444d72c2
+ ---> b8f2b43f6a9d
 Step 14/16 : EXPOSE 80 443 22
- ---> Running in a252f92826f2
-Removing intermediate container a252f92826f2
- ---> 76ec7ed77aa4
+ ---> Running in d1763bc70f08
+Removing intermediate container d1763bc70f08
+ ---> 45182ec168b1
 Step 15/16 : STOPSIGNAL SIGTERM
- ---> Running in 5fbddd5e9a65
-Removing intermediate container 5fbddd5e9a65
- ---> 91fcaf98410c
+ ---> Running in ace1aa8e1caf
+Removing intermediate container ace1aa8e1caf
+ ---> d40abe2225e6
 Step 16/16 : CMD ["nginx", "-g", "daemon off;"]
- ---> Running in 1d6051bb51bc
-Removing intermediate container 1d6051bb51bc
- ---> 593a0e8c4c1b
-Successfully built 593a0e8c4c1b
+ ---> Running in c07bbe3df0f3
+Removing intermediate container c07bbe3df0f3
+ ---> dbed9de58c95
+Successfully built dbed9de58c95
 Successfully tagged ft_nginx:1.0
 deployment.apps/nginx created
 service/nginx created
@@ -299,7 +299,7 @@ Digest: sha256:185518070891758909c9f839cf4ca393ee977ac378609f700f60a771a2dfe321
 Status: Downloaded newer image for alpine:latest
  ---> a24bb4013296
 Step 2/6 : RUN apk upgrade && apk add openssl vsftpd
- ---> Running in f31936436725
+ ---> Running in 874af78ee480
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
 (1/6) Upgrading musl (1.1.24-r8 -> 1.1.24-r9)
@@ -320,23 +320,23 @@ OK: 6 MiB in 14 packages
 Executing vsftpd-3.0.3-r6.pre-install
 Executing busybox-1.31.1-r19.trigger
 OK: 8 MiB in 18 packages
-Removing intermediate container f31936436725
- ---> f04f8f1091b9
+Removing intermediate container 874af78ee480
+ ---> 39989de22794
 Step 3/6 : COPY ./entry.sh /tmp/entry.sh
- ---> 19da263975fa
+ ---> ebfc6d052ca8
 Step 4/6 : RUN chmod 777 /tmp/entry.sh
- ---> Running in 719a37acd9a2
-Removing intermediate container 719a37acd9a2
- ---> 88f276ee066c
+ ---> Running in 5e5f9292f109
+Removing intermediate container 5e5f9292f109
+ ---> 9dc8bf294baa
 Step 5/6 : EXPOSE 20 21 20000-20001
- ---> Running in 2e87789e5e2f
-Removing intermediate container 2e87789e5e2f
- ---> 32a739bdac23
+ ---> Running in 0e6c51abb3c6
+Removing intermediate container 0e6c51abb3c6
+ ---> 78e6879f459e
 Step 6/6 : ENTRYPOINT ["/tmp/entry.sh"]
- ---> Running in 94e693b6d9f3
-Removing intermediate container 94e693b6d9f3
- ---> 2e284a764991
-Successfully built 2e284a764991
+ ---> Running in d2b6f9995113
+Removing intermediate container d2b6f9995113
+ ---> 58cdf613cf06
+Successfully built 58cdf613cf06
 Successfully tagged ft_ftps:latest
 configmap/ftps-config created
 deployment.apps/ftps created
@@ -345,11 +345,11 @@ Sending build context to Docker daemon  9.728kB
 Step 1/8 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/8 : RUN apk update && 	apk add mysql mysql-client && 	addgroup mysql mysql && 	rm -rf /var/cache/apk/*
- ---> Running in 7b718f46215b
+ ---> Running in 65695271baf9
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
-v3.12.0-185-gb4b2a5e482 [http://dl-cdn.alpinelinux.org/alpine/v3.12/main]
-v3.12.0-186-g2cd07a16f7 [http://dl-cdn.alpinelinux.org/alpine/v3.12/community]
+v3.12.0-199-gc106e3c922 [http://dl-cdn.alpinelinux.org/alpine/v3.12/main]
+v3.12.0-197-g6dfff0a61e [http://dl-cdn.alpinelinux.org/alpine/v3.12/community]
 OK: 12749 distinct packages available
 (1/14) Installing mariadb-common (10.4.13-r0)
 (2/14) Installing libaio (0.3.112-r1)
@@ -368,29 +368,29 @@ Executing mariadb-10.4.13-r0.pre-install
 (14/14) Installing mysql-client (10.4.13-r0)
 Executing busybox-1.31.1-r16.trigger
 OK: 166 MiB in 28 packages
-Removing intermediate container 7b718f46215b
- ---> ffba59f207eb
+Removing intermediate container 65695271baf9
+ ---> 575afcf343c4
 Step 3/8 : COPY ./start.sh /bin/start.sh
- ---> e4aad5b5c623
+ ---> 032b2e48e526
 Step 4/8 : RUN chmod +x /bin/start.sh
- ---> Running in 1b3436a1cba1
-Removing intermediate container 1b3436a1cba1
- ---> 4d7f5f4a61e5
+ ---> Running in da4307897053
+Removing intermediate container da4307897053
+ ---> 376509345b98
 Step 5/8 : COPY files/my.cnf /etc/mysql/my.cnf
- ---> e42ff8284432
+ ---> 05014976b99c
 Step 6/8 : VOLUME ["/var/lib/mysql"]
- ---> Running in 4524d4474bee
-Removing intermediate container 4524d4474bee
- ---> fd0dc669486a
+ ---> Running in 9b9e8cdcfdd1
+Removing intermediate container 9b9e8cdcfdd1
+ ---> 5a983fe65d15
 Step 7/8 : EXPOSE 3306
- ---> Running in a8e485028508
-Removing intermediate container a8e485028508
- ---> a4569885c5ab
+ ---> Running in 7f82bd806b0b
+Removing intermediate container 7f82bd806b0b
+ ---> 12dd1bceb6e6
 Step 8/8 : ENTRYPOINT ["/bin/start.sh"]
- ---> Running in 29be372b0606
-Removing intermediate container 29be372b0606
- ---> 71db0ec3d2a2
-Successfully built 71db0ec3d2a2
+ ---> Running in 361d45b8ad49
+Removing intermediate container 361d45b8ad49
+ ---> 4c0201ee9f78
+Successfully built 4c0201ee9f78
 Successfully tagged ft_mysql:latest
 deployment.apps/mysql created
 persistentvolumeclaim/mysql-pv-claim created
@@ -399,16 +399,16 @@ Sending build context to Docker daemon  7.168kB
 Step 1/10 : FROM alpine
  ---> a24bb4013296
 Step 2/10 : RUN apk update
- ---> Running in 9ac53a0e24aa
+ ---> Running in 74231eab0c5d
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
-v3.12.0-185-gb4b2a5e482 [http://dl-cdn.alpinelinux.org/alpine/v3.12/main]
-v3.12.0-186-g2cd07a16f7 [http://dl-cdn.alpinelinux.org/alpine/v3.12/community]
+v3.12.0-199-gc106e3c922 [http://dl-cdn.alpinelinux.org/alpine/v3.12/main]
+v3.12.0-197-g6dfff0a61e [http://dl-cdn.alpinelinux.org/alpine/v3.12/community]
 OK: 12749 distinct packages available
-Removing intermediate container 9ac53a0e24aa
- ---> 18afab81e498
+Removing intermediate container 74231eab0c5d
+ ---> 6c19524a37e1
 Step 3/10 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
- ---> Running in 2673f2ff480d
+ ---> Running in 2dd9b362e955
 (1/39) Installing php7-common (7.3.20-r0)
 (2/39) Installing argon2-libs (20190702-r1)
 (3/39) Installing ncurses-terminfo-base (6.2_p20200523-r0)
@@ -427,7 +427,7 @@ Step 3/10 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zli
 (16/39) Installing libbsd (0.10.0-r0)
 (17/39) Installing libxdmcp (1.1.3-r0)
 (18/39) Installing libxcb (1.14-r1)
-(19/39) Installing libx11 (1.6.9-r0)
+(19/39) Installing libx11 (1.6.10-r0)
 (20/39) Installing libxext (1.3.4-r0)
 (21/39) Installing libice (1.0.10-r0)
 (22/39) Installing libuuid (2.35.2-r0)
@@ -451,18 +451,19 @@ Step 3/10 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zli
 Executing busybox-1.31.1-r16.trigger
 Executing ca-certificates-20191127-r4.trigger
 OK: 30 MiB in 53 packages
-Removing intermediate container 2673f2ff480d
- ---> 379b8de6b22c
+Removing intermediate container 2dd9b362e955
+ ---> 584a330106d8
 Step 4/10 : RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.5/phpMyAdmin-4.9.5-all-languages.tar.gz
- ---> Running in 68786a31b39c
-[91mConnecting to files.phpmyadmin.net (89.187.160.52:443)
+ ---> Running in 199d8a9d82cc
+[91mConnecting to files.phpmyadmin.net (89.187.160.54:443)
 [0m[91msaving to 'phpMyAdmin-4.9.5-all-languages.tar.gz'
+[0m[91mphpMyAdmin-4.9.5-all   0% |                                | 48756  0:03:27 ETA
 [0m[91mphpMyAdmin-4.9.5-all 100% |********************************| 9907k  0:00:00 ETA
 'phpMyAdmin-4.9.5-all-languages.tar.gz' saved
-[0mRemoving intermediate container 68786a31b39c
- ---> 3e00695b41ea
+[0mRemoving intermediate container 199d8a9d82cc
+ ---> bff72485b551
 Step 5/10 : RUN tar -xvf /phpMyAdmin-4.9.5-all-languages.tar.gz
- ---> Running in 5fc9b73fc176
+ ---> Running in f307522857dc
 phpMyAdmin-4.9.5-all-languages/
 phpMyAdmin-4.9.5-all-languages/CODE_OF_CONDUCT.md
 phpMyAdmin-4.9.5-all-languages/CONTRIBUTING.md
@@ -3454,29 +3455,29 @@ phpMyAdmin-4.9.5-all-languages/version_check.php
 phpMyAdmin-4.9.5-all-languages/view_create.php
 phpMyAdmin-4.9.5-all-languages/view_operations.php
 phpMyAdmin-4.9.5-all-languages/yarn.lock
-Removing intermediate container 5fc9b73fc176
- ---> 7e080497131f
+Removing intermediate container f307522857dc
+ ---> 8890ccd86762
 Step 6/10 : RUN rm -f /phpMyAdmin-4.9.5-all-languages.tar.gz
- ---> Running in 1cb3ba0ce868
-Removing intermediate container 1cb3ba0ce868
- ---> 6706d7b41f5f
+ ---> Running in 0d1c07af72e9
+Removing intermediate container 0d1c07af72e9
+ ---> 0cadb6a72348
 Step 7/10 : RUN mv /phpMyAdmin-4.9.5-all-languages /etc/phpmyadmin
- ---> Running in 53e105913639
-Removing intermediate container 53e105913639
- ---> f86eb5959b1c
+ ---> Running in 5153aaef626f
+Removing intermediate container 5153aaef626f
+ ---> 47de01f017d8
 Step 8/10 : RUN rm -rf /var/cache/apk/*
- ---> Running in 13e5020300ee
-Removing intermediate container 13e5020300ee
- ---> deba364af8fa
+ ---> Running in 76fc0dd0fb06
+Removing intermediate container 76fc0dd0fb06
+ ---> 16091f6d9d6e
 Step 9/10 : EXPOSE 5000
- ---> Running in b27a9760747e
-Removing intermediate container b27a9760747e
- ---> 703b8b44424c
+ ---> Running in a92c14696062
+Removing intermediate container a92c14696062
+ ---> 3ca3e2de97c0
 Step 10/10 : CMD php -S 0.0.0.0:5000 -t /etc/phpmyadmin/
- ---> Running in 0837ff07860b
-Removing intermediate container 0837ff07860b
- ---> 9789a4121fed
-Successfully built 9789a4121fed
+ ---> Running in a598b4d41df0
+Removing intermediate container a598b4d41df0
+ ---> 769562a6c106
+Successfully built 769562a6c106
 Successfully tagged ft_phpmyadmin:latest
 configmap/phpmyadmin created
 deployment.apps/phpmyadmin created
@@ -3485,24 +3486,24 @@ Sending build context to Docker daemon  43.52kB
 Step 1/4 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/4 : RUN apk add influxdb --no-cache
- ---> Running in 39a72daa4f8f
+ ---> Running in 31f42b9e513a
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
 (1/1) Installing influxdb (1.8.0-r1)
 Executing influxdb-1.8.0-r1.pre-install
 Executing busybox-1.31.1-r16.trigger
 OK: 268 MiB in 15 packages
-Removing intermediate container 39a72daa4f8f
- ---> 4416f381d3e4
+Removing intermediate container 31f42b9e513a
+ ---> d55367c6bfef
 Step 3/4 : EXPOSE 8086
- ---> Running in b981445bea16
-Removing intermediate container b981445bea16
- ---> 8ffdede3461a
+ ---> Running in 4288d182c1f5
+Removing intermediate container 4288d182c1f5
+ ---> c0bb479ab279
 Step 4/4 : ENTRYPOINT ["/usr/sbin/influxd"]
- ---> Running in ee00fd2ded92
-Removing intermediate container ee00fd2ded92
- ---> 4ac9933accd1
-Successfully built 4ac9933accd1
+ ---> Running in 2848e5c41745
+Removing intermediate container 2848e5c41745
+ ---> e7703ffacc45
+Successfully built e7703ffacc45
 Successfully tagged ft_influxdb:latest
 configmap/influxdb created
 persistentvolumeclaim/influxdb-data created
@@ -3513,23 +3514,24 @@ Sending build context to Docker daemon  10.24kB
 Step 1/4 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/4 : ENV TELEGRAF_VERSION 1.14.0
- ---> Running in 80e29c33d7ad
-Removing intermediate container 80e29c33d7ad
- ---> 0d5942ad32b8
+ ---> Running in 66dbfc3db5dd
+Removing intermediate container 66dbfc3db5dd
+ ---> 620c0d112895
 Step 3/4 : RUN	wget https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz 	&& tar -C . -xzf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz 	&& chmod +x telegraf/telegraf 	&& cp telegraf/telegraf /usr/bin/ 	&& rm -rf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz telegraf/
- ---> Running in 07c929a8ad74
-[91mConnecting to dl.influxdata.com (99.84.238.92:443)
+ ---> Running in e4bc402dcd97
+[91mConnecting to dl.influxdata.com (99.84.238.71:443)
 [0m[91msaving to 'telegraf-1.14.0-static_linux_amd64.tar.gz'
-[0m[91mtelegraf-1.14.0-stat  18% |******                          | 3875k  0:00:04 ETA
-[0m[91mtelegraf-1.14.0-stat 100% |********************************| 20.1M  0:00:00 ETA
+[0m[91mtelegraf-1.14.0-stat   0% |                                |  127k  0:02:41 ETA
+[0m[91mtelegraf-1.14.0-stat  57% |******************              | 11.5M  0:00:01 ETA
+[0m[91mtelegraf-1.14.0-stat [0m[91m100% [0m[91m|********************************| 20.1M  0:00:00 ETA
 'telegraf-1.14.0-static_linux_amd64.tar.gz' saved
-[0mRemoving intermediate container 07c929a8ad74
- ---> c2034532d0cf
+[0mRemoving intermediate container e4bc402dcd97
+ ---> 2289116ece1d
 Step 4/4 : ENTRYPOINT ["usr/bin/telegraf"]
- ---> Running in 688fa3aafc87
-Removing intermediate container 688fa3aafc87
- ---> b96897c2f120
-Successfully built b96897c2f120
+ ---> Running in 708d08e46796
+Removing intermediate container 708d08e46796
+ ---> 716fceba9e03
+Successfully built 716fceba9e03
 Successfully tagged ft_telegraf:latest
 configmap/telegraf created
 deployment.apps/telegraf created
@@ -3538,7 +3540,7 @@ Sending build context to Docker daemon    169kB
 Step 1/7 : FROM alpine:latest
  ---> a24bb4013296
 Step 2/7 : RUN apk add grafana --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --no-cache
- ---> Running in 66a242836c4f
+ ---> Running in b071670c7f2e
 fetch http://dl-3.alpinelinux.org/alpine/edge/testing/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
 fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
@@ -3546,23 +3548,23 @@ fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.g
 Executing grafana-7.1.1-r0.pre-install
 Executing busybox-1.31.1-r16.trigger
 OK: 164 MiB in 15 packages
-Removing intermediate container 66a242836c4f
- ---> 12094d102680
+Removing intermediate container b071670c7f2e
+ ---> da924bb203bd
 Step 3/7 : COPY srcs/dashboards /var/lib/grafana/dashboards/
- ---> 3232743ff63e
+ ---> b919adf89a18
 Step 4/7 : COPY srcs/provisioning/dashboards/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/
- ---> 7a5a4211e827
+ ---> 998f59b11b68
 Step 5/7 : COPY srcs/provisioning/datasources/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/
- ---> 720861b82f0c
+ ---> b141fb2bf5f2
 Step 6/7 : EXPOSE 3000
- ---> Running in 8bafc18e40d9
-Removing intermediate container 8bafc18e40d9
- ---> 1d9fe1044013
+ ---> Running in 2a84356856ba
+Removing intermediate container 2a84356856ba
+ ---> 4d4d401a3f79
 Step 7/7 : ENTRYPOINT ["/usr/sbin/grafana-server", "--config=/etc/grafana/grafana.ini", "--homepath=/usr/share/grafana"]
- ---> Running in 154007d682bd
-Removing intermediate container 154007d682bd
- ---> cd998be33074
-Successfully built cd998be33074
+ ---> Running in c38e5ef39de4
+Removing intermediate container c38e5ef39de4
+ ---> e7ea7a4cea1c
+Successfully built e7ea7a4cea1c
 Successfully tagged ft_grafana:latest
 configmap/grafana created
 deployment.apps/grafana created
@@ -3574,22 +3576,22 @@ Step 1/15 : FROM alpine
  ---> a24bb4013296
 Step 2/15 : RUN apk update
  ---> Using cache
- ---> 18afab81e498
+ ---> 6c19524a37e1
 Step 3/15 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
  ---> Using cache
- ---> 379b8de6b22c
+ ---> 584a330106d8
 Step 4/15 : RUN wget https://wordpress.org/latest.tar.gz
- ---> Running in 4af64f1a72e0
+ ---> Running in 17ea83a58e42
 [91mConnecting to wordpress.org (198.143.164.252:443)
 [0m[91msaving to 'latest.tar.gz'
-[0m[91mlatest.tar.gz          0% |                                | 97897  0:02:04 ETA
-[0m[91mlatest.tar.gz         38% |************                    | 4575k  0:00:03 ETA
+[0m[91mlatest.tar.gz          2% |                                |  351k  0:00:33 ETA
+[0m[91mlatest.tar.gz         76% |************************        | 9119k  0:00:00 ETA
 [0m[91mlatest.tar.gz        100% |********************************| 11.6M  0:00:00 ETA
-[0m[91m'latest.tar.gz' saved
-[0mRemoving intermediate container 4af64f1a72e0
- ---> 7a754105cbea
+'latest.tar.gz' saved
+[0mRemoving intermediate container 17ea83a58e42
+ ---> 30edad16132c
 Step 5/15 : RUN tar -xvf latest.tar.gz
- ---> Running in 40ff404f3928
+ ---> Running in e4dbe8381501
 wordpress/
 wordpress/xmlrpc.php
 wordpress/wp-blog-header.php
@@ -5701,20 +5703,20 @@ wordpress/wp-admin/themes.php
 wordpress/wp-admin/options-reading.php
 wordpress/wp-trackback.php
 wordpress/wp-comments-post.php
-Removing intermediate container 40ff404f3928
- ---> 09d5a0b66746
+Removing intermediate container e4dbe8381501
+ ---> b3c9711c2741
 Step 6/15 : RUN rm -f latest.tar.gz
- ---> Running in 5df91fc8a1da
-Removing intermediate container 5df91fc8a1da
- ---> 6890d34ca38d
+ ---> Running in 756e37bb10af
+Removing intermediate container 756e37bb10af
+ ---> c4a2f71261b6
 Step 7/15 : RUN mv wordpress /etc/
- ---> Running in d448103c2825
-Removing intermediate container d448103c2825
- ---> c0994657806b
+ ---> Running in 003eb341276c
+Removing intermediate container 003eb341276c
+ ---> 2d5ec76a06c6
 Step 8/15 : COPY files/wp-config.php /etc/wordpress/
- ---> b6bfdb746496
+ ---> 51a8af1cc88c
 Step 9/15 : RUN apk add mysql-client
- ---> Running in a1b2a86f0b13
+ ---> Running in 708ac064d8cc
 (1/5) Installing mariadb-common (10.4.13-r0)
 (2/5) Installing libgcc (9.3.0-r2)
 (3/5) Installing libstdc++ (9.3.0-r2)
@@ -5722,26 +5724,26 @@ Step 9/15 : RUN apk add mysql-client
 (5/5) Installing mysql-client (10.4.13-r0)
 Executing busybox-1.31.1-r16.trigger
 OK: 62 MiB in 58 packages
-Removing intermediate container a1b2a86f0b13
- ---> 39b495ebf52f
+Removing intermediate container 708ac064d8cc
+ ---> 120dfc4e3fd4
 Step 10/15 : COPY files/wordpress.sql /tmp/
- ---> 6a2306e98e07
+ ---> 51dfd3154f5c
 Step 11/15 : COPY scripts/init-wordpress.sh /tmp/
- ---> 65e1c188ce93
+ ---> fc50068ad73a
 Step 12/15 : EXPOSE 5050
- ---> Running in df966286b6ef
-Removing intermediate container df966286b6ef
- ---> b1fff08267e9
+ ---> Running in 2bcb00883de6
+Removing intermediate container 2bcb00883de6
+ ---> 6a0175da55e1
 Step 13/15 : RUN rm -rf /var/cache/apk/*
- ---> Running in 8ad02d760b6c
-Removing intermediate container 8ad02d760b6c
- ---> 0438e869c093
+ ---> Running in 7428d3bd090c
+Removing intermediate container 7428d3bd090c
+ ---> be6d1dae5d33
 Step 14/15 : COPY scripts/run.sh /tmp/
- ---> 749f97f77b2b
+ ---> b4defa0059c4
 Step 15/15 : ENTRYPOINT ["sh", "/tmp/run.sh"]
- ---> Running in cfed0cb69501
-Removing intermediate container cfed0cb69501
- ---> ab63232a8060
-Successfully built ab63232a8060
+ ---> Running in e9820461bf98
+Removing intermediate container e9820461bf98
+ ---> 4e0cd4ad6821
+Successfully built 4e0cd4ad6821
 Successfully tagged ft_wordpress:latest
 deployment.apps/wordpress created

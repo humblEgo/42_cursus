@@ -1,7 +1,9 @@
-BLUE_GREEN="\033[36m"
-echo -n "${BLUE_GREEN}"
+#!/bin/bash
 
-echo "%s" "
+BLUE_GREEN="\033[36m"
+echo -e "${BLUE_GREEN}"
+
+echo "
   ______ _______ _____ ______ _______      _______ _____ ______  _____ 
  |  ____|__   __/ ____|  ____|  __ \ \    / /_   _/ ____|  ____|/ ____|
  | |__     | | | (___ | |__  | |__) \ \  / /  | || |    | |__  | (___  
@@ -37,7 +39,8 @@ fi
 
 #===============================================>	Set minikube, log_path, and dashboard
 echo "Minikube start..."
-minikube start --vm-driver virtualbox
+#minikube start --vm-driver virtualbox
+minikube start
 eval $(minikube docker-env)
 
 echo "Set log_path..."
@@ -52,7 +55,6 @@ cd srcs
 
 SERVICE_LIST="metalLB nginx ftps mysql phpmyadmin influxDB telegraf grafana wordpress"
 
-#	I recommend installing metalLB first since it allocates EXTERNAL_IP to other services.
 for SERVICE in $SERVICE_LIST
 do
 	./setup_$SERVICE.sh
