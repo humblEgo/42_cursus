@@ -3,9 +3,9 @@
 void    set_cond(t_cond *cond, int argc, char **argv)
 {
     cond->num_of_ph = ft_atoi(argv[0]);
-    cond->time_to_die = ft_atoi(argv[1]) * 1000;
-    cond->time_to_eat = ft_atoi(argv[2]) * 1000;
-    cond->time_to_sleep = ft_atoi(argv[3]) * 1000;
+    cond->time_to_die = ft_atoi(argv[1]);
+    cond->time_to_eat = ft_atoi(argv[2]);
+    cond->time_to_sleep = ft_atoi(argv[3]);
     cond->time_ph_must_eat = -1;
     if (argc == 6)
         cond->time_ph_must_eat = ft_atoi(argv[4]);

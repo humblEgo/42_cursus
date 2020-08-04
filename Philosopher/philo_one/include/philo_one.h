@@ -31,7 +31,7 @@ typedef struct  s_ph
 	pthread_t   thread;
 	int         ph_num;
 	int         num_of_meals;
-	int         last_eat_time;
+	long long   last_eat_time;
 	int         is_eating_now;
 	t_fork      *left_fork;
 	t_fork      *right_fork;

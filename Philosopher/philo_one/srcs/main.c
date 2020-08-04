@@ -25,7 +25,7 @@ int     eating(t_ph *ph)
 	ph->is_eating_now = TRUE;
 	ph->last_eat_time = get_cur_time();
 	print_status(ph, EATING);
-	usleep(ph->cond->time_to_eat);
+	usleep(ph->cond->time_to_eat * 1000);
 	ph->is_eating_now = FALSE;
 	pthread_mutex_unlock(&ph->mutex);
 	return (TRUE);
@@ -64,7 +64,7 @@ int     picking_up_forks(t_ph *ph)
 int     sleeping(t_ph *ph)
 {
 	print_status(ph, SLEEPING);
-	usleep(ph->cond->time_to_sleep);
+	usleep(ph->cond->time_to_sleep * 1000);
 	return (TRUE);
 }
 
@@ -76,7 +76,7 @@ int     thinking(t_ph *ph)
 
 void    monitor_ph(t_ph *ph)
 {
-	int cur;
+	long long cur;
 
 	while (1)
 	{
@@ -84,14 +84,14 @@ void    monitor_ph(t_ph *ph)
 		cur = get_cur_time();
 		if (cur > ph->last_eat_time + ph->cond->time_to_die)
 		{
-			printf("cur: %d last_eat_time: %d time_to_die: %d\n", cur, ph->last_eat_time, ph->cond->time_to_die);
+			printf("cur: %lld last_eat_time: %lld time_to_die: %d\n", cur, ph->last_eat_time, ph->cond->time_to_die);
 			print_status(ph, DIED);
 			pthread_mutex_unlock(&ph->mutex);
 			pthread_mutex_unlock(ph->someone_died_m);
 			return ;
 		}
 		pthread_mutex_unlock(&ph->mutex);
-		usleep(10);
+		usleep(10000);
 	}
 }
 

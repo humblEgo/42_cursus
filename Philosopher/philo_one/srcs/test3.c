@@ -12,6 +12,8 @@ int main()
     gettimeofday(&tv, NULL);
     test = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 
-    printf("%lld", test);
+    printf("%ld\n", tv.tv_sec);
+    printf("%ld\n", tv.tv_usec);
+    printf("%lld\n", test);
     return 0;
 }
