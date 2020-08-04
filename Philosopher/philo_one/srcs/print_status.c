@@ -1,73 +1,18 @@
 #include "philo_one.h"
 
-void    print_status_taken_fork(int ph_num)
+void    print_status(t_ph *ph, char *state)
 {
     struct timeval tv;
 
-    //TODO: change printf to allowed function
+    //TODO: printf는 허용이 안된데이~
+    pthread_mutex_lock(ph->msg_m);
     if (gettimeofday(&tv, NULL))
     {
         ft_putstr_fd("gettimeofday error\n", 2);
         return ;
     }
-    printf("%d %d has taken a fork\n", tv.tv_usec, ph_num + 1);
-}
-
-void    print_status_eating(int ph_num)
-{
-    struct timeval tv;
-
-    //TODO: change printf to allowed function
-    if (gettimeofday(&tv, NULL))
-    {
-        ft_putstr_fd("gettimeofday error\n", 2);
-        return ;
-    }
-    printf("%d %d is eating\n", tv.tv_usec, ph_num + 1);
-}
-
-void    print_status_sleeping(int ph_num)
-{
-    struct timeval tv;
-
-    //TODO: change printf to allowed function
-    if (gettimeofday(&tv, NULL))
-    {
-        ft_putstr_fd("gettimeofday error\n", 2);
-        return ;
-    }
-    printf("%d %d is sleeping\n", tv.tv_usec, ph_num + 1);
-}
-
-void    pirnt_status_thinking(int ph_num)
-{
-    struct timeval tv;
-
-    //TODO: change printf to allowed function
-    if (gettimeofday(&tv, NULL))
-    {
-        ft_putstr_fd("gettimeofday error\n", 2);
-        return ;
-    }
-    printf("%d %d is thinking\n", tv.tv_usec, ph_num + 1);
-}
-
-void    print_status_died(int ph_num)
-{
-    struct timeval tv;
-
-    //TODO: change printf to allowed function
-    if (gettimeofday(&tv, NULL))
-    {
-        ft_putstr_fd("gettimeofday error\n", 2);
-        return ;
-    }
-    printf("%d %d died\n", tv.tv_usec, ph_num);
-}
-
-
-void    print_status(int type)
-{
-    // TODO: refactoring all
-    (void)type;
+    printf("%ld ", tv.tv_usec);
+    printf("%d ", ph->ph_num);
+    printf("%s\n", state);
+    pthread_mutex_unlock(ph->msg_m);
 }
