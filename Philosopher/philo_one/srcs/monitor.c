@@ -5,14 +5,21 @@ void    monitor_ph(t_ph *ph)
 	while (1)
 	{
 		pthread_mutex_lock(&ph->eating_m);
+		if (ph->is_eating_now == TRUE)
+		{
+			pthread_mutex_unlock(&ph->eating_m);
+			continue ;
+		}
+		pthread_mutex_unlock(&ph->eating_m);
+		pthread_mutex_lock(&ph->last_eat_time_m);
 		if (get_cur_time() > ph->last_eat_time + ph->cond->time_to_die)
 		{
 			print_state(ph, DIED);
-			pthread_mutex_unlock(&ph->eating_m);
+			pthread_mutex_unlock(&ph->last_eat_time_m);
 			pthread_mutex_unlock(ph->finish_dining_m);
 			return ;
 		}
-		pthread_mutex_unlock(&ph->eating_m);
+		pthread_mutex_unlock(&ph->last_eat_time_m);
 		usleep(10 * 1000);
 	}
 }

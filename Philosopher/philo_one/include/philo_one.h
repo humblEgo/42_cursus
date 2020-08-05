@@ -37,6 +37,7 @@ typedef struct  s_ph
 	t_fork      *right_fork;
 	t_cond      *cond;
 	pthread_mutex_t *finish_dining_m;
+	pthread_mutex_t last_eat_time_m;
 	pthread_mutex_t eating_m;
 	pthread_mutex_t	must_eat;
 	pthread_mutex_t *msg_m;

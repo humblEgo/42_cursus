@@ -46,7 +46,7 @@ int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
         ph[i].ph_num = i + 1;
         ph[i].start_time = &ph_info->start_time;
         ph[i].cond = cond;
-        pthread_mutex_init(&ph[i].eating_m, NULL);
+        pthread_mutex_init(&ph[i].last_eat_time_m, NULL);
         pthread_mutex_init(&ph[i].must_eat, NULL);
         pthread_mutex_lock(&ph[i].must_eat);
         ph[i].msg_m = &ph_info->msg_m;

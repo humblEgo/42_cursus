@@ -32,10 +32,7 @@ int     dining_start(t_ph_info *ph_info)
 	while (++i < cond->num_of_ph)
 	{
 		if (pthread_create(&tid, NULL, (void *)ph_routine, &ph[i]) != 0)
-		{
-			ft_putstr_fd("error: failed to create thread\n", 2);
 			return (FALSE);
-		}
 		pthread_detach(tid);
         usleep(100);
 	}
