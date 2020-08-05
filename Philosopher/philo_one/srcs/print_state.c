@@ -1,5 +1,15 @@
 #include "philo_one.h"
 
+int     ft_strcmp(const char *s1, const char *s2)
+{
+    int i;
+
+    i = 0;
+    while (s1[i] && s2[i] && s1[i] == s2[i])
+        i++;
+    return (s1[i] - s2[i]);
+}
+
 void    ft_putchar_fd(char c, int fd)
 {
     write(1, &c, fd);
@@ -37,7 +47,7 @@ void    print_state(t_ph *ph, char *state)
     ft_putnbr_fd(ph->ph_num, 1);
     write(1, " ", 1);
     ft_putstr_fd(state, 1);
-    if (state == DIED)
+    if (!ft_strcmp(state, DIED))
         return ;
     pthread_mutex_unlock(ph->msg_m);
 }

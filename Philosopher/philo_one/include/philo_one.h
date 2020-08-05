@@ -34,11 +34,11 @@ typedef struct  s_ph
 	t_fork      *left_fork;
 	t_fork      *right_fork;
 	t_cond      *cond;
-	pthread_mutex_t *finish_dining_m;
 	pthread_mutex_t last_eat_time_m;
 	pthread_mutex_t eating_m;
 	pthread_mutex_t	must_eat;
 	pthread_mutex_t *msg_m;
+	pthread_mutex_t *finish_dining_m;
 }               t_ph;
 
 typedef struct  s_ph_info
@@ -58,7 +58,11 @@ long long	get_cur_time(void);
 int			is_num_str(char *str);
 void		ft_putnbr_fd(int i, int fd);
 
-int			init_ph_and_dining(t_ph_info *ph_info, int argc, char **argv);
+/*
+** 	init.c
+*/
+
+int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
 
 int			error(char *msg);
 
