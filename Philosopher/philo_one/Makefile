@@ -4,7 +4,7 @@ CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-MAIN_FILES = main ft_atoi print_status utils
+MAIN_FILES = main ft_atoi print_state utils init routine monitor error clean
 
 SRCS_PATH = $(MAIN_FILES)
 SRCS = $(addprefix srcs/, $(addsuffix .c, $(SRCS_PATH)))
@@ -19,7 +19,7 @@ all: $(NAME)
 
 ${NAME}: ${OBJS}
 	@echo "$(GREEN)PHIOLOSOPHY START$(RESET)"
-	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME}
+	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME} -pthread
 	@echo "$(GREEN)DONE"
 
 ${OBJS}: ${SRCS}

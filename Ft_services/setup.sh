@@ -39,8 +39,7 @@ fi
 
 #===============================================>	Set minikube, log_path, and dashboard
 echo "Minikube start..."
-#minikube start --vm-driver virtualbox
-minikube start
+minikube start --vm-driver virtualbox
 eval $(minikube docker-env)
 
 echo "Set log_path..."

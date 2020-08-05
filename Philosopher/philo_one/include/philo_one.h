@@ -8,34 +8,72 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <string.h>
+# include "macro_ph.h"
 
-# define TRUE 1
-# define FALSE 0
-
-typedef struct  s_ph_state
+typedef struct  s_cond
 {
-    pthread_mutex_t *mutex;
-    pthread_cond_t  *cond;
-    int             *fork;
-}               t_ph_state;
+	int             num_of_ph;
+	int             time_to_die;
+	int             time_to_eat;
+	int             time_to_sleep;
+	int             count_must_eat;
+}               t_cond;
+
+typedef struct  s_fork
+{
+	pthread_mutex_t fork_m;
+}               t_fork;
+
+typedef struct  s_ph
+{
+	int         ph_num;
+	int         num_of_meals;
+	int			is_eating_now;
+	long long	*start_time;
+	long long   last_eat_time;
+	t_fork      *left_fork;
+	t_fork      *right_fork;
+	t_cond      *cond;
+	pthread_mutex_t last_eat_time_m;
+	pthread_mutex_t eating_m;
+	pthread_mutex_t	must_eat;
+	pthread_mutex_t *msg_m;
+	pthread_mutex_t *finish_dining_m;
+}               t_ph;
 
 typedef struct  s_ph_info
 {
-    int num_of_ph;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int time_ph_must_eat;
+	t_cond      	*cond;
+	t_ph        	*ph;
+	t_fork      	*forks;
+	long long		start_time;
+	pthread_mutex_t	msg_m;
+	pthread_mutex_t	finish_dining_m;
 }               t_ph_info;
 
-t_ph_state  g_ph_state;
-
 int			ft_atoi(const char *nptr);
-void        ft_putstr_fd(char *s, int fd);
+int			ft_strcmp(const char *s1, const char *s2);
+void		ft_putstr_fd(char *s, int fd);
+long long	get_cur_time(void);
+int			is_num_str(char *str);
+void		ft_putnbr_fd(int i, int fd);
 
-void        print_status_taken_fork(int ph_num);
-void        print_status_eating(int ph_num);
-void        print_status_sleeping(int ph_num);
-void        print_status_thinking(int ph_num);
-void        print_status_died(int ph_num);
+/*
+** 	init.c
+*/
+
+int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
+
+int			error(char *msg);
+
+int			clean_ph_info(t_ph_info	*ph_info);
+
+void		monitor_ph(t_ph *ph);
+void		monitor_eat_count(t_ph_info *ph_info);
+
+void		ph_routine(void *ph_void);
+
+void		print_state(t_ph *ph, char *state);
+void		print_ate_enough(t_ph_info *ph);
+
 #endif
