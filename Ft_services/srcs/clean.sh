@@ -5,7 +5,7 @@ echo "metalLB manifest delete"
 kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
 
 echo "nginx ssl delete"
-cd srcs/nginx
+cd nginx
 make clean
 cd ..
 sleep 2

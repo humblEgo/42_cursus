@@ -91,8 +91,8 @@ void    ph_routine(void *ph_void)
 
     ph = (t_ph *)ph_void;
     printf("I'm %d philosopher!\n", ph->ph_num);
+    sleep(1);
 }
-
 
 int     dining_start(t_ph_info *ph_info)
 {
