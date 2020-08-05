@@ -9,10 +9,10 @@
 **  Philosopher's state 
 */
 
-# define PICKING_FORK "has taken a fork"
-# define EATING "is eating"
-# define SLEEPING "is sleeping"
-# define THINKING "is thinking"
-# define DIED "died"
+# define PICKING_FORK "has taken a fork\n"
+# define EATING "is eating\n"
+# define SLEEPING "is sleeping\n"
+# define THINKING "is thinking\n"
+# define DIED "died\n"
 
 #endif

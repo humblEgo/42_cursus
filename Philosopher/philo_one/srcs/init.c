@@ -19,6 +19,7 @@ int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
     int     i;
 
     //TODO: malloc guard
+    ph_info->start_time = get_cur_time();
     if (!(ph_info->cond = (t_cond *)malloc(sizeof(t_cond))))
         return (FALSE);
     cond = ph_info->cond;
@@ -28,8 +29,8 @@ int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
     ph_info->ph = (t_ph *)malloc(sizeof(t_ph) * cond->num_of_ph);
     ph = ph_info->ph;
     pthread_mutex_init(&ph_info->msg_m, NULL);
-    pthread_mutex_init(&ph_info->someone_died_m, NULL);
-    pthread_mutex_lock(&ph_info->someone_died_m);
+    pthread_mutex_init(&ph_info->finish_dining_m, NULL);
+    pthread_mutex_lock(&ph_info->finish_dining_m);
 
     i = -1;
     while (++i < cond->num_of_ph)
@@ -43,12 +44,13 @@ int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
     while (++i < cond->num_of_ph)
     {
         ph[i].ph_num = i + 1;
+        ph[i].start_time = &ph_info->start_time;
         ph[i].cond = cond;
         pthread_mutex_init(&ph[i].eating_m, NULL);
         pthread_mutex_init(&ph[i].must_eat, NULL);
         pthread_mutex_lock(&ph[i].must_eat);
         ph[i].msg_m = &ph_info->msg_m;
-        ph[i].someone_died_m = &ph_info->someone_died_m;
+        ph[i].finish_dining_m = &ph_info->finish_dining_m;
         ph[i].num_of_meals = 0;
         ph[i].is_eating_now = FALSE;
     }

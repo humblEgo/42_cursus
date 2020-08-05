@@ -4,7 +4,7 @@ CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-MAIN_FILES = main ft_atoi print_state utils init routine
+MAIN_FILES = main ft_atoi print_state utils init routine monitor
 
 SRCS_PATH = $(MAIN_FILES)
 SRCS = $(addprefix srcs/, $(addsuffix .c, $(SRCS_PATH)))

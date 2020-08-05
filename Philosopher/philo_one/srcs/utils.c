@@ -1,15 +1,5 @@
 #include "philo_one.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1[i] && s2[i] && (s1[i] == s2[i]))
-		i++;
-	return (s1[i] - s2[i]);
-}
-
 int     ft_strlen(char *s)
 {
     int i;
@@ -28,11 +18,9 @@ void    ft_putstr_fd(char *s, int fd)
 long long   get_cur_time(void)
 {
     struct timeval  tv;
-    long long       res;
 
     gettimeofday(&tv, NULL);
-    res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-    return (res);
+    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 int is_num_str(char *str)

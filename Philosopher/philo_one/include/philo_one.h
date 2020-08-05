@@ -30,15 +30,16 @@ typedef struct  s_ph
 {
 	int         ph_num;
 	int         num_of_meals;
+	int			is_eating_now;
+	long long	*start_time;
 	long long   last_eat_time;
-	int         is_eating_now;
 	t_fork      *left_fork;
 	t_fork      *right_fork;
 	t_cond      *cond;
+	pthread_mutex_t *finish_dining_m;
 	pthread_mutex_t eating_m;
 	pthread_mutex_t	must_eat;
 	pthread_mutex_t *msg_m;
-	pthread_mutex_t *someone_died_m;
 }               t_ph;
 
 typedef struct  s_ph_info
@@ -46,8 +47,9 @@ typedef struct  s_ph_info
 	t_cond      *cond;
 	t_ph        *ph;
 	t_fork      *forks;
+	long long	start_time;
 	pthread_mutex_t msg_m;
-	pthread_mutex_t someone_died_m;
+	pthread_mutex_t finish_dining_m;
 }               t_ph_info;
 
 int			ft_atoi(const char *nptr);
@@ -60,6 +62,7 @@ void		ft_putnbr_fd(int i, int fd);
 int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
 
 void		monitor_ph(t_ph *ph);
+void		monitor_eat_count(t_ph_info *ph_info);
 
 void		ph_routine(void *ph_void);
 
