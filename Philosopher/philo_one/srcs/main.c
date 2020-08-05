@@ -45,11 +45,11 @@ int main(int argc, char *argv[])
 
 	if (argc < 5 || argc > 6)
 		return (0);
-	if (is_valid_arg(&argv[1]))
-	{
-		init_ph_info(&ph_info, argc, &argv[1]);
-		dining_start(&ph_info);
-	}
+	if (!is_valid_arg(&argv[1]))
+		return (0);
+	if (!init_ph_and_dining(&ph_info, argc, &argv[1]))
+		return (error(INIT) + clean_ph_info(&ph_info));
+	dining_start(&ph_info);
 	pthread_mutex_lock(&ph_info.finish_dining_m);
 	pthread_mutex_unlock(&ph_info.finish_dining_m);
 	//TODO: free all

@@ -21,8 +21,6 @@ typedef struct  s_cond
 
 typedef struct  s_fork
 {
-	int             picked;
-	int             fork_num;
 	pthread_mutex_t fork_m;
 }               t_fork;
 
@@ -45,12 +43,12 @@ typedef struct  s_ph
 
 typedef struct  s_ph_info
 {
-	t_cond      *cond;
-	t_ph        *ph;
-	t_fork      *forks;
-	long long	start_time;
-	pthread_mutex_t msg_m;
-	pthread_mutex_t finish_dining_m;
+	t_cond      	*cond;
+	t_ph        	*ph;
+	t_fork      	*forks;
+	long long		start_time;
+	pthread_mutex_t	msg_m;
+	pthread_mutex_t	finish_dining_m;
 }               t_ph_info;
 
 int			ft_atoi(const char *nptr);
@@ -60,7 +58,11 @@ long long	get_cur_time(void);
 int			is_num_str(char *str);
 void		ft_putnbr_fd(int i, int fd);
 
-int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
+int			init_ph_and_dining(t_ph_info *ph_info, int argc, char **argv);
+
+int			error(char *msg);
+
+int			clean_ph_info(t_ph_info	*ph_info);
 
 void		monitor_ph(t_ph *ph);
 void		monitor_eat_count(t_ph_info *ph_info);
