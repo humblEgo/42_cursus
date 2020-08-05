@@ -13,128 +13,68 @@ int is_valid_arg(char **argv)
 	return (TRUE);
 }
 
-void    pick_up_fork(t_ph *ph, t_fork *fork)
-{
-	pthread_mutex_lock(&fork->fork_m);
-	print_status(ph, PICKING_FORK);
-}
-
-int     eating(t_ph *ph)
-{
-	pthread_mutex_lock(&ph->mutex);
-	ph->is_eating_now = TRUE;
-	ph->last_eat_time = get_cur_time();
-	print_status(ph, EATING);
-	usleep(ph->cond->time_to_eat * 1000);
-	ph->is_eating_now = FALSE;
-	pthread_mutex_unlock(&ph->mutex);
-	return (TRUE);
-}
-
-int     putting_down_forks(t_ph *ph)
-{
-	if (ph->ph_num % 2 == 0)
-	{
-		pthread_mutex_unlock(&ph->left_fork->fork_m);
-		pthread_mutex_unlock(&ph->right_fork->fork_m);
-	}
-	else
-	{
-		pthread_mutex_unlock(&ph->right_fork->fork_m);
-		pthread_mutex_unlock(&ph->left_fork->fork_m);
-	}
-	return (TRUE);
-}
-
-int     picking_up_forks(t_ph *ph)
-{
-	if (ph->ph_num % 2 == 0)
-	{
-		pick_up_fork(ph, ph->left_fork);
-		pick_up_fork(ph, ph->right_fork);
-	}
-	else
-	{
-		pick_up_fork(ph, ph->right_fork);
-		pick_up_fork(ph, ph->left_fork);
-	}
-	return (TRUE);
-}
-
-int     sleeping(t_ph *ph)
-{
-	print_status(ph, SLEEPING);
-	usleep(ph->cond->time_to_sleep * 1000);
-	return (TRUE);
-}
-
-int     thinking(t_ph *ph)
-{
-	print_status(ph, THINKING);
-	return (TRUE);
-}
-
 void    monitor_ph(t_ph *ph)
 {
 	long long cur;
 
 	while (1)
 	{
-		pthread_mutex_lock(&ph->mutex);
+		pthread_mutex_lock(&ph->eating_m);
 		cur = get_cur_time();
 		if (cur > ph->last_eat_time + ph->cond->time_to_die)
 		{
-			printf("cur: %lld last_eat_time: %lld time_to_die: %d\n", cur, ph->last_eat_time, ph->cond->time_to_die);
-			print_status(ph, DIED);
-			pthread_mutex_unlock(&ph->mutex);
+			// printf("cur: %lld last_eat_time: %lld time_to_die: %d\n", cur, ph->last_eat_time, ph->cond->time_to_die);
+			print_state(ph, DIED);
+			pthread_mutex_unlock(&ph->eating_m);
 			pthread_mutex_unlock(ph->someone_died_m);
 			return ;
 		}
-		pthread_mutex_unlock(&ph->mutex);
-		usleep(10000);
+		pthread_mutex_unlock(&ph->eating_m);
+		usleep(10 * 1000);
 	}
 }
 
-void    ph_routine(void *ph_void)
+void	monitor_eat_count(t_ph_info *ph_info)
 {
-	t_ph        *ph;
-	pthread_t   tid;
+	t_ph	*ph;
+	int		i;
 
-	ph = (t_ph *)ph_void;
-	ph->last_eat_time = get_cur_time();
-	if (pthread_create(&tid, NULL, (void *)monitor_ph, ph))
+	ph = ph_info->ph;
+	i = -1;
+	while (++i < ph->cond->num_of_ph)
 	{
-		ft_putstr_fd("error: failed to create thread\n", 2);
-		return ;
+		pthread_mutex_lock(&ph[i].must_eat);
+		pthread_mutex_unlock(&ph[i].must_eat);
 	}
-	pthread_detach(tid);
-	while (1)
-	{
-		picking_up_forks(ph);
-		eating(ph);
-		putting_down_forks(ph);
-		sleeping(ph);
-		thinking(ph);
-	}
+	print_ate_enough(ph_info);
+	pthread_mutex_unlock(ph->someone_died_m);
 }
 
 int     dining_start(t_ph_info *ph_info)
 {
 	t_ph        *ph;
 	t_cond      *cond;
+	pthread_t	tid;
 	int         i;
 
 	ph = ph_info->ph;
 	cond = ph_info->cond;
+	if (ph->cond->count_must_eat >= 0)
+	{
+		if (pthread_create(&tid, NULL, (void *)monitor_eat_count, ph_info))
+			return (FALSE);
+		pthread_detach(tid);
+	}
 	i = -1;
 	while (++i < cond->num_of_ph)
 	{
-		if(pthread_create(&(ph[i].thread), NULL, (void *)ph_routine, &ph[i]) != 0)
+		if (pthread_create(&tid, NULL, (void *)ph_routine, &ph[i]) != 0)
 		{
 			ft_putstr_fd("error: failed to create thread\n", 2);
 			return (FALSE);
 		}
-		pthread_detach(ph[i].thread);
+		pthread_detach(tid);
+        usleep(100);
 	}
 	return (TRUE);
 }
@@ -152,7 +92,6 @@ int main(int argc, char *argv[])
 	}
 	pthread_mutex_lock(&ph_info.someone_died_m);
 	pthread_mutex_unlock(&ph_info.someone_died_m);
-	printf("The end\n");
 	//TODO: free all
 	return (0);
 }

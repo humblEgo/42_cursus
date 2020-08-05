@@ -6,9 +6,9 @@ void    set_cond(t_cond *cond, int argc, char **argv)
     cond->time_to_die = ft_atoi(argv[1]);
     cond->time_to_eat = ft_atoi(argv[2]);
     cond->time_to_sleep = ft_atoi(argv[3]);
-    cond->time_ph_must_eat = -1;
+    cond->count_must_eat = -1;
     if (argc == 6)
-        cond->time_ph_must_eat = ft_atoi(argv[4]);
+        cond->count_must_eat = ft_atoi(argv[4]);
 }
 
 int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
@@ -44,7 +44,9 @@ int init_ph_info(t_ph_info *ph_info, int argc, char **argv)
     {
         ph[i].ph_num = i + 1;
         ph[i].cond = cond;
-        pthread_mutex_init(&ph[i].mutex, NULL);
+        pthread_mutex_init(&ph[i].eating_m, NULL);
+        pthread_mutex_init(&ph[i].must_eat, NULL);
+        pthread_mutex_lock(&ph[i].must_eat);
         ph[i].msg_m = &ph_info->msg_m;
         ph[i].someone_died_m = &ph_info->someone_died_m;
         ph[i].num_of_meals = 0;

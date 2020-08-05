@@ -16,7 +16,7 @@ typedef struct  s_cond
 	int             time_to_die;
 	int             time_to_eat;
 	int             time_to_sleep;
-	int             time_ph_must_eat;
+	int             count_must_eat;
 }               t_cond;
 
 typedef struct  s_fork
@@ -28,7 +28,6 @@ typedef struct  s_fork
 
 typedef struct  s_ph
 {
-	pthread_t   thread;
 	int         ph_num;
 	int         num_of_meals;
 	long long   last_eat_time;
@@ -36,7 +35,8 @@ typedef struct  s_ph
 	t_fork      *left_fork;
 	t_fork      *right_fork;
 	t_cond      *cond;
-	pthread_mutex_t mutex;
+	pthread_mutex_t eating_m;
+	pthread_mutex_t	must_eat;
 	pthread_mutex_t *msg_m;
 	pthread_mutex_t *someone_died_m;
 }               t_ph;
@@ -51,12 +51,19 @@ typedef struct  s_ph_info
 }               t_ph_info;
 
 int			ft_atoi(const char *nptr);
+int			ft_strcmp(const char *s1, const char *s2);
 void		ft_putstr_fd(char *s, int fd);
 long long	get_cur_time(void);
 int			is_num_str(char *str);
+void		ft_putnbr_fd(int i, int fd);
 
 int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
 
-void		print_status(t_ph *ph, char *state);
+void		monitor_ph(t_ph *ph);
+
+void		ph_routine(void *ph_void);
+
+void		print_state(t_ph *ph, char *state);
+void		print_ate_enough(t_ph_info *ph);
 
 #endif
