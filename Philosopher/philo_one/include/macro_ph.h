@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macro_ph.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/06 16:18:58 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MACRO_PH_H
 # define MACRO_PH_H
-
 
 # define TRUE 1
 # define FALSE 0
 
 /*
-**  Philosopher's state 
+**  Philosopher's state
 */
 
 # define PICKING_FORK 1
@@ -29,7 +40,7 @@
 **  arg_type
 */
 
-# define PH -1
-# define PH_INFO -2
+# define PH 1
+# define PH_INFO 2
 
 #endif

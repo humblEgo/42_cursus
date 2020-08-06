@@ -6,22 +6,22 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 15:58:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 15:58:23 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/06 16:00:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void ft_free(void *ptr)
+void	ft_free(void *ptr)
 {
 	if (!ptr)
-		return;
+		return ;
 	free(ptr);
 }
 
-void destroy_mutexes(t_ph_info *ph_info)
+void	destroy_mutexes(t_ph_info *ph_info)
 {
-	int i;
+	int	i;
 
 	if (ph_info->ph)
 	{
@@ -43,7 +43,7 @@ void destroy_mutexes(t_ph_info *ph_info)
 	pthread_mutex_destroy(&ph_info->finish_dining_m);
 }
 
-int clean_ph_info(t_ph_info *ph_info)
+int		clean_ph_info(t_ph_info *ph_info)
 {
 	destroy_mutexes(ph_info);
 	ft_free(ph_info->cond);

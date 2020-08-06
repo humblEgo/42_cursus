@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/06 16:04:52 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
-int is_valid_arg(char **argv)
+int		is_valid_arg(char **argv)
 {
 	int i;
 
@@ -13,9 +25,9 @@ int is_valid_arg(char **argv)
 	return (TRUE);
 }
 
-void    *routine_ph(void *ph_void)
+void	*routine_ph(void *ph_void)
 {
-	t_ph        *ph;
+	t_ph *ph;
 
 	ph = (t_ph *)ph_void;
 	while (1)
@@ -28,11 +40,11 @@ void    *routine_ph(void *ph_void)
 	return ((void *)TRUE);
 }
 
-int     dining_start(t_ph_info *ph_info)
+int		dining_start(t_ph_info *ph_info)
 {
-	t_ph        *ph;
+	t_ph		*ph;
 	pthread_t	tid;
-	int         i;
+	int			i;
 
 	ph = ph_info->ph;
 	if (ph->cond->count_must_eat >= 0)
@@ -47,12 +59,12 @@ int     dining_start(t_ph_info *ph_info)
 			return (error(CREATE_THREAD));
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
 			return (error(CREATE_THREAD));
-        usleep(100);
+		usleep(100);
 	}
 	return (TRUE);
 }
 
-int main(int argc, char *argv[])
+int		main(int argc, char *argv[])
 {
 	t_ph_info ph_info;
 

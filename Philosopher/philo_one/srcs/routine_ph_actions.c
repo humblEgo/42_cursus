@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine_ph_actions.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/06 16:06:30 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
-void    pick_up_fork(t_ph *ph, t_fork *fork)
+void	pick_up_fork(t_ph *ph, t_fork *fork)
 {
 	pthread_mutex_lock(&fork->fork_m);
 	print_ph_state(ph, PICKING_FORK);
@@ -34,7 +46,7 @@ void	eating(t_ph *ph)
 	pthread_mutex_unlock(&ph->eating_m);
 }
 
-void     sleeping(t_ph *ph)
+void	sleeping(t_ph *ph)
 {
 	print_ph_state(ph, SLEEPING);
 	usleep(ph->cond->time_to_sleep * 1000);
