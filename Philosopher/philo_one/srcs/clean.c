@@ -16,7 +16,6 @@ int clean_ph_info(t_ph_info *ph_info)
     ph_info->cond = NULL;
     ph_info->ph = NULL;
     ph_info->forks = NULL;
-    ft_free(ph_info);
     ph_info = NULL;
-    return (TRUE);
+    return (0);
 }

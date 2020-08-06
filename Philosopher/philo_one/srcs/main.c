@@ -13,27 +13,39 @@ int is_valid_arg(char **argv)
 	return (TRUE);
 }
 
+void    *routine_ph(void *ph_void)
+{
+	t_ph        *ph;
+
+	ph = (t_ph *)ph_void;
+	while (1)
+	{
+		picking_up_forks(ph);
+		eating(ph);
+		sleeping(ph);
+		thinking(ph);
+	}
+	return ((void *)TRUE);
+}
+
 int     dining_start(t_ph_info *ph_info)
 {
 	t_ph        *ph;
-	t_cond      *cond;
 	pthread_t	tid;
 	int         i;
 
 	ph = ph_info->ph;
-	cond = ph_info->cond;
 	if (ph->cond->count_must_eat >= 0)
-	{
-		if (pthread_create(&tid, NULL, (void *)monitor_eat_count, ph_info))
-			return (FALSE);
-		pthread_detach(tid);
-	}
+		if (!create_detached_thread(&tid, monitor_eat_count, ph_info, PH_INFO))
+			return (error(CREATE_THREAD));
 	i = -1;
-	while (++i < cond->num_of_ph)
+	while (++i < ph_info->cond->num_of_ph)
 	{
-		if (pthread_create(&tid, NULL, (void *)ph_routine, &ph[i]) != 0)
-			return (FALSE);
-		pthread_detach(tid);
+		ph[i].last_eat_time = get_cur_time();
+		if (!create_detached_thread(&tid, monitor_ph, &ph[i], PH))
+			return (error(CREATE_THREAD));
+		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
+			return (error(CREATE_THREAD));
         usleep(100);
 	}
 	return (TRUE);
@@ -49,9 +61,10 @@ int main(int argc, char *argv[])
 		return (0);
 	if (!init_ph_info(&ph_info, argc, &argv[1]))
 		return (error(INIT) + clean_ph_info(&ph_info));
-	dining_start(&ph_info);
+	if (!dining_start(&ph_info))
+		return (error(DINING) + clean_ph_info(&ph_info));
 	pthread_mutex_lock(&ph_info.finish_dining_m);
 	pthread_mutex_unlock(&ph_info.finish_dining_m);
-	//TODO: free all
+	clean_ph_info(&ph_info);
 	return (0);
 }

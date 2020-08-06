@@ -20,5 +20,14 @@
 */
 
 # define INIT "Failed to initialize\n"
+# define CREATE_THREAD "Failed to create thread\n"
+# define DINING "Error while dining\n"
+
+/*
+**  arg_type
+*/
+
+# define PH -1
+# define PH_INFO -2
 
 #endif

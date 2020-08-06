@@ -64,16 +64,44 @@ void		ft_putnbr_fd(int i, int fd);
 
 int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
 
+/*
+**	error.c
+*/
+
 int			error(char *msg);
 
+/*
+** 	clean.c
+*/
+
 int			clean_ph_info(t_ph_info	*ph_info);
+
+/*
+** 	monitor.c
+*/
 
 void		monitor_ph(t_ph *ph);
 void		monitor_eat_count(t_ph_info *ph_info);
 
-void		ph_routine(void *ph_void);
+/*
+** 	routine_ph.c
+*/
+
+void		*routine_ph(void *ph_void);
+
+/*
+** 	routine_ph_actions.c
+*/
+
+void		picking_up_forks(t_ph *ph);
+void		eating(t_ph *ph);
+void		sleeping(t_ph *ph);
+void		thinking(t_ph *ph);
 
 void		print_state(t_ph *ph, char *state);
 void		print_ate_enough(t_ph_info *ph);
+
+int			create_detached_thread(pthread_t *tid, void *funcion, \
+										void *arg, int arg_type);
 
 #endif
