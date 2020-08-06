@@ -4,7 +4,7 @@ CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-MAIN_FILES = main ft_atoi print_state utils init routine_ph_actions \
+MAIN_FILES = main ft_atoi print_ph_state utils init routine_ph_actions \
 			monitor error clean create_detached_thread
 
 SRCS_PATH = $(MAIN_FILES)

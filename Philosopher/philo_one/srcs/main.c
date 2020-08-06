@@ -41,7 +41,8 @@ int     dining_start(t_ph_info *ph_info)
 	i = -1;
 	while (++i < ph_info->cond->num_of_ph)
 	{
-		ph[i].last_eat_time = get_cur_time();
+		if ((ph[i].last_eat_time = get_cur_time()) < 0)
+			return (error(GET_TIME));
 		if (!create_detached_thread(&tid, monitor_ph, &ph[i], PH))
 			return (error(CREATE_THREAD));
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))

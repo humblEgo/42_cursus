@@ -58,13 +58,13 @@ static int     init_ph(t_ph_info *ph_info)
     {
         ph_info->ph[i].ph_num = i + 1;
         ph_info->ph[i].num_of_meals = 0;
-        ph_info->ph[i].is_eating_now = FALSE;
         ph_info->ph[i].start_time = &ph_info->start_time;
         ph_info->ph[i].cond = ph_info->cond;
         pthread_mutex_init(&ph_info->ph[i].last_eat_time_m, NULL);
+        pthread_mutex_init(&ph_info->ph[i].eating_m, NULL);
         ph_info->ph[i].msg_m = &ph_info->msg_m;
-        pthread_mutex_init(&ph_info->ph[i].must_eat, NULL);
-        pthread_mutex_lock(&ph_info->ph[i].must_eat);
+        pthread_mutex_init(&ph_info->ph[i].must_eat_m, NULL);
+        pthread_mutex_lock(&ph_info->ph[i].must_eat_m);
         ph_info->ph[i].finish_dining_m = &ph_info->finish_dining_m;
     }
     set_fork_between_ph(ph_info);
@@ -76,6 +76,9 @@ int     init_ph_info(t_ph_info *ph_info, int argc, char **argv)
     ph_info->cond = NULL;
     ph_info->ph = NULL;
     ph_info->forks = NULL;
+    pthread_mutex_init(&ph_info->msg_m, NULL);
+    pthread_mutex_init(&ph_info->finish_dining_m, NULL);
+    pthread_mutex_lock(&ph_info->finish_dining_m);
     if ((ph_info->start_time = get_cur_time()) < -1)
         return (FALSE);
     if (!init_cond(ph_info, argc, argv))
@@ -84,8 +87,5 @@ int     init_ph_info(t_ph_info *ph_info, int argc, char **argv)
         return (FALSE);
     if (!init_ph(ph_info))
         return (FALSE);
-    pthread_mutex_init(&ph_info->msg_m, NULL);
-    pthread_mutex_init(&ph_info->finish_dining_m, NULL);
-    pthread_mutex_lock(&ph_info->finish_dining_m);
     return (TRUE);
 }

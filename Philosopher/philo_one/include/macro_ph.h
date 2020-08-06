@@ -9,11 +9,12 @@
 **  Philosopher's state 
 */
 
-# define PICKING_FORK "has taken a fork\n"
-# define EATING "is eating\n"
-# define SLEEPING "is sleeping\n"
-# define THINKING "is thinking\n"
-# define DIED "died\n"
+# define PICKING_FORK 1
+# define EATING 2
+# define SLEEPING 3
+# define THINKING 4
+# define DIED -1
+# define MUST_EAT_REACHED -2
 
 /*
 **  Error messages
@@ -21,6 +22,7 @@
 
 # define INIT "Failed to initialize\n"
 # define CREATE_THREAD "Failed to create thread\n"
+# define GET_TIME "Failed to get current time\n"
 # define DINING "Error while dining\n"
 
 /*
