@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:04:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/07 15:43:09 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ int		dining_start(t_ph_info *ph_info)
 	return (TRUE);
 }
 
+void    wait_finish_dining(t_ph_info *ph_info)
+{
+	pthread_mutex_lock(&ph_info->finish_dining_m);
+	pthread_mutex_unlock(&ph_info->finish_dining_m);
+}
+
 int		main(int argc, char *argv[])
 {
 	t_ph_info ph_info;
@@ -76,8 +82,8 @@ int		main(int argc, char *argv[])
 		return (error(INIT) + clean_ph_info(&ph_info));
 	if (!dining_start(&ph_info))
 		return (error(DINING) + clean_ph_info(&ph_info));
-	pthread_mutex_lock(&ph_info.finish_dining_m);
-	pthread_mutex_unlock(&ph_info.finish_dining_m);
+	wait_finish_dining(&ph_info);
+	wait_all_mutexes_unlocked(&ph_info);
 	clean_ph_info(&ph_info);
 	return (0);
 }

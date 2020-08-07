@@ -5,7 +5,7 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
 MAIN_FILES = main ft_atoi print_ph_state utils init routine_ph_actions \
-			monitor error clean create_detached_thread
+			monitor error clean create_detached_thread ensure_mutexes_unlocked
 
 SRCS_PATH = $(MAIN_FILES)
 SRCS = $(addprefix srcs/, $(addsuffix .c, $(SRCS_PATH)))

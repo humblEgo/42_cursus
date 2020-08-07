@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_ph.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:20:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/07 15:31:08 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_ph
 {
 	int				ph_num;
 	int				num_of_meals;
+	int				*is_all_unlocked;
 	long long		*start_time;
 	long long		last_eat_time;
 	t_fork			*left_fork;
@@ -41,6 +42,9 @@ typedef struct	s_ph
 	pthread_mutex_t	must_eat_m;
 	pthread_mutex_t	*msg_m;
 	pthread_mutex_t	*finish_dining_m;
+	pthread_mutex_t *ensure_unlock_m;
+	pthread_mutex_t ensure_ph_unlock_m;
+	pthread_mutex_t ensure_monitor_unlock_m;
 }				t_ph;
 
 typedef struct	s_ph_info
@@ -49,8 +53,10 @@ typedef struct	s_ph_info
 	t_ph			*ph;
 	t_fork			*forks;
 	long long		start_time;
+	int				is_all_unlocked;
 	pthread_mutex_t	msg_m;
 	pthread_mutex_t	finish_dining_m;
+	pthread_mutex_t ensure_unlock_m;
 }				t_ph_info;
 
 #endif

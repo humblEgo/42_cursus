@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:22:07 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/07 15:50:16 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_ONE_H
 # define PHILO_ONE_H
+
+#include <stdio.h>
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -20,6 +22,10 @@
 # include <string.h>
 # include "macro_ph.h"
 # include "type_ph.h"
+
+void	ensure_unlock(t_ph *ph);
+void	ensure_monitor_unlock(t_ph *ph);
+void	wait_all_mutexes_unlocked(t_ph_info *ph_info);
 
 /*
 ** 	init.c
@@ -51,7 +57,7 @@ void		monitor_eat_count(t_ph_info *ph_info);
 */
 
 void		picking_up_forks(t_ph *ph);
-void		ating(t_ph *ph);
+void		eating(t_ph *ph);
 void		sleeping(t_ph *ph);
 void		thinking(t_ph *ph);
 

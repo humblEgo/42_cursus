@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_ph_actions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:06:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/07 15:07:21 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	eating(t_ph *ph)
 	pthread_mutex_unlock(&ph->left_fork->fork_m);
 	pthread_mutex_unlock(&ph->right_fork->fork_m);
 	pthread_mutex_unlock(&ph->eating_m);
+	ensure_unlock(ph);
 }
 
 void	sleeping(t_ph *ph)
