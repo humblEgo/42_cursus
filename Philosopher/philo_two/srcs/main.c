@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:27:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/06 16:04:52 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,9 @@ void	*routine_ph(void *ph_void)
 	ph = (t_ph *)ph_void;
 	while (1)
 	{
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		picking_up_forks(ph);
-		unlock_m_if_done(ph, FORK_M_LOCKED);
 		eating(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		sleeping(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		thinking(ph);
 	}
 	return ((void *)TRUE);
@@ -53,41 +49,35 @@ int		dining_start(t_ph_info *ph_info)
 	ph = ph_info->ph;
 	if (ph->cond->count_must_eat >= 0)
 		if (!create_detached_thread(&tid, monitor_eat_count, ph_info, PH_INFO))
-			return (error(CREATE_THREAD) + CREATE_MONITOR_EC_ERRNO);
+			return (error(CREATE_THREAD));
 	i = -1;
 	while (++i < ph_info->cond->num_of_ph)
 	{
 		if ((ph[i].last_eat_time = get_cur_time()) < 0)
-			return (error(GET_TIME) + GET_TIME_ERRNO + i);
+			return (error(GET_TIME));
 		if (!create_detached_thread(&tid, monitor_ph, &ph[i], PH))
-			return (error(CREATE_THREAD) + CREATE_MONITOR_PH_ERRNO + i);
+			return (error(CREATE_THREAD));
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
-			return (error(CREATE_THREAD) + CREATE_ROUTINE_PH_ERRNO + i);
-		usleep(50);
+			return (error(CREATE_THREAD));
+		usleep(100);
 	}
 	return (TRUE);
 }
 
-void	wait_finish_dining(t_ph_info *ph_info)
-{
-	pthread_mutex_lock(&ph_info->finish_dining_m);
-	pthread_mutex_unlock(&ph_info->finish_dining_m);
-}
-
 int		main(int argc, char *argv[])
 {
-	t_ph_info	ph_info;
-	int			error_num;
+	t_ph_info ph_info;
 
 	if (argc < 5 || argc > 6)
-		return (error(INVALID_ARG));
+		return (0);
 	if (!is_valid_arg(&argv[1]))
-		return (error(INVALID_ARG));
-	if ((error_num = init_ph_info(&ph_info, argc, &argv[1])) != TRUE)
-		return (error(INIT) + clean_all(&ph_info, error_num));
-	if ((error_num = dining_start(&ph_info)) != TRUE)
-		return (error(DINING) + clean_all(&ph_info, error_num));
-	wait_finish_dining(&ph_info);
-	clean_all(&ph_info, NO_ERROR);
+		return (0);
+	if (!init_ph_info(&ph_info, argc, &argv[1]))
+		return (error(INIT) + clean_ph_info(&ph_info));
+	if (!dining_start(&ph_info))
+		return (error(DINING) + clean_ph_info(&ph_info));
+	pthread_mutex_lock(&ph_info.finish_dining_m);
+	pthread_mutex_unlock(&ph_info.finish_dining_m);
+	clean_ph_info(&ph_info);
 	return (0);
 }
