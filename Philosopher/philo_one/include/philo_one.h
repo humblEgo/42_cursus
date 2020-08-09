@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/07 15:50:16 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 00:53:46 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 # include "macro_ph.h"
 # include "type_ph.h"
 
-void	ensure_unlock(t_ph *ph);
-void	ensure_monitor_unlock(t_ph *ph);
-void	wait_all_mutexes_unlocked(t_ph_info *ph_info);
+void		ensure_unlock(t_ph *ph);
+void		ensure_unlock_before_eating(t_ph *ph);
+void		ensure_monitor_unlock(t_ph *ph);
+void		wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_of_monitor);
 
 /*
 ** 	init.c
@@ -43,7 +44,7 @@ int			error(char *msg);
 ** 	clean.c
 */
 
-int			clean_ph_info(t_ph_info *ph_info);
+int			clean_all(t_ph_info *ph_info, int error_no);
 
 /*
 ** 	monitor.c

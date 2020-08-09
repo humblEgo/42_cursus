@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:02:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/07 15:31:08 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/08 10:57:01 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ int			init_ph_info(t_ph_info *ph_info, int argc, char **argv)
 	pthread_mutex_init(&ph_info->finish_dining_m, NULL);
 	pthread_mutex_lock(&ph_info->finish_dining_m);
 	if ((ph_info->start_time = get_cur_time()) < -1)
-		return (FALSE);
+		return (error(GET_TIME) + INIT_ERRNO);
 	if (!init_cond(ph_info, argc, argv))
-		return (FALSE);
+		return (INIT_ERRNO);
 	if (!init_forks(ph_info))
-		return (FALSE);
+		return (INIT_ERRNO);
 	if (!init_ph(ph_info))
-		return (FALSE);
+		return (INIT_ERRNO);
 	return (TRUE);
 }

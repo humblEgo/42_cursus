@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macro_ph.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:18:58 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/09 14:39:44 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define TRUE 1
 # define FALSE 0
+
+
 
 /*
 **  Philosopher's state
@@ -26,6 +28,17 @@
 # define THINKING 4
 # define DIED -1
 # define MUST_EAT_REACHED -2
+
+/*
+**  Error type
+*/
+
+# define INIT_ERRNO -1
+# define CREATE_MONITOR_EC_ERRNO -2
+# define GET_TIME_ERRNO -10000
+# define CREATE_MONITOR_PH_ERRNO -10000
+# define CREATE_ROUTINE_PH_ERRNO -20000
+# define NO_ERROR 0
 
 /*
 **  Error messages
