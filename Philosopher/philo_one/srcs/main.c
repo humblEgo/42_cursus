@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 16:55:53 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:27:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		dining_start(t_ph_info *ph_info)
 	return (TRUE);
 }
 
-void    wait_finish_dining(t_ph_info *ph_info)
+void	wait_finish_dining(t_ph_info *ph_info)
 {
 	pthread_mutex_lock(&ph_info->finish_dining_m);
 	pthread_mutex_unlock(&ph_info->finish_dining_m);

@@ -6,14 +6,12 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:10:54 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:45:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_ONE_H
 # define PHILO_ONE_H
-
-#include <stdio.h>
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -23,17 +21,18 @@
 # include "macro_ph.h"
 # include "type_ph.h"
 
+/*
+** 	ensure_mutexes_unlocked.c
+*/
+
 void		unlock_m_if_done(t_ph *ph, int flag);
-void		ensure_unlock_m_ph_and_fork(t_ph *ph);
-void		ensure_unlock_m_monitor(t_ph *ph);
-void		wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_of_monitor);
+void		wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_monitor);
 
 /*
 ** 	init_ph_info.c
 */
 
 int			init_ph_info(t_ph_info *ph_info, int argc, char **argv);
-
 
 /*
 ** 	init_cond_forks_ph.c
@@ -83,7 +82,6 @@ void		print_ph_state(t_ph *ph, int state_type);
 
 int			create_detached_thread(pthread_t *tid, void *funcion,
 										void *arg, int arg_type);
-
 
 /*
 ** 	destroy_mutexes.c

@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 16:12:35 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:27:54 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@
 
 # define PH 1
 # define PH_INFO 2
-
 
 /*
 **  Ensure_unlock_m flag macro (second argument)

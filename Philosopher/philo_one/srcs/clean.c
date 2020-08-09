@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 15:58:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 16:39:54 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:23:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_free(void *ptr)
 	free(ptr);
 }
 
-void	get_num_of_threads(int err_n, int *n_of_ph, int *n_of_monitor, 
-															t_ph_info *ph_info)
+void	get_num_of_threads(int err_n, int *n_of_ph, int *n_of_monitor, \
+		t_ph_info *ph_info)
 {
 	int i;
 

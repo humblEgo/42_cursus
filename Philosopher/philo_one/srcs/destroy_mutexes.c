@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   destroy_mutexes.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/09 17:23:21 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/09 17:23:38 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
 static void	destroy_m_forks(t_fork *forks, int n_of_ph)
@@ -41,7 +53,7 @@ static void	destroy_m_monitor(t_ph *ph, int n_of_monitor)
 	}
 }
 
-void	destroy_m_all(t_ph_info *ph_info, int n_of_ph, int n_of_monitor)
+void		destroy_m_all(t_ph_info *ph_info, int n_of_ph, int n_of_monitor)
 {
 	if (ph_info->ph)
 	{

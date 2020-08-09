@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 17:26:45 by humblego          #+#    #+#             */
-/*   Updated: 2020/08/09 16:54:58 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:42:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	unlock_m_if_done(t_ph *ph, int flag)
 	pthread_mutex_unlock(ph->ensure_unlock_m);
 }
 
-void    wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_of_monitor)
+void	wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_of_monitor)
 {
-    int i;
+	int i;
 
 	pthread_mutex_lock(&ph_info->ensure_unlock_m);
 	ph_info->let_all_m_unlock = TRUE;
 	pthread_mutex_unlock(&ph_info->ensure_unlock_m);
-    i = -1;
+	i = -1;
 	while (++i < n_of_monitor)
 	{
 		pthread_mutex_lock(&ph_info->ph[i].ensure_monitor_unlock_m);

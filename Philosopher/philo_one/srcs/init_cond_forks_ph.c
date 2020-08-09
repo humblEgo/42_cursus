@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:02:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:10:39 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 17:24:53 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	init_and_lock_ph_m(t_ph *ph)
 	pthread_mutex_lock(&ph->must_eat_m);
 }
 
-int		init_ph(t_ph_info *ph_info)
+int			init_ph(t_ph_info *ph_info)
 {
 	int num_of_ph;
 	int i;
@@ -89,7 +89,6 @@ int		init_ph(t_ph_info *ph_info)
 		ph_info->ph[i].msg_m = &ph_info->msg_m;
 		ph_info->ph[i].finish_dining_m = &ph_info->finish_dining_m;
 		init_and_lock_ph_m(&ph_info->ph[i]);
-
 	}
 	set_fork_between_ph(ph_info);
 	return (TRUE);
