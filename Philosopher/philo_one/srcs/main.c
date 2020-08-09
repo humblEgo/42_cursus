@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 14:39:33 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 16:55:53 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	*routine_ph(void *ph_void)
 	ph = (t_ph *)ph_void;
 	while (1)
 	{
-		ensure_unlock(ph);
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		picking_up_forks(ph);
-		ensure_unlock_before_eating(ph);
+		unlock_m_if_done(ph, FORK_M_LOCKED);
 		eating(ph);
-		ensure_unlock(ph);
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		sleeping(ph);
-		ensure_unlock(ph);
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
 		thinking(ph);
 	}
 	return ((void *)TRUE);
@@ -63,7 +63,7 @@ int		dining_start(t_ph_info *ph_info)
 			return (error(CREATE_THREAD) + CREATE_MONITOR_PH_ERRNO + i);
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
 			return (error(CREATE_THREAD) + CREATE_ROUTINE_PH_ERRNO + i);
-		usleep(100);
+		usleep(50);
 	}
 	return (TRUE);
 }
@@ -80,9 +80,9 @@ int		main(int argc, char *argv[])
 	int			error_num;
 
 	if (argc < 5 || argc > 6)
-		return (1);
+		return (error(INVALID_ARG));
 	if (!is_valid_arg(&argv[1]))
-		return (1);
+		return (error(INVALID_ARG));
 	if ((error_num = init_ph_info(&ph_info, argc, &argv[1])) != TRUE)
 		return (error(INIT) + clean_all(&ph_info, error_num));
 	if ((error_num = dining_start(&ph_info)) != TRUE)

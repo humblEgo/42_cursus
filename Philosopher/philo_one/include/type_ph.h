@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/07 15:31:08 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 16:50:51 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_ph
 {
 	int				ph_num;
 	int				num_of_meals;
-	int				*is_all_unlocked;
+	int				*let_all_m_unlock;
 	long long		*start_time;
 	long long		last_eat_time;
 	t_fork			*left_fork;
@@ -53,7 +53,7 @@ typedef struct	s_ph_info
 	t_ph			*ph;
 	t_fork			*forks;
 	long long		start_time;
-	int				is_all_unlocked;
+	int				let_all_m_unlock;
 	pthread_mutex_t	msg_m;
 	pthread_mutex_t	finish_dining_m;
 	pthread_mutex_t ensure_unlock_m;

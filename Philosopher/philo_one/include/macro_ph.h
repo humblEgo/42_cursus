@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 14:39:44 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/09 16:12:35 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # define TRUE 1
 # define FALSE 0
-
-
 
 /*
 **  Philosopher's state
@@ -44,16 +42,27 @@
 **  Error messages
 */
 
+# define INVALID_ARG "Error: Invalid arg\n"
 # define INIT "Failed to initialize\n"
 # define CREATE_THREAD "Failed to create thread\n"
 # define GET_TIME "Failed to get current time\n"
 # define DINING "Error while dining\n"
 
 /*
-**  arg_type
+**  Arg_type
 */
 
 # define PH 1
 # define PH_INFO 2
+
+
+/*
+**  Ensure_unlock_m flag macro (second argument)
+*/
+
+# define FORK_M_UNLOCKED 0
+# define FORK_M_LOCKED -1
+# define MONITOR -2
+# define MONITOR_EAT_COUNT -3
 
 #endif
