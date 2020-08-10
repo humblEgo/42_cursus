@@ -6,26 +6,26 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:03:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:03:55 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 18:28:20 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 void	monitor_ph(t_ph *ph)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&ph->eating_m);
+		sem_wait(ph->eating_s);
 		if (get_cur_time() > ph->last_eat_time + ph->cond->time_to_die)
 		{
 			print_ph_state(ph, DIED);
-			pthread_mutex_unlock(&ph->eating_m);
-			pthread_mutex_unlock(ph->finish_dining_m);
+			sem_post(ph->eating_s);
+			sem_post(ph->finish_dining_s);
 			return ;
 		}
-		pthread_mutex_unlock(&ph->eating_m);
-		usleep(10 * 1000);
+		sem_post(ph->eating_s);
+		usleep(10 * 100);
 	}
 }
 
@@ -35,12 +35,16 @@ void	monitor_eat_count(t_ph_info *ph_info)
 	int		i;
 
 	ph = ph_info->ph;
-	i = -1;
-	while (++i < ph->cond->num_of_ph)
+	if (ph_info->cond->count_must_eat > 0)
 	{
-		pthread_mutex_lock(&ph[i].must_eat_m);
-		pthread_mutex_unlock(&ph[i].must_eat_m);
+		i = -1;
+		while (++i < ph->cond->num_of_ph)
+		{
+			sem_wait(ph[i].must_eat_s);
+			sem_post(ph[i].must_eat_s);
+			usleep(10 * 10);
+		}
 	}
 	print_ph_state(ph, MUST_EAT_REACHED);
-	pthread_mutex_unlock(ph->finish_dining_m);
+	sem_post(ph->finish_dining_s);
 }

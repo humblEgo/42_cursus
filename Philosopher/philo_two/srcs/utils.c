@@ -6,11 +6,11 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:08:54 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:10:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 13:21:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 int			ft_strlen(char *s)
 {

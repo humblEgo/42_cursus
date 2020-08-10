@@ -6,44 +6,36 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:06:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 18:26:55 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
-
-void	pick_up_fork(t_ph *ph, t_fork *fork)
-{
-	pthread_mutex_lock(&fork->fork_m);
-	print_ph_state(ph, PICKING_FORK);
-}
+#include "philo_two.h"
 
 void	picking_up_forks(t_ph *ph)
 {
-	if (ph->ph_num % 2 == 0)
-	{
-		pick_up_fork(ph, ph->right_fork);
-		pick_up_fork(ph, ph->left_fork);
-	}
-	else
-	{
-		pick_up_fork(ph, ph->left_fork);
-		pick_up_fork(ph, ph->right_fork);
-	}
+	sem_wait(ph->forks);
+	print_ph_state(ph, PICKING_FORK);
+	sem_wait(ph->forks);
+	print_ph_state(ph, PICKING_FORK);
 }
 
 void	eating(t_ph *ph)
 {
-	pthread_mutex_lock(&ph->eating_m);
+	sem_wait(ph->eating_s);
 	print_ph_state(ph, EATING);
 	usleep(ph->cond->time_to_eat * 1000);
 	ph->last_eat_time = get_cur_time();
 	ph->num_of_meals++;
 	if (ph->num_of_meals == ph->cond->count_must_eat)
-		pthread_mutex_unlock(&ph->must_eat_m);
-	pthread_mutex_unlock(&ph->left_fork->fork_m);
-	pthread_mutex_unlock(&ph->right_fork->fork_m);
-	pthread_mutex_unlock(&ph->eating_m);
+		sem_post(ph->must_eat_s);
+	sem_post(ph->eating_s);
+}
+
+void	put_down_forks(t_ph *ph)
+{
+	sem_post(ph->forks);
+	sem_post(ph->forks);
 }
 
 void	sleeping(t_ph *ph)
