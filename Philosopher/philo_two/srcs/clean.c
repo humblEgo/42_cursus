@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 15:58:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:10:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 20:18:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ int		clean_all(t_ph_info *ph_info, int err_n)
 	if (err_n != NO_ERROR)
 		sem_post(ph_info->finish_dining_s);
 	get_num_of_threads(err_n, &n_of_ph, &n_of_monitor, ph_info);
-	// wait_all_m_unlocked(ph_info, n_of_ph, n_of_monitor);
-	unlink_s_all(ph_info, n_of_ph, n_of_monitor);
+	unlink_s_all(ph_info, n_of_ph);
 	ft_free(ph_info->cond);
 	ft_free(ph_info->ph);
 	ph_info->cond = NULL;

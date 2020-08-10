@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:03:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:42:26 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 21:35:00 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	monitor_ph(t_ph *ph)
 	while (1)
 	{
 		unlock_m_if_done(ph, MONITOR);
+		// pthread_mutex_lock(&ph->last_eat_time_m);
 		pthread_mutex_lock(&ph->eating_m);
-		if (get_cur_time() > ph->last_eat_time + ph->cond->time_to_die)
+		if (ph->is_eating_now == FALSE && get_cur_time() > ph->last_eat_time + ph->cond->time_to_die)
 		{
 			print_ph_state(ph, DIED);
+			// pthread_mutex_unlock(&ph->last_eat_time_m);
 			pthread_mutex_unlock(&ph->eating_m);
 			pthread_mutex_unlock(&ph->ensure_ph_unlock_m);
 			pthread_mutex_unlock(&ph->ensure_monitor_unlock_m);
@@ -28,7 +30,8 @@ void	monitor_ph(t_ph *ph)
 			return ;
 		}
 		pthread_mutex_unlock(&ph->eating_m);
-		usleep(10 * 100);
+		// pthread_mutex_unlock(&ph->last_eat_time_m);
+		usleep(1000);
 	}
 }
 
@@ -46,7 +49,7 @@ void	monitor_eat_count(t_ph_info *ph_info)
 			unlock_m_if_done(&ph[i], MONITOR_EAT_COUNT);
 			pthread_mutex_lock(&ph[i].must_eat_m);
 			pthread_mutex_unlock(&ph[i].must_eat_m);
-			usleep(10 * 100);
+			usleep(1000);
 		}
 	}
 	else if (ph_info->cond->count_must_eat == 0)

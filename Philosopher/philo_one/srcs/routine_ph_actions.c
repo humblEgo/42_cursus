@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_ph_actions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/07 17:05:11 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/10 21:36:15 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	pick_up_fork(t_ph *ph, t_fork *fork)
 {
-	pthread_mutex_lock(&fork->fork_m);
+	(void)fork;
+	// pthread_mutex_lock(&fork->fork_m);
 	print_ph_state(ph, PICKING_FORK);
 }
 
@@ -22,11 +23,15 @@ void	picking_up_forks(t_ph *ph)
 {
 	if (ph->ph_num % 2 == 0)
 	{
+		pthread_mutex_lock(&ph->right_fork->fork_m);
+		pthread_mutex_lock(&ph->left_fork->fork_m);
 		pick_up_fork(ph, ph->right_fork);
 		pick_up_fork(ph, ph->left_fork);
 	}
 	else
 	{
+		pthread_mutex_lock(&ph->left_fork->fork_m);
+		pthread_mutex_lock(&ph->right_fork->fork_m);
 		pick_up_fork(ph, ph->left_fork);
 		pick_up_fork(ph, ph->right_fork);
 	}
@@ -35,14 +40,23 @@ void	picking_up_forks(t_ph *ph)
 void	eating(t_ph *ph)
 {
 	pthread_mutex_lock(&ph->eating_m);
+	// pthread_mutex_lock(&ph->last_eat_time_m);
+	ph->is_eating_now = TRUE;
+	ph->last_eat_time = get_cur_time();
+	// pthread_mutex_unlock(&ph->last_eat_time_m);
+
+	// ph->last_eat_time = get_cur_time();
 	print_ph_state(ph, EATING);
 	usleep(ph->cond->time_to_eat * 1000);
-	ph->last_eat_time = get_cur_time();
+	// ph->last_eat_time = get_cur_time();
+
 	ph->num_of_meals++;
 	if (ph->num_of_meals == ph->cond->count_must_eat)
 		pthread_mutex_unlock(&ph->must_eat_m);
 	pthread_mutex_unlock(&ph->left_fork->fork_m);
 	pthread_mutex_unlock(&ph->right_fork->fork_m);
+
+	ph->is_eating_now = FALSE;
 	pthread_mutex_unlock(&ph->eating_m);
 }
 

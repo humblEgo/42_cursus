@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:23:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 20:19:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@
 
 sem_t		*ft_sem_open(char const *name, int value);
 int			make_sem_name_in_buf(char *buf, char *src, int ph_num);
-
-/*
-** 	ensure_mutexes_unlocked.c
-*/
-
-void		wait_if_done(t_ph *ph);
-void		wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_monitor);
 
 /*
 ** 	init_ph_info.c
@@ -90,10 +83,10 @@ int			create_detached_thread(pthread_t *tid, void *funcion,
 										void *arg, int arg_type);
 
 /*
-** 	destroy_mutexes.c
+** 	unlink_semaphores.c
 */
 
-void		unlink_s_all(t_ph_info *ph_info, int n_of_ph, int n_of_monitor);
+void		unlink_s_all(t_ph_info *ph_info, int n_of_ph);
 
 
 /*
