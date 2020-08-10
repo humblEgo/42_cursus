@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:02:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:28:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 20:05:43 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,10 @@ static void	init_and_lock_ph_m(t_ph *ph, int ph_num)
 	if (!(make_sem_name_in_buf(buf, EATING_S, ph_num)))
 		return ;
 	ph->eating_s = ft_sem_open(buf, 1);
-	if (ph->cond->count_must_eat >= 0)
-	{
-		if (!(make_sem_name_in_buf(buf, MUST_EAT_S, ph_num)))
-			return ;
-		ph->must_eat_s = ft_sem_open(buf, 1);
-		sem_wait(ph->must_eat_s);
-	}
+	if (!(make_sem_name_in_buf(buf, MUST_EAT_S, ph_num)))
+		return ;
+	ph->must_eat_s = ft_sem_open(buf, 1);
+	sem_wait(ph->must_eat_s);
 }
 
 int			init_ph(t_ph_info *ph_info)

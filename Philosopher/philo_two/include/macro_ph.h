@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 17:36:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 18:43:36 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define LAST_EAT_TIME_S "last_eat_time_s"
 # define EATING_S "eating_s"
 # define MUST_EAT_S "must_eat_s"
+# define WAIT_PH_S "WAIT_PH_S"
+# define WAIT_MONITOR_S "WAIT_MONITOR_S"
 
 /*
 **  Philosopher's state

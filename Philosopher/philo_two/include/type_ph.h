@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:21:23 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 19:46:18 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct	s_ph
 {
 	int				ph_num;
 	int				num_of_meals;
-	int				*let_wait_if_done;
 	long long		*start_time;
 	long long		last_eat_time;
 	t_cond			*cond;
@@ -36,7 +35,6 @@ typedef struct	s_ph
 	sem_t			*must_eat_s;
 	sem_t			*msg_s;
 	sem_t			*finish_dining_s;
-	sem_t			*done_s;
 }				t_ph;
 
 typedef struct	s_ph_info
@@ -45,7 +43,6 @@ typedef struct	s_ph_info
 	t_ph			*ph;
 	sem_t			*forks;
 	long long		start_time;
-	int				let_wait_if_done;
 	sem_t			*msg_s;
 	sem_t			*finish_dining_s;
 }				t_ph_info;

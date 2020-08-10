@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:15:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 20:08:18 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,10 @@ void	*routine_ph(void *ph_void)
 	ph = (t_ph *)ph_void;
 	while (1)
 	{
-		// wait_if_done(ph);
 		picking_up_forks(ph);
-		// wait_if_done(ph);
 		eating(ph);
-		// wait_if_done(ph);
 		put_down_forks(ph);
-		// wait_if_done(ph);
 		sleeping(ph);
-		// wait_if_done(ph);
 		thinking(ph);
 	}
 	return ((void *)TRUE);
@@ -65,7 +60,7 @@ int		dining_start(t_ph_info *ph_info)
 			return (error(CREATE_THREAD) + CREATE_MONITOR_PH_ERRNO + i);
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
 			return (error(CREATE_THREAD) + CREATE_ROUTINE_PH_ERRNO + i);
-		usleep(50);
+		usleep(5);
 	}
 	return (TRUE);
 }

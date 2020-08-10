@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:03:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:28:20 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 20:00:50 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	monitor_ph(t_ph *ph)
 			return ;
 		}
 		sem_post(ph->eating_s);
-		usleep(10 * 100);
+		usleep(100);
 	}
 }
 
@@ -42,7 +42,7 @@ void	monitor_eat_count(t_ph_info *ph_info)
 		{
 			sem_wait(ph[i].must_eat_s);
 			sem_post(ph[i].must_eat_s);
-			usleep(10 * 10);
+			usleep(100);
 		}
 	}
 	print_ph_state(ph, MUST_EAT_REACHED);

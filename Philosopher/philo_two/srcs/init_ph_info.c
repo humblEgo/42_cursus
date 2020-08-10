@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 17:14:58 by humblego          #+#    #+#             */
-/*   Updated: 2020/08/10 18:12:31 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 19:55:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int			init_ph_info(t_ph_info *ph_info, int argc, char **argv)
 	ph_info->cond = NULL;
 	ph_info->ph = NULL;
 	ph_info->forks = NULL;
-	// ph_info->let_all_s_unlink = FALSE;
 
 	ph_info->msg_s = ft_sem_open(MSG_S, 1);
 	ph_info->finish_dining_s = ft_sem_open(FINISH_DINING_S, 1);
