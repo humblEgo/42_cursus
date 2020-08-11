@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:03:03 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:42:26 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 14:21:53 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	monitor_ph(t_ph *ph)
 			return ;
 		}
 		pthread_mutex_unlock(&ph->eating_m);
-		usleep(10 * 100);
+		usleep(1000);
 	}
 }
 
@@ -46,7 +46,7 @@ void	monitor_eat_count(t_ph_info *ph_info)
 			unlock_m_if_done(&ph[i], MONITOR_EAT_COUNT);
 			pthread_mutex_lock(&ph[i].must_eat_m);
 			pthread_mutex_unlock(&ph[i].must_eat_m);
-			usleep(10 * 100);
+			usleep(1000);
 		}
 	}
 	else if (ph_info->cond->count_must_eat == 0)

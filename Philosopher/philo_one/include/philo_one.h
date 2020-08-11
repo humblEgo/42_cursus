@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:45:09 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 14:17:44 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <string.h>
 # include "macro_ph.h"
 # include "type_ph.h"
+
+/*
+**	make_ph_and_monitor.c
+*/
+
+int			make_even_ph_and_monitor(t_ph_info *ph_info);
+int			make_odd_ph_and_monitor(t_ph_info *ph_info);
 
 /*
 ** 	ensure_mutexes_unlocked.c
@@ -69,6 +76,7 @@ void		picking_up_forks(t_ph *ph);
 void		eating(t_ph *ph);
 void		sleeping(t_ph *ph);
 void		thinking(t_ph *ph);
+void		*routine_ph(void *ph_info);
 
 /*
 ** 	print_ph_state.c

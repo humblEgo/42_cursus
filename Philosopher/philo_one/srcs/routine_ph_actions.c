@@ -3,41 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   routine_ph_actions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/07 17:05:11 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/11 14:21:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void	pick_up_fork(t_ph *ph, t_fork *fork)
-{
-	pthread_mutex_lock(&fork->fork_m);
-	print_ph_state(ph, PICKING_FORK);
-}
-
 void	picking_up_forks(t_ph *ph)
 {
-	if (ph->ph_num % 2 == 0)
-	{
-		pick_up_fork(ph, ph->right_fork);
-		pick_up_fork(ph, ph->left_fork);
-	}
-	else
-	{
-		pick_up_fork(ph, ph->left_fork);
-		pick_up_fork(ph, ph->right_fork);
-	}
+	pthread_mutex_lock(&ph->left_fork->fork_m);
+	print_ph_state(ph, PICKING_FORK);
+	pthread_mutex_lock(&ph->right_fork->fork_m);
+	print_ph_state(ph, PICKING_FORK);
 }
 
 void	eating(t_ph *ph)
 {
 	pthread_mutex_lock(&ph->eating_m);
+	ph->last_eat_time = get_cur_time();
 	print_ph_state(ph, EATING);
 	usleep(ph->cond->time_to_eat * 1000);
-	ph->last_eat_time = get_cur_time();
 	ph->num_of_meals++;
 	if (ph->num_of_meals == ph->cond->count_must_eat)
 		pthread_mutex_unlock(&ph->must_eat_m);
@@ -55,4 +43,23 @@ void	sleeping(t_ph *ph)
 void	thinking(t_ph *ph)
 {
 	print_ph_state(ph, THINKING);
+}
+
+void	*routine_ph(void *ph_void)
+{
+	t_ph *ph;
+
+	ph = (t_ph *)ph_void;
+	while (1)
+	{
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		picking_up_forks(ph);
+		unlock_m_if_done(ph, FORK_M_LOCKED);
+		eating(ph);
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		sleeping(ph);
+		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		thinking(ph);
+	}
+	return ((void *)TRUE);
 }

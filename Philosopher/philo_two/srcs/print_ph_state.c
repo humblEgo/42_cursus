@@ -6,11 +6,11 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:05:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:05:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 16:47:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 void	print_state(int state_type)
 {
@@ -32,10 +32,10 @@ void	print_ph_state(t_ph *ph, int state_type)
 {
 	static int is_print_end;
 
-	pthread_mutex_lock(ph->msg_m);
+	sem_wait(ph->msg_s);
 	if (is_print_end)
 	{
-		pthread_mutex_unlock(ph->msg_m);
+		sem_post(ph->msg_s);
 		return ;
 	}
 	if (state_type == DIED || state_type == MUST_EAT_REACHED)
@@ -44,7 +44,7 @@ void	print_ph_state(t_ph *ph, int state_type)
 		if (state_type == MUST_EAT_REACHED)
 		{
 			print_state(MUST_EAT_REACHED);
-			pthread_mutex_unlock(ph->msg_m);
+			sem_post(ph->msg_s);
 			return ;
 		}
 	}
@@ -52,5 +52,5 @@ void	print_ph_state(t_ph *ph, int state_type)
 	write(1, " ", 1);
 	ft_putnbr_fd(ph->ph_num, 1);
 	print_state(state_type);
-	pthread_mutex_unlock(ph->msg_m);
+	sem_post(ph->msg_s);
 }

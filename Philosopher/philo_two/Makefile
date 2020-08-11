@@ -4,8 +4,9 @@ CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-MAIN_FILES = main ft_atoi print_ph_state utils init routine_ph_actions \
-			monitor error clean create_detached_thread
+MAIN_FILES = main ft_atoi print_ph_state utils init_ph_info init_cond_forks_ph \
+			routine_ph_actions monitor error clean create_detached_thread \
+			unlink_semaphores semaphore
 
 SRCS_PATH = $(MAIN_FILES)
 SRCS = $(addprefix srcs/, $(addsuffix .c, $(SRCS_PATH)))
@@ -20,7 +21,7 @@ all: $(NAME)
 
 ${NAME}: ${OBJS}
 	@echo "$(GREEN)PHIOLOSOPHY START$(RESET)"
-	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME} -pthread
+	@${CC} ${CFLAGS} ${INCLUDES} ${OBJS} -o ${NAME} -lpthread
 	@echo "$(GREEN)DONE"
 
 ${OBJS}: ${SRCS}

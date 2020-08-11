@@ -6,11 +6,11 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 12:02:43 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/06 16:08:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/10 13:21:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo_two.h"
 
 static int	is_sign(char *tmp)
 {
