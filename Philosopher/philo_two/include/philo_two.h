@@ -6,14 +6,12 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 20:19:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 14:28:42 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
-
-#include <stdio.h>
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -87,7 +85,6 @@ int			create_detached_thread(pthread_t *tid, void *funcion,
 */
 
 void		unlink_s_all(t_ph_info *ph_info, int n_of_ph);
-
 
 /*
 ** 	ft_atoi.c

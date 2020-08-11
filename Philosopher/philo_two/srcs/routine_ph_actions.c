@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:26:55 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 14:25:33 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	picking_up_forks(t_ph *ph)
 void	eating(t_ph *ph)
 {
 	sem_wait(ph->eating_s);
+	ph->last_eat_time = get_cur_time();
 	print_ph_state(ph, EATING);
 	usleep(ph->cond->time_to_eat * 1000);
-	ph->last_eat_time = get_cur_time();
 	ph->num_of_meals++;
 	if (ph->num_of_meals == ph->cond->count_must_eat)
 		sem_post(ph->must_eat_s);
