@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 16:19:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:51:50 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,5 @@ int		main(int argc, char *argv[])
 		return (error(DINING) + clean_all(&ph_info, error_num));
 	wait_finish_dining(&ph_info);
 	clean_all(&ph_info, NO_ERROR);
-	while (1)
-		;
 	return (0);
 }

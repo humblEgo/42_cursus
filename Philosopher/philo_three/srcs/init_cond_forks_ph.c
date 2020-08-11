@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:02:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 17:18:03 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:48:52 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ static void	init_and_lock_ph_m(t_ph *ph, int ph_num)
 {
 	char buf[BUFFER_SIZE];
 
-	if (!(make_sem_name_in_buf(buf, LAST_EAT_TIME_S, ph_num)))
-		return ;
-	ph->last_eat_time_s = ft_sem_open(buf, 1);
 	if (!(make_sem_name_in_buf(buf, EATING_S, ph_num)))
 		return ;
 	ph->eating_s = ft_sem_open(buf, 1);
@@ -76,7 +73,6 @@ int			init_ph(t_ph_info *ph_info)
 		ph_info->ph[i].cond = ph_info->cond;
 		ph_info->ph[i].msg_s = ph_info->msg_s;
 		ph_info->ph[i].finish_dining_s = ph_info->finish_dining_s;
-		ph_info->ph[i].clean_all_s = ph_info->clean_all_s;
 		ph_info->ph[i].is_end = &ph_info->is_end;
 		init_and_lock_ph_m(&ph_info->ph[i], ph_info->ph[i].ph_num);
 	}

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 16:58:42 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:52:40 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define MSG_S "msg_s"
 # define FINISH_DINING_S "finish_dining_s"
 # define FORK_S "fork_s"
-# define LAST_EAT_TIME_S "last_eat_time_s"
 # define EATING_S "eating_s"
 # define MUST_EAT_S "must_eat_s"
 

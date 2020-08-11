@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/09 17:27:54 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:53:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 **  Error messages
 */
 
-# define INVALID_ARG "Error: Invalid arg\n"
+# define INVALID_ARG "Error: Invalid arguments\n"
 # define INIT "Failed to initialize\n"
 # define CREATE_THREAD "Failed to create thread\n"
 # define GET_TIME "Failed to get current time\n"

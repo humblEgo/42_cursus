@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 17:23:21 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 14:27:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:52:57 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ static void	unlink_s_ph(int n_of_ph)
 	i = -1;
 	while (++i < n_of_ph)
 	{
-		if (!make_sem_name_in_buf(buf, LAST_EAT_TIME_S, i))
-			return ;
-		sem_unlink(buf);
 		if (!make_sem_name_in_buf(buf, EATING_S, i))
 			return ;
 		sem_unlink(buf);

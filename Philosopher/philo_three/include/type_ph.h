@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 17:05:58 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:49:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ typedef struct	s_ph
 	long long		last_eat_time;
 	t_cond			*cond;
 	sem_t			*forks;
-	sem_t			*last_eat_time_s;
 	sem_t			*eating_s;
 	sem_t			*must_eat_s;
 	sem_t			*msg_s;
 	sem_t			*finish_dining_s;
-	sem_t			*clean_all_s;
 }				t_ph;
 
 typedef struct	s_ph_info
