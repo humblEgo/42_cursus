@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 MAIN_FILES = main ft_atoi print_ph_state utils init_ph_info init_cond_forks_ph \
 			routine_ph_actions monitor error clean create_detached_thread \
-			ensure_mutexes_unlocked destroy_mutexes
+			ensure_mutexes_unlocked destroy_mutexes make_ph_and_monitor
 
 SRCS_PATH = $(MAIN_FILES)
 SRCS = $(addprefix srcs/, $(addsuffix .c, $(SRCS_PATH)))

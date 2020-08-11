@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:02:07 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 21:35:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 13:34:59 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int			init_ph(t_ph_info *ph_info)
 		ph_info->ph[i].ensure_unlock_m = &ph_info->ensure_unlock_m;
 		ph_info->ph[i].msg_m = &ph_info->msg_m;
 		ph_info->ph[i].finish_dining_m = &ph_info->finish_dining_m;
-		ph_info->ph[i].is_eating_now = FALSE;
 		init_and_lock_ph_m(&ph_info->ph[i]);
 	}
 	set_fork_between_ph(ph_info);

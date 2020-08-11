@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 21:36:09 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 12:28:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_ph
 	int				ph_num;
 	int				num_of_meals;
 	int				*let_all_m_unlock;
-	int				is_eating_now;
 	long long		*start_time;
 	long long		last_eat_time;
 	t_fork			*left_fork;

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 20:40:09 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 14:12:09 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,18 @@ int		is_valid_arg(char **argv)
 	return (TRUE);
 }
 
-void	*routine_ph(void *ph_void)
-{
-	t_ph *ph;
-
-	ph = (t_ph *)ph_void;
-	while (1)
-	{
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
-		picking_up_forks(ph);
-		unlock_m_if_done(ph, FORK_M_LOCKED);
-		eating(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
-		sleeping(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
-		thinking(ph);
-	}
-	return ((void *)TRUE);
-}
-
 int		dining_start(t_ph_info *ph_info)
 {
-	t_ph		*ph;
 	pthread_t	tid;
-	int			i;
+	int			err_num;
 
-	ph = ph_info->ph;
-	if (ph->cond->count_must_eat >= 0)
+	if (ph_info->cond->count_must_eat >= 0)
 		if (!create_detached_thread(&tid, monitor_eat_count, ph_info, PH_INFO))
 			return (error(CREATE_THREAD) + CREATE_MONITOR_EC_ERRNO);
-	i = -1;
-	while (++i < ph_info->cond->num_of_ph)
-	{
-		if ((ph[i].last_eat_time = get_cur_time()) < 0)
-			return (error(GET_TIME) + GET_TIME_ERRNO + i);
-		if (!create_detached_thread(&tid, monitor_ph, &ph[i], PH))
-			return (error(CREATE_THREAD) + CREATE_MONITOR_PH_ERRNO + i);
-		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
-			return (error(CREATE_THREAD) + CREATE_ROUTINE_PH_ERRNO + i);
-		usleep(10);
-	}
+	if ((err_num = make_even_ph_and_monitor(ph_info)) != TRUE)
+		return (err_num);
+	if ((err_num = make_odd_ph_and_monitor(ph_info)) != TRUE)
+		return (err_num);
 	return (TRUE);
 }
 
