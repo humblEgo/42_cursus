@@ -6,11 +6,11 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 17:23:21 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 22:52:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 23:08:16 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 static void	unlink_s_ph_info(void)
 {

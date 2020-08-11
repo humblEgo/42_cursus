@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 18:43:36 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 23:14:01 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 # define BUFFER_SIZE 300
 
-# define ENSURE_UNLOCK_S "ensure_unlock_s"
-# define MSG_S "msg_s"
-# define FINISH_DINING_S "finish_dining_s"
-# define FORK_S "fork_s"
-# define LAST_EAT_TIME_S "last_eat_time_s"
-# define EATING_S "eating_s"
-# define MUST_EAT_S "must_eat_s"
-# define WAIT_PH_S "WAIT_PH_S"
-# define WAIT_MONITOR_S "WAIT_MONITOR_S"
+/*
+**  Semaphore names
+*/
+
+# define MSG_S "/msg_s"
+# define FINISH_DINING_S "/finish_dining_s"
+# define FORK_S "/fork_s"
+# define EATING_S "/eating_s"
+# define MUST_EAT_S "/must_eat_s"
 
 /*
 **  Philosopher's state
@@ -54,7 +54,7 @@
 **  Error messages
 */
 
-# define INVALID_ARG "Error: Invalid arg\n"
+# define INVALID_ARG "Error: Invalid argument\n"
 # define INIT "Failed to initialize\n"
 # define CREATE_THREAD "Failed to create thread\n"
 # define GET_TIME "Failed to get current time\n"

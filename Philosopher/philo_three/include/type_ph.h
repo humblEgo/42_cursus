@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 22:57:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 22:49:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,32 @@ typedef struct	s_cond
 	int				count_must_eat;
 }				t_cond;
 
-typedef struct	s_fork
-{
-	pthread_mutex_t fork_m;
-}				t_fork;
-
 typedef struct	s_ph
 {
 	int				ph_num;
+	pid_t			pid;
 	int				num_of_meals;
-	int				*let_all_m_unlock;
+	int				*is_end;
 	long long		*start_time;
 	long long		last_eat_time;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
 	t_cond			*cond;
-	pthread_mutex_t	last_eat_time_m;
-	pthread_mutex_t	eating_m;
-	pthread_mutex_t	must_eat_m;
-	pthread_mutex_t	*msg_m;
-	pthread_mutex_t	*finish_dining_m;
-	pthread_mutex_t *ensure_unlock_m;
-	pthread_mutex_t ensure_ph_unlock_m;
-	pthread_mutex_t ensure_monitor_unlock_m;
+	sem_t			*forks;
+	sem_t			*eating_s;
+	sem_t			*must_eat_s;
+	sem_t			*msg_s;
+	sem_t			*finish_dining_s;
 }				t_ph;
 
 typedef struct	s_ph_info
 {
 	t_cond			*cond;
 	t_ph			*ph;
-	t_fork			*forks;
+	sem_t			*forks;
 	long long		start_time;
-	int				let_all_m_unlock;
-	pthread_mutex_t	msg_m;
-	pthread_mutex_t	finish_dining_m;
-	pthread_mutex_t ensure_unlock_m;
+	int				is_end;
+	sem_t			*msg_s;
+	sem_t			*finish_dining_s;
+	sem_t			*clean_all_s;
 }				t_ph_info;
 
 #endif

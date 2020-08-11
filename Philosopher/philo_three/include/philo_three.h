@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_two.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:09:06 by iwoo             ###   ########.fr       */
+/*   Created: 2020/08/11 22:49:19 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/11 22:50:10 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TWO_H
-# define PHILO_TWO_H
+#ifndef PHILO_THREE_H
+# define PHILO_THREE_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <signal.h>
 # include <sys/time.h>
 # include <semaphore.h>
 # include "macro_ph.h"
 # include "type_ph.h"
-
-/*
-** 	semaphore.c
-*/
-
 
 sem_t		*ft_sem_open(char const *name, int value);
 int			make_sem_name_in_buf(char *buf, char *src, int ph_num);
@@ -54,6 +50,7 @@ int			error(char *msg);
 */
 
 int			clean_all(t_ph_info *ph_info, int error_no);
+void		ft_free(void *ptr);
 
 /*
 ** 	monitor.c

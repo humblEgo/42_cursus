@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macro_ph.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:14:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 23:13:45 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 # define TRUE 1
 # define FALSE 0
+
+# define BUFFER_SIZE 300
+
+/*
+**  Semaphore names
+*/
+
+# define MSG_S "/msg_s"
+# define FINISH_DINING_S "f/inish_dining_s"
+# define FORK_S "/fork_s"
+# define EATING_S "/eating_s"
+# define MUST_EAT_S "/must_eat_s"
 
 /*
 **  Philosopher's state
