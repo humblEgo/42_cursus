@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 22:42:37 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 23:23:55 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int		is_valid_arg(char **argv)
 	while (argv[++i])
 	{
 		if (!(is_num_str(argv[i])))
+			return (FALSE);
+		if (i == 0 && argv[0][0] - '0' == 0)
+			return (FALSE);
+		if (i != 0 && ft_strlen(argv[i]) != 1 && argv[i][0] - '0' == 0)
 			return (FALSE);
 	}
 	return (TRUE);

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 14:17:44 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/11 23:19:45 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void		ft_putstr_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 long long	get_cur_time(void);
 int			is_num_str(char *str);
+int			ft_strlen(char *str);
 
 #endif
