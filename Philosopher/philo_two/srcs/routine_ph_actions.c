@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_ph_actions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 14:25:33 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 23:25:54 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	picking_up_forks(t_ph *ph)
 {
-	sem_wait(ph->forks);
+	sem_wait(ph->forks_s);
 	print_ph_state(ph, PICKING_FORK);
-	sem_wait(ph->forks);
+	sem_wait(ph->forks_s);
 	print_ph_state(ph, PICKING_FORK);
 }
 
@@ -34,8 +34,8 @@ void	eating(t_ph *ph)
 
 void	put_down_forks(t_ph *ph)
 {
-	sem_post(ph->forks);
-	sem_post(ph->forks);
+	sem_post(ph->forks_s);
+	sem_post(ph->forks_s);
 }
 
 void	sleeping(t_ph *ph)

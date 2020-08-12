@@ -25,7 +25,7 @@ void	monitor_ph(t_ph *ph)
 			return ;
 		}
 		sem_post(ph->eating_s);
-		usleep(100);
+		usleep(1000);
 	}
 }
 
@@ -42,7 +42,7 @@ void	monitor_eat_count(t_ph_info *ph_info)
 		{
 			sem_wait(ph[i].must_eat_s);
 			sem_post(ph[i].must_eat_s);
-			usleep(100);
+			usleep(1000);
 		}
 	}
 	print_ph_state(ph, MUST_EAT_REACHED);

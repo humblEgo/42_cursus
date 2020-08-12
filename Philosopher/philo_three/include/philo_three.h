@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 22:49:19 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 22:50:10 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 23:29:20 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <signal.h>
+# include <fcntl.h>
 # include <sys/time.h>
 # include <semaphore.h>
 # include "macro_ph.h"

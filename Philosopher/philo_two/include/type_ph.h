@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_ph.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:25 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 22:52:36 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 23:24:16 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	s_ph
 	long long		*start_time;
 	long long		last_eat_time;
 	t_cond			*cond;
-	sem_t			*forks;
+	sem_t			*forks_s;
 	sem_t			*eating_s;
 	sem_t			*must_eat_s;
 	sem_t			*msg_s;
@@ -40,7 +40,7 @@ typedef struct	s_ph_info
 {
 	t_cond			*cond;
 	t_ph			*ph;
-	sem_t			*forks;
+	sem_t			*forks_s;
 	long long		start_time;
 	sem_t			*msg_s;
 	sem_t			*finish_dining_s;

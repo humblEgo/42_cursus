@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macro_ph.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:39 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:13:45 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 23:38:45 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 
 # define MSG_S "/msg_s"
-# define FINISH_DINING_S "f/inish_dining_s"
+# define FINISH_DINING_S "/finish_dining_s"
 # define FORK_S "/fork_s"
 # define EATING_S "/eating_s"
 # define MUST_EAT_S "/must_eat_s"
