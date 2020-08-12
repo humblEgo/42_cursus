@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/12 10:20:27 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 11:16:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <fcntl.h>
 # include <sys/time.h>
 # include <semaphore.h>
 # include "macro_ph.h"
