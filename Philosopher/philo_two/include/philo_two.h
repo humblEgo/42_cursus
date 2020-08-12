@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:09:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 10:20:27 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 /*
 ** 	semaphore.c
 */
-
 
 sem_t		*ft_sem_open(char const *name, int value);
 int			make_sem_name_in_buf(char *buf, char *src, int ph_num);

@@ -6,13 +6,13 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 17:26:45 by humblego          #+#    #+#             */
-/*   Updated: 2020/08/09 17:42:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 10:10:55 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void	unlock_m_if_done(t_ph *ph, int flag)
+int		unlock_m_if_done(t_ph *ph, int flag)
 {
 	pthread_mutex_lock(ph->ensure_unlock_m);
 	if (*ph->let_all_m_unlock)
@@ -27,10 +27,10 @@ void	unlock_m_if_done(t_ph *ph, int flag)
 			pthread_mutex_unlock(&ph->ensure_monitor_unlock_m);
 		else if (flag != MONITOR_EAT_COUNT)
 			pthread_mutex_unlock(&ph->ensure_ph_unlock_m);
-		while (1)
-			usleep(42424242);
+		return (TRUE);
 	}
 	pthread_mutex_unlock(ph->ensure_unlock_m);
+	return (FALSE);
 }
 
 void	wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_of_monitor)

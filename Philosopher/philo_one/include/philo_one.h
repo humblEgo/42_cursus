@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:19:45 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 10:12:30 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			make_odd_ph_and_monitor(t_ph_info *ph_info);
 ** 	ensure_mutexes_unlocked.c
 */
 
-void		unlock_m_if_done(t_ph *ph, int flag);
+int			unlock_m_if_done(t_ph *ph, int flag);
 void		wait_all_m_unlocked(t_ph_info *ph_info, int n_of_ph, int n_monitor);
 
 /*
@@ -76,7 +76,7 @@ void		picking_up_forks(t_ph *ph);
 void		eating(t_ph *ph);
 void		sleeping(t_ph *ph);
 void		thinking(t_ph *ph);
-void		*routine_ph(void *ph_info);
+void		routine_ph(void *ph_info);
 
 /*
 ** 	print_ph_state.c

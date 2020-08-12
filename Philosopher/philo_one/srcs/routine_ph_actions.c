@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:06:29 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 15:02:12 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/12 10:11:45 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,24 @@ void	thinking(t_ph *ph)
 	print_ph_state(ph, THINKING);
 }
 
-void	*routine_ph(void *ph_void)
+void	routine_ph(void *ph_void)
 {
 	t_ph *ph;
 
 	ph = (t_ph *)ph_void;
 	while (1)
 	{
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		if (unlock_m_if_done(ph, FORK_M_UNLOCKED))
+			return ;
 		picking_up_forks(ph);
-		unlock_m_if_done(ph, FORK_M_LOCKED);
+		if (unlock_m_if_done(ph, FORK_M_LOCKED))
+			return ;
 		eating(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		if (unlock_m_if_done(ph, FORK_M_UNLOCKED))
+			return ;
 		sleeping(ph);
-		unlock_m_if_done(ph, FORK_M_UNLOCKED);
+		if (unlock_m_if_done(ph, FORK_M_UNLOCKED))
+			return ;
 		thinking(ph);
 	}
-	return ((void *)TRUE);
 }
