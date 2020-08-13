@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:05:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/10 16:47:47 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/13 01:35:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	print_state(int state_type)
 		ft_putstr_fd(" died\n", 1);
 	else if (state_type == MUST_EAT_REACHED)
 		ft_putstr_fd("All philosophers ate enough :)\n", 1);
+	else if (state_type == -1000)
+		ft_putstr_fd("put down forks\n", 1);
 }
 
 void	print_ph_state(t_ph *ph, int state_type)

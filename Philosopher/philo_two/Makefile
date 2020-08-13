@@ -28,12 +28,12 @@ ${OBJS}: ${SRCS}
 	@${CC} ${CFLAGS} ${INCLUDES} -c ${SRCS}
 
 clean:
-	@echo "$(RESET)Cleaning your mongshell .o files$(RESET)"
+	@echo "$(RESET)Cleaning your philosophers .o files$(RESET)"
 	@${RM} $(OBJS)
 	@echo "$(RED)clean DONE"
 
 fclean: clean
-	@echo "$(RESET)Removing mongshell"
+	@echo "$(RESET)Removing philosophers"
 	@${RM} $(NAME)
 	@echo "$(RED)fclean DONE"
 

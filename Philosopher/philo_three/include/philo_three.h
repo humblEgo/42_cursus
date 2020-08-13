@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 22:49:19 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/12 23:29:20 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/13 13:48:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <signal.h>
+# include <string.h>
 # include <fcntl.h>
 # include <sys/time.h>
 # include <semaphore.h>
 # include "macro_ph.h"
 # include "type_ph.h"
 
-sem_t		*ft_sem_open(char const *name, int value);
+/*
+**	semaphore.c
+*/
+
+sem_t		*ft_sem_open(char *name, int value);
 int			make_sem_name_in_buf(char *buf, char *src, int ph_num);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:04:36 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:21:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/13 01:32:28 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		dining_start(t_ph_info *ph_info)
 			return (error(CREATE_THREAD) + CREATE_MONITOR_PH_ERRNO + i);
 		if (!create_detached_thread(&tid, routine_ph, &ph[i], PH))
 			return (error(CREATE_THREAD) + CREATE_ROUTINE_PH_ERRNO + i);
-		usleep(5);
+		usleep(100);
 	}
 	return (TRUE);
 }
