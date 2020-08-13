@@ -6,7 +6,7 @@
 /*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 15:58:22 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/12 23:26:19 by humblego         ###   ########.fr       */
+/*   Updated: 2020/08/12 23:53:21 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ int		clean_all(t_ph_info *ph_info, int err_n)
 	ft_free(ph_info->ph);
 	ph_info->cond = NULL;
 	ph_info->ph = NULL;
-	ph_info = NULL;
 	return (0);
 }

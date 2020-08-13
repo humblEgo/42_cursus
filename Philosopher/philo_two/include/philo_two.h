@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:18:26 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/11 23:09:06 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/13 00:48:25 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <string.h>
 # include <fcntl.h>
 # include <sys/time.h>
 # include <semaphore.h>
@@ -26,8 +27,7 @@
 ** 	semaphore.c
 */
 
-
-sem_t		*ft_sem_open(char const *name, int value);
+sem_t		*ft_sem_open(char *name, int value);
 int			make_sem_name_in_buf(char *buf, char *src, int ph_num);
 
 /*
