@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semaphore.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwoo <iwoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: humblego <humblego@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 14:27:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/13 01:22:08 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/13 18:47:59 by humblego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ sem_t	*ft_sem_open(char *name, int value)
 	sem_unlink(name);
 	if ((res = sem_open(name, O_CREAT | O_EXCL, 0644, value)) == SEM_FAILED)
 		return (NULL);
+	sem_unlink(name);
 	return (res);
 }
 
