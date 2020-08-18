@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 22:30:01 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/17 23:34:32 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/18 00:10:28 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 ZombieHorde::ZombieHorde(int N)
 {
     std::cout<<"ZombieHorde summon minions!"<<std::endl;
-    this->zombie_array = new Zombie[N];
+    try
+    {
+        this->zombie_array = new Zombie[N];
+    }
+    catch (std::bad_alloc e)
+    {
+        std::cout<<e.what()<<std::endl;
+        std::cout<<"failed to make new zombies"<<std::endl;
+    }
 }
 
 ZombieHorde::~ZombieHorde(void)
