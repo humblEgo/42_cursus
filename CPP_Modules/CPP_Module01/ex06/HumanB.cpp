@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Human.cpp                                          :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/19 18:35:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/19 18:47:43 by iwoo             ###   ########.fr       */
+/*   Created: 2020/08/19 21:33:34 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/19 21:33:35 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Human.hpp"
+#include "HumanB.hpp"
 
-Human::Human(void)
+HumanB::HumanB(std::string const name)
+: name_(name), weapon_(NULL)
 {
 }
 
-Human::~Human()
+HumanB::~HumanB()
 {
+    std::cout<<this->name_<<" died"<<std::endl;
 }
 
-std::string Human::identify(void)
+void    HumanB::attack(void) const
 {
-    return (this->brain.identify());
+    std::cout<<this->name_<<" attacks with his ";
+    std::cout<<this->weapon_->getType()<<std::endl;
 }
 
-const Brain &Human::getBrain(void) const
+void    HumanB::setWeapon(const Weapon& weapon)
 {
-    return (this->brain);
+    this->weapon_ = &weapon;
 }

@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Human.cpp                                          :+:      :+:    :+:   */
+/*   HumanA.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/19 18:35:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/19 18:47:43 by iwoo             ###   ########.fr       */
+/*   Created: 2020/08/19 21:33:28 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/19 21:33:29 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Human.hpp"
+#include "HumanA.hpp"
 
-Human::Human(void)
+HumanA::HumanA(std::string name, Weapon& weapon)
+: name_(name), weapon_(weapon)
 {
 }
 
-Human::~Human()
+HumanA::~HumanA()
 {
+    std::cout<<name_<<" died"<<std::endl;
 }
 
-std::string Human::identify(void)
+void    HumanA::attack(void)
 {
-    return (this->brain.identify());
+    std::cout<<name_<<" attacks with his ";
+    std::cout<<weapon_.getType()<<std::endl;
 }
 
-const Brain &Human::getBrain(void) const
-{
-    return (this->brain);
+void    HumanA::printWeaponAddr(void)
+{   
+    long addr;
+
+    addr = (long)(&weapon_);
+    std::cout<<std::hex<<addr<<std::endl;
 }

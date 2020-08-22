@@ -1,10 +1,10 @@
-NAME = phonebook
+NAME = replace
 INCLUDES = -I./include/
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
-MAIN_FILES = main contact phonebook
+MAIN_FILES = main Replace
 
 SRCS_PATH = $(MAIN_FILES)
 VPATH := .:srcs

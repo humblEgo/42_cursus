@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Human.cpp                                          :+:      :+:    :+:   */
+/*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/19 18:35:51 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/19 18:47:43 by iwoo             ###   ########.fr       */
+/*   Created: 2020/08/19 21:33:31 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/19 21:33:32 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Human.hpp"
+#ifndef HUMANA_HPP
+# define HUMANA_HPP
 
-Human::Human(void)
-{
-}
+# include "Weapon.hpp"
 
-Human::~Human()
+class HumanA
 {
-}
+private:
+    Weapon& weapon_;
+    std::string name_;
+public:
+    HumanA(std::string name, Weapon &weapon);
+    ~HumanA();
+    void attack(void);
+    void printWeaponAddr(void);
+};
 
-std::string Human::identify(void)
-{
-    return (this->brain.identify());
-}
-
-const Brain &Human::getBrain(void) const
-{
-    return (this->brain);
-}
+#endif
