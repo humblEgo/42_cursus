@@ -50,3 +50,14 @@ void MateriaSource::learnMateria(AMateria* materia)
     }
     std::cout<<"Source slot is full"<<std::endl;
 }
+
+AMateria* MateriaSource::createMateria(std::string const& type)
+{
+    for (int i = 0; i < SLOT_SIZE; i++)
+    {
+        if (this->_sources[i]->getType() == type)
+            return (this->_sources[i]);
+    }
+    std::cout<<"There is no source type: "<<type<<std::endl;
+    return (nullptr);
+}

@@ -6,7 +6,7 @@ Ice::Ice()
 }
 
 Ice::Ice(const Ice& other)
-: AMateria(other) //TODO: check is it okay
+: AMateria(other)
 {
 }
 
@@ -27,7 +27,6 @@ AMateria* Ice::clone() const
 
 void Ice::use(ICharacter& target)
 {
-    std::cout<<"Ice: \"* shoots an ice bolt at ";
-    std::cout<<target.getName()<<" *"<<std::endl;
+    std::cout<<"* shoots an ice bolt at "<<target.getName()<<" *"<<std::endl;
     AMateria::use(target);
 }
