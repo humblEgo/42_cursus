@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 21:33:37 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/19 21:33:38 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/24 09:47:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 class HumanB
 {
 private:
-    const Weapon *weapon_;
     std::string name_;
+    const Weapon *weapon_;
 public:
     HumanB(std::string const name);
     ~HumanB();

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 21:33:31 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/19 21:33:32 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/24 09:47:38 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 class HumanA
 {
 private:
-    Weapon& weapon_;
     std::string name_;
+    Weapon& weapon_;
 public:
     HumanA(std::string name, Weapon &weapon);
     ~HumanA();
