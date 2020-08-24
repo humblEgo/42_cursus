@@ -35,24 +35,28 @@ NinjaTrap::~NinjaTrap(void)
 
 void NinjaTrap::ninjaShoebox(ClapTrap& target)
 {
+    (void)target;
     std::cout<<name_<<": ClapTrap..? die!"<<std::endl;
     std::cout<<name_<<": From the shadows!"<<std::endl;
 }
 
 void NinjaTrap::ninjaShoebox(FragTrap& target)
 {
+    (void)target;
     std::cout<<name_<<": FragTrap..? die!"<<std::endl;
     std::cout<<name_<<": Haaayaaaa!"<<std::endl;
 }
 
 void NinjaTrap::ninjaShoebox(ScavTrap& target)
 {
+    (void)target;
     std::cout<<name_<<": ScavTrap..? die!"<<std::endl;
     std::cout<<name_<<": Time to strike!"<<std::endl;
 }
 
 void NinjaTrap::ninjaShoebox(NinjaTrap& target)
 {
+    (void)target;
     std::cout<<name_<<": NinjaTrap..? die!"<<std::endl;
     std::cout<<name_<<": A silent death!"<<std::endl;
 }

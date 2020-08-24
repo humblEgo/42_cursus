@@ -1,8 +1,8 @@
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap(std::string name)
-: name_(name), hit_points_(100), max_hit_points_(100), level_(1),
-energy_points_(0), max_energy_points_(0), melee_attack_damage_(0),
+: hit_points_(100), max_hit_points_(100), energy_points_(0),
+max_energy_points_(0), name_(name), level_(1), melee_attack_damage_(0),
 range_attack_damage_(0), armor_damage_reduction_(0)
 {
     std::cout<<"ClapTrap created."<<std::endl;

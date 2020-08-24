@@ -1,7 +1,7 @@
 #include "SuperTrap.hpp"
 
 SuperTrap::SuperTrap(std::string name)
-: ClapTrap(name), NinjaTrap("temp"), FragTrap("temp")
+: ClapTrap(name), FragTrap("temp"), NinjaTrap("temp")
 {
     setMaxHitPoints(100);
     setHitPoints(100);

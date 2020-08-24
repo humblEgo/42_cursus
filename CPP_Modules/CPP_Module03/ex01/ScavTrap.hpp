@@ -7,15 +7,15 @@
 class ScavTrap
 {
 private:
-    int             hit_points_;
-    int             max_hit_points_;
-    unsigned int    energy_points_;
-    int             max_energy_points_;
-    int             level_;
-    std::string     name_;
-    int             melee_attack_damage_;
-    int             range_attack_damage_;
-    int             armor_damage_reduction_;
+    unsigned int        hit_points_;
+    unsigned int        max_hit_points_;
+    unsigned int        energy_points_;
+    unsigned int        max_energy_points_;
+    unsigned int        level_;
+    std::string         name_;
+    unsigned int        melee_attack_damage_;
+    unsigned int        range_attack_damage_;
+    unsigned int        armor_damage_reduction_;
 
 public:
     ScavTrap(std::string name);
