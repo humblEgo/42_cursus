@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.hpp                                     :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/24 22:16:43 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/24 22:16:43 by iwoo             ###   ########.fr       */
+/*   Created: 2020/08/24 22:12:47 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/24 22:12:47 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICHARACTER_HPP
-# define ICHARACTER_HPP
+#include "Fixed.hpp"
+#include <iostream>
 
-# include <iostream>
-# include <string>
-
-class AMateria;
-
-class ICharacter
+int main(void)
 {
-public:
-    virtual ~ICharacter() {}
-    virtual std::string const& getName() const = 0;
-    virtual void equip(AMateria* m) = 0;
-    virtual void unequip(int idx) = 0;
-    virtual void use(int idx, ICharacter& target) = 0;
-};
+    Fixed a;
+    Fixed b(a);
+    Fixed c;
 
-#endif
+    c = b;
+
+    std::cout<<a.getRawBits()<<std::endl;
+    std::cout<<b.getRawBits()<<std::endl;
+    std::cout<<c.getRawBits()<<std::endl;
+
+    return (0);
+}
