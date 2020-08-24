@@ -34,7 +34,6 @@ FragTrap::~FragTrap(void)
 {
     std::cout<<"======================Destructor"<<std::endl;
     std::cout<<name_<<" died"<<std::endl;
-    std::cout<<name_<<""<<std::endl;
     std::cout<<"An ally has been slain"<<std::endl;
 }
 

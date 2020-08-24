@@ -10,11 +10,10 @@ range_attack_damage_(0), armor_damage_reduction_(0)
 }
 
 ClapTrap::ClapTrap(const ClapTrap& copy)
-: ClapTrap(copy.name_)
 {
     std::cout<<"=========================copy"<<std::endl;
     std::cout<<"ClapTrap copied."<<std::endl;
-    ClapTrap::copy(copy);
+	*this = copy;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& assign)
