@@ -6,13 +6,13 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 17:50:47 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/17 22:25:59 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/24 09:46:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ZombieEvent.hpp"
 
-int main(int argc, char *argv[])
+int main(void)
 {
     ZombieEvent intp;
     ZombieEvent infj;
