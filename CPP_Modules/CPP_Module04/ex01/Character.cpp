@@ -85,7 +85,8 @@ std::ostream const& operator<<(std::ostream& out, Character& character)
     out<<character.getAP()<<" AP and ";
     std::string weapon_name = character.getCurrentWeaponName();
     if (weapon_name.length() == 0)
-        weapon_name = "is unarmed";
-    out<<"whields a "<<weapon_name;
+        out<<"is unarmed";
+	else
+    	out<<"wields a "<<weapon_name;
     return (out<<std::endl);
 }

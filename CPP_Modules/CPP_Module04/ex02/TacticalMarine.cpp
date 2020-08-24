@@ -19,7 +19,7 @@ TacticalMarine& TacticalMarine::operator=(const TacticalMarine& other)
 
 TacticalMarine::~TacticalMarine()
 {
-    std::cout<<"Aaaargh..."<<std::endl;
+    std::cout<<"Aaargh..."<<std::endl;
 }
 
 ISpaceMarine *TacticalMarine::clone() const 
