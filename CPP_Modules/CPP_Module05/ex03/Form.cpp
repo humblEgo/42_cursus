@@ -6,14 +6,14 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:30 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:28:39 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/25 22:28:28 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-Form::Form(std::string name, int signable_grade, int executable_grade)  throw (GradeTooHighException, GradeTooLowException)
+Form::Form(std::string name, int signable_grade, int executable_grade) throw (GradeTooHighException, GradeTooLowException)
 : _name(name), _signed(false), _signable_grade(signable_grade), _executable_grade(executable_grade)
 {
     if (this->_signable_grade < HIGHEST_GRADE)

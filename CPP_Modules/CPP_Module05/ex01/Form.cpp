@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:30 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 15:13:32 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/25 22:29:17 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ std::ostream& operator<<(std::ostream& out, Form& other)
     out<<"| - Name              : "<<other.getName()<<"\n";
     out<<"| - Signed            : "<<other.isSigned()<<"\n";
     out<<"| - Signable grade    : "<<other.getSignableGrade()<<"\n";
-    out<<"| - Executable grade  : "<<other.getSignableGrade()<<"\n";
+    out<<"| - Executable grade  : "<<other.getExecutableGrade()<<"\n";
     out<<"|==========";
     return (out<<std::endl);
 }

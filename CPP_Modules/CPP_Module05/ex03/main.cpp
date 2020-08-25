@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:53 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:40:07 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/25 22:27:20 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
@@ -85,9 +86,32 @@ int main(void)
     }
     if (presidential_form != nullptr)
         delete (presidential_form);
-
     if (kangmin != nullptr)
         delete (kangmin);
+
+    Intern someRandomIntern;
+    Form* form = nullptr;
+    try
+    {
+        std::cout<<"\n==========================Intern case"<<std::endl;
+        /*
+            You can use below form_type as the makeForm functions's first argument regardless of the case of alphabet.
+            "ShrubberyCreation",
+            "Shrubbery Creation",
+            "RobotomyRequest",
+            "Robotomy Request",
+            "PresidentialPardon",
+            "Presidential Pardon"
+        */
+        form = someRandomIntern.makeForm("Presidential pardon", "Home");
+        std::cout<<*form;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    if  (form != nullptr)
+        delete (form);
     
     return (0); 
 }
