@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/08/25 10:48:52 by iwoo              #+#    #+#             */
+/*   Updated: 2020/08/25 11:26:43 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
 # include <iostream>
 # include <string>
 
-# define MAX_GRADE 150
-# define MIN_GRADE 1
+# define HIGHEST_GRADE 1        // grade 1 is the highest grade.
+# define LOWEST_GRADE 150      // grade 150 is the lowest grade.
 
 class Bureaucrat
 {
@@ -24,16 +36,16 @@ public:
         virtual const char *what() const throw();
     };
 
-    Bureaucrat(std::string& name, int grade) throw (GradeTooLowException, GradeTooHighException);
-    Bureaucrat(const Bureaucrat& other) throw (GradeTooLowException, GradeTooHighException);
+    Bureaucrat(std::string const& name, int grade) throw (GradeTooHighException, GradeTooLowException);
+    Bureaucrat(const Bureaucrat& other) throw (GradeTooHighException, GradeTooLowException);
     Bureaucrat& operator=(const Bureaucrat& other);
     virtual ~Bureaucrat();
 
     std::string const& getName() const;
     int const& getGrade() const;
 
-    void increaseGrade(void) throw (GradeTooHighException);
-    void decreaseGrade(void) throw (GradeTooLowException);
+    void incrementGrade(void) throw (Bureaucrat::GradeTooHighException);
+    void decrementGrade(void) throw (Bureaucrat::GradeTooLowException);
 };
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& other);
