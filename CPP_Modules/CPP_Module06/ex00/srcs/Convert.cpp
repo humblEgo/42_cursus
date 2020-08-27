@@ -86,78 +86,85 @@ void Convert::parsingLiteralType()
 
     ss << this->getInput();
     int type = this->getInputType();
-    if (type == TYPE_CHAR)
-        parseToCharValue(ss);
-    else if (type == TYPE_INT)
-        parseToIntValue(ss);
-    else if (type == TYPE_FLOAT)
-        parseToFloatValue(ss);
-    else if (type == TYPE_DOUBLE)
-        parseToDoubleValue(ss);
-    else if (type == TYPE_INVALID)
-        set_flag_if_inf_or_nan();
+    parseToCharValue();
+    parseToIntValue();
+    parseToFloatValue();
+    parseToDoubleValue();
+    set_flag_if_inf_or_nan();
+    (void)type;
 }
 
-void Convert::parseToCharValue(std::stringstream& ss)
+void Convert::parseToCharValue()
 {
-    char check_limit;
+    std::stringstream ss;
+    int ivalue;
 
-    ss >> check_limit;
-    this->_cvalue = check_limit;
-    if (ss.fail() || check_limit > std::numeric_limits<char>::max() || check_limit < std::numeric_limits<char>::min())
-        this->_flags[TYPE_CHAR] = OVERFLOW_FLAG;
+    if (this->getInput().length() == 3 && this->getInput()[0] == '\'' && this->getInput()[2] == '\'')
+        this->_cvalue = this->getInput()[1];
+    else
+    {
+        ivalue = this->getInput()[0];
+        if (ivalue > 127 || ivalue < 0)
+            this->_flags[TYPE_CHAR] = OVERFLOW_FLAG;
+        this->_cvalue = static_cast<char>(ivalue);
+    }
 }
 
-void Convert::parseToIntValue(std::stringstream& ss)
+void Convert::parseToIntValue()
 {
-    long check_limit;
-    ss >> check_limit;
-    this->_ivalue = check_limit;
-    if (ss.fail() || check_limit > std::numeric_limits<int>::max() || check_limit < std::numeric_limits<int>::min())
+    std::stringstream ss;
+    long long llvalue;
+
+    ss << this->getInput();
+    ss >> llvalue;
+    if (llvalue > std::numeric_limits<int>::max() || llvalue < std::numeric_limits<int>::min())
         this->_flags[TYPE_INT] = OVERFLOW_FLAG;
+    this->_ivalue = static_cast<int>(llvalue);
 }
 
-void Convert::parseToFloatValue(std::stringstream& ss)
+void Convert::parseToFloatValue()
 {
-    float check_limit;
-    ss >> check_limit;
-    this->_fvalue = check_limit;
-    if (ss.fail() 
-        || check_limit > std::numeric_limits<float>::max() 
-        || check_limit < std::numeric_limits<float>::min())
+    std::stringstream ss;
+    double dvalue;
+
+    if (this->getInputType() == TYPE_CHAR)
+        dvalue = static_cast<double>(static_cast<int>(this->getCharValue()));
+    else
+        dvalue =  strtod(this->getInput().c_str(), NULL);
+    if (dvalue > std::numeric_limits<float>::max() || dvalue < std::numeric_limits<float>::lowest())
         this->_flags[TYPE_FLOAT] = OVERFLOW_FLAG;
+    this->_fvalue = static_cast<float>(dvalue);
 }
 
-void Convert::parseToDoubleValue(std::stringstream& ss)
+void Convert::parseToDoubleValue()
 {
-    double check_limit;
-    ss >> check_limit;
-    this->_dvalue = check_limit;
-    if (ss.fail() 
-        || check_limit > std::numeric_limits<double>::max() 
-        || check_limit < std::numeric_limits<double>::min())
+    std::stringstream ss;
+    long double ldvalue;
+
+    ss << this->getInput();
+    ss >> ldvalue;
+    if (ldvalue > std::numeric_limits<double>::max() 
+        || ldvalue < std::numeric_limits<double>::lowest())
         this->_flags[TYPE_DOUBLE] = OVERFLOW_FLAG;
+    this->_dvalue = static_cast<double>(ldvalue);
 }
 
 void Convert::set_flag_if_inf_or_nan()
 {
     std::string tmp = this->getInput();
-    if ((tmp[0] == '+' || tmp[0] == '-') && tmp.length() == 4)
-        tmp = tmp.substr(0);
-    if (tmp.length() == 3)
+    if (tmp[0] == '+' || tmp[0] == '-')
+        tmp = tmp.substr(1);
+    for (int i = 0; i < 4; i++)
     {
-        for (int i = 0; i < 4; i++)
+        if (tmp == _science[i] && i % 2 == 0)
         {
-            if (tmp == _science[i] && i % 2 == 1)
-            {
-                this->_flags[TYPE_FLOAT] = INF_FLAG;
-                this->_flags[TYPE_DOUBLE] = INF_FLAG;
-            }
-            else if (tmp == _science[i] && i % 2 == 0)
-            {
-                this->_flags[TYPE_FLOAT] = NAN_FLAG;
-                this->_flags[TYPE_DOUBLE] = NAN_FLAG;
-            }
+            this->_flags[TYPE_FLOAT] = INF_FLAG;
+            this->_flags[TYPE_DOUBLE] = INF_FLAG;
+        }
+        else if (tmp == _science[i] && i % 2 == 1)
+        {
+            this->_flags[TYPE_FLOAT] = NAN_FLAG;
+            this->_flags[TYPE_DOUBLE] = NAN_FLAG;
         }
     }
 }
@@ -168,6 +175,8 @@ bool Convert::isCharInput() const
     
     tmp = this->getInput();
     if (tmp.length() == 1 && !isdigit(tmp[0]))
+        return (true);
+    if (tmp.length() == 3 && tmp[0] == '\'' && tmp[2] == '\'')
         return (true);
     return (false);
 }
@@ -259,26 +268,79 @@ bool Convert::isDoubleInput() const
     return (false);
 }
 
+bool Convert::isOverflow(int type, char case_flag) const
+{
+    (void)case_flag;
+    if (this->_flags[type] == OVERFLOW_FLAG)
+        return (true);
+    if (type == TYPE_INT &&
+        (this->getIntValue() > 127 || this->getIntValue() < 0))
+        return (true);
+    if (type == TYPE_FLOAT &&
+        (this->getFloatValue() > 127 || this->getFloatValue() < 0))
+        return (true);
+    if (type == TYPE_DOUBLE &&
+        (this->getDoubleValue() > 127 || 0))
+        return (true);
+    return (false);
+}
+
+bool Convert::isOverflow(int type, int case_flag) const
+{
+    (void)case_flag;
+    if (this->_flags[type] == OVERFLOW_FLAG)
+        return (true);
+    if (type == TYPE_FLOAT &&
+        (this->getFloatValue() > static_cast<float>(std::numeric_limits<int>::max()) || this->getFloatValue() < static_cast<float>(std::numeric_limits<int>::lowest())))
+        return (true);
+    if (type == TYPE_DOUBLE &&
+        (this->getDoubleValue() > std::numeric_limits<int>::max() || this->getDoubleValue() < std::numeric_limits<int>::lowest()))
+        return (true);
+    return (false);
+}
+
+bool Convert::isOverflow(int type, float case_flag) const
+{
+    (void)case_flag;
+    if (this->_flags[type] == OVERFLOW_FLAG)
+        return (true);
+    if (type == TYPE_DOUBLE &&
+        (this->getDoubleValue() > std::numeric_limits<float>::max() || this->getDoubleValue() < std::numeric_limits<float>::lowest()))
+        return (true);
+    return (false);
+}
+
+bool Convert::isOverflow(int type, double case_flag) const
+{
+    (void)case_flag;
+    if (this->_flags[type] == OVERFLOW_FLAG)
+        return (true);
+    if (this->_flags[TYPE_DOUBLE] == OVERFLOW_FLAG)
+        return (true);
+    return (false);
+}
+
 char Convert::getValueAsChar()
 {
     char ret;
 
     ret = '\0';
     int type = this->getInputType();
-    if (type == TYPE_INVALID)
-        throw "impossible";
-    else if (type == TYPE_CHAR)
+    if (type == TYPE_INVALID || isOverflow(type, ret))
+        throw Convert::ImpossibleException();
+    if (type == TYPE_CHAR)
         ret = getCharValue();
     else if (type == TYPE_INT)
-        ret = static_cast<char>(getIntValue());
+        ret = static_cast<char>(this->getIntValue());
     else if (type == TYPE_FLOAT)
-        ret = static_cast<char>(getFloatValue());
+        ret = static_cast<char>(this->getFloatValue());
     else if (type == TYPE_DOUBLE)
-        ret = static_cast<char>(getDoubleValue());
+        ret = static_cast<char>(this->getDoubleValue());
     if (!isprint(ret))
-        throw "Non displayable";
+        throw Convert::NonDisplayableException();
     return (ret);
 }
+
 
 int Convert::getValueAsInt()
 {
@@ -286,8 +348,8 @@ int Convert::getValueAsInt()
 
     ret = 0;
     int type = this->getInputType();
-    if (type == TYPE_INVALID)
-        throw "impossible";
+    if (type == TYPE_INVALID || isOverflow(type, ret))
+        throw Convert::ImpossibleException();
     else if (type == TYPE_CHAR)
         ret = static_cast<int>(getCharValue());
     else if (type == TYPE_INT)
@@ -305,8 +367,10 @@ float Convert::getValueAsFloat()
 
     ret = 0.0;
     int type = this->getInputType();
-    if (type == TYPE_INVALID)
-        throw "impossible";
+    if (type == TYPE_INVALID && (this->_flags[TYPE_FLOAT] == INF_FLAG || this->_flags[TYPE_FLOAT] == NAN_FLAG))
+        throwInfOrNan();
+    else if (type == TYPE_INVALID || isOverflow(type, ret))
+        throw Convert::ImpossibleException();
     else if (type == TYPE_CHAR)
         ret = static_cast<float>(getCharValue());
     else if (type == TYPE_INT)
@@ -318,6 +382,37 @@ float Convert::getValueAsFloat()
     return (ret);
 }
 
+float Convert::getValueAsDouble()
+{
+    double ret;
+
+    ret = 0.0;
+    int type = this->getInputType();
+    if (type == TYPE_INVALID && (this->_flags[TYPE_DOUBLE] == INF_FLAG || this->_flags[TYPE_DOUBLE] == NAN_FLAG))
+        throwInfOrNan();
+    else if (type == TYPE_INVALID || isOverflow(type, ret))
+        throw Convert::ImpossibleException();
+    else if (type == TYPE_CHAR)
+        ret = static_cast<double>(static_cast<int>(this->getCharValue()));
+    else if (type == TYPE_INT)
+        ret = static_cast<double>(this->getIntValue());
+    else if (type == TYPE_FLOAT)
+        ret = static_cast<double>(this->getDoubleValue());
+    else if (type == TYPE_DOUBLE)
+        ret = this->getDoubleValue();
+    return (ret);
+}
+
+void Convert::throwInfOrNan()
+{
+    int flag = this->_flags[TYPE_FLOAT];
+
+    if (flag == INF_FLAG)
+        throw Convert::InfException();
+    else if (flag == NAN_FLAG)
+        throw Convert::NanException();
+}
+
 void Convert::toCharAndPrint()
 {
     std::string ret;
@@ -327,11 +422,11 @@ void Convert::toCharAndPrint()
     try
     {
         char_value = this->getValueAsChar();
-        std::cout<<ret<<char_value<<std::endl;
+        std::cout<<ret<<"'"<<char_value<<"'"<<std::endl;
     }
-    catch(const char *e)
+    catch(const std::exception& e)
     {
-        ret += e;
+        ret += e.what();
         std::cout<<ret<<std::endl;
     }
 }
@@ -347,9 +442,9 @@ void Convert::toIntAndPrint()
         int_value = this->getValueAsInt();
         std::cout<<ret<<int_value<<std::endl;
     }
-    catch(const char *e)
+    catch(const std::exception& e)
     {
-        ret += e;
+        ret += e.what();
         std::cout<<ret<<std::endl;
     }
 }
@@ -372,9 +467,62 @@ void Convert::toFloatAndPrint()
             suffix = "f";
         std::cout<<ret<<float_value<<suffix<<std::endl;
     }
-    catch(const char *e)
+    catch(const Convert::InfException& e)
     {
-        ret += e;
+        if (this->getInput()[0] == '-')
+            ret += this->getInput()[0];
+        ret += e.what();
+        ret += "f";
+        std::cout<<ret<<std::endl;
+    }
+    catch(const Convert::NanException& e)
+    {
+        if (this->getInput()[0] == '-')
+            ret += this->getInput()[0];
+        ret += e.what();
+        ret += "f";
+        std::cout<<ret<<std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        ret += e.what();
+        std::cout<<ret<<std::endl;
+    }
+}
+
+void Convert::toDoubleAndPrint()
+{
+    std::string ret;
+    double double_value;
+
+    ret = "double: ";
+    try
+    {
+        double_value = this->getValueAsDouble();
+        size_t idx = this->getInput().find('.');
+        std::string suffix = "";
+        
+        if (idx == std::string::npos || isAllZeroCharAfterIdx(idx))
+            suffix = ".0";
+        std::cout<<ret<<double_value<<suffix<<std::endl;
+    }
+    catch(const Convert::InfException& e)
+    {
+        if (this->getInput()[0] == '-')
+            ret += this->getInput()[0];
+        ret += e.what();
+        std::cout<<ret<<std::endl;
+    }
+    catch(const Convert::NanException& e)
+    {
+        if (this->getInput()[0] == '-')
+            ret += this->getInput()[0];
+        ret += e.what();
+        std::cout<<ret<<std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        ret += e.what();
         std::cout<<ret<<std::endl;
     }
 }
@@ -386,4 +534,24 @@ bool Convert::isAllZeroCharAfterIdx(size_t idx)
     if (this->getInput().length() == idx)
         return (true);
     return (false);
+}
+
+const char* Convert::ImpossibleException::what() const throw ()
+{
+    return "impossible";
+}
+
+const char* Convert::InfException::what() const throw ()
+{
+    return "inf";
+}
+
+const char* Convert::NanException::what() const throw ()
+{
+    return "nan";
+}
+
+const char* Convert::NonDisplayableException::what() const throw ()
+{
+    return "Non displayable";
 }
