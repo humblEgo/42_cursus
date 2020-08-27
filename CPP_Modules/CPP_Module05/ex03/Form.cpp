@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:30 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:28:28 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:01:33 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ bool Form::isExecutableGrade(Bureaucrat const& bureaucrat) const
 }
 
 void Form::execute(Bureaucrat const& bureaucrat) const
+throw (NotSignedFormException, GradeTooLowException)
 {
     if (this->isSigned() == false)
         throw Form::NotSignedFormException();

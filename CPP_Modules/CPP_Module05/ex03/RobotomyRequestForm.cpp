@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 20:40:54 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:58:20 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:05:50 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ std::string RobotomyRequestForm::getTarget() const
 /*==========================================================*/
 
 void RobotomyRequestForm::execute(Bureaucrat const& bureaucrat) const
+throw (NotSignedFormException, GradeTooLowException)
 {
     Form::execute(bureaucrat);
     this->action();

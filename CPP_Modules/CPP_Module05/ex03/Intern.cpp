@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 22:29:45 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:29:46 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:07:41 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ Form* Intern::makePresidentialPardonForm(std::string target)
 }
 
 Form* Intern::makeForm(std::string form_type, std::string target)
+throw (NoFormPatternException)
 {
     std::string form_pattern[6] = {
         "ShrubberyCreation",

@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 22:29:48 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/26 00:04:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:07:48 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ public:
     Form* makeShrubberyCreationForm(std::string target);
     Form* makeRobotomyRequestForm(std::string target);
     Form* makePresidentialPardonForm(std::string target);
-    Form* makeForm(std::string form_type, std::string target);
+    Form* makeForm(std::string form_type, std::string target) throw(NoFormPatternException);
 };
 
 #endif

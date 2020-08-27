@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:40:34 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:20:07 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ throw (Bureaucrat::GradeTooLowException)
 }
 
 void Bureaucrat::signForm(Form* form)
+throw (CannotSignToNullptr)
 {
     try
     {
@@ -115,6 +116,7 @@ void Bureaucrat::signForm(Form* form)
 }
 
 void Bureaucrat::executeForm(Form const& form)
+throw ()
 {
     std::string msg;
     form.execute(*this);

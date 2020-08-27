@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:37 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:29:43 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:02:08 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ public:
     bool isSignableGrade(Bureaucrat const& bureaucrat) const;
     bool isExecutableGrade(Bureaucrat const& bureaucrat) const;
 
-    virtual void execute(Bureaucrat const &bureaucrat) const = 0;
+    virtual void execute(Bureaucrat const &bureaucrat) const throw (NotSignedFormException, GradeTooLowException) = 0;
 };
 
 std::ostream& operator<<(std::ostream& out, Form& other);

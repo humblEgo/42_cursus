@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:52 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:40:35 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:21:03 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ public:
     };
 
     Bureaucrat(std::string const& name, int grade) throw (GradeTooHighException, GradeTooLowException);
-    Bureaucrat(const Bureaucrat& other) throw (GradeTooHighException, GradeTooLowException);
+    Bureaucrat(const Bureaucrat& other) throw (GradeTooLowException, GradeTooHighException);
     Bureaucrat& operator=(const Bureaucrat& other);
     virtual ~Bureaucrat();
 
@@ -55,8 +55,8 @@ public:
     void incrementGrade(void) throw (GradeTooHighException);
     void decrementGrade(void) throw (GradeTooLowException);
 
-    void signForm(Form* form);
-    void executeForm(Form const& form);
+    void signForm(Form* form) throw (CannotSignToNullptr);
+    void executeForm(Form const& form) throw ();
 };
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& other);

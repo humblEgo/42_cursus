@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 20:41:11 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:59:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/26 17:06:53 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ std::string ShrubberyCreationForm::getTree() const
 /*==========================================================*/
 
 void ShrubberyCreationForm::execute(Bureaucrat const& bureaucrat) const
+throw (NotSignedFormException, GradeTooLowException)
 {
     Form::execute(bureaucrat);
     this->action();
