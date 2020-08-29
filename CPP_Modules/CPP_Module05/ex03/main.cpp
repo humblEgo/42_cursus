@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:53 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:27:20 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:29:14 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(void)
     Bureaucrat* kangmin = nullptr;
     try
     {
-        std::cout<<"\n==========================Create bureaucrat "<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Create bureaucrat"<<"\033[0m"<<std::endl;
         kangmin = new Bureaucrat("kangmin", 20);
         std::cout<<*kangmin<<std::endl;
     }
@@ -33,7 +33,7 @@ int main(void)
     Form *shrubbery_form;    
     try
     {
-        std::cout<<"\n==========================Shrubbery case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Shrubbery case"<<"\033[0m"<<std::endl;
         std::cout<<*kangmin<<std::endl;
         shrubbery_form = new ShrubberyCreationForm("target");
         kangmin->signForm(shrubbery_form);
@@ -50,7 +50,7 @@ int main(void)
     Form *robotomy_form;
     try
     {
-        std::cout<<"\n==========================Robotomy case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Robotomy case"<<"\033[0m"<<std::endl;
         std::cout<<*kangmin<<std::endl;
         robotomy_form = new RobotomyRequestForm("target");
         kangmin->signForm(robotomy_form);
@@ -67,7 +67,7 @@ int main(void)
     Form *presidential_form;
     try
     {
-        std::cout<<"\n==========================Presidential case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Presidential case"<<"\033[0m"<<std::endl;
 
         std::cout<<*kangmin<<std::endl;
         std::cout<<"Increment to no.1!"<<std::endl;
@@ -93,7 +93,7 @@ int main(void)
     Form* form = nullptr;
     try
     {
-        std::cout<<"\n==========================Intern case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Intern case"<<"\033[0m"<<std::endl;
         /*
             You can use below form_type as the makeForm functions's first argument regardless of the case of alphabet.
             "ShrubberyCreation",

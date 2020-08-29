@@ -6,12 +6,16 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 15:29:52 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:22:30 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 Bureaucrat::Bureaucrat(std::string const& name, int grade) throw (Bureaucrat::GradeTooLowException, Bureaucrat::GradeTooHighException)
 {
@@ -23,9 +27,17 @@ Bureaucrat::Bureaucrat(std::string const& name, int grade) throw (Bureaucrat::Gr
     this->_grade = grade;
 }
 
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
+
 Bureaucrat::~Bureaucrat()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other) throw (Bureaucrat::GradeTooLowException, Bureaucrat::GradeTooHighException)
 {
@@ -69,7 +81,7 @@ int const& Bureaucrat::getGrade() const
 }
 
 /*==========================================================*/
-/*###################  Setter functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void Bureaucrat::incrementGrade() throw (Bureaucrat::GradeTooHighException)

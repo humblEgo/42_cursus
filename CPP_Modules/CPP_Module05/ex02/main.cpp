@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:53 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:40:07 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:30:46 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(void)
     Bureaucrat* kangmin = nullptr;
     try
     {
-        std::cout<<"\n==========================Create bureaucrat "<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Create bureaucrat"<<"\033[0m"<<std::endl;
         kangmin = new Bureaucrat("kangmin", 20);
         std::cout<<*kangmin<<std::endl;
     }
@@ -32,7 +32,7 @@ int main(void)
     Form *shrubbery_form;    
     try
     {
-        std::cout<<"\n==========================Shrubbery case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Shrubbery case"<<"\033[0m"<<std::endl;
         std::cout<<*kangmin<<std::endl;
         shrubbery_form = new ShrubberyCreationForm("target");
         kangmin->signForm(shrubbery_form);
@@ -49,7 +49,7 @@ int main(void)
     Form *robotomy_form;
     try
     {
-        std::cout<<"\n==========================Robotomy case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Robotomy case"<<"\033[0m"<<std::endl;
         std::cout<<*kangmin<<std::endl;
         robotomy_form = new RobotomyRequestForm("target");
         kangmin->signForm(robotomy_form);
@@ -66,7 +66,7 @@ int main(void)
     Form *presidential_form;
     try
     {
-        std::cout<<"\n==========================Presidential case"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Presiential case"<<"\033[0m"<<std::endl;
 
         std::cout<<*kangmin<<std::endl;
         std::cout<<"Increment to no.1!"<<std::endl;

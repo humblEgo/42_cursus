@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:53 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 15:30:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:24:22 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(void)
     Bureaucrat* kangmin = nullptr;
     try
     {
-        std::cout<<"\n==========================handle Grade"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Handle Grade"<<"\033[0m"<<std::endl;
         kangmin = new Bureaucrat("kangmin", 1);
         kangmin->decrementGrade();
         kangmin->decrementGrade();
@@ -38,7 +38,7 @@ int main(void)
     Form* form1 = nullptr;
     try
     {
-        std::cout<<"\n=======================================signable"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Signable form"<<"\033[0m"<<std::endl;
         form1 = new Form("Income audit", 3, 3);
         std::cout<<*form1;
 
@@ -52,7 +52,7 @@ int main(void)
     }
     try
     {
-        std::cout<<"\n=======================================Already signed"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Already signed"<<"\033[0m"<<std::endl;
         std::cout<<*form1;
         kangmin->signForm(form1);
     }
@@ -66,7 +66,7 @@ int main(void)
     Form* form2 = nullptr;
     try
     {
-        std::cout<<"\n=======================================Grade too low"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Grade too low"<<"\033[0m"<<std::endl;
 
         std::cout<<*kangmin;
 
@@ -89,7 +89,7 @@ int main(void)
     Form* form3 = nullptr;
     try
     {
-        std::cout<<"\n=======================================Cannot sign to nullptr"<<std::endl;
+        std::cout<<"\033[1;37;41m"<<"Cannot sign to nullptr"<<"\033[0m"<<std::endl;
 
         std::cout<<*kangmin;
         std::cout<<form3<<std::endl;

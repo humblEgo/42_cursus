@@ -6,12 +6,16 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:30 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/26 17:01:33 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:27:49 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 Form::Form(std::string name, int signable_grade, int executable_grade) throw (GradeTooHighException, GradeTooLowException)
 : _name(name), _signed(false), _signable_grade(signable_grade), _executable_grade(executable_grade)
@@ -22,9 +26,17 @@ Form::Form(std::string name, int signable_grade, int executable_grade) throw (Gr
         throw Bureaucrat::GradeTooLowException();
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 Form::~Form()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 Form::Form(const Form& other)
 : _name(other.getName()), _signed(other.isSigned()), 
@@ -79,7 +91,7 @@ int Form::getExecutableGrade() const
 }
 
 /*==========================================================*/
-/*####################  Other functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void Form::beSigned(Bureaucrat& bureaucrat) throw (Form::GradeTooLowException, Form::AlreadySignedException)

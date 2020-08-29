@@ -6,11 +6,15 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 20:41:11 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 20:59:21 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:27:11 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
 : Form("ShrubberyCreationForm", 145, 137), _target(target)
@@ -27,9 +31,17 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
     this->_tree += "      ||      \n";
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
 : Form(other.getName(), 145, 137), _target(other.getTarget())
@@ -45,6 +57,10 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
     this->_tree += "      ||      \n";
     this->_tree += "      ||      \n";
 }
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
 {
@@ -66,9 +82,8 @@ std::string ShrubberyCreationForm::getTree() const
     return (this->_tree);
 }
 
-
 /*==========================================================*/
-/*# Actions                                                #*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void ShrubberyCreationForm::execute(Bureaucrat const& bureaucrat) const

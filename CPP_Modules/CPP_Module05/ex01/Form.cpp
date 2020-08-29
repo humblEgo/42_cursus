@@ -6,11 +6,15 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 15:13:30 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 22:29:17 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:23:06 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 Form::Form(std::string name, int signable_grade, int executable_grade)  throw (Bureaucrat::GradeTooHighException, Bureaucrat::GradeTooLowException)
 : _name(name), _signed(false), _signable_grade(signable_grade), _executable_grade(executable_grade)
@@ -21,9 +25,17 @@ Form::Form(std::string name, int signable_grade, int executable_grade)  throw (B
         throw Bureaucrat::GradeTooLowException();
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 Form::~Form()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 Form::Form(const Form& other)
 : _name(other.getName()), _signed(other.isSigned()), 
@@ -78,7 +90,7 @@ int Form::getExecutableGrade() const
 }
 
 /*==========================================================*/
-/*###################  Setter functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void Form::beSigned(Bureaucrat& bureaucrat) throw (Form::GradeTooLowException, Form::AlreadySignedException)

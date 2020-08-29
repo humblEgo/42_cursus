@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:53 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/25 15:15:30 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 16:12:11 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(void)
 {
-    std::cout<<"=======================================Constructer test"<<std::endl;
+    std::cout<<"\033[1;37;41m"<<"Constructer test"<<"\033[0m"<<std::endl;
     Bureaucrat* kangmin = nullptr;
     try
     {
@@ -59,7 +59,7 @@ int main(void)
     if (too_low != nullptr)
         delete too_low;
 
-    std::cout<<"=======================================grade handler test"<<std::endl;
+    std::cout<<"\033[1;37;41m"<<"grade handler test"<<"\033[0m"<<std::endl;
     Bureaucrat* max_low = nullptr;
     try
     {
