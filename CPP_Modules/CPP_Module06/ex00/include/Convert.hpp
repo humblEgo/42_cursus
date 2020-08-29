@@ -19,12 +19,7 @@ private:
     double  _dvalue;
     int     _type;
     int     _flags[4];
-    const char    *_science[4] = {
-        "inf",
-        "nan",
-        "inff",
-        "nanf"
-    };
+    const char *_science[4];
     enum literalType
     {
         TYPE_CHAR = 0,

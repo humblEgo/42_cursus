@@ -9,6 +9,10 @@ Convert::Convert(std::string input)
 {
     for (int i = TYPE_CHAR; i < TYPE_DOUBLE; i++)
         this->_flags[i] = NORMAL_FLAG;
+    this->_science[0] = "inf";
+    this->_science[1] = "nan";
+    this->_science[2] = "inff";
+    this->_science[3] = "nanf";
     this->_type = detectLiteralType();
     parsingLiteralType();
 }
@@ -28,6 +32,10 @@ Convert::~Convert()
 Convert::Convert(const Convert& other)
 : _input(other.getInput())
 {
+    this->_science[0] = "inf";
+    this->_science[1] = "nan";
+    this->_science[2] = "inff";
+    this->_science[3] = "nanf";
 }
 
 /*==========================================================*/
@@ -413,7 +421,7 @@ float Convert::getValueAsDouble()
     else if (type == TYPE_INT)
         ret = static_cast<double>(this->getIntValue());
     else if (type == TYPE_FLOAT)
-        ret = static_cast<double>(this->getDoubleValue());
+        ret = static_cast<double>(this->getFloatValue());
     else if (type == TYPE_DOUBLE)
         ret = this->getDoubleValue();
     return (ret);
