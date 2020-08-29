@@ -23,12 +23,7 @@ Span& Span::operator=(const Span& other)
     this->_limit_size = other.getLimitSize();
     this->_current_size = other.getCurrentSize();
     this->_shortest_span = other.getShortestSpan();
-    std::list<int>::const_iterator itr = other._list_of_nums.begin();
-    while (itr != other._list_of_nums.end())
-    {
-        this->_list_of_nums.push_back(*itr);
-        itr++;
-    }
+    this->_list_of_nums = other._list_of_nums; //Don't worry, it's deep copy
     return (*this);
 }
 
@@ -57,7 +52,7 @@ std::list<int>& Span::getList()
 }
 
 /*==========================================================*/
-/*###################  Setter functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void Span::addNumber(int num) throw (NoEmptySpaceException)
@@ -85,10 +80,6 @@ void Span::addNumber(int num) throw (NoEmptySpaceException)
     }
     this->_current_size += 1;
 }
-
-/*==========================================================*/
-/*####################  Span functions  ####################*/
-/*==========================================================*/
 
 long long Span::shortestSpan() throw (NoSpanToFindException)
 {
