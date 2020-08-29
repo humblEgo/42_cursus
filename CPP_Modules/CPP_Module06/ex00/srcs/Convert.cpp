@@ -1,5 +1,9 @@
 #include "Convert.hpp"
 
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
+
 Convert::Convert(std::string input)
 : _input(input)
 {
@@ -9,14 +13,26 @@ Convert::Convert(std::string input)
     parsingLiteralType();
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 Convert::~Convert()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 Convert::Convert(const Convert& other)
 : _input(other.getInput())
 {
 }
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
 
 Convert& Convert::operator=(const Convert& other)
 {
@@ -60,7 +76,7 @@ double Convert::getDoubleValue() const
 }
 
 /*==========================================================*/
-/*###################  Setter functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 int Convert::detectLiteralType() const
@@ -403,16 +419,6 @@ float Convert::getValueAsDouble()
     return (ret);
 }
 
-void Convert::throwInfOrNan()
-{
-    int flag = this->_flags[TYPE_FLOAT];
-
-    if (flag == INF_FLAG)
-        throw Convert::InfException();
-    else if (flag == NAN_FLAG)
-        throw Convert::NanException();
-}
-
 void Convert::toCharAndPrint()
 {
     std::string ret;
@@ -535,6 +541,20 @@ bool Convert::isAllZeroCharAfterIdx(size_t idx)
         return (true);
     return (false);
 }
+
+void Convert::throwInfOrNan()
+{
+    int flag = this->_flags[TYPE_FLOAT];
+
+    if (flag == INF_FLAG)
+        throw Convert::InfException();
+    else if (flag == NAN_FLAG)
+        throw Convert::NanException();
+}
+
+/*==========================================================*/
+/*#####################  Exceptions  #######################*/
+/*==========================================================*/
 
 const char* Convert::ImpossibleException::what() const throw ()
 {

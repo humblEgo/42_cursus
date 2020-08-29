@@ -6,12 +6,16 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 10:48:57 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/26 17:20:07 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 12:25:10 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 Bureaucrat::Bureaucrat(std::string const& name, int grade)
 throw (Bureaucrat::GradeTooLowException, Bureaucrat::GradeTooHighException)
@@ -24,9 +28,17 @@ throw (Bureaucrat::GradeTooLowException, Bureaucrat::GradeTooHighException)
     this->_grade = grade;
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 Bureaucrat::~Bureaucrat()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other)
 throw (Bureaucrat::GradeTooLowException, Bureaucrat::GradeTooHighException)
@@ -71,7 +83,7 @@ int const& Bureaucrat::getGrade() const
 }
 
 /*==========================================================*/
-/*###################  Setter functions  ###################*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void Bureaucrat::incrementGrade() 

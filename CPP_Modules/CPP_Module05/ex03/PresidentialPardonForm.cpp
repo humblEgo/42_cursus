@@ -6,25 +6,41 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 20:40:45 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/26 17:04:41 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 12:22:48 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PresidentialPardonForm.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
 : Form("PresidentialPardonForm", 25, 5), _target(target)
 {
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 PresidentialPardonForm::~PresidentialPardonForm()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& other)
 : Form(other.getName(), 25, 5), _target(other.getTarget())
 {
 }
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
 
 PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPardonForm& other)
 {
@@ -42,7 +58,7 @@ std::string PresidentialPardonForm::getTarget() const
 }
 
 /*==========================================================*/
-/*# Actions                                                #*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void PresidentialPardonForm::execute(Bureaucrat const& bureaucrat) const

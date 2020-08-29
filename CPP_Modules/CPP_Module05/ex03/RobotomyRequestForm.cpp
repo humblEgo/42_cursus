@@ -6,25 +6,41 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/25 20:40:54 by iwoo              #+#    #+#             */
-/*   Updated: 2020/08/26 17:05:50 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/08/29 12:23:24 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RobotomyRequestForm.hpp"
+
+/*==========================================================*/
+/*#####################  Constructor  ######################*/
+/*==========================================================*/
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
 : Form("RobotomyRequestForm", 72, 45), _target(target)
 {
 }
 
+/*==========================================================*/
+/*#####################  Destructor  #######################*/
+/*==========================================================*/
+
 RobotomyRequestForm::~RobotomyRequestForm()
 {
 }
+
+/*==========================================================*/
+/*###################  Copy Constructor  ###################*/
+/*==========================================================*/
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other)
 : Form(other.getName(), 72, 45), _target(other.getTarget())
 {
 }
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
 {
@@ -42,7 +58,7 @@ std::string RobotomyRequestForm::getTarget() const
 }
 
 /*==========================================================*/
-/*# Actions                                                #*/
+/*################    Member functions    ##################*/
 /*==========================================================*/
 
 void RobotomyRequestForm::execute(Bureaucrat const& bureaucrat) const
