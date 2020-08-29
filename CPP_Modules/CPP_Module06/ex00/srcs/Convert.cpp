@@ -9,10 +9,17 @@ Convert::Convert(std::string input)
 {
     for (int i = TYPE_CHAR; i < TYPE_DOUBLE; i++)
         this->_flags[i] = NORMAL_FLAG;
+<<<<<<< HEAD
     this->_science[0] = "inf";
     this->_science[1] = "nan";
     this->_science[2] = "inff";
     this->_science[3] = "nanf";
+=======
+	this->_science[0] = "inf";
+	this->_science[1] = "nan";
+	this->_science[2] = "inff";
+	this->_science[3] = "nanf";
+>>>>>>> b24310a3f45a7570108e15b49215822dfd4cf287
     this->_type = detectLiteralType();
     parsingLiteralType();
 }
@@ -32,10 +39,17 @@ Convert::~Convert()
 Convert::Convert(const Convert& other)
 : _input(other.getInput())
 {
+<<<<<<< HEAD
     this->_science[0] = "inf";
     this->_science[1] = "nan";
     this->_science[2] = "inff";
     this->_science[3] = "nanf";
+=======
+	this->_science[0] = "inf";
+	this->_science[1] = "nan";
+	this->_science[2] = "inff";
+	this->_science[3] = "nanf";
+>>>>>>> b24310a3f45a7570108e15b49215822dfd4cf287
 }
 
 /*==========================================================*/
@@ -46,6 +60,10 @@ Convert& Convert::operator=(const Convert& other)
 {
     this->_input = other.getInput();
     this->_type = other.getInputType();
+	this->_science[0] = "inf";
+	this->_science[1] = "nan";
+	this->_science[2] = "inff";
+	this->_science[3] = "nanf";
     return (*this);
 }
 
