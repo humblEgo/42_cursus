@@ -1,7 +1,8 @@
 NAME = convert
 INCLUDES = -I./include/
 CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 RM = rm -rf
 
 MAIN_FILES = main Convert 
