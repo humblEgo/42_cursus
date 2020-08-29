@@ -810,6 +810,8 @@ dynamic_cast를 쓰자. dynamic_cast가 성공했을 때와 실패했을 때를 
 - 중복함수와 템플릿 함수가 같이 정의&선언되어있다면 중복함수가 우선적으로 실행된다.
 - '**함수 템플릿 **자체는 컴파일 되지 않는다. 왜? 함수 템플릿은 함수를 만들기 위한 도구일 뿐이다! 컴파일시에 컴파일러가 함수 템플릿과 함수의 호출문장을 해석하여 **'템플릿 함수'**를 생성하여 오브젝트 파일에 포함시킨다.
 
+## Tips
+
 ### ex00
 
 템플릿을 이용하자. 이 때 min, max 함수는 strcmp를 이용하여 비교할 수 있도록 [**함수 템플릿의 특수화(Specialization)**](https://blockdmask.tistory.com/45)을 했다.
@@ -846,3 +848,79 @@ void iter(T1* array, T2 length, void (*func)(T1 const&))
 
 ![code4](https://user-images.githubusercontent.com/54612343/91528314-7350a600-e942-11ea-99c8-4e1e3fe34a14.png)
 
+
+
+# CPP_Module08
+
+키워드: 컨테이너
+
+---
+
+## 컨테이너?
+
+C++에서 말하는 컨테이너는 같은 타입의 여러 객체를 저장하는 일종의 집합이라 할 수 있다. 컨테이너는 클래스템플릿으로 컨테이너 벼수를 선언할 때 컨테이너에 포함할 요소의 타입을 명시할 수 있다. 딱봐도 templete를 쓴 티가 나지않는가? 맞다ㅎㅎ 
+
+컨테이너에는 복사 생성과 대입을 할 수 있는 타입의 객체만을 저장할 수 있다. 그리고 요소의 추가 및 제거를 포함한 다양한 작업을 도와주는 여러 멤버 함수를 포함하고 있다.
+
+특히 C++에서 제공하는 STL에서는 자료를 저장하는 방식과 관리하는 방식에 따라 크게 세 가지 유형으로 구분된다.
+
+1. 시퀀스 컨테이너: 데이터를 선형으로 저장하며, 특별한 제약이나 규칙이 없는 가장 일반적인 컨테이너
+   - [vector](https://blockdmask.tistory.com/70): 가변 크기의 배열을 일반화한 클래스
+   - [deque](https://modoocode.com/223): 앞 뒤 모두 입력 가능한 큐 클래스
+   - [list](https://blockdmask.tistory.com/76): 빠른 삽입/삭제 가능한 리스트 클래스
+2. 연관 컨테이너: 데이터를 일정 규칙에 따라 조직화하여 저장하고 관리하는 컨테이너
+   - [set](https://modoocode.com/224): 정렬된 순서로 값을 저장하는 집합 클래스. key값이 중복되지 않는다.내부에 원소를 추가할 때 정렬된 상태를 유지하며 추가된다.
+   - multiset: set과 거의 동일하지만 key값이 중복될 수 있다.
+   - map: key-value 쌍을 저장하는 맵 클래스
+   - multimap: map과 거의 동일하지만 key값이 중복될 수 있다.
+3. 컨테이너 어댑터: 간결함과 명료성을 위해 인터페이스를 제한한 시쿼스나 연관 컨테이너의 변형 (단, 반복자를 지원하지 않으므로 STL 알고리즘에서는 사용할 수 없다.)
+   - stack: 스택을 일반화한 클래스
+   - queue: 큐를 일반화한 클래스
+   - priority_queue: 우선순위에 따라 push하고 pop한다!
+
+### 반복자(Iterator)
+
+반복자(Iterator)는 포인터와 상당히 비슷하며, 컨테이너에 저장되어 있는 원소들을 참조할 때 사용한다. 즉, 컨테이너에 저장되어 있는 모든 원소들을 전체적으로 훑어나갈 때 사용하는, 일종의 원소에 대한 포인터와 비슷한 객체라고 할 수 있다. 이것을 사용하면 라이브러리의 방식대로 자료구조를 액세스할 수 있다.
+
+> 반복자를 이용해서 컨테이너를 추상화 시켜서 접근할 수 있기 때문에 `N` 개의 알고리즘 코드 만으로 `M` 종류의 컨테이너들을 모두 지원할 수 있게 됩니다.       -모두의 코드
+
+모든 컨테이너는 양방향 반복자 이상을 제공한다.
+
+자세한건 이 [링크]([https://mayple.tistory.com/entry/CSTL2%EC%9E%A5-%EB%B0%98%EB%B3%B5%EC%9E%90iterator](https://mayple.tistory.com/entry/CSTL2장-반복자iterator))와 이 [링크](https://eehoeskrap.tistory.com/263)를 참고하자.
+
+
+
+## Tips
+
+#### ex00
+
+드디어 말로만 듣던 컨테이너를 쓸 수 있다.
+
+int의 자료들이 저장된 컨테이너인 T를 첫번째 인자로 받고, 두번째 인자로 들어오는 int가 첫번째 인자로 받은 T안에 있는지 찾는 함수를 만들면 된다. 
+
+#### ex01
+
+- 요구사항
+
+  unsigned int N개의 int를 저장하는 클래스를 만든다. `addNumber 함수`로 N을 추가하고, `shortestSpan 함수`로 저장한 N 중 가장 적은 차를 구해서 반환하며, `largestSpan 함수`로,  각 N 값들간의 차 중 가장 큰 값을 구해서 반환한다.
+
+- 구현방향
+
+  우선 어떤 자료형이 좋을지 생각해보자. N을 저장할 때 크기순서대로 저장하고, largestSpan은 가장 앞의 N값과 가장 뒤의 N값의 차를 반환하면 될 것 같다. 문제는 shortestSpan인데, 이건 N을 저장할 때 바로 앞의 N값과 바로 뒤의 N값의 차를 구해서 지금까지 구했던 shortestSpan 값보다 적으면 값을 갱신하는 식으로 가면 될 것 같다.
+
+  - 1) 어느 컨테이너에 unsigned int N을 저장할까? 값을 다른 값들 사이에 삽입하는 경우가 많을 것 같아서, list 자료형이 좋을 것 같다. 
+  - 2) 어느 위치에 삽입할지 어떻게 판단할까? 우선 부루트포스로 구현해보고, 필요하다면 이진검색으로 대소관계를 비교하도록 개선해보자.
+  - 3) 예외케이스는 다 처리했는가?
+    - container 저장공간이 0일 경우, int의 min값과 max 값이 들어간 경우, 같은 값이 들어간 경우 등등
+
+- 반성
+
+  - vector로 저장하고, sort기능을 썼다면 훨씬 구현이 간단했을 것 같다. sort에 소요되는 시간과 vector 순회시간 vs list 순회시간을 생각하면 시간이 비슷할 것 같다.
+
+#### ex02
+
+disgusting한 과제라고 적혀있는만큼 여간 품이 많이드는 과제가 아니다. [std::stack](https://en.cppreference.com/w/cpp/container/stack)의 기능에 iterator를 더해라고 하는데, std::stack을 상속 받고 iterator만 추가로 구현한 클래스인 'MutantStack'을 만들면 된다.
+
+- [cppreference](https://en.cppreference.com/w/cpp/container/stack)를 보면 protected member object인 `Container c`가  있다. [이 링크](https://blockdmask.tistory.com/100)를 보면 내부적으로는 vector, deque, list로 구현되어있다는데, 이게 `Container c`로 추상화되어있는 것 같다.
+
+- [typename 활용법](https://www.ikpil.com/540) **typename은 템플릿 내부에서 사용하면서, 컴파일러에게 템플릿 내부에서 "이건 타입이야" 라고 알릴 필요가 있을 때 써준다.** 가령 내 코드에서는 std::stack<T>가 생성되기 전에는 요게 타입이라는걸 컴파일러가 인식하기 어렵다. 그러니까 typename으로 이게 타입임을 명시적으로 알려주자.
