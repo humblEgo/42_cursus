@@ -172,12 +172,12 @@ void Convert::set_flag_if_inf_or_nan()
         tmp = tmp.substr(1);
     for (int i = 0; i < 4; i++)
     {
-        if (tmp == _science[i] && i % 2 == 0)
+        if (!tmp.compare(_science[i]) && i % 2 == 0)
         {
             this->_flags[TYPE_FLOAT] = INF_FLAG;
             this->_flags[TYPE_DOUBLE] = INF_FLAG;
         }
-        else if (tmp == _science[i] && i % 2 == 1)
+        else if (!tmp.compare(_science[i]) && i % 2 == 1)
         {
             this->_flags[TYPE_FLOAT] = NAN_FLAG;
             this->_flags[TYPE_DOUBLE] = NAN_FLAG;

@@ -19,7 +19,7 @@ private:
     double  _dvalue;
     int     _type;
     int     _flags[4];
-    std::string _science[4] = {
+    const char    *_science[4] = {
         "inf",
         "nan",
         "inff",
