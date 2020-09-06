@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 01:09:16 by iwoo              #+#    #+#             */
-/*   Updated: 2020/09/06 17:12:27 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/07 01:01:17 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,29 @@ public:
 
     class NoEmptySpaceException : public std::exception
     {
+    public:
+        NoEmptySpaceException() throw();
+        virtual ~NoEmptySpaceException() throw();
+        NoEmptySpaceException(const NoEmptySpaceException &) throw();
+        NoEmptySpaceException &operator=(const NoEmptySpaceException &) throw();
         virtual const char *what() const throw();
     };
     class NoSpanToFindException : public std::exception
     {
+    public:
+        NoSpanToFindException() throw();
+        virtual ~NoSpanToFindException() throw();
+        NoSpanToFindException(const NoSpanToFindException &) throw();
+        NoSpanToFindException &operator=(const NoSpanToFindException &) throw();
+        virtual const char *what() const throw();
+    };
+    class InvalidRangeException : public std::exception
+    {
+    public:
+        InvalidRangeException() throw();
+        virtual ~InvalidRangeException() throw();
+        InvalidRangeException(const InvalidRangeException &) throw();
+        InvalidRangeException &operator=(const InvalidRangeException &) throw();
         virtual const char *what() const throw();
     };
 
@@ -47,6 +66,8 @@ public:
     std::list<int> &getList();
 
     void addNumber(int num) throw(NoEmptySpaceException);
+    void addNumber(int begin, int end) throw(InvalidRangeException, NoEmptySpaceException);
+    void addNumberOfRange(size_t range) throw(InvalidRangeException, NoEmptySpaceException);
 
     long long shortestSpan() throw(NoSpanToFindException);
     long long longestSpan() throw(NoSpanToFindException);

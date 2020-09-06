@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 17:12:11 by iwoo              #+#    #+#             */
-/*   Updated: 2020/09/06 17:12:12 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/07 01:01:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,22 @@ void Span::addNumber(int num) throw(NoEmptySpaceException)
     this->_current_size += 1;
 }
 
+void Span::addNumber(int begin, int end) throw(InvalidRangeException, NoEmptySpaceException)
+{
+    if (begin > end)
+        throw(InvalidRangeException());
+    for (int i = begin; i < end; i++)
+        Span::addNumber(i);
+}
+
+void Span::addNumberOfRange(size_t range) throw(InvalidRangeException, NoEmptySpaceException)
+{
+    if (range > this->getLimitSize())
+        throw(InvalidRangeException());
+    for (int i = 0; i < static_cast<int>(range); i++)
+        Span::addNumber(i);
+}
+
 long long Span::shortestSpan() throw(NoSpanToFindException)
 {
     size_t cur_size = this->getCurrentSize();
@@ -106,7 +122,6 @@ long long Span::longestSpan() throw(NoSpanToFindException)
     size_t cur_size = this->getCurrentSize();
     if (cur_size == 0 || cur_size == 1)
         throw(Span::NoSpanToFindException());
-
     return ((long long)(this->getList().back()) - (long long)(this->getList().front()));
 }
 
@@ -114,12 +129,29 @@ long long Span::longestSpan() throw(NoSpanToFindException)
 /*#####################  Exceptions  #######################*/
 /*==========================================================*/
 
+Span::NoEmptySpaceException::NoEmptySpaceException() throw() {}
+Span::NoEmptySpaceException::~NoEmptySpaceException() throw() {}
+Span::NoEmptySpaceException::NoEmptySpaceException(const NoEmptySpaceException &) throw() {}
+Span::NoEmptySpaceException &Span::NoEmptySpaceException::operator=(const NoEmptySpaceException &) throw() { return (*this); }
 const char *Span::NoEmptySpaceException::what() const throw()
 {
     return ("Span: Error: Cannot add number since there is no empty space");
 }
 
+Span::NoSpanToFindException::NoSpanToFindException() throw() {}
+Span::NoSpanToFindException::~NoSpanToFindException() throw() {}
+Span::NoSpanToFindException::NoSpanToFindException(const NoSpanToFindException &) throw() {}
+Span::NoSpanToFindException &Span::NoSpanToFindException::operator=(const NoSpanToFindException &) throw() { return (*this); }
 const char *Span::NoSpanToFindException::what() const throw()
 {
     return ("Span: Error: No span to find since list is empty or has one integer");
+}
+
+Span::InvalidRangeException::InvalidRangeException() throw() {}
+Span::InvalidRangeException::~InvalidRangeException() throw() {}
+Span::InvalidRangeException::InvalidRangeException(const InvalidRangeException &) throw() {}
+Span::InvalidRangeException &Span::InvalidRangeException::operator=(const InvalidRangeException &) throw() { return (*this); }
+const char *Span::InvalidRangeException::what() const throw()
+{
+    return ("Span: Error: Invalid range");
 }
