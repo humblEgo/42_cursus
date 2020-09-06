@@ -67,21 +67,21 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
-
     std::cout<<"=========================================map case!"<<std::endl;
     std::map<int, int> map;
     for (int i = 0; i < 5; i++)
         map[i] = i+42;
     try
     {
-        std::cout<<"key: "<<target_num<<" value: "<<"? Let me check :)"<<std::endl;
-        auto found = easyfind(map, target_num);
-        std::cout<<"Success to find "<<found->second<<std::endl;
+        std::map<int,int>::iterator found = easyfind(map, target_num);
+        std::cout<<"Success to find key "<<found->first<<std::endl;
+        std::cout<<"And value is "<<found->second<<std::endl;
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
+
 
     return (0);
 }

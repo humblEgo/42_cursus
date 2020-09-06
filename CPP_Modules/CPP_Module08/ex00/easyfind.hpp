@@ -24,9 +24,9 @@ typename T::iterator easyfind(T &container, int value) throw(NotFoundException)
 }
 
 template <typename key_type, typename value_type>
-auto  easyfind(std::map<key_type, value_type> &container, int value) throw(NotFoundException)
+typename std::map<key_type, value_type>::iterator easyfind(std::map<key_type, value_type> &container, int value) throw(NotFoundException)
 {
-    auto ret = container.find(value);
+    typename std::map<key_type, value_type>::iterator ret = container.find(value);
     if (ret == container.end())
         throw (NotFoundException());
     return (ret);
