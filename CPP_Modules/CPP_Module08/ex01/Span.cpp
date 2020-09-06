@@ -67,18 +67,18 @@ void Span::addNumber(int num) throw (NoEmptySpaceException)
         std::list<int>::iterator itr;
         for (itr = list.begin(); itr != list.end(); itr++)
         {
+			if (this->getShortestSpan() < 0 || std::abs((long long)*itr - (long long)num) < this->getShortestSpan())
+				this->_shortest_span = std::abs((long long)*itr - (long long)num);
             if (num <= *itr)
             {
-                if (this->getShortestSpan() < 0 || std::abs(*itr - num) < this->getShortestSpan())
-                    this->_shortest_span = std::abs((long long)*itr - (long long)num);
                 list.insert(itr, num);
-                this->_current_size += 1;
-                return ;
+   				this->_current_size += 1;
+				return ;
             }
         }
-        list.push_back(num);
-    }
-    this->_current_size += 1;
+       	list.push_back(num);
+	}
+   	this->_current_size += 1;
 }
 
 long long Span::shortestSpan() throw (NoSpanToFindException)
