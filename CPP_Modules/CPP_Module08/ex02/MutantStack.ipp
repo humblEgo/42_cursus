@@ -4,7 +4,7 @@
 
 template <typename T>
 MutantStack<T>::MutantStack()
-: std::stack<T>()
+    : std::stack<T>()
 {
 }
 
@@ -21,10 +21,9 @@ MutantStack<T>::~MutantStack()
 /*###################  Copy Constructor  ###################*/
 /*==========================================================*/
 
-
 template <typename T>
-MutantStack<T>::MutantStack(const MutantStack<T>& other)
-: std::stack<T>(other)
+MutantStack<T>::MutantStack(const MutantStack<T> &other)
+    : std::stack<T>(other)
 {
 }
 
@@ -33,9 +32,11 @@ MutantStack<T>::MutantStack(const MutantStack<T>& other)
 /*==========================================================*/
 
 template <typename T>
-MutantStack<T>& MutantStack<T>::operator=(const MutantStack<T>& other)
+MutantStack<T> &MutantStack<T>::operator=(const MutantStack<T> &other)
 {
+    std::cout << "Assign operator!" << std::endl;
     this->c = other.c;
+    std::cout << this->c << std::endl;
     return (*this);
 }
 
@@ -90,4 +91,3 @@ typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const
 {
     return (this->c.rend());
 }
-
