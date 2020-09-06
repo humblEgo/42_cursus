@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   easyfind.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:12:22 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:12:22 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EASYFIND_HPP
-# define EASYFIND_HPP
+#define EASYFIND_HPP
 
-# include <map>
-# include <algorithm>
+#include <map>
+#include <algorithm>
 
-class NotFoundException : public std::exception 
+class NotFoundException : public std::exception
 {
-    virtual const char* what() const throw() 
+    virtual const char *what() const throw()
     {
         return ("easyFind: Error: target not founded");
     }
@@ -19,7 +31,7 @@ typename T::iterator easyfind(T &container, int value) throw(NotFoundException)
 
     ret = std::find(container.begin(), container.end(), value);
     if (ret == container.end())
-        throw (NotFoundException());
+        throw(NotFoundException());
     return (ret);
 }
 
@@ -28,7 +40,7 @@ typename std::map<key_type, value_type>::iterator easyfind(std::map<key_type, va
 {
     typename std::map<key_type, value_type>::iterator ret = container.find(value);
     if (ret == container.end())
-        throw (NotFoundException());
+        throw(NotFoundException());
     return (ret);
 }
 

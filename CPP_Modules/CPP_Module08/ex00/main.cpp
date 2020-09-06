@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:12:19 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:12:19 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include <vector>
 #include <deque>
@@ -12,76 +24,75 @@ int main()
 
     // int cannot_found_num = 99;
     // int target_num = cannot_found_num;
-    std::cout<<"=========================================Vector case!"<<std::endl;
+    std::cout << "=========================================Vector case!" << std::endl;
     std::vector<int> vec(5, 5);
     for (int i = 0; i < 5; i++)
         vec[i] = i;
     try
     {
         std::vector<int>::iterator found = easyfind(vec, target_num);
-        std::cout<<"Success to find "<<*found<<std::endl;
+        std::cout << "Success to find " << *found << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
 
-    std::cout<<"=========================================Deque case!"<<std::endl;
+    std::cout << "=========================================Deque case!" << std::endl;
     std::deque<int> deq(5, 5);
     for (int i = 0; i < 5; i++)
         deq[i] = i;
     try
     {
         std::deque<int>::iterator found = easyfind(deq, target_num);
-        std::cout<<"Success to find "<<*found<<std::endl;
+        std::cout << "Success to find " << *found << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
 
-    std::cout<<"=========================================list case!"<<std::endl;
+    std::cout << "=========================================list case!" << std::endl;
     std::list<int> lst;
     for (int i = 0; i < 5; i++)
         lst.push_back(i);
     try
     {
         std::list<int>::iterator found = easyfind(lst, target_num);
-        std::cout<<"Success to find "<<*found<<std::endl;
+        std::cout << "Success to find " << *found << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
 
-    std::cout<<"=========================================set case!"<<std::endl;
+    std::cout << "=========================================set case!" << std::endl;
     std::set<int> set;
     for (int i = 0; i < 5; i++)
         set.insert(i);
     try
     {
         std::set<int>::iterator found = easyfind(set, target_num);
-        std::cout<<"Success to find "<<*found<<std::endl;
+        std::cout << "Success to find " << *found << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
-    std::cout<<"=========================================map case!"<<std::endl;
+    std::cout << "=========================================map case!" << std::endl;
     std::map<int, int> map;
     for (int i = 0; i < 5; i++)
-        map[i] = i+42;
+        map[i] = i + 42;
     try
     {
-        std::map<int,int>::iterator found = easyfind(map, target_num);
-        std::cout<<"Success to find key "<<found->first<<std::endl;
-        std::cout<<"And value is "<<found->second<<std::endl;
+        std::map<int, int>::iterator found = easyfind(map, target_num);
+        std::cout << "Success to find key " << found->first << std::endl;
+        std::cout << "And value is " << found->second << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
-
 
     return (0);
 }

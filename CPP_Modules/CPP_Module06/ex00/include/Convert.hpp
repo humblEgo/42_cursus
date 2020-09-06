@@ -1,24 +1,36 @@
-#ifndef CONVERT_HPP
-# define CONVERT_HPP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Convert.hpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:13:29 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:13:30 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include <iostream>
-# include <sstream>
-# include <exception>
-# include <cstring>
-# include <cctype>
-# include <limits> 
-# include <cstdlib>
+#ifndef CONVERT_HPP
+#define CONVERT_HPP
+
+#include <iostream>
+#include <sstream>
+#include <exception>
+#include <cstring>
+#include <cctype>
+#include <limits>
+#include <cstdlib>
 
 class Convert
 {
 private:
     std::string _input;
-    char    _cvalue;
-    int     _ivalue;
-    float   _fvalue;
-    double  _dvalue;
-    int     _type;
-    int     _flags[4];
+    char _cvalue;
+    int _ivalue;
+    float _fvalue;
+    double _dvalue;
+    int _type;
+    int _flags[4];
     const char *_science[4];
     enum literalType
     {
@@ -26,7 +38,7 @@ private:
         TYPE_INT,
         TYPE_FLOAT,
         TYPE_DOUBLE,
-        TYPE_INVALID  // 4
+        TYPE_INVALID // 4
     };
     enum Flag
     {
@@ -35,11 +47,12 @@ private:
         NAN_FLAG,
         OVERFLOW_FLAG
     };
+
 public:
     Convert(std::string input);
     virtual ~Convert();
-    Convert(const Convert& other);
-    Convert& operator=(const Convert& other);
+    Convert(const Convert &other);
+    Convert &operator=(const Convert &other);
 
     std::string getInput() const;
     int getInputType() const;
@@ -81,27 +94,26 @@ public:
 
     void throwInfOrNan();
 
-    class ImpossibleException: public std::exception
+    class ImpossibleException : public std::exception
     {
     public:
         virtual const char *what() const throw();
     };
-    class InfException: public std::exception
+    class InfException : public std::exception
     {
     public:
         virtual const char *what() const throw();
     };
-    class NanException: public std::exception
+    class NanException : public std::exception
     {
     public:
         virtual const char *what() const throw();
     };
-    class NonDisplayableException: public std::exception
+    class NonDisplayableException : public std::exception
     {
     public:
         virtual const char *what() const throw();
     };
-
 };
 
 #endif

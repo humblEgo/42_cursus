@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Serialize.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:13:23 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:13:23 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Serialize.hpp"
 
 void *serialize()
@@ -12,19 +24,19 @@ void *serialize()
     raw = new char[20];
     for (size_t i = 0; i < 8; i++)
         raw[i] = alphabet[std::abs(pick(gen)) % alphabet.length()];
-    *reinterpret_cast<int*>(raw + 8) = pick(gen);
+    *reinterpret_cast<int *>(raw + 8) = pick(gen);
     for (size_t i = 13; i < 20; i++)
         raw[i] = alphabet[std::abs(pick(gen)) % alphabet.length()];
-    return (reinterpret_cast<void*>(raw));
+    return (reinterpret_cast<void *>(raw));
 }
 
 Data *deserialize(void *raw)
 {
-    Data* ret = nullptr;
+    Data *ret = nullptr;
 
     ret = new Data;
     ret->s1 = std::string(static_cast<char *>(raw), 8);
-    ret->n = *reinterpret_cast<int*>(static_cast<char *>(raw) + 8);
+    ret->n = *reinterpret_cast<int *>(static_cast<char *>(raw) + 8);
     ret->s2 = std::string(static_cast<char *>(raw) + 12, 8);
     return (ret);
 }

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Span.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:12:11 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:12:12 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Span.hpp"
 
 Span::Span(unsigned int value)
-: _limit_size(value), _current_size(0), _shortest_span(-42)
+    : _limit_size(value), _current_size(0), _shortest_span(-42)
 {
 }
 
@@ -9,7 +21,7 @@ Span::~Span()
 {
 }
 
-Span::Span(const Span& other)
+Span::Span(const Span &other)
 {
     *this = other;
 }
@@ -18,7 +30,7 @@ Span::Span(const Span& other)
 /*######################  Operators  #######################*/
 /*==========================================================*/
 
-Span& Span::operator=(const Span& other)
+Span &Span::operator=(const Span &other)
 {
     this->_limit_size = other.getLimitSize();
     this->_current_size = other.getCurrentSize();
@@ -46,7 +58,7 @@ long long Span::getShortestSpan() const
     return (this->_shortest_span);
 }
 
-std::list<int>& Span::getList()
+std::list<int> &Span::getList()
 {
     return (this->_list_of_nums);
 }
@@ -55,11 +67,11 @@ std::list<int>& Span::getList()
 /*################    Member functions    ##################*/
 /*==========================================================*/
 
-void Span::addNumber(int num) throw (NoEmptySpaceException)
+void Span::addNumber(int num) throw(NoEmptySpaceException)
 {
-    std::list<int>& list = this->_list_of_nums;
+    std::list<int> &list = this->_list_of_nums;
     if (this->getLimitSize() == this->getCurrentSize())
-        throw (NoEmptySpaceException());
+        throw(NoEmptySpaceException());
     if (this->getCurrentSize() == 0)
         list.push_back(num);
     else
@@ -67,34 +79,34 @@ void Span::addNumber(int num) throw (NoEmptySpaceException)
         std::list<int>::iterator itr;
         for (itr = list.begin(); itr != list.end(); itr++)
         {
-			if (this->getShortestSpan() < 0 || std::abs((long long)*itr - (long long)num) < this->getShortestSpan())
-				this->_shortest_span = std::abs((long long)*itr - (long long)num);
+            if (this->getShortestSpan() < 0 || std::abs((long long)*itr - (long long)num) < this->getShortestSpan())
+                this->_shortest_span = std::abs((long long)*itr - (long long)num);
             if (num <= *itr)
             {
                 list.insert(itr, num);
-   				this->_current_size += 1;
-				return ;
+                this->_current_size += 1;
+                return;
             }
         }
-       	list.push_back(num);
-	}
-   	this->_current_size += 1;
+        list.push_back(num);
+    }
+    this->_current_size += 1;
 }
 
-long long Span::shortestSpan() throw (NoSpanToFindException)
+long long Span::shortestSpan() throw(NoSpanToFindException)
 {
     size_t cur_size = this->getCurrentSize();
     if (cur_size == 0 || cur_size == 1)
-        throw (Span::NoSpanToFindException());
+        throw(Span::NoSpanToFindException());
     return (this->_shortest_span);
 }
 
-long long Span::longestSpan() throw (NoSpanToFindException)
+long long Span::longestSpan() throw(NoSpanToFindException)
 {
     size_t cur_size = this->getCurrentSize();
     if (cur_size == 0 || cur_size == 1)
-        throw (Span::NoSpanToFindException());
-    
+        throw(Span::NoSpanToFindException());
+
     return ((long long)(this->getList().back()) - (long long)(this->getList().front()));
 }
 
@@ -102,12 +114,12 @@ long long Span::longestSpan() throw (NoSpanToFindException)
 /*#####################  Exceptions  #######################*/
 /*==========================================================*/
 
-const char* Span::NoEmptySpaceException::what() const throw ()
+const char *Span::NoEmptySpaceException::what() const throw()
 {
     return ("Span: Error: Cannot add number since there is no empty space");
 }
 
-const char* Span::NoSpanToFindException::what() const throw ()
+const char *Span::NoSpanToFindException::what() const throw()
 {
     return ("Span: Error: No span to find since list is empty or has one integer");
 }

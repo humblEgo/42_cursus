@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Convert.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:13:32 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:13:33 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Convert.hpp"
 
 /*==========================================================*/
@@ -5,14 +17,14 @@
 /*==========================================================*/
 
 Convert::Convert(std::string input)
-: _input(input)
+    : _input(input)
 {
     for (int i = TYPE_CHAR; i < TYPE_DOUBLE; i++)
         this->_flags[i] = NORMAL_FLAG;
-	this->_science[0] = "inf";
-	this->_science[1] = "nan";
-	this->_science[2] = "inff";
-	this->_science[3] = "nanf";
+    this->_science[0] = "inf";
+    this->_science[1] = "nan";
+    this->_science[2] = "inff";
+    this->_science[3] = "nanf";
     this->_type = detectLiteralType();
     parsingLiteralType();
 }
@@ -29,27 +41,27 @@ Convert::~Convert()
 /*###################  Copy Constructor  ###################*/
 /*==========================================================*/
 
-Convert::Convert(const Convert& other)
-: _input(other.getInput())
+Convert::Convert(const Convert &other)
+    : _input(other.getInput())
 {
-	this->_science[0] = "inf";
-	this->_science[1] = "nan";
-	this->_science[2] = "inff";
-	this->_science[3] = "nanf";
+    this->_science[0] = "inf";
+    this->_science[1] = "nan";
+    this->_science[2] = "inff";
+    this->_science[3] = "nanf";
 }
 
 /*==========================================================*/
 /*######################  Operators  #######################*/
 /*==========================================================*/
 
-Convert& Convert::operator=(const Convert& other)
+Convert &Convert::operator=(const Convert &other)
 {
     this->_input = other.getInput();
     this->_type = other.getInputType();
-	this->_science[0] = "inf";
-	this->_science[1] = "nan";
-	this->_science[2] = "inff";
-	this->_science[3] = "nanf";
+    this->_science[0] = "inf";
+    this->_science[1] = "nan";
+    this->_science[2] = "inff";
+    this->_science[3] = "nanf";
     return (*this);
 }
 
@@ -158,7 +170,7 @@ void Convert::parseToFloatValue()
     if (this->getInputType() == TYPE_CHAR)
         dvalue = static_cast<double>(static_cast<int>(this->getCharValue()));
     else
-        dvalue =  strtod(this->getInput().c_str(), NULL);
+        dvalue = strtod(this->getInput().c_str(), NULL);
     if (dvalue > std::numeric_limits<float>::max() || dvalue < std::numeric_limits<float>::lowest())
         this->_flags[TYPE_FLOAT] = OVERFLOW_FLAG;
     this->_fvalue = static_cast<float>(dvalue);
@@ -171,8 +183,7 @@ void Convert::parseToDoubleValue()
 
     ss << this->getInput();
     ss >> ldvalue;
-    if (ldvalue > std::numeric_limits<double>::max() 
-        || ldvalue < std::numeric_limits<double>::lowest())
+    if (ldvalue > std::numeric_limits<double>::max() || ldvalue < std::numeric_limits<double>::lowest())
         this->_flags[TYPE_DOUBLE] = OVERFLOW_FLAG;
     this->_dvalue = static_cast<double>(ldvalue);
 }
@@ -199,8 +210,8 @@ void Convert::set_flag_if_inf_or_nan()
 
 bool Convert::isCharInput() const
 {
-    std::string tmp; 
-    
+    std::string tmp;
+
     tmp = this->getInput();
     if (tmp.length() == 1 && !isdigit(tmp[0]))
         return (true);
@@ -369,7 +380,6 @@ char Convert::getValueAsChar()
     return (ret);
 }
 
-
 int Convert::getValueAsInt()
 {
     int ret;
@@ -440,12 +450,12 @@ void Convert::toCharAndPrint()
     try
     {
         char_value = this->getValueAsChar();
-        std::cout<<ret<<"'"<<char_value<<"'"<<std::endl;
+        std::cout << ret << "'" << char_value << "'" << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
 }
 
@@ -458,12 +468,12 @@ void Convert::toIntAndPrint()
     try
     {
         int_value = this->getValueAsInt();
-        std::cout<<ret<<int_value<<std::endl;
+        std::cout << ret << int_value << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
 }
 
@@ -478,33 +488,33 @@ void Convert::toFloatAndPrint()
         float_value = this->getValueAsFloat();
         size_t idx = this->getInput().find('.');
         std::string suffix = "";
-        
+
         if (idx == std::string::npos || isAllZeroCharAfterIdx(idx))
             suffix = ".0f";
         else
             suffix = "f";
-        std::cout<<ret<<float_value<<suffix<<std::endl;
+        std::cout << ret << float_value << suffix << std::endl;
     }
-    catch(const Convert::InfException& e)
+    catch (const Convert::InfException &e)
     {
         if (this->getInput()[0] == '-')
             ret += this->getInput()[0];
         ret += e.what();
         ret += "f";
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
-    catch(const Convert::NanException& e)
+    catch (const Convert::NanException &e)
     {
         if (this->getInput()[0] == '-')
             ret += this->getInput()[0];
         ret += e.what();
         ret += "f";
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
 }
 
@@ -519,29 +529,29 @@ void Convert::toDoubleAndPrint()
         double_value = this->getValueAsDouble();
         size_t idx = this->getInput().find('.');
         std::string suffix = "";
-        
+
         if (idx == std::string::npos || isAllZeroCharAfterIdx(idx))
             suffix = ".0";
-        std::cout<<ret<<double_value<<suffix<<std::endl;
+        std::cout << ret << double_value << suffix << std::endl;
     }
-    catch(const Convert::InfException& e)
+    catch (const Convert::InfException &e)
     {
         if (this->getInput()[0] == '-')
             ret += this->getInput()[0];
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
-    catch(const Convert::NanException& e)
+    catch (const Convert::NanException &e)
     {
         if (this->getInput()[0] == '-')
             ret += this->getInput()[0];
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         ret += e.what();
-        std::cout<<ret<<std::endl;
+        std::cout << ret << std::endl;
     }
 }
 
@@ -568,22 +578,22 @@ void Convert::throwInfOrNan()
 /*#####################  Exceptions  #######################*/
 /*==========================================================*/
 
-const char* Convert::ImpossibleException::what() const throw ()
+const char *Convert::ImpossibleException::what() const throw()
 {
     return "impossible";
 }
 
-const char* Convert::InfException::what() const throw ()
+const char *Convert::InfException::what() const throw()
 {
     return "inf";
 }
 
-const char* Convert::NanException::what() const throw ()
+const char *Convert::NanException::what() const throw()
 {
     return "nan";
 }
 
-const char* Convert::NonDisplayableException::what() const throw ()
+const char *Convert::NonDisplayableException::what() const throw()
 {
     return "Non displayable";
 }

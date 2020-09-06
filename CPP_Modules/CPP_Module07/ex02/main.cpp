@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 17:12:41 by iwoo              #+#    #+#             */
+/*   Updated: 2020/09/06 17:12:42 by iwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Array.hpp"
-# include "Array.ipp"
+#include "Array.ipp"
 
 template <class T>
-void print (Array<T> &arr)
+void print(Array<T> &arr)
 {
 	try
 	{
 		for (unsigned int i = 0; i < arr.size() + 1; i++)
 			std::cout << (arr[i]) << std::endl;
 	}
-	catch(std::exception& e)
+	catch (std::exception &e)
 	{
 		std::cout << e.what() << std::endl;
 	}
@@ -17,10 +29,10 @@ void print (Array<T> &arr)
 
 int main()
 {
-    std::cout<<"Below test's are made by sanam. Thanks!"<<std::endl;
+	std::cout << "Below test's are made by sanam. Thanks!" << std::endl;
 	std::cout << "\n===================int test=====================" << std::endl;
 	Array<int> int_test(10);
-	for(size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < 10; i++)
 		int_test[i] = i;
 	print(int_test);
 
@@ -52,16 +64,15 @@ int main()
 	std::cout << "==== test2 ====" << std::endl;
 	print(copy_int_test);
 
-
 	std::cout << "\n==================== default constructor try-catch===============" << std::endl;
 	Array<int> test4;
 	try
 	{
 		test4[0];
 	}
-	catch(std::exception& e)
+	catch (std::exception &e)
 	{
 		std::cout << e.what() << std::endl;
 	}
-    return (0);
+	return (0);
 }
