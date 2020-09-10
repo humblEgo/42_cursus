@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/29 01:09:16 by iwoo              #+#    #+#             */
-/*   Updated: 2020/09/07 01:01:17 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/10 10:57:56 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ private:
     long long _shortest_span;
 
 public:
-    Span(unsigned int value);
+    explicit Span(unsigned int value);
+    explicit Span(int value);
     virtual ~Span();
     Span(const Span &other);
     Span &operator=(const Span &other);
@@ -59,6 +60,16 @@ public:
         InvalidRangeException &operator=(const InvalidRangeException &) throw();
         virtual const char *what() const throw();
     };
+    class NegativeSizeException : public std::exception
+    {
+    public:
+        NegativeSizeException() throw();
+        virtual ~NegativeSizeException() throw();
+        NegativeSizeException(const NegativeSizeException &) throw();
+        NegativeSizeException &operator=(const NegativeSizeException &) throw();
+        virtual const char *what() const throw();
+    };
+
 
     size_t getLimitSize() const;
     size_t getCurrentSize() const;

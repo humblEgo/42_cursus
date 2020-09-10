@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 17:12:11 by iwoo              #+#    #+#             */
-/*   Updated: 2020/09/07 01:01:26 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/10 10:59:17 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 Span::Span(unsigned int value)
     : _limit_size(value), _current_size(0), _shortest_span(-42)
 {
+	std::cout << "wow"<< value <<std::endl;
+}
+
+Span::Span(int value)
+{
+	if (value < 0)
+		throw (NegativeSizeException());
+	this->_limit_size = value;
+	this->_current_size = 0;
+	this->_shortest_span = -42;
 }
 
 Span::~Span()
@@ -154,4 +164,13 @@ Span::InvalidRangeException &Span::InvalidRangeException::operator=(const Invali
 const char *Span::InvalidRangeException::what() const throw()
 {
     return ("Span: Error: Invalid range");
+}
+
+Span::NegativeSizeException::NegativeSizeException() throw() {}
+Span::NegativeSizeException::~NegativeSizeException() throw() {}
+Span::NegativeSizeException::NegativeSizeException(const NegativeSizeException &) throw() {}
+Span::NegativeSizeException &Span::NegativeSizeException::operator=(const NegativeSizeException &) throw() { return (*this); }
+const char *Span::NegativeSizeException::what() const throw()
+{
+    return ("Span: Error: Negative number can't be size of array");
 }

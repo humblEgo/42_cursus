@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 17:12:09 by iwoo              #+#    #+#             */
-/*   Updated: 2020/09/07 01:02:15 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/10 11:02:26 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,29 @@ int main()
     try
     {
         Span sp2 = Span(0);
+        sp2.addNumber(2147483647);
+        sp2.addNumber(-2147483648);
+        sp2.addNumber(17);
+        sp2.addNumber(9);
+        sp2.addNumber(11);
+
+        // std::list<int>& list2 = sp2.getList();
+        // for (std::list<int>::iterator itr = list2.begin(); itr != list2.end(); itr++)
+        //     std::cout<<*itr<<std::endl;
+        std::cout << sp2.shortestSpan() << std::endl;
+        std::cout << sp2.longestSpan() << std::endl;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    std::cout << "\033[1;37;41m"
+              << "Negative array size case"
+              << "\033[0m" << std::endl;
+    try
+    {
+        Span sp2 = Span(-1);
         sp2.addNumber(2147483647);
         sp2.addNumber(-2147483648);
         sp2.addNumber(17);
@@ -152,7 +175,7 @@ int main()
     try
     {
         Span sp8 = Span(100);
-        sp8.addNumber(80, 100);
+        sp8.addNumber(1, 100);
 
         // std::list<int>& list2 = sp8.getList();
         // for (std::list<int>::iterator itr = list2.begin(); itr != list2.end(); itr++)
@@ -217,6 +240,5 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
-
     return (0);
 }
