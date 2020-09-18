@@ -2,7 +2,8 @@
 # define CONTAINER_TEST_HPP
 
 # include <iostream>
+# include <iomanip>
 
-void vector_test();
+void vectorTest();
 
 #endif

@@ -10,7 +10,7 @@ int main(int argc, const char *argv[])
 
     std::string container_type(argv[1]);
     if (container_type == "vector")
-        vector_test();
+        vectorTest();
     else
     {
         std::cerr<<"No match with container"<<std::endl;

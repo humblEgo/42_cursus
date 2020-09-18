@@ -1,4 +1,4 @@
-NAME = container_test 
+NAME = container_tests 
 INCLUDES = -I include -I include/utils
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror

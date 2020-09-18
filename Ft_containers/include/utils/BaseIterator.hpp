@@ -28,7 +28,7 @@ public:
     bool operator>(const BaseIterator& rhs);
     bool operator<=(const BaseIterator& rhs);
     bool operator>=(const BaseIterator& rhs);
-    value_type* getPointer() const;
+    value_type* base() const;
 };
 
 /*==========================================================*/
@@ -110,7 +110,7 @@ bool ft::BaseIterator<T>::operator>=(const BaseIterator& rhs)
 /*==========================================================*/
 
 template <typename T>
-T* ft::BaseIterator<T>::getPointer() const
+T* ft::BaseIterator<T>::base() const
 {
     return (this->_ptr);
 }
@@ -127,7 +127,7 @@ template <typename Iterator>
 typename std::iterator_traits<Iterator>::difference_type 
 distance(Iterator first, Iterator last)
 {
-    return (do_distance(first, last, typename std::iterator_traits<Iterator>::iterator_category());)
+    return (do_distance(first, last, typename std::iterator_traits<Iterator>::iterator_category()));
 }
 
 };

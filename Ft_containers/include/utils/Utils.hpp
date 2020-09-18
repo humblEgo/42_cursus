@@ -28,12 +28,7 @@ struct enable_if<true, T>
 template <typename T>
 struct is_integer
 {
-    std::string int_type = "i";
-
-    if (typeid(T).name() == int_type)
-        static const bool value = false;
-    else
-        static const bool value = true;
+    static const bool value = false;
 };
 
 };

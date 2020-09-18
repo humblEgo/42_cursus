@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "__bit_reference": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "iostream": "cpp",
+        "vector": "cpp",
+        "random": "cpp"
+    }
+}

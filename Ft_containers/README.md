@@ -73,6 +73,28 @@ https://www.cplusplus.com/reference/vector/vector/
 1. `T`: Type of the elements
 2. `Alloc`: Type of the allocator object used to define the storage allocation model.
 
+[모두의코드](https://modoocode.com/178) 에서처럼 예제를 가져와서 실험해가며 구현하자.
+
+<details><summary>문제: 처음에 begin()을 통해 얻은 첫번째 iterator가 vector에 새로운 인자를 insert를 할 때마다 유효하지 않게 된다.</summary>
+<p>
+  우선 vector의 동작 방식을 이해할 필요가 있다. vector는 가변배열이긴하지만 인자가 추가될 때마다 새로 공간을 할당해서 그 공간에 값을 채워넣는 식으로 동작하지 않는다. 이런식으로 동작하면 인자가 잦게 추가되는 경우마다 공간을 할당하고 값을 채워넣어야하므로 매우 비효율적이다. 그럼 어떻게 해야 효율적으로 처리할 수 있을까? vector는 미리 일정한 메모리공간을 할당해두고, 인자가 추가되었을 때 미리 할당해둔 메모리에 값을 넣는 전략을 쓴다. 물론 이 경우에도 잦은 insert 등으로 미리 할당해둔 메모리를 넘는 사이즈로 vector가 확장되었을 경우엔, 메모리에 재할당하고 그 메모리에 기존 vector의 데이터들을 복사하는 식으로 작동할 수 밖에 없다.
+
+  자 그럼 위 문제는 왜 일어난 것일까? 바로 내가 구현해둔 코드에서는 아래처럼 새로 추가된 인자의 사이즈만큼만 메모리를 할당해서 쓰도록 구현되어있었기 때문이다. 이 경우 insert할 때마다 메모리 전체의 재할당 및 복사가 이뤄지고 결국 기존에 iterator가 가리키고 있던 메모리주소는 유효하지 않은 메모리 주소가 된다.
+  ```
+  if (new_size > _cap)
+        reserve(new_size);
+  ```
+  아래처럼 코드를 수정하여 미리 더 많은 공간을 할당해둘 수 있도록 하였다.
+  ```
+  if (new_size > _cap)
+    {
+  			reserve(_cap / 2);
+    }
+  ```
+
+</p>
+</details>
+
 
 
 # Allocator
@@ -88,3 +110,6 @@ Allocator는 특히 STL 컨테이너들의 메모리 모델을 정의하는 클�
 참고로 메모리풀은 이미 결정된 메모리 영역을 대량으로 확보한 후 그 확보한 메모리 영역만을 사용하여 메모리에 데이터를 할당하는 방법이다. 메모리를 한번 할당한 후 한번에 해제하기 때문에 잦은 메모리 할당 해제로 인한 부하 및 메모리 단편화 문제를 해결할 수 있다.
 
 [C++ Standard Allocator, An Introduction and Implementation](https://www.codeproject.com/Articles/4795/C-Standard-Allocator-An-Introduction-and-Implement)을 보면 더 자세하게 확인할 수 있다.
+
+우리는 딱히 구현할 필요 없다. 가져다 쓰자!
+
