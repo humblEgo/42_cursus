@@ -130,7 +130,7 @@ public:
     template <class InputIterator>
     Vector(InputIterator first, InputIterator last, 
                     const allocator_type& alloc = allocator_type(),
-                    typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+                    typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
     virtual ~Vector();
     Vector(const Vector &other);
     Vector &operator=(const Vector &other);
@@ -177,7 +177,7 @@ public:
     /*==========================================================*/
     
     template <typename InputIterator>
-    void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+    void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
     void assign (size_type n, const value_type& val);
 
     /*==========================================================*/
@@ -218,8 +218,9 @@ Vector<T, A>::Vector(size_type n, const value_type& val, const allocator_type& a
 
 template <typename T, typename A>
 template <typename InputIterator>
-Vector<T, A>::Vector(InputIterator first, InputIterator last, const allocator_type& alloc, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter)
+Vector<T, A>::Vector(InputIterator first, InputIterator last, const allocator_type& alloc, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter)
 {
+    (void)alloc;
     (void)isIter;
     _size = last - first;
     _cap = _size;
@@ -426,7 +427,7 @@ typename Vector<T, A>::const_reference Vector<T, A>::back() const
 
 template <typename T, typename A>
 template <typename InputIterator>
-void Vector<T, A>::assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter)
+void Vector<T, A>::assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter)
 {
     (void)isIter;
     clear();

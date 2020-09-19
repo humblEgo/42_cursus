@@ -33,11 +33,11 @@ c++ 컨테이너를 직접 구현해야한다. iterator가 있다면, 그 또한
 
 - 특히 C++에서 제공하는 STL에서는 자료를 저장하는 방식과 관리하는 방식에 따라 크게 세 가지 유형으로 구분된다.
 
-  1. 시퀀스 컨테이너: 데이터를 선형으로 저장하며, 특별한 제약이나 규칙이 없는 가장 일반적인 컨테이너
+  1. 시퀀스 컨테이너: 데이터를 선형으로 저장한다. 즉, 순서를 유지한다. 특별한 제약이나 규칙이 없는 가장 일반적인 컨테이너. 
 
      - [vector](https://blockdmask.tistory.com/70): 가변 크기의 배열을 일반화한 클래스
      - [deque](https://modoocode.com/223): 앞 뒤 모두 입력 가능한 큐 클래스
-     - [list](https://blockdmask.tistory.com/76): 빠른 삽입/삭제 가능한 리스트 클래스
+     - [list](https://blockdmask.tistory.com/76): 빠른 삽입/삭제 가능한 리스트 클래스. C에서의 더블링크드 리스트 비슷.
 
   2. 연관 컨테이너: 데이터를 일정 규칙에 따라 조직화하여 저장하고 관리하는 컨테이너
 
@@ -57,6 +57,44 @@ c++ 컨테이너를 직접 구현해야한다. iterator가 있다면, 그 또한
 이제 [cpluscplus.com 레퍼런스](https://www.cplusplus.com/reference/stl/)를 보면서 세부사항을 파악해보자. bash를 구현할 때 bash reference를 참고했던 것처럼, 공식문서가 짱이다.
 
 Member map을 보면 각 컨테이너별로 중복되는 기능이 많은 것을 확인할 수 있다. 얼마나 중복없이 효율적으로 코딩하느냐가 관건일 것 같다. 테스트 케이스도 내가 제공해야하므로 TDD로 진행하면 더할나위 없을듯하다.
+
+
+
+# Allocator
+
+https://www.cplusplus.com/reference/memory/allocator/
+
+원형: `template <class T> class allocator;`
+
+Allocator는 특히 STL 컨테이너들의 메모리 모델을 정의하는 클래스이다. 모든 기초 컨테이너들이 마지막 인자를 입력하지 않으면 `default allocator`가 사용된다.
+
+대부분의 경우 new나 delete를 쓰기만 해도 충분할텐데 왜 allocator를 쓸까? [이 링크](https://kldp.org/node/109031)의 문답이 설득력 있는 것 같다. STL 클래스별로 allocation 정책을 자유자재로 적용하기 위함이다! 게임이나 웹서버에서 힙 대신 메모리풀을 이용하는 용도로 allocator를 쓰곤 한다고 한다.
+
+참고로 메모리풀은 이미 결정된 메모리 영역을 대량으로 확보한 후 그 확보한 메모리 영역만을 사용하여 메모리에 데이터를 할당하는 방법이다. 메모리를 한번 할당한 후 한번에 해제하기 때문에 잦은 메모리 할당 해제로 인한 부하 및 메모리 단편화 문제를 해결할 수 있다.
+
+[C++ Standard Allocator, An Introduction and Implementation](https://www.codeproject.com/Articles/4795/C-Standard-Allocator-An-Introduction-and-Implement)을 보면 더 자세하게 확인할 수 있다.
+
+우리는 딱히 구현할 필요 없다. 가져다 쓰자!
+
+
+
+
+
+## Iterator
+
+https://en.cppreference.com/w/cpp/iterator/iterator
+
+
+
+Iterator_traits의 멤버데이터
+
+- `difference_type` - a signed integer type that can be used to identify distance between iterators
+- `value_type` - the type of the values that can be obtained by dereferencing the iterator. This type is `void` for output iterators.
+- `pointer` - defines a pointer to the type iterated over (`value_type`)
+- `reference` - defines a reference to the type iterated over (`value_type`)
+- `iterator_category` - the category of the iterator. Must be one of [iterator category tags](https://en.cppreference.com/w/cpp/iterator/iterator_tags).
+
+
 
 
 
@@ -104,38 +142,9 @@ https://www.cplusplus.com/reference/vector/vector/
 
 
 
+## List
 
-# Allocator
+https://en.cppreference.com/w/cpp/container/list
 
-https://www.cplusplus.com/reference/memory/allocator/
-
-원형: `template <class T> class allocator;`
-
-Allocator는 특히 STL 컨테이너들의 메모리 모델을 정의하는 클래스이다. 모든 기초 컨테이너들이 마지막 인자를 입력하지 않으면 `default allocator`가 사용된다.
-
-대부분의 경우 new나 delete를 쓰기만 해도 충분할텐데 왜 allocator를 쓸까? [이 링크](https://kldp.org/node/109031)의 문답이 설득력 있는 것 같다. STL 클래스별로 allocation 정책을 자유자재로 적용하기 위함이다! 게임이나 웹서버에서 힙 대신 메모리풀을 이용하는 용도로 allocator를 쓰곤 한다고 한다.
-
-참고로 메모리풀은 이미 결정된 메모리 영역을 대량으로 확보한 후 그 확보한 메모리 영역만을 사용하여 메모리에 데이터를 할당하는 방법이다. 메모리를 한번 할당한 후 한번에 해제하기 때문에 잦은 메모리 할당 해제로 인한 부하 및 메모리 단편화 문제를 해결할 수 있다.
-
-[C++ Standard Allocator, An Introduction and Implementation](https://www.codeproject.com/Articles/4795/C-Standard-Allocator-An-Introduction-and-Implement)을 보면 더 자세하게 확인할 수 있다.
-
-우리는 딱히 구현할 필요 없다. 가져다 쓰자!
-
-
-
-
-
-## Iterator
-
-https://en.cppreference.com/w/cpp/iterator/iterator
-
-
-
-Iterator_traits의 멤버데이터
-
-- `difference_type` - a signed integer type that can be used to identify distance between iterators
-- `value_type` - the type of the values that can be obtained by dereferencing the iterator. This type is `void` for output iterators.
-- `pointer` - defines a pointer to the type iterated over (`value_type`)
-- `reference` - defines a reference to the type iterated over (`value_type`)
-- `iterator_category` - the category of the iterator. Must be one of [iterator category tags](https://en.cppreference.com/w/cpp/iterator/iterator_tags).
+iterator 유형이 bidirectional로 바뀌었다. 이에 유의해서 코딩할 것.
 

@@ -22,100 +22,91 @@ struct enable_if<true, T>
 };
 
 /*==========================================================*/
-/*#####################  is_itegral  #######################*/
+/*#####################  is_integral  ######################*/
 /*==========================================================*/
 
 template <typename T>
-struct is_integer
+struct is_integral
 {
     static const bool value = false;
 };
 
 template <>
-struct is_integer<bool>
+struct is_integral<bool>
 {
     static const bool value = true;
 };
 
 template <>
-struct is_integer<char>
+struct is_integral<char>
 {
     static const bool value = true;
 };
 
 template <>
-struct is_integer<wchar_t>
-{
-    static const bool value = true;
-};
-
-
-template <>
-struct is_integer<signed char>
+struct is_integral<wchar_t>
 {
     static const bool value = true;
 };
 
 
 template <>
-struct is_integer<short int>
-{
-    static const bool value = true;
-};
-
-
-//TODO ??
-template <>
-struct is_integer<int>
+struct is_integral<signed char>
 {
     static const bool value = true;
 };
 
 
 template <>
-struct is_integer<long int>
+struct is_integral<short int>
 {
     static const bool value = true;
 };
 
-
 template <>
-struct is_integer<long long int>
+struct is_integral<int>
 {
     static const bool value = true;
 };
 
-
 template <>
-struct is_integer<unsigned char>
+struct is_integral<long int>
 {
     static const bool value = true;
 };
 
-
 template <>
-struct is_integer<unsigned short int>
+struct is_integral<long long int>
 {
     static const bool value = true;
 };
 
-
 template <>
-struct is_integer<unsigned int>
+struct is_integral<unsigned char>
 {
     static const bool value = true;
 };
 
-
 template <>
-struct is_integer<unsigned long int>
+struct is_integral<unsigned short int>
 {
     static const bool value = true;
 };
 
+template <>
+struct is_integral<unsigned int>
+{
+    static const bool value = true;
+};
 
 template <>
-struct is_integer<unsigned long long int>
+struct is_integral<unsigned long int>
+{
+    static const bool value = true;
+};
+
+template <>
+struct is_integral<unsigned long long int>
 {
     static const bool value = true;
 };

@@ -11,6 +11,8 @@ int main(int argc, const char *argv[])
     std::string container_type(argv[1]);
     if (container_type == "vector")
         vectorTest();
+    else if (container_type == "list")
+        listTest();
     else
     {
         std::cerr<<"No match with container"<<std::endl;

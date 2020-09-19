@@ -6,10 +6,6 @@
 namespace ft
 {
 
-/*==========================================================*/
-/*###############  BaseIterator prototype  #################*/
-/*==========================================================*/
-
 template <typename T>
 class BaseIterator
 {
@@ -63,8 +59,24 @@ protected:
     Iter _base;
 
 public:
+    /*==========================================================*/
+    /*####################  Canonical form   ###################*/
+    /*==========================================================*/
     ReverseBaseIterator(Iter base) : _base(base) {};
+    ReverseBaseIterator(const ReverseBaseIterator& rhs) { this->_ptr = rhs._ptr; };
     virtual ~ReverseBaseIterator() {};
+    ReverseBaseIterator& operator=(const ReverseBaseIterator& rhs)
+    {
+        if (this == &rhs)
+            return (*this);
+        this->_ptr = rhs._ptr;
+        return (*this);
+    };
+
+    /*==========================================================*/
+    /*######################  Operators  #######################*/
+    /*==========================================================*/
+    
     bool operator==(const ReverseBaseIterator &rhs) const { return (_base == rhs._base); };
     bool operator!=(const ReverseBaseIterator &rhs) const { return (_base != rhs._base); };
     bool operator<(const ReverseBaseIterator &rhs) const { return (_base > rhs._base); };
@@ -94,8 +106,12 @@ public:
     ReverseIterator() : ReverseBaseIterator<Iter>(nullptr) {};
     explicit ReverseIterator(iterator_type base) : ReverseBaseIterator<Iter>(base) {};
     ReverseIterator(const reverse_iterator& other) : ReverseBaseIterator<Iter>(other._base) {};
-    reverse_iterator& operator=(const reverse_iterator& other) { this->_base = other._base; return (*this); };
     ~ReverseIterator() {};
+    reverse_iterator& operator=(const reverse_iterator& other)
+    { 
+        this->_base = other._base; 
+        return (*this); 
+    };
 
     /*==========================================================*/
     /*######################  Operators  #######################*/
@@ -143,7 +159,11 @@ public:
     ConstReverseIterator() : ReverseBaseIterator<Iter>(nullptr) {};
     explicit ConstReverseIterator(iterator_type base) : ReverseBaseIterator<Iter>(base) {};
     ConstReverseIterator(const const_reverse_iterator& other) : ReverseBaseIterator<Iter>(other._base) {};
-    const_reverse_iterator& operator=(const const_reverse_iterator& other) { this->_base = other._base; return (*this); };
+    const_reverse_iterator& operator=(const const_reverse_iterator& other)
+    { 
+        this->_base = other._base; 
+        return (*this); 
+    };
     ~ConstReverseIterator() {};
 
     /*==========================================================*/
@@ -196,6 +216,47 @@ distance(Iterator first, Iterator last)
 {
     return (do_distance(first, last, typename std::iterator_traits<Iterator>::iterator_category()));
 }
+
+template <typename T>
+struct ListNode 
+{
+    ListNode(ListNode<T> *prev, ListNode<T> *next, const T& element) : prev(prev), next(next), element(element) {}
+    ListNode<T> *prev;
+    ListNode<T> *next;
+    T element;
+};
+
+template <typename T>
+class ListBaseIterator
+{
+private:
+    ListBaseIterator();
+
+protected:
+    ListNode<T> *_ptr;
+
+public:
+    /*==========================================================*/
+    /*####################  Canonical form   ###################*/
+    /*==========================================================*/
+    
+    ListBaseIterator(ListNode<T> *ptr) : _ptr(ptr) {};
+    virtual ~ListBaseIterator() {};
+    ListBaseIterator(const ListBaseIterator& rhs) : _ptr(rhs._ptr) {};
+    ListBaseIterator& operator=(const ListBaseIterator& rhs)
+    { 
+        this->_ptr = rhs._ptr; 
+        return (*this); 
+    };
+
+    /*==========================================================*/
+    /*######################  Operators  #######################*/
+    /*==========================================================*/
+    
+    bool operator==(const ListBaseIterator& rhs) const { return (_ptr == rhs._ptr); };
+    bool operator!=(const ListBaseIterator& rhs) const { return (_ptr != rhs._ptr); };
+    ListNode<T> *base() const { return this->_ptr; };
+};
 
 };
 
