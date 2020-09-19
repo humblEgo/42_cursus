@@ -5,5 +5,6 @@
 # include <iomanip>
 
 void vectorTest();
+void listTest();
 
 #endif
