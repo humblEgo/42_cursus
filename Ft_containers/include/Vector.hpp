@@ -3,7 +3,7 @@
 
 # include <memory>
 # include <stdexcept>
-# include "BaseIterator.hpp"
+# include "Iterators.hpp"
 # include "Utils.hpp"
 
 namespace ft
@@ -44,89 +44,27 @@ public:
         /*==========================================================*/
         
         Iterator() : BaseIterator<T>(nullptr) {};
-        
-        //TODO: const iter, pointer
         virtual ~Iterator() {};
         Iterator(const Iterator& iter) : BaseIterator<T>(iter._ptr) {};
         Iterator(pointer ptr) : BaseIterator<T>(ptr) {};
-
-        Iterator& operator=(const Iterator& rhs)
-        {
-            this->_ptr = rhs._ptr;
-            return (*this);
-        };
+        Iterator& operator=(const Iterator& rhs) { this->_ptr = rhs._ptr; return (*this); };
 
         /*==========================================================*/
         /*######################  Operators  #######################*/
         /*==========================================================*/
         
-        reference operator*() const
-        {
-            return (*this->_ptr);
-        };
-
-        pointer operator->() const 
-        {
-            return (this->_ptr);
-        };
-
-        reference operator[](difference_type n) const
-        {
-            return (*(this->_ptr + n));
-        };
-
-        Iterator& operator++()
-        {
-            this->_ptr++;
-            return (*this);
-        };
-
-        Iterator operator++(int)
-        {
-            Iterator itr = *this;
-            this->_ptr++;
-            return (itr);
-        };
-
-        Iterator& operator--()
-        {
-            this->_ptr--;
-            return (*this);
-        };
-
-        Iterator operator--(int)
-        {
-            Iterator itr = *this;
-            this->_ptr--;
-            return (itr);
-        };
-
-        Iterator operator+=(difference_type n)
-        {
-            this->_ptr += n;
-            return (*this);
-        };
-
-        Iterator operator-=(difference_type n)
-        {
-            this->_ptr -= n;
-            return (*this);
-        };
-
-        Iterator operator+(difference_type n) const
-        {
-            return (Iterator(this->_ptr + n));
-        };
-
-        Iterator operator-(difference_type n) const
-        {
-            return (Iterator(this->_ptr - n));
-        };
-
-        difference_type operator-(const BaseIterator<T>& rhs)
-        {
-            return (this->_ptr - rhs.base());
-        };
+        reference operator*() const { return (*this->_ptr); };
+        pointer operator->() const { return (this->_ptr); };
+        reference operator[](difference_type n) const { return (*(this->_ptr + n)); };
+        Iterator& operator++() { this->_ptr++; return (*this); };
+        Iterator operator++(int) { Iterator itr = *this; this->_ptr++; return (itr); };
+        Iterator& operator--() { this->_ptr--; return (*this); };
+        Iterator operator--(int) { Iterator itr = *this; this->_ptr--; return (itr); };
+        Iterator operator+=(difference_type n) { this->_ptr += n; return (*this); };
+        Iterator operator-=(difference_type n) { this->_ptr -= n; return (*this); };
+        Iterator operator+(difference_type n) const { return (Iterator(this->_ptr + n)); };
+        Iterator operator-(difference_type n) const { return (Iterator(this->_ptr - n)); };
+        difference_type operator-(const BaseIterator<T>& rhs) { return (this->_ptr - rhs.base()); };
     };
 
     /*==========================================================*/
@@ -152,87 +90,29 @@ public:
         ConstIterator(const Iterator& itr) : BaseIterator<T>(itr.base()) {};
         ConstIterator(pointer ptr) : BaseIterator<T>(ptr) {};
         virtual ~ConstIterator() {};
-
-        ConstIterator& operator=(const ConstIterator &rhs)
-        {
-            this->_ptr = rhs._ptr;
-            return (*this);
-        };
+        ConstIterator& operator=(const ConstIterator &rhs) { this->_ptr = rhs._ptr; return (*this); };
 
         /*==========================================================*/
         /*######################  Operators  #######################*/
         /*==========================================================*/
 
-        reference operator*() const
-        {
-            return (*this->_ptr);
-        };
-
-        pointer operator->() const 
-        {
-            return (this->_ptr);
-        };
-
-        reference operator[](difference_type n) const
-        {
-            return (*(this->_ptr + n));
-        };
-
-        ConstIterator& operator++()
-        {
-            this->_ptr++;
-            return (*this);
-        };
-
-        ConstIterator operator++(int)
-        {
-            ConstIterator itr = *this;
-            this->_ptr++;
-            return (itr);
-        };
-
-        ConstIterator& operator--()
-        {
-            this->_ptr--;
-            return (*this);
-        };
-
-        ConstIterator operator--(int)
-        {
-            ConstIterator itr = *this;
-            this->_ptr--;
-            return (itr);
-        };
-
-        ConstIterator operator+=(difference_type n)
-        {
-            this->_ptr += n;
-            return (*this);
-        };
-
-        ConstIterator operator-=(difference_type n)
-        {
-            this->_ptr -= n;
-            return (*this);
-        };
-
-        ConstIterator operator+(difference_type n) const
-        {
-            return (ConstIterator(this->_ptr + n));
-        };
-
-        ConstIterator operator-(difference_type n) const
-        {
-            return (ConstIterator(this->_ptr - n));
-        };
-
-        difference_type operator-(const BaseIterator<T>& rhs)
-        {
-            return (this->_ptr - rhs.base());
-        };
+        reference operator*() const { return (*this->_ptr); };
+        pointer operator->() const { return (this->_ptr); };
+        reference operator[](difference_type n) const { return (*(this->_ptr + n)); };
+        ConstIterator& operator++() { this->_ptr++; return (*this); };
+        ConstIterator operator++(int) { ConstIterator itr = *this; this->_ptr++; return (itr); };
+        ConstIterator& operator--() { this->_ptr--; return (*this); };
+        ConstIterator operator--(int) { ConstIterator itr = *this; this->_ptr--; return (itr); };
+        ConstIterator operator+=(difference_type n) { this->_ptr += n; return (*this); };
+        ConstIterator operator-=(difference_type n) { this->_ptr -= n; return (*this); };
+        ConstIterator operator+(difference_type n) const { return (ConstIterator(this->_ptr + n)); };
+        ConstIterator operator-(difference_type n) const { return (ConstIterator(this->_ptr - n)); };
+        difference_type operator-(const BaseIterator<T>& rhs) { return (this->_ptr - rhs.base()); };
     };
 
-    //TODO: reverse, const_reverse
+typedef ReverseIterator<Iterator> reverse_iterator;
+typedef ConstReverseIterator<Iterator> const_reverse_iterator;
+
 private:
     allocator_type _allocator;
     pointer _arr;
@@ -247,10 +127,10 @@ public:
     explicit Vector(const allocator_type& alloc = allocator_type());
     explicit Vector(size_type n, const value_type& value = value_type(), 
                                 const allocator_type& alloc = allocator_type());
-    // template <class InputIterator>
-    // Vector(InputIterator first, InputIterator last, 
-    //                 const allocator_type& alloc = allocator_type(),
-    //                 typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+    template <class InputIterator>
+    Vector(InputIterator first, InputIterator last, 
+                    const allocator_type& alloc = allocator_type(),
+                    typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter = InputIterator());
     virtual ~Vector();
     Vector(const Vector &other);
     Vector &operator=(const Vector &other);
@@ -258,11 +138,15 @@ public:
     /*==========================================================*/
     /*#################  Iterator functions  ###################*/
     /*==========================================================*/
+
     Iterator begin();
     ConstIterator begin() const;
     Iterator end();
     ConstIterator end() const;
-    //TODO: reverse itr
+    reverse_iterator rbegin();
+    const_reverse_iterator rbegin() const;
+    reverse_iterator rend();
+    const_reverse_iterator rend() const;
 
     /*==========================================================*/
     /*######################  Capacity  ########################*/
@@ -279,10 +163,23 @@ public:
     /*####################  Element access  ####################*/
     /*==========================================================*/
 
+    reference operator[] (size_type n);
+    const_reference operator[] (size_type n) const;
+    reference at(size_type n);
+    const_reference at(size_type n) const;
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
+
     /*==========================================================*/
     /*#######################  Assign  #########################*/
     /*==========================================================*/
     
+    template <typename InputIterator>
+    void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+    void assign (size_type n, const value_type& val);
+
     /*==========================================================*/
     /*######################  Modifiers  #######################*/
     /*==========================================================*/
@@ -292,25 +189,11 @@ public:
     Iterator erase(Iterator first, Iterator last);
     void swap(Vector& other);
     void clear();
+    void push_back (const value_type& val);
+    void pop_back ();
 
 };
 
-/*==========================================================*/
-/*####################  Custom for test  ###################*/
-/*==========================================================*/
-
-template <typename T, typename A>
-std::ostream& operator<<(std::ostream& out, const Vector<T, A>& vec)
-{
-    std::cout<<std::endl;
-    out<<"size    : "<<vec.size()<<"\n";
-    out<<"capacity: "<<vec.capacity()<<"\n";
-    std::cout<<"member: [";
-    for (typename Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
-        std::cout<<*it<<" ";
-    std::cout<<"]";
-    return (out);
-}
 
 /*==========================================================*/
 /*####################  Canonical Form  ####################*/
@@ -334,6 +217,34 @@ Vector<T, A>::Vector(size_type n, const value_type& val, const allocator_type& a
 }
 
 template <typename T, typename A>
+template <typename InputIterator>
+Vector<T, A>::Vector(InputIterator first, InputIterator last, const allocator_type& alloc, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter)
+{
+    (void)isIter;
+    _size = last - first;
+    _cap = _size;
+    _arr = _allocator.allocate(_size);
+    int i = 0;
+    for (InputIterator it = 0; it != last; ++it, ++i)
+    {
+        _allocator.construct(_arr + i, *it);
+    }
+}
+
+template <typename T, typename A>
+Vector<T, A>::Vector(const Vector& other)
+: _allocator(other._allocator), _size(other._size), _cap(other._cap)
+{
+    if (other._arr)
+    {
+        _arr = _allocator.allocate(_cap);
+        for (size_type i = 0; i < _size; i++)
+            _allocator.construct(_arr + i, other._arr[i]);
+    }
+}
+
+
+template <typename T, typename A>
 Vector<T, A>::~Vector() 
 {
     if (_cap)
@@ -341,6 +252,25 @@ Vector<T, A>::~Vector()
         for (size_type i = 0; i < _size; i++)
             _allocator.destroy(_arr + i);
         _allocator.deallocate(_arr, _cap);
+    }
+}
+
+template <typename T, typename A>
+Vector<T, A>& Vector<T, A>:: operator=(const Vector& other)
+{
+    if (_arr)
+    {
+        for (size_type i = 0; i < _size; i++)
+            _allocator.destroy(_arr + i);
+        _allocator.deallocate(_arr, _cap);
+    }
+    if (other._arr)
+    {
+        _arr = _allocator.allocate(other._cap);
+        for (size_type i = 0; i < other._size; i++)
+            _allocator.construct(_arr + i, other._arr[i]);
+        _size = other._size;
+        _cap = other._cap;
     }
 }
 
@@ -389,7 +319,7 @@ typename Vector<T, A>::size_type Vector<T, A>::max_size() const
     return (static_cast<size_type>(-1 / sizeof(T)));
 }
 
-// reserve는 최소한으로 실행되어야한다. 그런데 만약 cap = 10이고 size가 10인 상태에서 push를 하면, 무조건 재할당이 이뤄지는 구조로 구현되어있으므로, n을 더 더해줘야겠따. std::vector에서는 2배만큼 reserve하게 되어있다.
+// reserve는 최소한으로 실행되어야한다. 만약 cap = 10이고 size가 10인 상태에서 push를 하면, 무조건 재할당이 이뤄지는 구조로 구현되어있으므로, n을 더 더해줘야겠다. std::vector에서는 2배만큼 reserve하게 되어있다고 한다.
 template <typename T, typename A>
 void Vector<T, A>::reserve(size_type n)
 {
@@ -432,6 +362,82 @@ void Vector<T, A>::resize(size_type n, value_type val)
     {
         insert(end(), n - size(), val);
     }
+}
+
+/*==========================================================*/
+/*####################  Element access  ####################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+typename Vector<T, A>::reference Vector<T, A>::operator[] (size_type n)
+{
+    return (_arr[n]);
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::const_reference Vector<T, A>::operator[] (size_type n) const
+{
+    return (_arr[n]);
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::reference Vector<T, A>::at(size_type n)
+{
+    if (n >= size())
+        throw (std::out_of_range("out of range"));
+    return (_arr[n]);
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::const_reference Vector<T, A>::at(size_type n) const
+{
+    if (n >= size())
+        throw (std::out_of_range("out of range"));
+    return (_arr[n]);
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::reference Vector<T, A>::front()
+{
+    return (*begin()); //비어있으면 정의되지 않은 동작하도록!
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::const_reference Vector<T, A>::front() const
+{
+    return (*begin());
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::reference Vector<T, A>::back()
+{
+    return (*(--end()));
+}
+
+template <typename T, typename A>
+typename Vector<T, A>::const_reference Vector<T, A>::back() const
+{
+    return (*(--end()));
+}
+
+/*==========================================================*/
+/*#######################  Assign  #########################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+template <typename InputIterator>
+void Vector<T, A>::assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integer<InputIterator>::value, InputIterator>::type isIter)
+{
+    (void)isIter;
+    clear();
+    insert(begin(), first, last);
+}
+
+template <typename T, typename A>
+void Vector<T, A>::assign(size_type n, const value_type& val)
+{
+    clear();
+    insert(begin(), n, val);
 }
 
 /*==========================================================*/
@@ -502,6 +508,135 @@ typename Vector<T, A>::Iterator Vector<T, A>::erase(Iterator first, Iterator las
     }
     _size -= times;
     return (first);
+}
+
+template <typename T, typename A>
+void Vector<T, A>::swap(Vector& x)
+{
+    std::swap(_allocator, x._allocator);
+    std::swap(_size, x._size);
+    std::swap(_cap, x._cap);
+    std::swap(_arr, x._arr);
+}
+
+template <typename T, typename A>
+void Vector<T, A>::clear()
+{
+    erase(begin(), end());
+}
+
+template <typename T, typename A>
+void Vector<T, A>::push_back(const value_type& val)
+{
+    insert(end(), val);
+}
+
+template <typename T, typename A>
+void Vector<T, A>::pop_back()
+{
+    erase(--end());
+}
+
+/*==========================================================*/
+/*####################  Custom for test  ###################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const Vector<T, A>& vec)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [";
+    for (typename Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
+
+std::ostream& operator<<(std::ostream& out, const Vector<SampleClass>& vec)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [";
+    for (Vector<SampleClass>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<(*it).getName()<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+bool operator==(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    if (lhs.size() != rhs.size())
+        return (false);
+    for (typename Vector<T, A>::size_type i = 0; i < lhs.size(); i++)
+    {
+        if (lhs[i] != rhs[i])
+            return (false);
+    }
+    return (true);
+}
+
+template <typename T, typename A>
+bool operator!=(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    return (!(lhs == rhs));
+}
+
+template <typename T, typename A>
+bool operator<(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    for (typename Vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+    {
+        if (lhs[i] != rhs[i])
+            return (lhs[i] < rhs[i]);
+    }
+    if (lhs.size() == rhs.size())
+        return (false);
+    return (lhs.size() < rhs.size());
+}
+
+template <typename T, typename A>
+bool operator<=(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    return (!(lhs > rhs));
+}
+
+template <typename T, typename A>
+bool operator>(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    for (typename Vector<T, A>::size_type i = 0; i < lhs.size() && i < rhs.size(); i++)
+    {
+        if (lhs[i] != rhs[i])
+            return (lhs[i] > rhs[i]);
+    }
+    if (lhs.size() == rhs.size())
+        return (false);
+    return (lhs.size() > rhs.size());
+}
+
+template <typename T, typename A>
+bool operator>=(const Vector<T, A>& lhs, const Vector<T, A>& rhs)
+{
+    return (!(lhs < rhs));
+}
+
+/*==========================================================*/
+/*####################  Other functions  ###################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+void swap(Vector<T, A>& lhs, Vector<T, A>& rhs)
+{
+    lhs.swap(rhs);
 }
 
 };

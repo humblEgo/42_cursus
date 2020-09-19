@@ -1,10 +1,24 @@
+#include "SampleClass.hpp"
 #include "container_test.hpp"
 #include <vector>
 #include "Vector.hpp"
 
-namespace 
-{
-}
+/*==========================================================*/
+/*####################  g_data for test  ###################*/
+/*==========================================================*/
+
+std::string g_data[10] = {
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+};
 
 void printTest(std::string test_name)
 {
@@ -22,6 +36,33 @@ void printResult(bool result)
     {
         std::cout << "\033[1;31;40m" << "fail" << "\033[0m" << std::endl;
     }
+}
+
+bool checkResultManually(void)
+{
+    std::string input;
+    bool ret;
+
+    while (true)
+    {
+        std::cout<<"Is it success? Input y or n! : ";
+        std::cin >> input;
+        if (input == "y")
+        {
+            ret = true;
+            break;
+        }
+        else if (input == "n")
+        {
+            ret = false;
+            break;
+        }
+        else
+            std::cout<<"Invalid input"<<std::endl;
+    }
+    std::cout << "\033[1;36;40m" << std::setw(50);
+    std::cout << " " << "\033[0m";
+    return (ret);
 }
 
 void vectorTest()
@@ -124,9 +165,9 @@ void vectorTest()
 
     //TODO: 여기없는 연산자들 추가
 
-    /*==========================================================*/
-    /*####################  Vector Test  #######################*/
-    /*==========================================================*/
+/*==========================================================*/
+/*####################  Vector Test  #######################*/
+/*==========================================================*/
     
     printTest("[Vector]Default constructor");
     {
@@ -135,6 +176,10 @@ void vectorTest()
         res = true;
         printResult(res);
     }
+
+    /*==========================================================*/
+    /*############### Iterator functions  tests ################*/
+    /*==========================================================*/
 
     printTest("[Vector]begin test");
     {
@@ -151,6 +196,10 @@ void vectorTest()
         printResult(res);
     }
 
+    /*==========================================================*/
+    /*####################  Capacity tests  ####################*/
+    /*==========================================================*/
+    
     printTest("[Vector]size test");
     {
         ft::Vector<int> my_vec(5);
@@ -171,8 +220,6 @@ void vectorTest()
         ft::Vector<int> my_vec(5);
         std::vector<int> std_vec(5);
 
-        // std::cout<<std_vec.max_size()<<" ";
-        // std::cout<<my_vec.max_size()<<" ";
         if (std_vec.max_size() == my_vec.max_size())
             res = true;
         else
@@ -181,28 +228,7 @@ void vectorTest()
         printResult(res);
     }
 
-    //TODO: reserve test
-    
-    printTest("[Vector]insert test");
-    {
-        ft::Vector<int> my_vec(5);
-        std::vector<int> std_vec(5);
-
-        my_vec.reserve(100);
-        ft::Vector<int>::Iterator itr;
-
-        std::cout<<std::endl;
-        itr = my_vec.begin();
-        for (int i = 0; i < 5; i++)
-            itr = my_vec.insert(itr, 42 + i);
-        for (ft::Vector<int>::Iterator tmp = my_vec.begin(); tmp < my_vec.end(); tmp++)
-                    std::cout<<*tmp<<" ";
-            std::cout<<std::endl;
-        res = true;
-        printResult(res);
-    }
-
-    printTest("[Vector]empty test");
+        printTest("[Vector]empty test");
     {
         ft::Vector<int> empty_vec;
         ft::Vector<int> noempty_vec(5);
@@ -225,24 +251,316 @@ void vectorTest()
             res = false;
         printResult(res);
     }
+    //TODO: reserve test
+
+    /*==========================================================*/
+    /*#################  Element Access tests ##################*/
+    /*==========================================================*/
+
+    printTest("[Vector]operator[] test");
+    {
+        ft::Vector<int> int_vec(1);
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<int>::Iterator itr = int_vec.begin();
+            int_vec.insert(itr, 42 + i);
+        }
+        res = true;
+        for (int i = 0; i < 5; i++)
+        {
+            if (int_vec[i] != 42 + 4 - i)
+            {
+                res = false;
+                break;
+            }
+        }
+        if (res)
+        {
+            ft::Vector<SampleClass> class_vec(1);
+
+            for (size_t i = 0; i < 5; i++)
+            {
+                ft::Vector<SampleClass>::Iterator itr = class_vec.begin();
+                class_vec.insert(itr, SampleClass(g_data[i]));
+            }
+            std::string tmp[5];
+            for (size_t i = 0; i < 5; i++)
+                tmp[i] = g_data[4 - i];
+            for (size_t i = 0; i < 5; i++)
+            {
+                // std::cout<<" "<<class_vec[i].getName()<<" ";
+                // std::cout<<tmp[i];
+                if (class_vec[i].getName() != tmp[i])
+                {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        printResult(res);
+    }
+
+    printTest("[Vector]at test");
+    {
+        ft::Vector<int> int_vec(1);
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<int>::Iterator itr = int_vec.begin();
+            itr = int_vec.insert(itr, 42 + i);
+        }
+        res = true;
+        for (int i = 0; i < 5; i++)
+        {
+            if (int_vec.at(i) != 42 + 4 - i)
+            {
+                res = false;
+                break;
+            }
+        }
+        if (res)
+        {
+            ft::Vector<SampleClass> class_vec(1);
+
+            for (size_t i = 0; i < 5; i++)
+            {
+                ft::Vector<SampleClass>::Iterator itr2 = class_vec.begin();
+                class_vec.insert(itr2, SampleClass(g_data[i]));
+            }
+            std::string tmp[5];
+            for (size_t i = 0; i < 5; i++)
+                tmp[i] = g_data[4 - i];
+            for (size_t i = 0; i < 5; i++)
+            {
+                // std::cout<<" "<<class_vec[i].getName()<<" ";
+                // std::cout<<tmp[i];
+                if (class_vec.at(i).getName() != tmp[i])
+                {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        printResult(res);
+    }
+
+    printTest("[Vector]front test");
+    {
+        ft::Vector<SampleClass> my_vec(1);
+        std::vector<SampleClass> std_vec(1);
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            ft::Vector<SampleClass>::Iterator itr = my_vec.begin();
+            my_vec.insert(itr, SampleClass(g_data[i]));
+        }
+        for (size_t i = 0; i < 5; i++)
+        {
+            std::vector<SampleClass>::iterator itr2 = std_vec.begin();
+            std_vec.insert(itr2, SampleClass(g_data[i]));
+        }
+
+        if (my_vec.front().getName() == std_vec.front().getName())
+            res = true;
+        else
+            res = false;
+        printResult(res);
+    }
+
+    printTest("[Vector]back test");
+    {
+        ft::Vector<SampleClass> my_vec(1);
+        std::vector<SampleClass> std_vec(1);
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            ft::Vector<SampleClass>::Iterator itr = my_vec.begin();
+            my_vec.insert(itr, SampleClass(g_data[i]));
+        }
+        for (size_t i = 0; i < 5; i++)
+        {
+            std::vector<SampleClass>::iterator itr2 = std_vec.begin();
+            std_vec.insert(itr2, SampleClass(g_data[i]));
+        }
+
+        if (my_vec.back().getName() == std_vec.back().getName())
+            res = true;
+        else
+            res = false;
+        printResult(res);
+    }
+    
+    /*==========================================================*/
+    /*####################  Assign tests  ######################*/
+    /*==========================================================*/
+    
+    printTest("[Vector]Assign test");
+    {
+        ft::Vector<SampleClass> vec;
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<SampleClass>::Iterator itr = vec.begin();
+            vec.insert(itr, SampleClass(g_data[i]));
+        }
+        std::cout<<vec<<std::endl;
+
+        std::cout<<"After assign(2, SampleClass(g_data[o])"<<std::endl;
+        vec.assign(2, SampleClass(g_data[0]));
+        
+        std::cout<<vec<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
+
+    /*==========================================================*/
+    /*####################  Modifiers tests  ###################*/
+    /*==========================================================*/
+    
+    printTest("[Vector]insert test");
+    {
+        ft::Vector<int> my_vec(5);
+        std::vector<int> std_vec(5);
+
+        my_vec.reserve(100);
+        std_vec.reserve(100);
+        ft::Vector<int>::Iterator itr;
+        std::vector<int>::iterator std_itr;
+
+        std::cout<<std::endl;
+        std::cout<<"my_vec : ";
+        itr = my_vec.begin();
+        for (int i = 0; i < 5; i++)
+            itr = my_vec.insert(itr, 42 + i);
+        for (ft::Vector<int>::Iterator tmp = my_vec.begin(); tmp < my_vec.end(); tmp++)
+                    std::cout<<*tmp<<" ";
+        std::cout<<std::endl;
+
+        std::cout<<"std_vec: ";
+        std_itr = std_vec.begin();
+        for (int i = 0; i < 5; i++)
+            std_itr = std_vec.insert(std_itr, 42 + i);
+        for (std::vector<int>::iterator tmp = std_vec.begin(); tmp < std_vec.end(); tmp++)
+                    std::cout<<*tmp<<" ";
+        std::cout<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
 
    printTest("[Vector]erase test");
     {
         //TODO: 아무 인자없이 vector를 만들었을 때 nullptr이 아니라 할당된 포인터를 가지게끔해야함.
-        // ft::Vector<int> vec;
-        // ft::Vector<int>::Iterator itr = vec.begin();
-        ft::Vector<int> vec(1);
+        ft::Vector<int> vec;
+        ft::Vector<int>::Iterator itr = vec.begin();
+        // ft::Vector<int> vec(1);
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<int>::Iterator itr = vec.begin();
+            itr = vec.insert(itr, 42 + i);
+        }
+        std::cout<<std::endl;
+        std::cout<<vec<<std::endl;
+        vec.erase(vec.begin());
+        std::cout<<"After erase begin itr"<<std::endl;
+        std::cout<<vec<<std::endl;
+        vec.erase(vec.begin(), (vec.begin()) + 1);
+        std::cout<<"After erase begin itr to next of begin itr"<<std::endl;
+        std::cout<<vec<<std::endl;
+        
+        res = checkResultManually();
+        printResult(res);
+    }
+
+    printTest("[Vector]swap test");
+    {
+        ft::Vector<int> vec1(1);
+        ft::Vector<int> vec2(1);
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<int>::Iterator itr = vec1.begin();
+            vec1.insert(itr, 42 + i);
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            ft::Vector<int>::Iterator itr = vec2.begin();
+            vec2.insert(itr, i);
+        }
+
+        std::cout<<std::endl;
+        std::cout<<"vec1"<<std::endl;
+        std::cout<<vec1<<std::endl;
+        std::cout<<"vec2"<<std::endl;
+        std::cout<<vec2<<std::endl;
+
+        std::cout<<"After swap"<<std::endl;
+        vec1.swap(vec2);
+        std::cout<<"vec1"<<std::endl;
+        std::cout<<vec1<<std::endl;
+        std::cout<<"vec2"<<std::endl;
+        std::cout<<vec2<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
+
+    printTest("[Vector]clear test");
+    {
+        ft::Vector<int> vec;
 
         for (int i = 0; i < 5; i++)
         {
             ft::Vector<int>::Iterator itr = vec.begin();
             vec.insert(itr, 42 + i);
         }
+        std::cout<<std::endl;
         std::cout<<vec<<std::endl;
-        vec.erase(vec.begin());
-        std::cout<<"After erase begin"<<std::endl;
+        vec.clear();
+        std::cout<<"After clear"<<std::endl;
         std::cout<<vec<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
+
+    printTest("[Vector]push_back test");
+    {
+        ft::Vector<SampleClass> vec;
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<SampleClass>::Iterator itr = vec.begin();
+            vec.insert(itr, SampleClass(g_data[i]));
+        }
+        std::cout<<vec<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
+
+    printTest("[Vector]pop_back test");
+    {
+        ft::Vector<SampleClass> vec;
+
+        for (int i = 0; i < 5; i++)
+        {
+            ft::Vector<SampleClass>::Iterator itr = vec.begin();
+            vec.insert(itr, SampleClass(g_data[i]));
+        }
+        std::cout<<vec<<std::endl;
+
+        std::cout<<"After pop_back 2 times"<<std::endl;
+        for (size_t i = 0; i < 2; i++)
+            vec.pop_back();
         
+        std::cout<<vec<<std::endl;
+
+        res = checkResultManually();
         printResult(res);
     }
 
