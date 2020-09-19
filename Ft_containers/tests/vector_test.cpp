@@ -27,8 +27,7 @@ void vectorTest()
     
     printTest("default constructor");
     {
-        std::vector<int> stdvec;
-        ft::Vector<int> myvec;
+        ft::Vector<SampleClass> myvec;
         res = true;
         printResult(res);
         //TODO: other contsturctors

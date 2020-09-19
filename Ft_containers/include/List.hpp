@@ -92,7 +92,7 @@ public:
         /*==========================================================*/
 
         reference operator*() const { return (this->_ptr->element); };
-        pointer operator->() const { return (&(this->_ptr->element); };
+        pointer operator->() const { return (&(this->_ptr->element)); };
 
         ConstIterator& operator++() { this->_ptr = this->_ptr->next; return (*this); };
         ConstIterator operator++(int) { ConstIterator itr(this->_ptr); this->_ptr = this->_ptr->_next; return (itr); };
@@ -218,6 +218,106 @@ List<T, A>::List(const allocator_type& alloc)
     _li->prev = _li;
     _li->next = _li;
 }
+
+// template <typename T, typename A>
+// List<T, A>::List(size_type n, const value_type& val, const allocator_type& alloc)
+// : _allocator(alloc), _size(0)
+// {
+//     _li = new ListNode<T>(nullptr, nullptr, value_type());
+//     _li->prev = _li;
+//     _li->next = _li;
+//     insert(begin(), n, val);
+// }
+
+template <typename T, typename A>
+List<T, A>::~List()
+{
+    // clear();
+    delete[] _li;
+}
+
+/*==========================================================*/
+/*#################  Iterator functions  ###################*/
+/*==========================================================*/
+
+// Iterator begin();
+// ConstIterator begin() const;
+// Iterator end();
+// ConstIterator end() const;
+// reverse_iterator rbegin();
+// const_reverse_iterator rbegin() const;
+// reverse_iterator rend();
+// const_reverse_iterator rend() const;
+
+/*==========================================================*/
+/*######################  Capacity  ########################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+List<T, A>::size_type List<T, A>::size() const
+{
+    return (_size);
+}
+
+// size_type max_size() const;
+// bool empty() const;
+
+/*==========================================================*/
+/*####################  Element access  ####################*/
+/*==========================================================*/
+
+// reference front();
+// const_reference front() const;
+// reference back();
+// const_reference back() const;
+
+/*==========================================================*/
+/*#######################  Assign  #########################*/
+/*==========================================================*/
+
+// template <typename InputIterator>
+// void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+// void assign (size_type n, const value_type& val);
+
+/*==========================================================*/
+/*######################  Modifiers  #######################*/
+/*==========================================================*/
+
+// void push_front(const value_type& val);
+// void push_back(const value_type& val);
+// void pop_front();
+// void pop_back();
+// Iterator insert(Iterator position, const value_type& val);
+// void insert(Iterator position, size_type n, const value_type& val);
+// template <typename InputIterator>
+// void insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+// Iterator erase(Iterator position);
+// Iterator erase(Iterator first, Iterator last);
+// void resize(size_type n, value_type val = value_type());
+// void swap(List& other);
+// void clear();
+
+/*==========================================================*/
+/*####################  Operations  ########################*/
+/*==========================================================*/
+
+// void merge(List& other);
+// template <typename Compare>
+// void merge(List& other, Compare comp);
+// void splice(Iterator position, List& other);
+// void splice(Iterator position, List& other, Iterator it);
+// void splice(Iterator position, List& other, Iterator first, Iterator last);
+// void remove(const value_type& val);
+// template <typename UnaryPredicate>
+// void remove_if(UnaryPredicate p);
+// void reverse();
+// void unique();
+// template <typename BinaryPredicate>
+// void unique(BinaryPredicate binary_pred);
+// void sort();
+// template <typename Compare>
+// void sort(Compare comp);
+
 
 };
 
