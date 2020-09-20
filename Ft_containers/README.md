@@ -148,3 +148,4 @@ https://en.cppreference.com/w/cpp/container/list
 
 iterator 유형이 bidirectional로 바뀌었다. 이에 유의해서 코딩할 것.
 
+[리스트 소스코드](http://cs.brown.edu/~jwicks/libstdc++/html_user/stl__list_8h-source.html) 를 참고하면 begin()은  `return this->_M_impl._M_node._M_next;`처럼 구현되어있고, end()는 `return this->_M_impl._M_node;`처럼 구현되어 있는 것을 확인할 수 있다. 내부적으로 가장 마지막 node 주소를 저장해두되 그 node의 next는 begin node와 연결되도록 하여 일종의 **환형태**로 연결하는 것이 좋겠다.

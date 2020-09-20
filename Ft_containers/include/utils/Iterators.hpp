@@ -255,7 +255,7 @@ public:
     
     bool operator==(const ListBaseIterator& rhs) const { return (_ptr == rhs._ptr); };
     bool operator!=(const ListBaseIterator& rhs) const { return (_ptr != rhs._ptr); };
-    ListNode<T> *base() const { return this->_ptr; };
+    ListNode<T> *base() const { return (this->_ptr); };
 };
 
 };

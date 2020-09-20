@@ -14,9 +14,12 @@ void listTest()
 
     printTest("[List] Constructor test");
     {
-        // ft::List<SampleClass> my_list;
-        ft::List<int> my_list;
+        ft::List<SampleClass> my_list;
+        ft::List<int> my_list1;
+        // std::list<SampleClass> std_list;
+
         res = true;
         printResult(res);
     }
+
 }
