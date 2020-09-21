@@ -393,5 +393,86 @@ void listTest()
         printResult(res);
     }
 
+    printTest("[List] resize test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        
+        my_list.resize(3, SampleClass("iwoo"));
+        std_list.resize(3, SampleClass("iwoo"));
+        // printCase("Resize(3, SampleClass(\"iwoo\")");
+        // std::cout<<my_list<<std::endl;
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+
+        if (res)
+        {
+            my_list.resize(10, SampleClass("iwoo"));
+            std_list.resize(10, SampleClass("iwoo"));
+            // printCase("Resize(10, SampleClass(\"iwoo\")");
+            // std::cout<<my_list<<std::endl;
+
+            my_itr = my_list.begin();
+            std_itr = std_list.begin();
+            for (size_t i = 0; i < std_list.size(); i++)
+            {
+                if (*(my_itr++) != *(std_itr++))
+                {
+                    res = false;
+                    break;
+                }
+                res = true;
+            }
+        }
+        printResult(res);
+    }
+
+    printTest("[List] swap test");
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_front(SampleClass(data[i]));
+        for (int i = 0; i < 3; i++)
+            my_list2.push_back(SampleClass(data[i]));
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        ft::List<SampleClass>::Iterator my_itr2 = my_list2.begin();
+
+        std::cout<<std::endl;
+        std::cout<<"[my_list]"<<std::endl;
+        std::cout<<my_list<<std::endl;
+
+        std::cout<<"[my_list2]"<<std::endl;
+        std::cout<<my_list2<<std::endl;
+               
+        printCase("my_list.swap(std_list)");
+        my_list.swap(my_list2);
+        std::cout<<"[my_list]"<<std::endl;
+        std::cout<<my_list<<std::endl;
+        std::cout<<"[std_list]"<<std::endl;
+        std::cout<<my_list2<<std::endl;
+
+        res = checkResultManually();
+        printResult(res);
+    }
+
+
 
 }

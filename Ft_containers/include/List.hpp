@@ -178,8 +178,8 @@ public:
     void insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()); 
     Iterator erase(Iterator position);
     Iterator erase(Iterator first, Iterator last);
-    // void resize(size_type n, value_type val = value_type());
-    // void swap(List& other);
+    void resize(size_type n, value_type val = value_type());
+    void swap(List& other);
     void clear();
 
     /*==========================================================*/
@@ -507,8 +507,27 @@ List<T, A>::erase(typename List<T, A>::Iterator first, typename List<T, A>::Iter
     return (Iterator(end_node));
 }
 
-// void resize(size_type n, value_type val = value_type());
-// void swap(List& other);
+template <typename T, typename A>
+void List<T, A>::resize(size_type n, value_type val)
+{
+    if (n < size())
+    {
+        Iterator it = begin();
+        for (size_t i = 0; i < n; i++)
+            ++it;
+        erase(it, end());
+    }
+    else if (n > size())
+        insert(end(), n - size(), val);
+}
+
+template <typename T, typename A>
+void List<T, A>::swap(List& other)
+{
+    std::swap(_allocator, other._allocator);
+    std::swap(_size, other._size);
+    std::swap(_li, other._li);
+}
 
 template <typename T, typename A>
 void List<T, A>::clear()
@@ -562,7 +581,7 @@ std::ostream& operator<<(std::ostream& out, const List<T, A>& li)
 std::ostream& operator<<(std::ostream& out, const List<SampleClass>& li)
 {
     std::cout<<"============================================="<<std::endl;
-    out<<"size    : "<<li.size()<<"\n";
+    out<<"size  : "<<li.size()<<"\n";
     std::cout<<"member: [ ";
     for (List<SampleClass>::ConstIterator it = li.begin(); it != li.end(); ++it)
         std::cout<<(*it).getName()<<" ";
