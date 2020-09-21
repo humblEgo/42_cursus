@@ -518,7 +518,6 @@ void listTest()
     }
 
     printTest("[List] merge(list& other, Compare comp) test");
-
     {
         ft::List<SampleClass> my_list;
         ft::List<SampleClass> my_list2;
@@ -552,5 +551,129 @@ void listTest()
         }
         printResult(res);
     }
+
+    printTest("[List] splice(p, other) test");
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+        std::list<SampleClass> std_list;
+        std::list<SampleClass> std_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            my_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            std_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        my_list.splice(++my_itr, my_list2);
+        std_list.splice(++std_itr, std_list2);
+
+        my_itr = my_list.begin();
+        std_itr = std_list.begin();
+        // std::cout<<my_list<<std::endl;
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        if (my_list2.size() != std_list2.size())
+            res = false;
+        printResult(res);
+    }
+
+    printTest("[List] splice(p, other, itr) test");
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+        std::list<SampleClass> std_list;
+        std::list<SampleClass> std_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            my_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            std_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        my_list.splice(++my_itr, my_list2, my_list2.begin());
+        std_list.splice(++std_itr, std_list2, std_list2.begin());
+
+        my_itr = my_list.begin();
+        std_itr = std_list.begin();
+        // std::cout<<my_list<<std::endl;
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        if (my_list2.size() != std_list2.size())
+            res = false;
+        printResult(res);
+    }
+
+    printTest("[List] splice(p, other, first, last) test");
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+        std::list<SampleClass> std_list;
+        std::list<SampleClass> std_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            my_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            std_list2.push_back(SampleClass("!>splice-" + data[i] + "<!"));
+
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        my_list.splice(++my_itr, my_list2, my_list2.begin(), --(my_list2.end()));
+        std_list.splice(++std_itr, std_list2, std_list2.begin(), --(std_list2.end()));
+
+        my_itr = my_list.begin();
+        std_itr = std_list.begin();
+        // std::cout<<my_list<<std::endl;
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        if (my_list2.size() != std_list2.size())
+            res = false;
+        printResult(res);
+    }
+
 
 }

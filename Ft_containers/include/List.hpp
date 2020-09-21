@@ -189,9 +189,10 @@ public:
     void merge(List& other);
     template <typename Compare>
     void merge(List& other, Compare comp);
-    // void splice(Iterator position, List& other);
-    // void splice(Iterator position, List& other, Iterator it);
-    // void splice(Iterator position, List& other, Iterator first, Iterator last);
+    //TODO: operations
+    void splice(Iterator position, List& other);
+    void splice(Iterator position, List& other, Iterator it);
+    void splice(Iterator position, List& other, Iterator first, Iterator last);
     // void remove(const value_type& val);
     // template <typename UnaryPredicate>
     // void remove_if(UnaryPredicate p);
@@ -609,9 +610,27 @@ void List<T, A>::merge(List& other, Compare comp)
     other_list->prev = other_list;
 }
 
-// void splice(Iterator position, List& other);
-// void splice(Iterator position, List& other, Iterator it);
-// void splice(Iterator position, List& other, Iterator first, Iterator last);
+template <typename T, typename A>
+void List<T, A>::splice(Iterator position, List& other)
+{
+    insert(position, other.begin(), other.end());
+    other.clear();
+}
+
+template <typename T, typename A>
+void List<T, A>::splice(Iterator position, List& other, Iterator it)
+{
+    insert(position, *it);
+    other.erase(it);
+}
+
+template <typename T, typename A>
+void List<T, A>::splice(Iterator position, List& other, Iterator first, Iterator last)
+{
+    insert(position, first, last);
+    other.erase(first, last);
+}
+
 // void remove(const value_type& val);
 // template <typename UnaryPredicate>
 // void remove_if(UnaryPredicate p);
