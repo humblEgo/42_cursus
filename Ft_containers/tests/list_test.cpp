@@ -166,6 +166,104 @@ void listTest()
     }
 
     /*==========================================================*/
+    /*####################  Element test  ######################*/
+    /*==========================================================*/
+    
+    printTest("[List] front test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        if (my_list.front() == std_list.front())
+            res = true;
+        else
+            res = false;
+        
+        printResult(res);
+    }
+
+    printTest("[List] back test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        if (my_list.back() == std_list.back())
+            res = true;
+        else
+            res = false;
+        
+        printResult(res);
+    }
+
+    /*==========================================================*/
+    /*####################  Assign test  #######################*/
+    /*==========================================================*/
+    
+    printTest("[List] Assign test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        my_list.assign(5, SampleClass("iwoo!"));
+        std_list.assign(5, SampleClass("iwoo!"));
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        if (my_list.size() != std_list.size())
+            res = false;
+        printResult(res);
+    }
+
+    printTest("[List] Assign(begin, end) test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        ft::List<SampleClass> new_my_list;
+        std::list<SampleClass> new_std_list;
+        new_my_list.assign(my_list.begin(), my_list.end());
+        new_std_list.assign(std_list.begin(), std_list.end());
+        ft::List<SampleClass>::Iterator my_itr = new_my_list.begin();
+        std::list<SampleClass>::iterator std_itr = new_std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+
+    /*==========================================================*/
     /*####################  Modifier test  #####################*/
     /*==========================================================*/
     
@@ -236,7 +334,62 @@ void listTest()
             }
             res = true;
         }
-        
+        printResult(res);
+    }
+
+    printTest("[List] pop_front test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        // 비어있는 list를 pop_front하면? segfault 나야한다!
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        my_list.pop_front();
+        std_list.pop_front();
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+    printTest("[List] pop_back test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        // 비어있는 list를 pop_back하면? segfault 나야한다!
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        my_list.pop_back();
+        std_list.pop_back();
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
         printResult(res);
     }
 

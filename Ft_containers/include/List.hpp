@@ -151,18 +151,18 @@ public:
     /*####################  Element access  ####################*/
     /*==========================================================*/
 
-    // reference front();
-    // const_reference front() const;
-    // reference back();
-    // const_reference back() const;
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
 
     /*==========================================================*/
     /*#######################  Assign  #########################*/
     /*==========================================================*/
     
-    // template <typename InputIterator>
-    // void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
-    // void assign (size_type n, const value_type& val);
+    template <typename InputIterator>
+    void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+    void assign (size_type n, const value_type& val);
 
     /*==========================================================*/
     /*######################  Modifiers  #######################*/
@@ -305,18 +305,48 @@ bool List<T, A>::empty() const
 /*####################  Element access  ####################*/
 /*==========================================================*/
 
-// reference front();
-// const_reference front() const;
-// reference back();
-// const_reference back() const;
+template <typename T, typename A>
+typename List<T, A>::reference List<T, A>::front()
+{
+    return (_li->next->element);
+}
+
+template <typename T, typename A>
+typename List<T, A>::const_reference List<T, A>::front() const
+{
+    return (_li->next->element);
+}
+
+template <typename T, typename A>
+typename List<T, A>::reference List<T, A>::back()
+{
+    return (_li->prev->element);
+}
+template <typename T, typename A>
+typename List<T, A>::const_reference List<T, A>::back() const
+{
+    return (_li->prev->element);
+}
 
 /*==========================================================*/
 /*#######################  Assign  #########################*/
 /*==========================================================*/
 
-// template <typename InputIterator>
-// void assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
-// void assign (size_type n, const value_type& val);
+template <typename T, typename A>
+template <typename InputIterator>
+void List<T, A>::assign(InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter) 
+{
+    (void)isIter;
+    clear();
+    insert(begin(), first, last);
+}
+
+template <typename T, typename A>
+void List<T, A>::assign(size_type n, const value_type& val)
+{
+    clear();
+    insert(begin(), n, val);
+}
 
 /*==========================================================*/
 /*######################  Modifiers  #######################*/
@@ -334,9 +364,17 @@ void List<T, A>::push_back(const value_type& val)
     insert(end(), val);
 }
 
-// void pop_front();
-// void pop_back();
-// Iterator insert(Iterator position, const value_type& val);
+template <typename T, typename A>
+void List<T, A>::pop_front()
+{
+    erase(begin());
+}
+
+template <typename T, typename A>
+void List<T, A>::pop_back()
+{
+    erase(--(end()));
+}
 
 template <typename T, typename A>
 typename List<T, A>::Iterator List<T, A>::insert(Iterator position, const value_type& val)
