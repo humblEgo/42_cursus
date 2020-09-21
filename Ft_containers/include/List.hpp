@@ -198,8 +198,8 @@ public:
     void remove_if(UnaryPredicate pred);
 
     //TODO: operations
-    // void reverse();
-    // void unique();
+    void reverse();
+    void unique();
     // template <typename BinaryPredicate>
     // void unique(BinaryPredicate binary_pred);
     // void sort();
@@ -659,7 +659,25 @@ void List<T, A>::remove_if(UnaryPredicate pred)
     }
 }
 
-// void reverse();
+template <typename T, typename A>
+void List<T, A>::reverse()
+{
+    ListNode<T> *cur = _li->next;
+    ListNode<T> *next;
+
+    while (cur != _li)
+    {
+        next = cur->next;
+        cur->next = cur->prev;
+        cur->prev = next;
+
+        cur = next;
+    }
+    next = cur->next;
+    cur->next = cur->prev;
+    cur->prev = next;
+}
+
 // void unique();
 // template <typename BinaryPredicate>
 // void unique(BinaryPredicate binary_pred);

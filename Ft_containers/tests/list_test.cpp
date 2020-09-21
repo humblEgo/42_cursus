@@ -738,19 +738,42 @@ void listTest()
         std_list.push_back(SampleClass("five"));
         std_list.push_back(SampleClass("five"));
 
-        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
-        std::list<SampleClass>::iterator std_itr = std_list.begin();
-
         // remove 'five'
         my_list.remove_if(unary_predicator);
         std_list.remove_if(unary_predicator);
         
-        // remove no memeber which is not in list.
-        my_list.remove(SampleClass("Non_Member"));
-        std_list.remove(SampleClass("Non_member"));
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
 
-        my_itr = my_list.begin();
-        std_itr = std_list.begin();
+    printTest("[List] reverse test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+
+        // std::cout<<my_list<<std::endl;
+        // std::cout<<"After reverse"<<std::endl;
+        my_list.reverse();
+        std_list.reverse();
+        // std::cout<<my_list<<std::endl;
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
         for (size_t i = 0; i < std_list.size(); i++)
         {
             if (*(my_itr++) != *(std_itr++))
