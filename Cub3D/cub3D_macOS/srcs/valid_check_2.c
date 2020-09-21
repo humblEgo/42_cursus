@@ -6,7 +6,7 @@
 /*   By: iwoo <iwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 02:03:33 by iwoo              #+#    #+#             */
-/*   Updated: 2020/06/04 11:56:57 by iwoo             ###   ########.fr       */
+/*   Updated: 2020/09/21 21:42:45 by iwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ int		is_valid_rgb_values(char **rgb)
 {
 	int	rgb_value;
 	int count;
-
+	
+	count = 0;
+	while (rgb[count])
+		count++;
+	if (count != 3)
+		return (FALSE);
 	count = -1;
 	while (rgb[++count])
 	{
-		if (count > 2)
-			return (FALSE);
 		if (!is_num_str(rgb[count]))
 			return (FALSE);
 		rgb_value = ft_atoi(rgb[count]);
