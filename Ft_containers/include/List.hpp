@@ -74,15 +74,14 @@ public:
         typedef T* pointer;
         typedef typename A::difference_type difference_type;
         typedef typename A::value_type value_type;
-        //TODO: random access 맞는지 확인 필요
-        typedef std::random_access_iterator_tag iterator_category;
+        typedef std::bidirectional_iterator_tag iterator_category;
 
     public:
         /*==========================================================*/
         /*####################  Canonical form   ###################*/
         /*==========================================================*/
 
-        ConstIterator() : ListBaseIterator<T>(nullptr) {};
+        ConstIterator() : ListBaseIterator<T>(NULL) {};
         ConstIterator(const ConstIterator &other) : ListBaseIterator<T>(other._ptr) {};
         ConstIterator(const Iterator& other) : ListBaseIterator<T>(other.base()) {};
         ConstIterator(ListNode<T> *ptr) : ListBaseIterator<T>(ptr) {};
