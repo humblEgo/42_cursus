@@ -63,7 +63,7 @@ public:
     /*####################  Canonical form   ###################*/
     /*==========================================================*/
     ReverseBaseIterator(Iter base) : _base(base) {};
-    ReverseBaseIterator(const ReverseBaseIterator& rhs) { this->_ptr = rhs._ptr; };
+    ReverseBaseIterator(const ReverseBaseIterator& rhs) { this->_base= rhs._base; };
     virtual ~ReverseBaseIterator() {};
     ReverseBaseIterator& operator=(const ReverseBaseIterator& rhs)
     {
@@ -103,7 +103,7 @@ public:
     /*####################  Canonical form   ###################*/
     /*==========================================================*/
 
-    ReverseIterator() : ReverseBaseIterator<Iter>(nullptr) {};
+    ReverseIterator() : ReverseBaseIterator<Iter>(NULL) {};
     explicit ReverseIterator(iterator_type base) : ReverseBaseIterator<Iter>(base) {};
     ReverseIterator(const reverse_iterator& other) : ReverseBaseIterator<Iter>(other._base) {};
     ~ReverseIterator() {};

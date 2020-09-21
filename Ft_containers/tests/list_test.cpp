@@ -13,6 +13,11 @@ static bool unary_predicator(SampleClass target)
     return (target.getName() == "five");
 }
 
+static bool binary_predicate(SampleClass first, SampleClass second)
+{
+    return (first.getName() == second.getName());
+}
+
 
 void listTest()
 {
@@ -81,51 +86,57 @@ void listTest()
         printResult(res);
     }
 
-    // printTest("[List] end test");
-    // {
-    //     ft::List<SampleClass> my_list;
-    //     std::list<SampleClass> std_list;
-    //     for (int i = 0; i < 5; i++)
-    //         my_list.insert(my_list.end(), SampleClass(data[i]));
+    printTest("[List] end test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
         
-    //     for (int i = 0; i < 5; i++)
-    //         std_list.insert(std_list.end(), SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
         
-    //     ft::List<SampleClass>::Iterator my_itr = my_list.end();
-    //     std::list<SampleClass>::iterator std_itr = std_list.end();
-    //     for (size_t i = 0; i < 5; i++)
-    //     {
-    //         std::cout<<*my_itr<<" ";
-    //         if (*my_itr != *std_itr)
-    //         {
-    //             res = false;
-    //             break;
-    //         }
-    //         res = true;
-    //         --my_itr;
-    //         --std_itr;
-    //     }
-    //     printResult(res);
-    // }
+        ft::List<SampleClass>::Iterator my_itr = my_list.end();
+        std::list<SampleClass>::iterator std_itr = std_list.end();
+        for (size_t i = 0; i < 5; i++)
+        {
+            --my_itr;
+            --std_itr;
+            if (*my_itr != *std_itr)
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
 
-    // printTest("[List] rbegin test");
-    // {
-    //     ft::List<SampleClass> my_list;
-    //     std::list<SampleClass> std_list;
-    //     for (int i = 0; i < 5; i++)
-    //         my_list.insert(my_list.end(), SampleClass(data[i]));
+    printTest("[List] rbegin && rend test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(data[i]);
         
-    //     for (int i = 0; i < 5; i++)
-    //         std_list.insert(std_list.end(), SampleClass(data[i]));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(data[i]);
         
-    //     ft::List<SampleClass>::reverse_iterator ritr;
-    //     ritr = my_list.rbegin();
-    //     std::cout<<*ritr<<std::endl;
-    //     std::cout<<*(++ritr)<<std::endl;
-    //     std::cout<<*(++ritr)<<std::endl;
-    //     printResult(res);
-    // }
-
+        ft::List<SampleClass>::reverse_iterator my_ritr = my_list.rbegin();
+        std::list<SampleClass>::reverse_iterator std_ritr = std_list.rbegin();
+        for (; my_ritr != my_list.rend() && std_ritr != std_list.rend(); ++my_ritr, ++std_ritr)
+        {
+            if (*my_ritr != *std_ritr)
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        if (my_list.size() != std_list.size())
+            res = false;
+        printResult(res);
+    }
     
     /*==========================================================*/
     /*###################  Capacity tests  #####################*/
@@ -774,6 +785,104 @@ void listTest()
 
         ft::List<SampleClass>::Iterator my_itr = my_list.begin();
         std::list<SampleClass>::iterator std_itr = std_list.begin();
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+    printTest("[List] unique test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        my_list.push_front(SampleClass("five"));
+        my_list.push_back(SampleClass("five"));
+        my_list.push_back(SampleClass("five"));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        std_list.push_front(SampleClass("five"));
+        std_list.push_back(SampleClass("five"));
+        std_list.push_back(SampleClass("five"));
+
+        my_list.unique();
+        std_list.unique();
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+    printTest("[List] unique test");
+    {
+        ft::List<SampleClass> my_list;
+        std::list<SampleClass> std_list;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        my_list.push_front(SampleClass("five"));
+        my_list.push_back(SampleClass("five"));
+        my_list.push_back(SampleClass("five"));
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        std_list.push_front(SampleClass("five"));
+        std_list.push_back(SampleClass("five"));
+        std_list.push_back(SampleClass("five"));
+
+        my_list.unique(binary_predicate);
+        std_list.unique(binary_predicate);
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+    printTest("[List] sort test");
+    {
+        ft::List<int> my_list;
+        std::list<int> std_list;
+        
+        my_list.push_back(1);
+        std_list.push_back(1);
+        my_list.push_back(5);
+        std_list.push_back(5);
+        my_list.push_back(42);
+        std_list.push_back(42);
+        my_list.push_back(-42);
+        std_list.push_back(-42);
+        my_list.push_back(777);
+        std_list.push_back(777);
+
+        my_list.sort();
+        std_list.sort();
+        ft::List<int>::Iterator my_itr = my_list.begin();
+        std::list<int>::iterator std_itr = std_list.begin();
         for (size_t i = 0; i < std_list.size(); i++)
         {
             if (*(my_itr++) != *(std_itr++))

@@ -197,14 +197,13 @@ public:
     template <typename UnaryPredicate>
     void remove_if(UnaryPredicate pred);
 
-    //TODO: operations
     void reverse();
     void unique();
-    // template <typename BinaryPredicate>
-    // void unique(BinaryPredicate binary_pred);
-    // void sort();
-    // template <typename Compare>
-    // void sort(Compare comp);
+    template <typename BinaryPredicate>
+    void unique(BinaryPredicate binary_pred);
+    void sort();
+    template <typename Compare>
+    void sort(Compare comp);
 
 };
 
@@ -278,8 +277,17 @@ typename List<T, A>::const_reverse_iterator List<T, A>::rbegin() const
     return (const_reverse_iterator(end()));
 }
 
-// reverse_iterator rend();
-// const_reverse_iterator rend() const;
+template <typename T, typename A>
+typename List<T, A>::reverse_iterator List<T, A>::rend()
+{
+    return (reverse_iterator(begin()));
+}
+
+template <typename T, typename A>
+typename List<T, A>::const_reverse_iterator List<T, A>::rend() const
+{
+    return (const_reverse_iterator(begin()));
+}
 
 /*==========================================================*/
 /*######################  Capacity  ########################*/
@@ -678,19 +686,178 @@ void List<T, A>::reverse()
     cur->prev = next;
 }
 
-// void unique();
-// template <typename BinaryPredicate>
-// void unique(BinaryPredicate binary_pred);
-// void sort();
-// template <typename Compare>
-// void sort(Compare comp);
+template <typename T, typename A>
+void List<T, A>::unique()
+{
+    for (Iterator it = ++(begin()); it != end();)
+    {
+        Iterator tmp = it;
+        --tmp;
+        if (*tmp == *it)
+            it = erase(it);
+        else
+            ++it;
+    }
+}
 
-//TODO: 구현
+template <typename T, typename A>
+template <typename BinaryPredicate>
+void List<T, A>::unique(BinaryPredicate binary_pred)
+{
+    for (Iterator it = (++(begin())); it != end();)
+    {
+        Iterator tmp = it;
+        --tmp;
+        if (binary_pred(*tmp, *it))
+            it = erase(it);
+        else
+            ++it;
+    }
+}
+
+template <typename T, typename A>
+void List<T, A>::sort()
+{
+    ListNode<T> *a = _li->next;
+    ListNode<T> *b = a->next;
+    ListNode<T> *prev;
+    ListNode<T> *next;
+    while (b != _li)
+    {
+        if (b->element < a->element)
+        {
+            prev = a->prev;
+            next = b->next;
+
+            prev->next = b;
+            b->prev = prev;
+
+            b->next = a;
+            a->prev = b;
+
+            a->next = next;
+            next->prev = a;
+            // reset a and b to begin 
+            a = _li->next;
+            b = a->next;
+        }
+        else
+        {
+            a = a->next;
+            b = b->next;
+        }
+    }
+}
+
+template <typename T, typename A>
+template <typename Compare>
+void List<T, A>::sort(Compare comp)
+{
+    ListNode<T> *a = _li->next;
+    ListNode<T> *b = a->next;
+    ListNode<T> *prev;
+    ListNode<T> *next;
+    while (b != _li)
+    {
+        if (comp(b->element, a->element))
+        {
+            prev = a->prev;
+            next = b->next;
+
+            prev->next = b;
+            b->prev = prev;
+
+            b->next = a;
+            a->prev = b;
+
+            a->next = next;
+            next->prev = a;
+            // reset a and b to begin 
+            a = _li->next;
+            b = a->next;
+        }
+        else
+        {
+            a = a->next;
+            b = b->next;
+        }
+    }
+}
 
 /*==========================================================*/
 /*######################  Operators  #######################*/
 /*==========================================================*/
 
+template <typename T, typename A>
+bool operator==(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    if (lhs.size() != rhs.size())
+        return (false);
+    typename List<T, A>::const_iterator lit = lhs.begin();
+    typename List<T, A>::const_iterator rit = rhs.begin();
+    for (; lit != lhs.end() && rit != rhs.end(); ++lit, ++rit)
+    {
+        if (*lit != *rit)
+            return (false);
+    }
+    return (true);
+}
+
+template <typename T, typename A>
+bool operator!=(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    return (!(lhs == rhs));
+}
+
+template <typename T, typename A>
+bool operator<(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    typename List<T, A>::const_iterator lit = lhs.begin();
+    typename List<T, A>::const_iterator rit = rhs.begin();
+
+    if (lhs.size() == rhs.size())
+        return (false);
+    for (; lit != lhs.end() && rit != rhs.end(); ++lit, ++rit)
+    {
+        if (*lit != *rit)
+            return (*lit < *rit);
+    }
+    return (lhs.size() < rhs.size());
+}
+
+template <typename T, typename A>
+bool operator>(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    typename List<T, A>::const_iterator lit = lhs.begin();
+    typename List<T, A>::const_iterator rit = rhs.begin();
+
+    if (lhs.size() == rhs.size())
+        return (false);
+    for (; lit != lhs.end() && rit != rhs.end(); ++lit, ++rit)
+    {
+        if (*lit != *rit)
+            return (*lit > *rit);
+    }
+    return (lhs.size() > rhs.size());
+}
+
+template <typename T, typename A>
+bool operator<=(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    return (!(lhs > rhs));
+}
+
+template <typename T, typename A>
+bool operator>=(const List<T, A>& lhs, const List<T, A>& rhs)
+{
+    return (!(lhs < rhs));
+}
+
+template <typename T, typename A>
+void swap(List<T, A>& lhs, List<T, A>& rhs)
+{
+    lhs.swap(rhs);
+}
 
 /*==========================================================*/
 /*####################  Custom for test  ###################*/
