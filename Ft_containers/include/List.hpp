@@ -1,4 +1,5 @@
 #ifndef LIST_HPP
+
 # define LIST_HPP
 
 # include <memory>
@@ -121,7 +122,6 @@ public:
     List(InputIterator first, InputIterator last, 
                     const allocator_type& alloc = allocator_type(),
                     typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
-    //NOTE: different part --> virtual
     virtual ~List();
     List(const List& rhs);
     List &operator=(const List& rhs);
@@ -134,10 +134,10 @@ public:
     ConstIterator begin() const;
     Iterator end();
     ConstIterator end() const;
-    // reverse_iterator rbegin();
-    // const_reverse_iterator rbegin() const;
-    // reverse_iterator rend();
-    // const_reverse_iterator rend() const;
+    reverse_iterator rbegin();
+    const_reverse_iterator rbegin() const;
+    reverse_iterator rend();
+    const_reverse_iterator rend() const;
 
     /*==========================================================*/
     /*######################  Capacity  ########################*/
@@ -145,7 +145,7 @@ public:
 
     size_type size() const;
     size_type max_size() const;
-    // bool empty() const;
+    bool empty() const;
     
     /*==========================================================*/
     /*####################  Element access  ####################*/
@@ -168,14 +168,14 @@ public:
     /*######################  Modifiers  #######################*/
     /*==========================================================*/
 
-    // void push_front(const value_type& val);
-    // void push_back(const value_type& val);
-    // void pop_front();
-    // void pop_back();
-    // Iterator insert(Iterator position, const value_type& val);
+    void push_front(const value_type& val);
+    void push_back(const value_type& val);
+    void pop_front();
+    void pop_back();
+    Iterator insert(Iterator position, const value_type& val);
     void insert(Iterator position, size_type n, const value_type& val);
-    // template <typename InputIterator>
-    // void insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()); 
+    template <typename InputIterator>
+    void insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()); 
     Iterator erase(Iterator position);
     Iterator erase(Iterator first, Iterator last);
     // void resize(size_type n, value_type val = value_type());
@@ -205,8 +205,6 @@ public:
 
 };
 
-//TODO: 전역 함수들
-
 /*==========================================================*/
 /*####################  Canonical form   ###################*/
 /*==========================================================*/
@@ -220,15 +218,15 @@ List<T, A>::List(const allocator_type& alloc)
     _li->next = _li;
 }
 
-// template <typename T, typename A>
-// List<T, A>::List(size_type n, const value_type& val, const allocator_type& alloc)
-// : _allocator(alloc), _size(0)
-// {
-//     _li = new ListNode<T>(nullptr, nullptr, value_type());
-//     _li->prev = _li;
-//     _li->next = _li;
-//     insert(begin(), n, val);
-// }
+template <typename T, typename A>
+List<T, A>::List(size_type n, const value_type& val, const allocator_type& alloc)
+: _allocator(alloc), _size(0)
+{
+    _li = new ListNode<T>(nullptr, nullptr, value_type());
+    _li->prev = _li;
+    _li->next = _li;
+    insert(begin(), n, val);
+}
 
 template <typename T, typename A>
 List<T, A>::~List()
@@ -265,8 +263,18 @@ typename List<T, A>::ConstIterator List<T, A>::end() const
     return (ConstIterator(_li));
 }
 
-// reverse_iterator rbegin();
-// const_reverse_iterator rbegin() const;
+template <typename T, typename A>
+typename List<T, A>::reverse_iterator List<T, A>::rbegin()
+{
+    return (reverse_iterator(end()));
+}
+
+template <typename T, typename A>
+typename List<T, A>::const_reverse_iterator List<T, A>::rbegin() const
+{
+    return (const_reverse_iterator(end()));
+}
+
 // reverse_iterator rend();
 // const_reverse_iterator rend() const;
 
@@ -287,7 +295,11 @@ typename List<T, A>::size_type List<T, A>::max_size() const
     return (static_cast<size_type>(-1 / sizeof(ListNode<T>)));
 }
 
-// bool empty() const;
+template <typename T, typename A>
+bool List<T, A>::empty() const
+{
+    return (_size == 0);
+}
 
 /*==========================================================*/
 /*####################  Element access  ####################*/
@@ -310,18 +322,28 @@ typename List<T, A>::size_type List<T, A>::max_size() const
 /*######################  Modifiers  #######################*/
 /*==========================================================*/
 
-// void push_front(const value_type& val);
-// void push_back(const value_type& val);
+template <typename T, typename A>
+void List<T, A>::push_front(const value_type& val)
+{
+    insert(begin(), val);
+}
+
+template <typename T, typename A>
+void List<T, A>::push_back(const value_type& val)
+{
+    insert(end(), val);
+}
+
 // void pop_front();
 // void pop_back();
 // Iterator insert(Iterator position, const value_type& val);
 
-// template <typename T, typename A>
-// List<T, A>::Iterator List<T, A>::insert(Iterator position, const value_type& val)
-// {
-//     insert(position, 1, val);
-//     return (--position);
-// }
+template <typename T, typename A>
+typename List<T, A>::Iterator List<T, A>::insert(Iterator position, const value_type& val)
+{
+    insert(position, 1, val);
+    return (--position);
+}
 
 template <typename T, typename A>
 void List<T, A>::insert(Iterator position, size_type n, const value_type& val)
@@ -368,8 +390,52 @@ void List<T, A>::insert(Iterator position, size_type n, const value_type& val)
     _size += n;
 }
 
-// template <typename InputIterator>
-// void insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
+template <typename T, typename A>
+template <typename InputIterator>
+void List<T, A>::insert(Iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter)
+{
+    (void)isIter;
+    ListNode<T> *start;
+    ListNode<T> *cur;
+    ListNode<T> *next;
+    size_type nb = 0;
+
+    for (InputIterator it = first; it != last; ++it)
+    {
+        if (nb == 0)
+        {
+            start = new ListNode<T>(nullptr, nullptr, *it);
+            cur = start;
+            next = cur;
+        }
+        else
+        {
+            next = new ListNode<T>(cur, nullptr, *it);
+            cur->next = next;
+            cur = cur->next;
+        }
+        nb++;
+    }
+    if (!nb)
+        return ;
+    if (_size == 0)
+    {
+        _li->next = start;
+        start->prev = _li;
+        next->next = _li;
+        _li->prev = next;
+    }
+    else
+    {
+        ListNode<T> *pos = position.base();
+        ListNode<T> *prev = pos->prev;
+        prev->next = start;
+        start->prev = prev;
+        next->next = pos;
+        pos->prev = next;
+    }
+    _size += nb;
+}
 
 template <typename T, typename A>
 typename List<T, A>::Iterator List<T, A>::erase(typename List<T, A>::Iterator position)
@@ -432,6 +498,40 @@ void List<T, A>::clear()
 // void sort();
 // template <typename Compare>
 // void sort(Compare comp);
+
+/*==========================================================*/
+/*######################  Operators  #######################*/
+/*==========================================================*/
+
+
+/*==========================================================*/
+/*####################  Custom for test  ###################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const List<T, A>& li)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<li.size()<<"\n";
+    std::cout<<"member: [ ";
+    for (typename List<T, A>::ConstIterator it = li.begin(); it != li.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
+
+std::ostream& operator<<(std::ostream& out, const List<SampleClass>& li)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<li.size()<<"\n";
+    std::cout<<"member: [ ";
+    for (List<SampleClass>::ConstIterator it = li.begin(); it != li.end(); ++it)
+        std::cout<<(*it).getName()<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
 
 
 };

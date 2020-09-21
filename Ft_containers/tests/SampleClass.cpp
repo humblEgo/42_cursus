@@ -4,7 +4,7 @@
 /*#####################  Constructor  ######################*/
 /*==========================================================*/
 
-SampleClass::SampleClass() : _name("default name") {}
+SampleClass::SampleClass() : _name("NoName") {}
 SampleClass::SampleClass(const std::string& name): _name(name) {}
 
 /*==========================================================*/
@@ -67,6 +67,12 @@ bool                SampleClass::operator>(const SampleClass& other) const
 bool                SampleClass::operator>=(const SampleClass& other) const
 {
     return (this->_name >= other._name);
+}
+
+std::ostream& operator<<(std::ostream& out, const SampleClass& other)
+{
+    out<<other.getName();
+    return (out);
 }
 
 /*==========================================================*/

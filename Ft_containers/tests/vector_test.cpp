@@ -3,22 +3,22 @@
 #include <vector>
 #include "Vector.hpp"
 
-std::string g_data[10] = {
- "one",
- "two",
- "three",
- "four",
- "five",
- "six",
- "seven",
- "eight",
- "nine",
- "ten"
-};
-
 void vectorTest()
 {
-    bool res;
+    std::string data[10] = {
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "ten"
+    };
+
+        bool res;
     std::cout<<"\033[1;37;41m"<<"Vector test start"<<"\033[0m"<<std::endl;
 
     /*==========================================================*/
@@ -232,11 +232,11 @@ void vectorTest()
             for (size_t i = 0; i < 5; i++)
             {
                 ft::Vector<SampleClass>::Iterator itr = class_vec.begin();
-                class_vec.insert(itr, SampleClass(g_data[i]));
+                class_vec.insert(itr, SampleClass(data[i]));
             }
             std::string tmp[5];
             for (size_t i = 0; i < 5; i++)
-                tmp[i] = g_data[4 - i];
+                tmp[i] = data[4 - i];
             for (size_t i = 0; i < 5; i++)
             {
                 // std::cout<<" "<<class_vec[i].getName()<<" ";
@@ -276,11 +276,11 @@ void vectorTest()
             for (size_t i = 0; i < 5; i++)
             {
                 ft::Vector<SampleClass>::Iterator itr2 = class_vec.begin();
-                class_vec.insert(itr2, SampleClass(g_data[i]));
+                class_vec.insert(itr2, SampleClass(data[i]));
             }
             std::string tmp[5];
             for (size_t i = 0; i < 5; i++)
-                tmp[i] = g_data[4 - i];
+                tmp[i] = data[4 - i];
             for (size_t i = 0; i < 5; i++)
             {
                 // std::cout<<" "<<class_vec[i].getName()<<" ";
@@ -303,12 +303,12 @@ void vectorTest()
         for (size_t i = 0; i < 5; i++)
         {
             ft::Vector<SampleClass>::Iterator itr = my_vec.begin();
-            my_vec.insert(itr, SampleClass(g_data[i]));
+            my_vec.insert(itr, SampleClass(data[i]));
         }
         for (size_t i = 0; i < 5; i++)
         {
             std::vector<SampleClass>::iterator itr2 = std_vec.begin();
-            std_vec.insert(itr2, SampleClass(g_data[i]));
+            std_vec.insert(itr2, SampleClass(data[i]));
         }
 
         if (my_vec.front().getName() == std_vec.front().getName())
@@ -326,12 +326,12 @@ void vectorTest()
         for (size_t i = 0; i < 5; i++)
         {
             ft::Vector<SampleClass>::Iterator itr = my_vec.begin();
-            my_vec.insert(itr, SampleClass(g_data[i]));
+            my_vec.insert(itr, SampleClass(data[i]));
         }
         for (size_t i = 0; i < 5; i++)
         {
             std::vector<SampleClass>::iterator itr2 = std_vec.begin();
-            std_vec.insert(itr2, SampleClass(g_data[i]));
+            std_vec.insert(itr2, SampleClass(data[i]));
         }
 
         if (my_vec.back().getName() == std_vec.back().getName())
@@ -352,12 +352,12 @@ void vectorTest()
         for (int i = 0; i < 5; i++)
         {
             ft::Vector<SampleClass>::Iterator itr = vec.begin();
-            vec.insert(itr, SampleClass(g_data[i]));
+            vec.insert(itr, SampleClass(data[i]));
         }
         std::cout<<vec<<std::endl;
 
-        std::cout<<"After assign(2, SampleClass(g_data[o])"<<std::endl;
-        vec.assign(2, SampleClass(g_data[0]));
+        std::cout<<"After assign(2, SampleClass(data[o])"<<std::endl;
+        vec.assign(2, SampleClass(data[0]));
         
         std::cout<<vec<<std::endl;
 
@@ -485,7 +485,7 @@ void vectorTest()
         for (int i = 0; i < 5; i++)
         {
             ft::Vector<SampleClass>::Iterator itr = vec.begin();
-            vec.insert(itr, SampleClass(g_data[i]));
+            vec.insert(itr, SampleClass(data[i]));
         }
         std::cout<<vec<<std::endl;
 
@@ -500,7 +500,7 @@ void vectorTest()
         for (int i = 0; i < 5; i++)
         {
             ft::Vector<SampleClass>::Iterator itr = vec.begin();
-            vec.insert(itr, SampleClass(g_data[i]));
+            vec.insert(itr, SampleClass(data[i]));
         }
         std::cout<<vec<<std::endl;
 

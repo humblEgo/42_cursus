@@ -19,6 +19,11 @@ void printResult(bool result)
     }
 }
 
+void printCase(std::string case_text)
+{
+    std::cout<<"\n"<<"\033[1;33m"<<"[Case] "<<case_text<<"\033[0m"<<std::endl;
+}
+
 bool checkResultManually(void)
 {
     std::string input;

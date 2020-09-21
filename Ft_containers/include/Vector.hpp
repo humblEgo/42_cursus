@@ -539,37 +539,6 @@ void Vector<T, A>::pop_back()
 }
 
 /*==========================================================*/
-/*####################  Custom for test  ###################*/
-/*==========================================================*/
-
-template <typename T, typename A>
-std::ostream& operator<<(std::ostream& out, const Vector<T, A>& vec)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"size    : "<<vec.size()<<"\n";
-    out<<"capacity: "<<vec.capacity()<<"\n";
-    std::cout<<"member: [";
-    for (typename Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
-        std::cout<<*it<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-std::ostream& operator<<(std::ostream& out, const Vector<SampleClass>& vec)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"size    : "<<vec.size()<<"\n";
-    out<<"capacity: "<<vec.capacity()<<"\n";
-    std::cout<<"member: [";
-    for (Vector<SampleClass>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
-        std::cout<<(*it).getName()<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-/*==========================================================*/
 /*######################  Operators  #######################*/
 /*==========================================================*/
 
@@ -640,6 +609,38 @@ void swap(Vector<T, A>& lhs, Vector<T, A>& rhs)
     lhs.swap(rhs);
 }
 
+/*==========================================================*/
+/*####################  Custom for test  ###################*/
+/*==========================================================*/
+
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const Vector<T, A>& vec)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [ ";
+    for (typename Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
+
+std::ostream& operator<<(std::ostream& out, const Vector<SampleClass>& vec)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [ ";
+    for (Vector<SampleClass>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<(*it).getName()<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
+
 };
+
 
 #endif
