@@ -186,9 +186,9 @@ public:
     /*####################  Operations  ########################*/
     /*==========================================================*/
     
-    // void merge(List& other);
-    // template <typename Compare>
-    // void merge(List& other, Compare comp);
+    void merge(List& other);
+    template <typename Compare>
+    void merge(List& other, Compare comp);
     // void splice(Iterator position, List& other);
     // void splice(Iterator position, List& other, Iterator it);
     // void splice(Iterator position, List& other, Iterator first, Iterator last);
@@ -539,9 +539,76 @@ void List<T, A>::clear()
 /*####################  Operations  ########################*/
 /*==========================================================*/
 
-// void merge(List& other);
-// template <typename Compare>
-// void merge(List& other, Compare comp);
+// 이미 정렬된 두 리스트를 오름차순으로 결합. 정렬되어있지 않으면 merge() 함수는 실패하며 오류가 발생.
+template <typename T, typename A>
+void List<T, A>::merge(List& other)
+{
+    ListNode<T> *original_cur = begin().base();
+    ListNode<T> *other_cur = other.begin().base();
+    ListNode<T> *other_next;
+    ListNode<T> *original_prev;
+
+    while (other_cur != other._li)
+    {
+        if (original_cur == end().base() || other_cur->element < original_cur->element)
+        {
+            other_next = other_cur->next;
+            original_prev = original_cur->prev;
+
+            original_prev->next = other_cur;
+            other_cur->prev = original_prev;
+
+            other_cur->next = original_cur;
+            original_cur->prev = other_cur;
+
+            other_cur = other_next;
+        }
+        else
+            original_cur = original_cur->next;
+    }
+    _size += other._size;
+    other._size = 0;
+    // remove elements of 'other', without destroying them.
+    ListNode<T> *other_list = other._li;
+    other_list->next = other_list;
+    other_list->prev = other_list;
+}
+
+template <typename T, typename A>
+template <typename Compare>
+void List<T, A>::merge(List& other, Compare comp)
+{
+    ListNode<T> *original_cur = begin().base();
+    ListNode<T> *other_cur = other.begin().base();
+    ListNode<T> *other_next;
+    ListNode<T> *original_prev;
+
+    while (other_cur != other._li)
+    {
+        if (original_cur == end().base() || comp(other_cur->element, original_cur->element))
+        {
+            other_next = other_cur->next;
+            original_prev = original_cur->prev;
+
+            original_prev->next = other_cur;
+            other_cur->prev = original_prev;
+
+            other_cur->next = original_cur;
+            original_cur->prev = other_cur;
+
+            other_cur = other_next;
+        }
+        else
+            original_cur = original_cur->next;
+    }
+    _size += other._size;
+    other._size = 0;
+    // remove elements of 'other', without destroying them.
+    ListNode<T> *other_list = other._li;
+    other_list->next = other_list;
+    other_list->prev = other_list;
+}
+
 // void splice(Iterator position, List& other);
 // void splice(Iterator position, List& other, Iterator it);
 // void splice(Iterator position, List& other, Iterator first, Iterator last);

@@ -3,6 +3,10 @@
 #include <list>
 #include "List.hpp"
 
+static bool comparator(SampleClass first, SampleClass second)
+{
+    return (first.getName() < second.getName());
+}
 
 void listTest()
 {
@@ -474,5 +478,79 @@ void listTest()
     }
 
 
+    /*==========================================================*/
+    /*####################  Operations  #######################*/
+    /*==========================================================*/
+    
+    printTest("[List] merge test");
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+        std::list<SampleClass> std_list;
+        std::list<SampleClass> std_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            my_list2.push_back(SampleClass(data[i]));
+
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            std_list2.push_back(SampleClass(data[i]));
+
+        my_list.merge(my_list2);
+        std_list.merge(std_list2);
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
+
+    printTest("[List] merge(list& other, Compare comp) test");
+
+    {
+        ft::List<SampleClass> my_list;
+        ft::List<SampleClass> my_list2;
+        std::list<SampleClass> std_list;
+        std::list<SampleClass> std_list2;
+
+        for (int i = 0; i < 5; i++)
+            my_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            my_list2.push_back(SampleClass(data[i]));
+
+        for (int i = 0; i < 5; i++)
+            std_list.push_back(SampleClass(data[i]));
+        for (int i = 5; i < 8; i++)
+            std_list2.push_back(SampleClass(data[i]));
+
+        my_list.merge(my_list2, comparator);
+        std_list.merge(std_list2, comparator);
+
+        ft::List<SampleClass>::Iterator my_itr = my_list.begin();
+        std::list<SampleClass>::iterator std_itr = std_list.begin();
+
+        for (size_t i = 0; i < std_list.size(); i++)
+        {
+            if (*(my_itr++) != *(std_itr++))
+            {
+                res = false;
+                break;
+            }
+            res = true;
+        }
+        printResult(res);
+    }
 
 }
