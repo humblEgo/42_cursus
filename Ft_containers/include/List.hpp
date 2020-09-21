@@ -186,16 +186,18 @@ public:
     /*####################  Operations  ########################*/
     /*==========================================================*/
     
+
     void merge(List& other);
     template <typename Compare>
     void merge(List& other, Compare comp);
-    //TODO: operations
     void splice(Iterator position, List& other);
     void splice(Iterator position, List& other, Iterator it);
     void splice(Iterator position, List& other, Iterator first, Iterator last);
-    // void remove(const value_type& val);
-    // template <typename UnaryPredicate>
-    // void remove_if(UnaryPredicate p);
+    void remove(const value_type& val);
+    template <typename UnaryPredicate>
+    void remove_if(UnaryPredicate pred);
+
+    //TODO: operations
     // void reverse();
     // void unique();
     // template <typename BinaryPredicate>
@@ -631,9 +633,32 @@ void List<T, A>::splice(Iterator position, List& other, Iterator first, Iterator
     other.erase(first, last);
 }
 
-// void remove(const value_type& val);
-// template <typename UnaryPredicate>
-// void remove_if(UnaryPredicate p);
+
+template <typename T, typename A>
+void List<T, A>::remove(const value_type& val)
+{
+    for (Iterator it = begin(); it != end();)
+    {
+        if (*it == val)
+            it = erase(it);
+        else
+            ++it;
+    }
+}
+
+template <typename T, typename A>
+template <typename UnaryPredicate>
+void List<T, A>::remove_if(UnaryPredicate pred)
+{
+    for (Iterator it = begin(); it != end();)
+    {
+        if (pred(*it))
+            it = erase(it);
+        else
+            ++it;
+    }
+}
+
 // void reverse();
 // void unique();
 // template <typename BinaryPredicate>
@@ -641,6 +666,8 @@ void List<T, A>::splice(Iterator position, List& other, Iterator first, Iterator
 // void sort();
 // template <typename Compare>
 // void sort(Compare comp);
+
+//TODO: 구현
 
 /*==========================================================*/
 /*######################  Operators  #######################*/
