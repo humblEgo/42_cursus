@@ -1,4 +1,7 @@
+#include "SampleClass.hpp"
 #include "container_test.hpp"
+#include "Stack.hpp"
+#include <stack>
 
 // static bool comparator(SampleClass first, SampleClass second)
 // {
@@ -18,20 +21,20 @@
 
 void stackTest()
 {
-    // std::string data[10] = {
-    //     "one",
-    //     "two",
-    //     "three",
-    //     "four",
-    //     "five",
-    //     "six",
-    //     "seven",
-    //     "eight",
-    //     "nine",
-    //     "ten"
-    // };
+    std::string data[10] = {
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "ten"
+    };
 
-    // bool res;
+    bool res;
     std::cout<<"\033[1;37;41m"<<"Stack test start"<<"\033[0m"<<std::endl;
 
     /*==========================================================*/
@@ -40,15 +43,16 @@ void stackTest()
 
     printTest("[Stack] Constructor test");
     {
-        // printCase("Stack<SampleCalss> my_stack");
+        printCase("Stack<SampleCalss> my_stack");
         // ft::Stack<SampleClass> my_stack;
+        ft::Stack<int> my_stack;
         // std::cout<<my_stack<<std::endl;
 
-        // std::stack<SampleClass> std_stack;
-        // std::stack<int> std_stack;
+        std::stack<SampleClass> std_stack;
+        std::stack<int> std_stack2;
 
-        // res = checkResultManually();
-        // printResult(res);
+        res = checkResultManually();
+        printResult(res);
     }
 
 }

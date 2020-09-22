@@ -120,7 +120,7 @@ public:
                     const allocator_type& alloc = allocator_type(),
                     typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
     virtual ~List();
-    List(const List& rhs);
+    List(const List& other);
     List &operator=(const List& rhs);
 
     /*==========================================================*/
@@ -225,6 +225,24 @@ List<T, A>::List(size_type n, const value_type& val, const allocator_type& alloc
     _li->prev = _li;
     _li->next = _li;
     insert(begin(), n, val);
+}
+
+template <typename T, typename A>
+List<T, A>::List(const List<T, A>& other)
+: _allocator(other._allocator), _size(0)
+{
+    _li = new ListNode<T>(nullptr, nullptr, value_type());
+    _li->prev = _li;
+    _li->next = _li;
+    insert(begin(), other.begin(), other.end());
+}
+
+template <typename T, typename A>
+List<T, A>& List<T, A>::operator=(const List<T, A>& rhs)
+{
+    clear();
+    insert(begin(), rhs.begin(), rhs.end());
+    return (*this);
 }
 
 template <typename T, typename A>

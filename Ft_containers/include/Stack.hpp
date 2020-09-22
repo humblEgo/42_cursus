@@ -37,9 +37,7 @@ public:
     /*==========================================================*/
 
     reference top();
-    // value_type& top();
     const_reference top() const;
-    // const value_type& top() const;
 
     /*==========================================================*/
     /*######################  Capacity  ########################*/
@@ -97,23 +95,11 @@ typename Stack<T, C>::reference Stack<T, C>::top()
     return (_cont.back());
 }
 
-// template <typename T, typename C>
-// typename Stack<T, C>::value_type& Stack<T, C>::top()
-// {
-//     return (_cont.back());
-// }
-
 template <typename T, typename C>
 typename Stack<T, C>::const_reference Stack<T, C>::top() const
 {
     return (_cont.back());
 }
-
-// template <typename T, typename C>
-// const typename Stack<T, C>::value_type& Stack<T, C>::top() const
-// {
-//     return (_cont.back());
-// }
 
 /*==========================================================*/
 /*######################  Capacity  ########################*/
