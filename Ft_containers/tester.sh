@@ -45,15 +45,15 @@ do
 done
 
 if [ $answer -eq 1 ]; then
-	test="list_test"
+	test="list"
 elif [ $answer -eq 2 ]; then
-	test="vector_test"
+	test="vector"
 elif [ $answer -eq 3 ]; then
-	test="stack_test"
+	test="stack"
 elif [ $answer -eq 4 ]; then
-	test="queue_test"
+	test="queue"
 elif [ $answer -eq 5 ]; then
-	test="map_test"
+	test="map"
 fi;
 
-make N=$test && ./container_tests && make fclean
+make && ./container_tests $test &&make fclean

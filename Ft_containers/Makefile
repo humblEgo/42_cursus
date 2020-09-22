@@ -4,7 +4,7 @@ CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
-MAIN_FILES = main list_test vector_test stack_test container_test SampleClass
+MAIN_FILES = main list_test vector_test stack_test container_test queue_test SampleClass
 
 SRCS_PATH = $(MAIN_FILES)
 VPATH := .:srcs:tests

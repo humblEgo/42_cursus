@@ -808,8 +808,8 @@ bool operator==(const List<T, A>& lhs, const List<T, A>& rhs)
 {
     if (lhs.size() != rhs.size())
         return (false);
-    typename List<T, A>::const_iterator lit = lhs.begin();
-    typename List<T, A>::const_iterator rit = rhs.begin();
+    typename List<T, A>::ConstIterator lit = lhs.begin();
+    typename List<T, A>::ConstIterator rit = rhs.begin();
     for (; lit != lhs.end() && rit != rhs.end(); ++lit, ++rit)
     {
         if (*lit != *rit)
@@ -827,8 +827,8 @@ bool operator!=(const List<T, A>& lhs, const List<T, A>& rhs)
 template <typename T, typename A>
 bool operator<(const List<T, A>& lhs, const List<T, A>& rhs)
 {
-    typename List<T, A>::const_iterator lit = lhs.begin();
-    typename List<T, A>::const_iterator rit = rhs.begin();
+    typename List<T, A>::ConstIterator lit = lhs.begin();
+    typename List<T, A>::ConstIterator rit = rhs.begin();
 
     if (lhs.size() == rhs.size())
         return (false);
@@ -843,8 +843,8 @@ bool operator<(const List<T, A>& lhs, const List<T, A>& rhs)
 template <typename T, typename A>
 bool operator>(const List<T, A>& lhs, const List<T, A>& rhs)
 {
-    typename List<T, A>::const_iterator lit = lhs.begin();
-    typename List<T, A>::const_iterator rit = rhs.begin();
+    typename List<T, A>::ConstIterator lit = lhs.begin();
+    typename List<T, A>::ConstIterator rit = rhs.begin();
 
     if (lhs.size() == rhs.size())
         return (false);

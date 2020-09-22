@@ -1,16 +1,16 @@
-#ifndef STACK_HPP
-# define STACK_HPP
+#ifndef QUEUE_HPP 
+# define QUEUE_HPP
 
 # include "List.hpp"
 
 namespace ft
 {
 /*==========================================================*/
-/*#################     Stack prototype     ################*/
+/*#################     Queue prototype     ################*/
 /*==========================================================*/
 
 template <typename T, typename C = ft::List<T> >
-class Stack
+class Queue
 {
 public:
     typedef T value_type;
@@ -27,17 +27,19 @@ public:
     /*####################  Canonical form   ###################*/
     /*==========================================================*/
     
-    explicit Stack(const container_type& cont = container_type());
-    virtual ~Stack();
-    explicit Stack(Stack const& other);
-    Stack& operator=(Stack const& other);
+    explicit Queue(const container_type& cont = container_type());
+    virtual ~Queue();
+    explicit Queue(Queue const& other);
+    Queue& operator=(Queue const& other);
 
     /*==========================================================*/
     /*####################  Element access  ####################*/
     /*==========================================================*/
 
-    reference top();
-    const_reference top() const;
+    reference front();
+    const_reference front() const;
+    reference back();
+    const_reference back() const;
 
     /*==========================================================*/
     /*######################  Capacity  ########################*/
@@ -57,12 +59,12 @@ public:
     /*######################  Operators  #######################*/
     /*==========================================================*/
     
-    friend bool operator==(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (lhs._cont == rhs._cont ); };
-    friend bool operator!=(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (!(lhs == rhs)); };
-    friend bool operator<(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (lhs._cont < rhs._cont); };
-    friend bool operator>(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (lhs._cont > rhs._cont); };
-    friend bool operator<=(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (!(lhs > rhs)); };
-    friend bool operator>=(const Stack<T, C>& lhs, const Stack<T, C>& rhs) { return (!(lhs < rhs)); };
+    friend bool operator==(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (lhs._cont == rhs._cont ); };
+    friend bool operator!=(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (!(lhs == rhs)); };
+    friend bool operator<(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (lhs._cont < rhs._cont); };
+    friend bool operator>(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (lhs._cont > rhs._cont); };
+    friend bool operator<=(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (!(lhs > rhs)); };
+    friend bool operator>=(const Queue<T, C>& lhs, const Queue<T, C>& rhs) { return (!(lhs < rhs)); };
 };
 
 /*==========================================================*/
@@ -70,33 +72,45 @@ public:
 /*==========================================================*/
 
 template <typename T, typename C>
-Stack<T, C>::Stack(const container_type& cont) : _cont(cont) {}
+Queue<T, C>::Queue(const container_type& cont) : _cont(cont) {}
 
 template <typename T, typename C>
-Stack<T, C>::Stack(Stack const &other) : _cont(other._cont) {}
+Queue<T, C>::Queue(Queue const &other) : _cont(other._cont) {}
 
 template <typename T, typename C>
-Stack<T, C>& Stack<T, C>::operator=(Stack const& other)
+Queue<T, C>& Queue<T, C>::operator=(Queue const& other)
 {
     _cont = other._cont;
     return (*this);
 }
 
 template <typename T, typename C>
-Stack<T, C>::~Stack() {}
+Queue<T, C>::~Queue() {}
 
 /*==========================================================*/
 /*####################  Element access  ####################*/
 /*==========================================================*/
 
 template <typename T, typename C>
-typename Stack<T, C>::reference Stack<T, C>::top()
+typename Queue<T, C>::reference Queue<T, C>::front()
+{
+    return (_cont.front());
+}
+
+template <typename T, typename C>
+typename Queue<T, C>::const_reference Queue<T, C>::front() const
+{
+    return (_cont.front());
+}
+
+template <typename T, typename C>
+typename Queue<T, C>::reference Queue<T, C>::back()
 {
     return (_cont.back());
 }
 
 template <typename T, typename C>
-typename Stack<T, C>::const_reference Stack<T, C>::top() const
+typename Queue<T, C>::const_reference Queue<T, C>::back() const
 {
     return (_cont.back());
 }
@@ -106,13 +120,13 @@ typename Stack<T, C>::const_reference Stack<T, C>::top() const
 /*==========================================================*/
 
 template <typename T, typename C>
-bool Stack<T, C>::empty() const
+bool Queue<T, C>::empty() const
 {
     return (_cont.empty());
 }
 
 template <typename T, typename C>
-typename Stack<T, C>::size_type Stack<T, C>::size() const
+typename Queue<T, C>::size_type Queue<T, C>::size() const
 {
     return (_cont.size());
 }
@@ -122,15 +136,15 @@ typename Stack<T, C>::size_type Stack<T, C>::size() const
 /*==========================================================*/
 
 template <typename T, typename C>
-void Stack<T, C>::push(const value_type& value)
+void Queue<T, C>::push(const value_type& value)
 {
     _cont.push_back(value);
 }
 
 template <typename T, typename C>
-void Stack<T, C>::pop()
+void Queue<T, C>::pop()
 {
-    _cont.pop_back();
+    _cont.pop_front();
 }
 
 };

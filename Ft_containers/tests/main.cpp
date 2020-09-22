@@ -15,6 +15,10 @@ int main(int argc, const char *argv[])
         listTest();
     else if (container_type == "stack")
         stackTest();
+    else if (container_type == "queue")
+        queueTest();
+    else if (container_type == "map")
+        mapTest()
     else
     {
         std::cerr<<"No match with container"<<std::endl;
