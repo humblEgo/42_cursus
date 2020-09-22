@@ -516,3 +516,10 @@ void vectorTest()
     }
 
 }
+
+int main(void)
+{
+    vectorTest();
+    
+    return (0);
+}

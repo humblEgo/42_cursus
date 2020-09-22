@@ -54,5 +54,11 @@ void stackTest()
         res = checkResultManually();
         printResult(res);
     }
+}
 
+int main(void)
+{
+    stackTest();
+    
+    return (0);
 }

@@ -896,3 +896,10 @@ void listTest()
     }
 
 }
+
+int main(void)
+{
+    listTest();
+    
+    return (0);
+}
