@@ -190,6 +190,7 @@ std::ostream& operator<<(std::ostream& out, const Stack<T, C>& stk)
     return (out);
 }
 
+template <>
 std::ostream& operator<<(std::ostream& out, const Stack<SampleClass>& stk)
 {
     std::cout<<"============================================="<<std::endl;

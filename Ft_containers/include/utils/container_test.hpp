@@ -11,6 +11,6 @@ bool checkResultManually(void);
 
 void vectorTest();
 void listTest();
-// void stackTest();
+void stackTest();
 
 #endif

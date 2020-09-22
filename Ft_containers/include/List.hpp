@@ -891,6 +891,7 @@ std::ostream& operator<<(std::ostream& out, const List<T, A>& li)
     return (out);
 }
 
+template <>
 std::ostream& operator<<(std::ostream& out, const List<SampleClass>& li)
 {
     std::cout<<"============================================="<<std::endl;
