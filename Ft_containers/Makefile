@@ -1,10 +1,10 @@
 NAME = container_tests 
-INCLUDES = -I include -I include/utils
+INCLUDES = -I include -I include/utils -I tests
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
-MAIN_FILES = main container_test vector_test list_test SampleClass
+MAIN_FILES = main container_test vector_test list_test stack_test SampleClass
 
 SRCS_PATH = $(MAIN_FILES)
 VPATH := .:srcs:tests

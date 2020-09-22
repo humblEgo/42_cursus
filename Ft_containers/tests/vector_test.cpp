@@ -3,6 +3,7 @@
 #include <vector>
 #include "Vector.hpp"
 
+
 void vectorTest()
 {
     std::string data[10] = {

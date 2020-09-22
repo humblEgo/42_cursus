@@ -1,9 +1,7 @@
 #ifndef LIST_HPP
-
 # define LIST_HPP
 
 # include <memory>
-# include <stdexcept>
 # include "Iterators.hpp"
 # include "Utils.hpp"
 
@@ -868,7 +866,7 @@ std::ostream& operator<<(std::ostream& out, const List<T, A>& li)
     std::cout<<"============================================="<<std::endl;
     out<<"size    : "<<li.size()<<"\n";
     std::cout<<"member: [ ";
-    for (typename List<T, A>::ConstIterator it = li.begin(); it != li.end(); ++it)
+    for (typename List<T, A>::Iterator it = li.begin(); it != li.end(); ++it)
         std::cout<<*it<<" ";
     std::cout<<"]"<<std::endl;
     std::cout<<"=============================================";

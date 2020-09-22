@@ -150,3 +150,14 @@ iterator 유형이 bidirectional로 바뀌었다. 이에 유의해서 코딩할 
 
 [리스트 소스코드](http://cs.brown.edu/~jwicks/libstdc++/html_user/stl__list_8h-source.html) 를 참고하면 begin()은  `return this->_M_impl._M_node._M_next;`처럼 구현되어있고, end()는 `return this->_M_impl._M_node;`처럼 구현되어 있는 것을 확인할 수 있다. 내부적으로 가장 마지막 node 주소를 저장해두되 그 node의 next는 begin node와 연결되도록 하여 일종의 **환형태**로 연결하는 것이 좋겠다.
 
+
+
+## Stack
+
+https://en.cppreference.com/w/cpp/container/stack
+
+컨테이너 어댑터에 속해있는 Stack! 왜 어댑터라는 표현이 붙었냐면, vector, deque, list container에 붙여서 붙인 컨테이너를 기반으로 stack과 같이 작동하도록 지원해주기 때문이다.
+
+마침 List를 구현해둔만큼 디폴트로는 List로 기능을 구현시키고, 다른 컨테이너도 받을 수 있도록 하자.
+
+Stack이 감싸고 있는 컨테이너에 접근할 수 있도록 friend 키워드를 써서 연산자를 오버로딩해보자. [이 링크](https://m.blog.naver.com/PostView.nhn?blogId=kks227&logNo=60205572356&proxyReferer=https:%2F%2Fwww.google.com%2F) 참고!
