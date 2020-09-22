@@ -13,7 +13,7 @@ int main(int argc, const char *argv[])
         vectorTest();
     else if (container_type == "list")
         listTest();
-    if (container_type == "stack")
+    else if (container_type == "stack")
         stackTest();
     else
     {

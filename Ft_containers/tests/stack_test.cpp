@@ -68,5 +68,4 @@ void stackTest()
         res = checkResultManually();
         printResult(res);
     }
-
 }
