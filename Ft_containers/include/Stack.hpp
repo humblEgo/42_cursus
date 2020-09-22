@@ -173,37 +173,6 @@ bool operator>=(const Stack<T, C>& lhs, const Stack<T, C>& rhs)
     return (!(lhs < rhs));
 }
 
-/*==========================================================*/
-/*####################  Custom for test  ###################*/
-/*==========================================================*/
-
-template <typename T, typename C>
-std::ostream& operator<<(std::ostream& out, const Stack<T, C>& stk)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"top   : "<<stk.top()<<"\n";
-    std::cout<<"member: [ ";
-    // for (typename Stack<T, C>::Iterator it = stk.begin(); it != stk.end(); ++it)
-    //     std::cout<<*it<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-template <>
-std::ostream& operator<<(std::ostream& out, const Stack<SampleClass>& stk)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"top   : "<<stk.top()<<"\n";
-    std::cout<<"member: [ ";
-    // for (typename Stack<SampleClass>::Iterator it = stk.begin(); it != stk.end(); ++it)
-    //     std::cout<<(*it).getName()<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-
 };
 
 #endif

@@ -3,6 +3,19 @@
 #include <vector>
 #include "Vector.hpp"
 
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const ft::Vector<T, A>& vec)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [ ";
+    for (typename ft::Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
 
 void vectorTest()
 {

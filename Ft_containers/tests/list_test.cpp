@@ -18,6 +18,18 @@ static bool binary_predicate(SampleClass first, SampleClass second)
     return (first.getName() == second.getName());
 }
 
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const ft::List<T, A>& li)
+{
+    std::cout<<"============================================="<<std::endl;
+    out<<"size    : "<<li.size()<<"\n";
+    std::cout<<"member: [ ";
+    for (typename ft::List<T, A>::ConstIterator it = li.begin(); it != li.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
 
 void listTest()
 {

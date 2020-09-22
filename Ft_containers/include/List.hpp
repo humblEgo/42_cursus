@@ -874,37 +874,6 @@ void swap(List<T, A>& lhs, List<T, A>& rhs)
     lhs.swap(rhs);
 }
 
-/*==========================================================*/
-/*####################  Custom for test  ###################*/
-/*==========================================================*/
-
-template <typename T, typename A>
-std::ostream& operator<<(std::ostream& out, const List<T, A>& li)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"size    : "<<li.size()<<"\n";
-    std::cout<<"member: [ ";
-    for (typename List<T, A>::Iterator it = li.begin(); it != li.end(); ++it)
-        std::cout<<*it<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-template <>
-std::ostream& operator<<(std::ostream& out, const List<SampleClass>& li)
-{
-    std::cout<<"============================================="<<std::endl;
-    out<<"size  : "<<li.size()<<"\n";
-    std::cout<<"member: [ ";
-    for (List<SampleClass>::ConstIterator it = li.begin(); it != li.end(); ++it)
-        std::cout<<(*it).getName()<<" ";
-    std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
-    return (out);
-}
-
-
 };
 
 #endif

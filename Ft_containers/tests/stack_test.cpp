@@ -3,6 +3,7 @@
 #include "Stack.hpp"
 #include <stack>
 
+
 // static bool comparator(SampleClass first, SampleClass second)
 // {
 //     return (first.getName() < second.getName());
@@ -18,6 +19,19 @@
 //     return (first.getName() == second.getName());
 // }
 
+template <typename T>
+std::ostream& operator<<(std::ostream& out, const ft::Stack<T>& li)
+{
+    std::cout<<"============================================="<<std::endl;
+    (void)li;
+    // out<<"size    : "<<li.size()<<"\n";
+    std::cout<<"member: [ ";
+    // for (typename ft::Stack<T>::Iterator it = li.begin(); it != li.end(); ++it)
+    //     std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    std::cout<<"=============================================";
+    return (out);
+}
 
 void stackTest()
 {
@@ -44,9 +58,9 @@ void stackTest()
     printTest("[Stack] Constructor test");
     {
         printCase("Stack<SampleCalss> my_stack");
-        // ft::Stack<SampleClass> my_stack;
-        ft::Stack<int> my_stack;
-        // std::cout<<my_stack<<std::endl;
+        ft::Stack<SampleClass> my_stack;
+        ft::Stack<int> my_stack2;
+        std::cout<<my_stack<<std::endl;
 
         std::stack<SampleClass> std_stack;
         std::stack<int> std_stack2;
