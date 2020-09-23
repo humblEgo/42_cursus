@@ -18,7 +18,7 @@ int main(int argc, const char *argv[])
     else if (container_type == "queue")
         queueTest();
     else if (container_type == "map")
-        mapTest()
+        mapTest();
     else
     {
         std::cerr<<"No match with container"<<std::endl;

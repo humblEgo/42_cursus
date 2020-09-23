@@ -258,6 +258,68 @@ public:
     ListNode<T> *base() const { return (this->_ptr); };
 };
 
+template <typename T, typename Compare>
+class BST;
+
+template <typename T>
+struct BSTNode
+{
+    T element;
+    BSTNode *parent;
+    BSTNode *left;
+    BSTNode *right;
+    BSTNode() {};
+    BSTNode(T element, BSTNode *parent, BSTNode *left, BSTNode *right)
+    : element(element), parent(parent), left(left), right(right) {};
+    BSTNode(const BSTNode& o)
+    : element(o.element), parent(o.parent), left(o.left), right(o.right) {};
+};
+
+template <typename T, typename Compare>
+class BSTBaseIterator
+{
+private:
+    BSTBaseIterator();
+protected:
+    BST<T, Compare> *_tree;
+    BSTNode<T> *_node;
+public:
+    typedef std::ptrdiff_t difference_type;
+    typedef T value_type;
+    typedef T* pointer;
+    typedef T& reference;
+    typedef std::bidirectional_iterator_tag iterator_category;
+public:
+    /*==========================================================*/
+    /*####################  Canonical form   ###################*/
+    /*==========================================================*/
+
+    BSTBaseIterator(BST<T, Compare> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {};
+    virtual ~BSTBaseIterator() {};
+    BSTBaseIterator(const BSTBaseIterator& other) : _tree(other.tree), _node(other.node) {};
+    BSTBaseIterator& operator=(const BSTBaseIterator& other)
+    { 
+        this->_tree = other._tree;
+        this->_node = other._node;
+        return (*this);
+    };
+
+    /*==========================================================*/
+    /*######################  Operators  #######################*/
+    /*==========================================================*/
+    
+    bool operator==(const BSTBaseIterator& rhs) const { return (_node == rhs._node); };
+    bool operator!=(const BSTBaseIterator& rhs) const { return (_node != rhs._node); };
+
+    /*==========================================================*/
+    /*################    Member functions    ##################*/
+    /*==========================================================*/
+    
+    BSTNode<T> *getPointer() const { return (_node); };
+    BST<T, Compare> *getTree() const { return (_tree); };
+};
+
+
 };
 
 #endif

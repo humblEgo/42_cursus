@@ -161,3 +161,34 @@ https://en.cppreference.com/w/cpp/container/stack
 마침 List를 구현해둔만큼 디폴트로는 List로 기능을 구현시키고, 다른 컨테이너도 받을 수 있도록 하자.
 
 Stack이 감싸고 있는 컨테이너에 접근할 수 있도록 friend 키워드를 써서 연산자를 오버로딩해보자. [이 링크](https://m.blog.naver.com/PostView.nhn?blogId=kks227&logNo=60205572356&proxyReferer=https:%2F%2Fwww.google.com%2F) 참고!
+
+
+
+## Map
+
+https://en.cppreference.com/w/cpp/container/map
+
+템플릿 인자만해도 4개.. 굉장히 복잡해보인다. 
+일단 value_type에 `std::pair<const Key, T>`를 쓰는 것을 주목해보자. 
+
+https://en.cppreference.com/w/cpp/utility/pair
+
+이 pair 데이터형으로 key 와 value를 짝지어넣을 수 있다.
+
+
+
+그리고 이 pair 자료들은 어떻게 엮이는가? 보통 [레드-블랙빈 트리](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)로 내부구현된다고 하는데 흠.. 굳이 이 정도로 구현할 필요는 없을 것 같다. 그냥 일반적인 Binary search tree로 구현해보자.
+
+
+
+#### Binary serach tree?
+
+이진 탐색 트리는 이진 트리 기반의 탐색을 위한 자료 구조이다. 아래 4가지 조건을 가지고 있다.
+
+1. 모든 노드의 키는 유일하다. 
+   여기서 키는 노드 안에 들어있는 데이터 값을 말하며, 중복된 데이터를 갖는 노드는 없다는 걸 뜻한다.
+2. 왼쪽 서브 트리의 키들은 루트의 키보다 작다.
+3. 오른쪽 서브 트리의 키들은 루트의 키보다 크다.
+4. 왼쪽과 오른쪽의 서브 트리도 이진 탐색트리이다.
+
+erase 구현이 상당히 복잡한데, [이 링크](https://mattlee.tistory.com/30)와 sanam, hbrulin 씨 등의 깃헙 코드를 참고하였다.
