@@ -4,30 +4,15 @@
 #include "Pair.hpp"
 #include "Map.hpp"
 
-// static bool comparator(SampleClass first, SampleClass second)
-// {
-//     return (first.getName() < second.getName());
-// }
-
-// static bool unary_predicator(SampleClass target)
-// {
-//     return (target.getName() == "five");
-// }
-
-// static bool binary_predicate(SampleClass first, SampleClass second)
-// {
-//     return (first.getName() == second.getName());
-// }
-
 template <typename Key, typename T>
 void print_stdmap(std::map<Key, T>& m)
 {
     typename std::map<Key, T>::iterator iter;
 
-    std::cout<<"std_map = { ";
+    std::cout<<"\033[1;31m"<<"std_map = { ";
     for(iter = m.begin(); iter != m.end(); iter++)
         std::cout<<iter->first<<" : "<<iter->second<<", ";
-    std::cout<<"}\n";
+    std::cout<<"} \033[0m"<<std::endl;
 }
 
 template <typename Key, typename T>
@@ -35,10 +20,10 @@ void print_mymap(typename ft::Map<Key, T>& m)
 {
     typename ft::Map<Key, T>::Iterator iter;
 
-    std::cout<<"my_map = { ";
+    std::cout<<"\033[1;34m"<<"my_map = { ";
     for(iter = m.begin(); iter != m.end(); iter++)
         std::cout<<iter->first<<" : "<<iter->second<<", ";
-    std::cout<<"}\n";
+    std::cout<<"} \033[0m"<<std::endl;
 }
 
 void mapTest()
@@ -253,6 +238,12 @@ void mapTest()
         print_stdmap(std_map);
         print_mymap(my_map);
 
+        printCase("erase pair 'no_exist_key'");
+        std_map.erase(SampleClass("no_exist_key"));
+        my_map.erase(SampleClass("no_exist_key"));
+        print_stdmap(std_map);
+        print_mymap(my_map);
+
         res = checkResultManually();
         printResult(res);
     }
@@ -276,6 +267,7 @@ void mapTest()
 
         std_map1.swap(std_map2);
         my_map1.swap(my_map2);
+        printCase("after swap\n");
 
         std::cout<<"\033[1;33m"<<"std_map1: "<<"\033[0m";
         print_stdmap(std_map1);
