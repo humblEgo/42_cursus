@@ -17,11 +17,12 @@ void printResult(bool result)
     {
         std::cout << "\033[1;31;40m" << "fail" << "\033[0m" << std::endl;
     }
+    std::cout<<std::endl;
 }
 
 void printCase(std::string case_text)
 {
-    std::cout<<"\n"<<"\033[1;33m"<<"[Case] "<<case_text<<"\033[0m"<<std::endl;
+    std::cout<<"\n"<<"\033[1;33m"<<"---> "<<case_text<<"\033[0m"<<std::endl;
 }
 
 bool checkResultManually(void)

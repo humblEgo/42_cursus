@@ -6,16 +6,29 @@
 template <typename T, typename A>
 std::ostream& operator<<(std::ostream& out, const ft::Vector<T, A>& vec)
 {
-    std::cout<<"============================================="<<std::endl;
+    std::cout<<"===============    my_vec    ================"<<std::endl;
     out<<"size    : "<<vec.size()<<"\n";
     out<<"capacity: "<<vec.capacity()<<"\n";
     std::cout<<"member: [ ";
     for (typename ft::Vector<T, A>::ConstIterator it = vec.begin(); it != vec.end(); ++it)
         std::cout<<*it<<" ";
     std::cout<<"]"<<std::endl;
-    std::cout<<"=============================================";
     return (out);
 }
+
+template <typename T, typename A>
+std::ostream& operator<<(std::ostream& out, const std::vector<T, A>& vec)
+{
+    std::cout<<"===============    std_vec    ================"<<std::endl;
+    out<<"size    : "<<vec.size()<<"\n";
+    out<<"capacity: "<<vec.capacity()<<"\n";
+    std::cout<<"member: [ ";
+    for (typename std::vector<T, A>::const_iterator it = vec.begin(); it != vec.end(); ++it)
+        std::cout<<*it<<" ";
+    std::cout<<"]"<<std::endl;
+    return (out);
+}
+
 
 void vectorTest()
 {
@@ -41,106 +54,63 @@ void vectorTest()
     
     printTest("default constructor");
     {
-        ft::Vector<SampleClass> myvec;
+        ft::Vector<SampleClass> my_vec;
+        ft::Vector<int> my_vec2(5);
+
+        my_vec.insert(my_vec.begin(), SampleClass("iwoo"));
+        my_vec.insert(my_vec.begin(), SampleClass("humblego"));
+        ft::Vector<int> my_vec3(5, 42);
+        ft::Vector<int> my_vec4(my_vec3.begin(), my_vec3.end());
+        ft::Vector<SampleClass> my_vec5(my_vec.begin(), my_vec.end());
+
+        // std::cout<<std::endl;
+        // std::cout<<my_vec<<std::endl;
+        // std::cout<<my_vec2<<std::endl;
+        // std::cout<<my_vec3<<std::endl;
+        // std::cout<<my_vec4<<std::endl;
+        // std::cout<<my_vec5<<std::endl;
+
         res = true;
         printResult(res);
-        //TODO: other contsturctors
     }
 
-    /*==========================================================*/
-    /*####################  Iterator test  #####################*/
-    /*==========================================================*/
+    printTest("copy constructor && assign operator");
+    { 
+        ft::Vector<SampleClass> orignial_vec;
+        orignial_vec.insert(orignial_vec.begin(), SampleClass(data[0]));
+        orignial_vec.insert(orignial_vec.begin(), SampleClass(data[1]));
+        orignial_vec.insert(orignial_vec.begin(), SampleClass(data[2]));
+        orignial_vec.insert(orignial_vec.begin(), SampleClass(data[3]));
+
+        std::cout<<std::endl;
+        std::cout<<"\033[1;31m"<<"👇 original vec👇"<<std::endl;
+        std::cout<<orignial_vec<<"\033[0m"<<std::endl;
+
+        ft::Vector<SampleClass> copy_vec(orignial_vec);
+        std::cout<<"\033[1;34m"<<"👇 copy vec 👇"<<std::endl;
+        std::cout<<copy_vec<<"\033[0m"<<std::endl;
+        
+        ft::Vector<SampleClass> assign_vec;
+        assign_vec = orignial_vec;
+        std::cout<<"\033[1;36m"<<"👇 assign vec 👇"<<std::endl;
+        std::cout<<assign_vec<<"\033[0m"<<std::endl;
+
+        copy_vec.clear();
+        assign_vec.clear();
+
+        printCase("After copy_vec && assign_vec clear");
+        std::cout<<"\033[1;31m"<<"👇 original vec👇"<<std::endl;
+        std::cout<<orignial_vec<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;34m"<<"👇 copy vec 👇"<<std::endl;
+        std::cout<<copy_vec<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;36m"<<"👇 assign vec 👇"<<std::endl;
+        std::cout<<assign_vec<<"\033[0m"<<std::endl;
+        
+        res = checkResultManually();
+        printResult(res);
+    }
+
     
-    printTest("[Iterator] default constructor");
-    {
-        ft::Vector<int>::Iterator itr_default;
-        res = true;
-        printResult(res);
-        //TODO: printTest("[Iterator] copy constructor");
-    }
-
-    printTest("[Iterator] operator*");
-    {
-        //TODO: * 처음에 인자없이 생성자가 입력되더라도 데이터 자료형 크기만큼 임의의 메모리 공간을 할당해서 그 주소를 _ptr로 가지고 있도록해야 이 테스트를 통과할 수 있다... 추후 생각해보자.
-        ft::Vector<int>::Iterator itr;
-        // std::vector<int>::iterator itr;
-        // *itr = 1;
-        res = false;
-        printResult(res);
-    }
-
-    printTest("[Iterator] operator->");
-    {
-        //TODO: 멤버 함수 생기면 써보자.
-        // ft::Vector<int>::Iterator itr;
-        // std::vector<int>::iterator itr;
-        res = false;
-        printResult(res);
-    }
-
-    printTest("[Iterator] operator=");
-    {
-        ft::Vector<int>::Iterator itr_lhs;
-        ft::Vector<int>::Iterator itr_rhs;
-        itr_lhs = itr_rhs;
-        if (itr_lhs.base() == itr_rhs.base())
-            res = true;
-        else
-            res = false;
-        printResult(res);
-    }
-
-    printTest("[Iterator] operator++(prefix)");
-    {
-        ft::Vector<int>::Iterator itr;
-        ft::Vector<int>::Iterator tmp;
-        // std::vector<int>::iterator itr;
-        // std::vector<int>::iterator tmp;
-
-        itr = tmp;
-        if (tmp.base() + 1 == (++itr).base())
-            res = true;
-        else
-            res = false;
-        printResult(res);
-    }
-
-    printTest("[Iterator] operator++(postfix)");
-    {
-        // ft::Vector<int>::Iterator itr;
-        // ft::Vector<int>::Iterator tmp;
-        std::vector<int>::iterator itr;
-        std::vector<int>::iterator tmp;
-
-        itr = tmp;
-        if (tmp.base() + 1 == itr++.base())
-            res = false;
-        else
-            res = true;
-        if (res)
-        {
-            if (tmp.base() == itr.base())
-                res = true;
-            else
-                res = false;
-        }
-        printResult(res);
-    }
-
-    //TODO: 여기없는 연산자들 추가
-
-/*==========================================================*/
-/*####################  Vector Test  #######################*/
-/*==========================================================*/
-    
-    printTest("[Vector]Default constructor");
-    {
-        ft::Vector<int> my_vec(5);
-        std::vector<int> std_vec(5);
-        res = true;
-        printResult(res);
-    }
-
     /*==========================================================*/
     /*############### Iterator functions  tests ################*/
     /*==========================================================*/
@@ -215,7 +185,6 @@ void vectorTest()
             res = false;
         printResult(res);
     }
-    //TODO: reserve test
 
     /*==========================================================*/
     /*#################  Element Access tests ##################*/
@@ -355,60 +324,34 @@ void vectorTest()
         printResult(res);
     }
     
-    /*==========================================================*/
-    /*####################  Assign tests  ######################*/
-    /*==========================================================*/
-    
-    printTest("[Vector]Assign test");
-    {
-        ft::Vector<SampleClass> vec;
-
-        for (int i = 0; i < 5; i++)
-        {
-            ft::Vector<SampleClass>::Iterator itr = vec.begin();
-            vec.insert(itr, SampleClass(data[i]));
-        }
-        std::cout<<vec<<std::endl;
-
-        std::cout<<"After assign(2, SampleClass(data[o])"<<std::endl;
-        vec.assign(2, SampleClass(data[0]));
-        
-        std::cout<<vec<<std::endl;
-
-        res = checkResultManually();
-        printResult(res);
-    }
-
-    /*==========================================================*/
+     /*==========================================================*/
     /*####################  Modifiers tests  ###################*/
     /*==========================================================*/
     
-    printTest("[Vector]insert test");
+    printTest("[Vector]reserve and insert test");
     {
         ft::Vector<int> my_vec(5);
         std::vector<int> std_vec(5);
 
+        std::cout<<std::endl;
+        std::cout<<my_vec<<std::endl;
         my_vec.reserve(100);
         std_vec.reserve(100);
+        printCase("after reserve(100)");
+        std::cout<<my_vec<<std::endl;
         ft::Vector<int>::Iterator itr;
         std::vector<int>::iterator std_itr;
 
-        std::cout<<std::endl;
-        std::cout<<"my_vec : ";
         itr = my_vec.begin();
+        std::cout<<std::endl;
         for (int i = 0; i < 5; i++)
             itr = my_vec.insert(itr, 42 + i);
-        for (ft::Vector<int>::Iterator tmp = my_vec.begin(); tmp < my_vec.end(); tmp++)
-                    std::cout<<*tmp<<" ";
-        std::cout<<std::endl;
+        std::cout<<"\033[1;34m"<<my_vec<<"\033[0m"<<std::endl;
 
-        std::cout<<"std_vec: ";
         std_itr = std_vec.begin();
         for (int i = 0; i < 5; i++)
             std_itr = std_vec.insert(std_itr, 42 + i);
-        for (std::vector<int>::iterator tmp = std_vec.begin(); tmp < std_vec.end(); tmp++)
-                    std::cout<<*tmp<<" ";
-        std::cout<<std::endl;
+        std::cout<<"\033[1;36m"<<std_vec<<"\033[0m"<<std::endl;
 
         res = checkResultManually();
         printResult(res);
@@ -416,10 +359,8 @@ void vectorTest()
 
    printTest("[Vector]erase test");
     {
-        //TODO: 아무 인자없이 vector를 만들었을 때 nullptr이 아니라 할당된 포인터를 가지게끔해야함.
         ft::Vector<int> vec;
         ft::Vector<int>::Iterator itr = vec.begin();
-        // ft::Vector<int> vec(1);
 
         for (int i = 0; i < 5; i++)
         {
@@ -429,10 +370,10 @@ void vectorTest()
         std::cout<<std::endl;
         std::cout<<vec<<std::endl;
         vec.erase(vec.begin());
-        std::cout<<"After erase begin itr"<<std::endl;
+        printCase("After erase begin itr");
         std::cout<<vec<<std::endl;
         vec.erase(vec.begin(), (vec.begin()) + 1);
-        std::cout<<"After erase begin itr to next of begin itr"<<std::endl;
+        printCase("After erase begin itr to next of begin itr");
         std::cout<<vec<<std::endl;
         
         res = checkResultManually();
@@ -457,17 +398,17 @@ void vectorTest()
         }
 
         std::cout<<std::endl;
-        std::cout<<"vec1"<<std::endl;
-        std::cout<<vec1<<std::endl;
-        std::cout<<"vec2"<<std::endl;
-        std::cout<<vec2<<std::endl;
+        std::cout<<"\033[1;31m"<<"👇 vec1 👇"<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;31m"<<vec1<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;34m"<<"👇 vec2 👇"<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;34m"<<vec2<<"\033[0m"<<std::endl;
 
-        std::cout<<"After swap"<<std::endl;
+        printCase("After swap");
         vec1.swap(vec2);
-        std::cout<<"vec1"<<std::endl;
-        std::cout<<vec1<<std::endl;
-        std::cout<<"vec2"<<std::endl;
-        std::cout<<vec2<<std::endl;
+        std::cout<<"\033[1;31m"<<"👇 vec1 👇"<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;31m"<<vec1<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;34m"<<"👇 vec2 👇"<<"\033[0m"<<std::endl;
+        std::cout<<"\033[1;34m"<<vec2<<"\033[0m"<<std::endl;
 
         res = checkResultManually();
         printResult(res);
@@ -485,7 +426,7 @@ void vectorTest()
         std::cout<<std::endl;
         std::cout<<vec<<std::endl;
         vec.clear();
-        std::cout<<"After clear"<<std::endl;
+        printCase("After clear");
         std::cout<<vec<<std::endl;
 
         res = checkResultManually();
@@ -501,6 +442,7 @@ void vectorTest()
             ft::Vector<SampleClass>::Iterator itr = vec.begin();
             vec.insert(itr, SampleClass(data[i]));
         }
+        std::cout<<std::endl;
         std::cout<<vec<<std::endl;
 
         res = checkResultManually();
@@ -518,14 +460,16 @@ void vectorTest()
         }
         std::cout<<vec<<std::endl;
 
-        std::cout<<"After pop_back 2 times"<<std::endl;
+        printCase("After pop_back 2 times");
         for (size_t i = 0; i < 2; i++)
             vec.pop_back();
         
+        std::cout<<std::endl;
         std::cout<<vec<<std::endl;
 
         res = checkResultManually();
         printResult(res);
     }
+
 
 }

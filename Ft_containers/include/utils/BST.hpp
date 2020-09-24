@@ -45,8 +45,8 @@ public:
         virtual ~Iterator() {};
         Iterator& operator=(const Iterator& other)
         {
-            _node = other._node;
-            _tree = other._tree;
+            this->_node = other._node;
+            this->_tree = other._tree;
             return (*this);
         };
 
@@ -61,45 +61,45 @@ public:
         //     BSTNode<T> *_node;
         Iterator& operator++()
         {
-            Node *root = _tree->getRoot();
+            Node *root = this->_tree->getRoot();
             Node *tmp;
 
             if (!(root))
             {
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
                 return (*this);
             }
             // 노드가 없거나 노드가 init을 가리키고 있다면(가장 마지막 노드), 그 다음 노드로 첫번째 노드를 가리키게하여 반환!
-            if (!(_node) || _node == _tree->getInit())
+            if (!(this->_node) || this->_node == this->_tree->getInit())
             {
                 tmp = root;
                 while (tmp->left)
                     tmp = tmp->left;
-                _node = tmp;
+                this->_node = tmp;
                 return (*this);
             }
             // 만약 노드의 오른쪽에 노드가 있다면? 오른쪽 노드를 기준으로 가장 왼쪽 노드를 가리키게하여 반환! 왼쪽 노드가 있다면 말이지.
-            if (_node->right)
+            if (this->_node->right)
             {
-                _node = _node->right;
-                while (_node->left)
-                    _node = _node->left;
+                this->_node = this->_node->right;
+                while (this->_node->left)
+                    this->_node = this->_node->left;
                 return (*this);
             }
 
             // 오른쪽 노드가 없는 케이스에는 자신이 lchild인지, rchild인지에 따라 달리 처리된다.
             // lchild일 경우: 바로 위 parent가 반환되어야할 노드
-            // rchild일 경우: 바로 위 parent의 parent가 반환되어야할 노드. 참고로 rchild면서 가장 마지막 노드인 경우는 (_node == _tree->getInit()) 조건에 걸려서 처리된 상태이다.
-            tmp = _node->parent;
-            while (tmp && tmp->right == _node)
+            // rchild일 경우: 바로 위 parent의 parent가 반환되어야할 노드. 참고로 rchild면서 가장 마지막 노드인 경우는 (this->_node == this->_tree->getInit()) 조건에 걸려서 처리된 상태이다.
+            tmp = this->_node->parent;
+            while (tmp && tmp->right == this->_node)
             {
-                _node = tmp;
-                tmp = _node->parent;
+                this->_node = tmp;
+                tmp = this->_node->parent;
             }
             if (!tmp)
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
             else
-                _node = tmp;
+                this->_node = tmp;
             return (*this);
         };
 
@@ -112,40 +112,40 @@ public:
 
         Iterator& operator--()
         {
-            Node *root = _tree->getRoot();
+            Node *root = this->_tree->getRoot();
             Node *tmp;
 
             if (!(root))
             {
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
                 return (*this);
             }
-            if (!(_node) || _node == _tree->getInit())
+            if (!(this->_node) || this->_node == this->_tree->getInit())
             {
                 tmp = root;
                 while (tmp->right)
                     tmp = tmp->right;
-                _node = tmp;
+                this->_node = tmp;
                 return (*this);
             }
-            if (_node->left)
+            if (this->_node->left)
             {
-                _node = _node->left;
-                while (_node->right)
-                    _node = _node->right;
+                this->_node = this->_node->left;
+                while (this->_node->right)
+                    this->_node = this->_node->right;
                 return (*this);
             }
 
-            tmp = _node->parent;
-            while (tmp && tmp->left == _node)
+            tmp = this->_node->parent;
+            while (tmp && tmp->left == this->_node)
             {
-                _node = tmp;
-                tmp = _node.parent;
+                this->_node = tmp;
+                tmp = this->_node.parent;
             }
             if (!tmp)
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
             else
-                _node = tmp;
+                this->_node = tmp;
             
             return (*this);
         };
@@ -157,8 +157,8 @@ public:
             return (it);
         }
 
-        reference operator*() const { return (_node->element); };
-        pointer operator->() const { return (&(_node->element)); };
+        reference operator*() const { return (this->_node->element); };
+        pointer operator->() const { return (&(this->_node->element)); };
     };
 
     /*==========================================================*/
@@ -187,8 +187,8 @@ public:
         virtual ~ConstIterator() {};
         ConstIterator& operator=(const ConstIterator& other)
         {
-            _node = other._node;
-            _tree = other._tree;
+            this->_node = other._node;
+            this->_trethis->e = other._trethis->e;
             return (*this);
         };
 
@@ -198,42 +198,42 @@ public:
 
         ConstIterator& operator++()
         {
-            Node *root = _tree->getRoot();
+            Node *root = this->_tree->getRoot();
             Node *tmp;
 
             if (!(root))
             {
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
                 return (*this);
             }
 
-            if (!(_node) || _node == _tree->getInit())
+            if (!(this->_node) || this->_node == this->_tree->getInit())
             {
                 tmp = root;
                 while (tmp->left)
                     tmp = tmp->left;
-                _node = tmp;
+                this->_node = tmp;
                 return (*this);
             }
 
-            if (_node->right)
+            if (this->_node->right)
             {
-                _node = _node->right;
-                while (_node->left)
-                    _node = _node->left;
+                this->_node = this->_node->right;
+                while (this->_node->left)
+                    this->_node = this->_node->left;
                 return (*this);
             }
 
-            tmp = _node->parent;
-            while (tmp && tmp->right == _node)
+            tmp = this->_node->parent;
+            while (tmp && tmp->right == this->_node)
             {
-                _node = tmp;
-                tmp = _node->parent;
+                this->_node = tmp;
+                tmp = this->_node->parent;
             }
             if (!tmp)
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
             else
-                _node = tmp;
+                this->_node = tmp;
             return (*this);
         };
 
@@ -246,40 +246,40 @@ public:
 
         ConstIterator& operator--()
         {
-            Node *root = _tree->getRoot();
+            Node *root = this->_tree->getRoot();
             Node *tmp;
 
             if (!(root))
             {
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
                 return (*this);
             }
-            if (!(_node) || _node == _tree->getInit())
+            if (!(this->_node) || this->_node == this->_tree->getInit())
             {
                 tmp = root;
                 while (tmp->right)
                     tmp = tmp->right;
-                _node = tmp;
+                this->_node = tmp;
                 return (*this);
             }
-            if (_node->left)
+            if (this->_node->left)
             {
-                _node = _node->left;
-                while (_node->right)
-                    _node = _node->right;
+                this->_node = this->_node->left;
+                while (this->_node->right)
+                    this->_node = this->_node->right;
                 return (*this);
             }
 
-            tmp = _node->parent;
-            while (tmp && tmp->left == _node)
+            tmp = this->_node->parent;
+            while (tmp && tmp->left == this->_node)
             {
-                _node = tmp;
-                tmp = _node.parent;
+                this->_node = tmp;
+                tmp = this->_node.parent;
             }
             if (!tmp)
-                _node = _tree->getInit();
+                this->_node = this->_tree->getInit();
             else
-                _node = tmp;
+                this->_node = tmp;
             
             return (*this);
         };
@@ -291,12 +291,12 @@ public:
             return (it);
         }
 
-        reference operator*() const { return (_node->element); };
-        pointer operator->() const { return (&(_node->element)); };
+        reference operator*() const { return (this->_node->element); };
+        pointer operator->() const { return (&(this->_node->element)); };
     };
 
-    typedef ReverseIterator<Iterator> reverse_iterator;
-    typedef ConstReverseIterator<Iterator> const_reverse_iterator;
+    typedef ReverseIterator<Iterator> ReverseIterator;
+    typedef ConstReverseIterator<Iterator> ConstReverseIterator;
 
 
 private:
@@ -339,7 +339,7 @@ public:
         _cmp = other._cmp;
         _size = other._size;
         return (*this);
-    }:
+    };
 
     virtual ~BST() { deep_free(_root); delete (_init); };
 
@@ -349,7 +349,7 @@ public:
     
     Node *getRoot();
     Node *getInit();
-    size_type getSize() { return (_size); };
+    size_type getSize() const;
     pair<Iterator, bool> insert(Iterator position, const value_type& val);
     bool map_erase(const value_type& val);
 };
@@ -390,7 +390,7 @@ template <typename T, typename Compare>
 typename BST<T, Compare>::Node *BST<T, Compare>::getInit() { return (this->_init); }
 
 template <typename T, typename Compare>
-typename BST<T, Compare>::size_type BST<T, Compare>::getSize()
+typename BST<T, Compare>::size_type BST<T, Compare>::getSize() const
 { 
     return (this->_size); 
 }
@@ -410,8 +410,8 @@ pair<typename BST<T, Compare>::Iterator, bool> BST<T, Compare>::insert(Iterator 
     while (true)
     {
         // 여기서 val과 pos->element는 pair<key, mapped_value>이다.
-        // pos->element와 val이 동일한게 존재한다면, 인자로 들어온 이터레이터와 같은 노드를 가리키는 이터레이터를 생성시켜서 false 값과 pair를 만들어 리턴한다. 
-        if (pos->element == val)
+        // pos->element의 key와 val의 key가 동일하게 존재한다면, 인자로 들어온 이터레이터와 같은 노드를 가리키는 이터레이터를 생성시켜서 false 값과 pair를 만들어 리턴한다. 
+        if (pos->element.first == val.first)
             return (make_pair(Iterator(this, pos), false));
         
         if (_cmp(val, pos->element))
@@ -482,8 +482,9 @@ bool BST<T, Compare>::map_erase(const value_type& val)
         cdd = del->left;
     else if (!(del->left) && (del->right))
         cdd = del->right;
-    else //case3. 삭제하려는 노드가 자식노드를 두개 가지고 있을 때. lchild의 오른쪽 끝 리프노드나 rchild의 왼쪽 끝 리프노드를 del 자리에 치환시키면 된다. 나는 후자로 구현해보았다.
+    else //case3. 삭제하려는 노드가 자식노드를 두개 가지고 있을 때. lchild의 오른쪽 끝 리프노드나 rchild의 왼쪽 끝 노드를 del 자리에 치환시키면 된다. 나는 후자로 구현해보았다.
     {
+        // 우선 rchild의 왼쪽 끝 노드를 찾아내려가자.
         cdd_parent = del;
         cdd = del->right;
         while (cdd->left)
@@ -491,44 +492,45 @@ bool BST<T, Compare>::map_erase(const value_type& val)
             cdd_parent = cdd;
             cdd = cdd->left;
         }
-        // 오른쪽 서브트리의 가장 작은 값을 찾아내려왔지만, 이 노드에 rchild가 있을 수 있다. 이 경우엔 cdd_parent의 lchild로 붙여버리자.
+        // 그런데 이 노드에 rchild가 있을 수 있다. 이 경우엔 cdd의 rchild를 cdd_parent의 lchild로 붙여버리자.
         if (cdd_parent->left == cdd)
         {
             cdd_parent->left = cdd->right;
             if (cdd->right)
                 cdd->right->parent = cdd_parent;
+            cdd->left = del->left;
+            del->left->parent = cdd;
         }
         // 오른쪽 서브트리의 가장 작은 값이 그냥 del->right였을 경우.
         else
         {
-            cdd_parent->right = cdd->right;
-            if (cdd->right)
-                cdd->right->parent = cdd_parent;
+            // cdd와 del->left를 연결시켜준다.
+            cdd->left = del->left;
+            del->left->parent = cdd;
         }
-
-        // cdd as child of del_parent
-        if (del_parent)
-        {
-            if (del_parent->left == del)
-                del_ptr = &del_parent->left;
-            else 
-                del_ptr = &del_parent->right;
-            *del_ptr = cdd;
-        }
-        else
-        {
-            // root만 parent가 존재하지 않는다. del_parent가 없다면? del이 루트라는 소리. root에 cdd를 대신 넣어주자.
-            _root = cdd;
-        }
-
-        if  (cdd) // 만약 del이 리프노드가 아니라면 cdd_parent도 설정해주자.
-            cdd->parent = del_parent;
-
-        // 이제 삭제!
-        delete del;
-        _size--;
-        return (true);
     }
+    // 이제 del_parent와 cdd를 연결시켜준다.
+    if (del_parent)
+    {
+        if (del_parent->left == del)
+            del_ptr = &(del_parent->left);
+        else 
+            del_ptr = &(del_parent->right);
+        *del_ptr = cdd;
+    }
+    else
+    {
+        // root만 parent가 존재하지 않는다. del_parent가 없다면? del이 루트라는 소리. root에 cdd를 대신 넣어주자.
+        _root = cdd;
+    }
+
+    if (cdd) // 만약 del이 리프노드가 아니라면(cdd가 None이 아니라면) cdd_parent도 설정해주자.
+        cdd->parent = del_parent;
+
+    // 이제 삭제!
+    delete del;
+    _size--;
+    return (true);
 }
 
 };

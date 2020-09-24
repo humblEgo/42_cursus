@@ -296,7 +296,7 @@ public:
 
     BSTBaseIterator(BST<T, Compare> *tree, BSTNode<T> *node) : _tree(tree), _node(node) {};
     virtual ~BSTBaseIterator() {};
-    BSTBaseIterator(const BSTBaseIterator& other) : _tree(other.tree), _node(other.node) {};
+    BSTBaseIterator(const BSTBaseIterator& other) : _tree(other._tree), _node(other._node) {};
     BSTBaseIterator& operator=(const BSTBaseIterator& other)
     { 
         this->_tree = other._tree;

@@ -133,7 +133,7 @@ public:
                     typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator());
     virtual ~Vector();
     Vector(const Vector &other);
-    Vector &operator=(const Vector &other);
+    Vector& operator=(const Vector &other);
 
     /*==========================================================*/
     /*#################  Iterator functions  ###################*/
@@ -226,10 +226,8 @@ Vector<T, A>::Vector(InputIterator first, InputIterator last, const allocator_ty
     _cap = _size;
     _arr = _allocator.allocate(_size);
     int i = 0;
-    for (InputIterator it = 0; it != last; ++it, ++i)
-    {
+    for (InputIterator it = first; it != last; ++it, ++i)
         _allocator.construct(_arr + i, *it);
-    }
 }
 
 template <typename T, typename A>
@@ -273,6 +271,7 @@ Vector<T, A>& Vector<T, A>:: operator=(const Vector& other)
         _size = other._size;
         _cap = other._cap;
     }
+    return (*this);
 }
 
 /*==========================================================*/

@@ -15,9 +15,9 @@ namespace ft
 /*==========================================================*/
 
 template <typename T>
-struct less : std::binary_fucntion<T, T, bool>
+struct less : std::binary_function<T, T, bool>
 {
-    bool operator()(const T& x, const T& y) cosnt { return (x < y); }
+    bool operator()(const T& x, const T& y) const { return (x < y); }
 };
 
 template <typename Key, typename T, typename Compare = ft::less<Key>, typename A = std::allocator<pair<const Key, T> > >
@@ -37,7 +37,7 @@ public:
         typedef pair<const Key, T> second_argument_type;
 
     private:
-        Comapre _cmp;
+        Compare _cmp;
         value_compare() {};
     
     public:
@@ -45,7 +45,7 @@ public:
         /*####################  Canonical form   ###################*/
         /*==========================================================*/
 
-        value_compare(const Compare& c) : _cmp(c) {}:
+        value_compare(const Compare& c) : _cmp(c) {};
         ~value_compare() {};
         value_compare(const value_compare& other) : _cmp(other._cmp) {};
         value_compare& operator=(const value_compare& rhs)
@@ -60,12 +60,13 @@ public:
         
         bool operator()(const pair<const Key, T>& x, const pair<const Key, T>& y) const { return (_cmp(x.first, y.first)); };
     };
+
     typedef A allocator_type;
     typedef typename A::reference reference;
     typedef typename A::const_reference const_reference;
     typedef typename A::pointer pointer;
     typedef typename A::const_pointer const_pointer;
-    typedef std::pirdiff_t difference_type;
+    typedef std::ptrdiff_t difference_type;
     typedef size_t size_type;
 
     typedef typename BST<value_type, value_compare>::Iterator Iterator;
@@ -129,7 +130,7 @@ public:
     void erase(Iterator position);
     size_type erase(const key_type& key);
     void erase(Iterator first, Iterator last);
-    void swap(map& other);
+    void swap(Map& other);
     void clear();
 
     /*==========================================================*/
@@ -150,8 +151,9 @@ public:
     ConstIterator lower_bound(const key_type& key) const;
     Iterator upper_bound(const key_type& key);
     ConstIterator upper_bound(const key_type& key) const;
-    pair<ConstIterator, ConstIterator> equal_range(const key_type& key) const;
     pair<Iterator, Iterator> equal_range(const key_type& key);
+    pair<ConstIterator, ConstIterator> equal_range(const key_type& key) const;
+
 };
 
 /*==========================================================*/
@@ -175,7 +177,7 @@ Map<Key, T, Compare, A>::Map(InputIterator first, InputIterator last, const key_
 
 template <typename Key, typename T, typename Compare, typename A>
 Map<Key, T, Compare, A>::Map(const Map& other)
-: _tree(othre._tree), _alloc(other._alloc)
+: _tree(other._tree), _alloc(other._alloc)
 {
 }
 
@@ -195,7 +197,7 @@ Map<Key, T, Compare, A>& Map<Key, T, Compare, A>::operator=(const Map& rhs)
 /*==========================================================*/
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::begin()
+typename Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::begin()
 {
     Node *n = _tree.getRoot();
     if (!n)
@@ -206,7 +208,7 @@ Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::begin()
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::begin() const
+typename Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::begin() const
 {
     Node *n = _tree.getRoot();
     if (!n)
@@ -217,37 +219,37 @@ Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::begin() const
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::end()
+typename Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::end()
 {
     return (Iterator(&_tree, _tree.getInit())); 
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::end() const
+typename Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::end() const
 {
     return (ConstIterator(&_tree, _tree.getInit())); 
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::reverse_iterator Map<Key, T, Compare, A>::rbegin()
+typename Map<Key, T, Compare, A>::reverse_iterator Map<Key, T, Compare, A>::rbegin()
 {
     return (reverse_iterator(end()));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::const_reverse_iterator Map<Key, T, Compare, A>::rbegin() const
+typename Map<Key, T, Compare, A>::const_reverse_iterator Map<Key, T, Compare, A>::rbegin() const
 {
     return (const_reverse_iterator(end()));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::reverse_iterator Map<Key, T, Compare, A>::rend()
+typename Map<Key, T, Compare, A>::reverse_iterator Map<Key, T, Compare, A>::rend()
 {
     return (reverse_iterator(begin()));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::const_reverse_iterator Map<Key, T, Compare, A>::rend() const
+typename Map<Key, T, Compare, A>::const_reverse_iterator Map<Key, T, Compare, A>::rend() const
 {
     return (const_reverse_iterator(begin()));
 }
@@ -260,15 +262,15 @@ template <typename Key, typename T, typename Compare, typename A>
 bool Map<Key, T, Compare, A>::empty() const { return (_tree.getSize() == 0); }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::size() const
+typename Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::size() const
 {
     return (_tree.getSize());
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::max_size() const
+typename Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::max_size() const
 {
-    return (std::min((size_type)std::numeric_limits<difference_type>::max(), std::numeric_limits<size_type>::max() / sizeof(Node)));
+    return static_cast<size_type>(-1 / sizeof(Node));
 }
 
 /*==========================================================*/
@@ -280,7 +282,7 @@ typename Map<Key, T, Compare, A>::mapped_type& Map<Key, T, Compare, A>::operator
 {
     Iterator it = find(key);
     if (it == end())
-        it = _tree.insert(Iterator(&_tree, _tree.getRoot()), make_pair(key, mapped_type())).first;
+        it = this->_tree.insert(Iterator(&(this->_tree), this->_tree.getRoot()), ft::make_pair(key, mapped_type())).first;
     return (it->second);
 }
 
@@ -291,16 +293,17 @@ typename Map<Key, T, Compare, A>::mapped_type& Map<Key, T, Compare, A>::operator
 template <typename Key, typename T, typename Compare, typename A>
 pair<typename Map<Key, T, Compare, A>::Iterator, bool> Map<Key, T, Compare, A>::insert(const value_type& val)
 {
-    return (_tree.insert(Iterator(&_tree, _tree.getRoot()), val));
+    return (this->_tree.insert(Iterator(&this->_tree, this->_tree.getRoot()), val));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::insert(Iterator position, const value_type& val)
+typename Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::insert(Iterator position, const value_type& val)
 {
     key_compare cmp = key_comp();
-    if (cmp(position->first, val.first) && upper_bound(position->first) == upper_bound(val.first))
-        return (_tree.insert(positiion, val).first);
-    return (_tree.insert(Iterator(&_tree, _tree.getRoot()), val).first);
+    if (cmp(position->first, val.first) 
+        && upper_bound(position->first) == upper_bound(val.first))
+        return (this->_tree.insert(position, val).first);
+    return (this->_tree.insert(Iterator(&this->_tree, this->_tree.getRoot()), val).first);
 }
 
 template <typename Key, typename T, typename Compare, typename A>
@@ -312,29 +315,34 @@ void Map<Key, T, Compare, A>::insert(InputIterator first, InputIterator last)
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-void erase(Iterator position)
+void Map<Key, T, Compare, A>::erase(Map<Key, T, Compare, A>::Iterator position)
 {
-    _tree.map_erase(*poisition);
+    this->_tree.map_erase(*position);
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::erase(const key_type& key)
+typename Map<Key, T, Compare, A>::size_type Map<Key, T, Compare, A>::erase(const key_type& key)
 {
-    return (_tree.map_erase(make_pair(key, mapped_type())));
+    return (this->_tree.map_erase(make_pair(key, mapped_type())));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
 void Map<Key, T, Compare, A>::erase(Iterator first, Iterator last)
 {
-    while (first != lsat)
-        _tree.map_erase(*first++);
+    // while (first != last)
+    //     this->_tree.map_erase(*first++);
+    ft::Vector<value_type> data;
+    for (Iterator it = first; it != last; ++it)
+        data.push_back(*it);
+    for (typename ft::Vector<value_type>::Iterator it = data.begin(); it != data.end(); ++it)
+        _tree.map_erase(*it);
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-void Map<Key, T, Compare, A>::swap(map& other)
+void Map<Key, T, Compare, A>::swap(Map& other)
 {
     std::swap(_alloc, other._alloc);
-    std::swap(_tree, other._tree);
+    std::swap(this->_tree, other._tree);
 }
 
 template <typename Key, typename T, typename Compare, typename A>
@@ -475,7 +483,7 @@ typename Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::lower_b
 template <typename Key, typename T, typename Compare, typename A>
 typename Map<Key, T, Compare, A>::Iterator Map<Key, T, Compare, A>::upper_bound(const key_type& key)
 {
-    Node *tmp = _tree.getRoot();
+    Node *tmp = this->_tree.getRoot();
     Node *ptmp = nullptr;
     key_compare cmp = key_comp();
     if (tmp)
@@ -527,16 +535,21 @@ typename Map<Key, T, Compare, A>::ConstIterator Map<Key, T, Compare, A>::upper_b
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-pair<typename Map<Key, T, Compare, A>::ConstIterator, typename Map<Key, T, Compare, A>::ConstIterator> equal_range(const key_type& key) const
+pair<typename Map<Key, T, Compare, A>::Iterator, typename Map<Key, T, Compare, A>::Iterator> Map<Key, T, Compare, A>::equal_range(const Map<Key, T, Compare, A>::key_type& key)
 {
     return (make_pair(lower_bound(key), upper_bound(key)));
 }
 
 template <typename Key, typename T, typename Compare, typename A>
-pair<typename Map<Key, T, Compare, A>::Iterator, typename Map<Key, T, Compare, A>::Iterator> Map<Key, T, Compare, A>::equal_range(const key_type& key)
+pair<typename Map<Key, T, Compare, A>::ConstIterator, typename Map<Key, T, Compare, A>::ConstIterator> Map<Key, T, Compare, A>::equal_range(const Map<Key, T, Compare, A>::key_type& key) const
 {
     return (make_pair(lower_bound(key), upper_bound(key)));
 }
+
+/*==========================================================*/
+/*####################  Operators  #######################*/
+/*==========================================================*/
+
 
 };
 
